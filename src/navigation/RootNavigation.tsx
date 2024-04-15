@@ -22,16 +22,13 @@ export const RootNavigator = () => {
 
   return (
     <>
-      {authToken == null || authToken == "" ? (
+      {/* {authToken == null || authToken == "" ? (
         <RootStackScreen />
       ) : (
         <BottomTabNavigator />
-      )}
-      {/* {userData! ? (
-        <BottomTabNavigator />
-      ) : (
-        <RootStackScreen />
-    )} */}
+      )} */}
+
+      <BottomTabNavigator />
     </>
   );
 }

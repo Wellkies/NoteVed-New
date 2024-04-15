@@ -111,7 +111,7 @@ const UserProfile = ({ }) => {
   };
   console.log(selectReason, 'selectReason...............');
 
-  const Logout = async() => {
+  const Logout = async () => {
     const authValue = await Storage.removeValue('@auth_Token');
     const User = await Storage.removeValue('@user');
     dispatch(setLanguage(language));
@@ -134,10 +134,10 @@ const UserProfile = ({ }) => {
     console.log(tokenData, 'tokenData................');
     dispatch(CheckDeviceTokenApi(tokenData));
     // if (CheckToken != undefined) {
-      if (CheckToken != undefined && CheckToken.message == 'Token not found!') {
-        console.log('*****************', CheckToken.message);
-        navigation.navigate('ExpiredTokenScreen');
-      }
+    if (CheckToken != undefined && CheckToken.message == 'Token not found!') {
+      console.log('*****************', CheckToken.message);
+      navigation.navigate('ExpiredTokenScreen');
+    }
     // }
   };
 
@@ -646,17 +646,12 @@ const UserProfile = ({ }) => {
                 <Iconz name="chevron-small-right" size={20} color={'#f1a722'} />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => {
                 setModalStatus(true);
                 // navigation.navigate('Kids_Profile', {childId: id});
               }}>
               <View style={styles.middleOptions}>
-                {/* <Image
-                source={require('../../../assets/plus.png')}
-                style={styles.iconStyle}
-              /> */}
-
                 <View style={styles.options}>
                   <View
                     style={{
@@ -683,9 +678,9 @@ const UserProfile = ({ }) => {
                   />
                 </View>
               </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => {
                 setDeleteModalStatus(true);
                 // navigation.navigate('Kids_Profile', {childId: id});
@@ -717,16 +712,8 @@ const UserProfile = ({ }) => {
                   />
                 </View>
               </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
-          {/* <View
-            style={{
-              backgroundColor: '#fff',
-              padding: 10,
-              marginHorizontal: 10,
-            }}>
-            
-          </View> */}
         </ScrollView>
         {modalStatus && (
           <CommonModalUser
