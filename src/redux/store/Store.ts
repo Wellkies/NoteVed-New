@@ -41,6 +41,8 @@ import YouTubeData from "../reducers/youtubeReducer";
 import LiveclassData from "../reducers/GetLiveClassData";
 import AllCoursesData from "../reducers/GetAllCoursesReducer";
 import AllSubjectsData from "../reducers/GetSubjectByCourseReducer";
+import TopicDetailsBySubData from "../reducers/GetTopicDetailsReducer";
+import ContentDetailsData from "../reducers/GetContentDetailsReducer";
 
 export const store = configureStore({
   reducer: {
@@ -87,6 +89,8 @@ export const store = configureStore({
     LiveClassList: LiveclassData,
     Courses: AllCoursesData,
     Subjects: AllSubjectsData,
+    TopicBySubDetails: TopicDetailsBySubData,
+    ContentDetails: ContentDetailsData,
   },
 });
 

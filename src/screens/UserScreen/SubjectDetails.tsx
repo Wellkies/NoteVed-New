@@ -28,23 +28,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import Fontisto from 'react-native-vector-icons/Fontisto';
-// import {
-//   getAllSubjectExamAPI,
-//   getChildRevisionDetailsAPI,
-//   getTopicBySubClassAPI,
-//   getTopicDetailsAPI,
-//   getUnlockChildAPI,
-//   getUserInfoAPI,
-//   handleSetTopicIdForRevision,
-//   updateParentProfile,
-// } from '../../redux/actions/Action';
-// import {
-//   emailRegex,
-//   markCalculation,
-//   markCalculationQuiz,
-//   name_reg,
-//   phoneRegex,
-// } from '../../../constants/Constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { device_height, device_width } from '../style';
 import LoadingScreen from '../CommonScreens/LoadingScreen';
