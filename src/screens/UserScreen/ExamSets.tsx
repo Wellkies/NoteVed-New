@@ -39,22 +39,6 @@ import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 import RazorpayCheckout from 'react-native-razorpay';
 import WebView from 'react-native-webview';
 import Fontisto from 'react-native-vector-icons/Fontisto';
-
-// import {
-//   getAllSubjectExamAPI,
-//   getContentQuizAPI,
-//   getRevisionAnswerAPI,
-//   getScholarshipPremiumAPI,
-//   getSignatureVerification,
-//   getTopicBySubClassAPI,
-//   getTopicDetailsAPI,
-//   getUnlockChildAPI,
-//   handleAsyncSetExamName,
-//   handleSetExamName,
-//   handleSetTopicIdForRevision,
-//   updateParentProfile,
-//   updateUserLikeDislikeApi,
-// } from '../../redux/actions/Action';
 import {
   emailRegex,
   markCalculation,
@@ -96,11 +80,6 @@ import {selectContentQuiz} from '../../redux/reducers/GetContentQuizReducer';
 import {handleSetExamName} from '../../redux/reducers/ExamTestNameReducer';
 import {selectTopicId} from '../../redux/reducers/GetTopicIdReducer';
 import {getSignatureVerification} from '../../redux/actions/ScholarshipPremiumAPI';
-// import VideoCard from './VideoCard';
-// import {
-//   GET_CONTENT_QUIZ,
-//   GET_REVISION_ANSWER,
-// } from '../../redux/actions/actiontypes';
 
 const ExamSets = ({route}) => {
   const navigation = useNavigation();

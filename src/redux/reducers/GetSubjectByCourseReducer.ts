@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store/Store";
-import { getAllCoursesActionAPI, getAllSubjectActionAPI } from "../actions/CoursesAPI";
+import { getAllSubjectActionAPI } from "../actions/CoursesAPI";
 
 interface AllSubjectState {
   AllSubjectsInfo: Object[]; // Define UserInfo interface as per your data structure
