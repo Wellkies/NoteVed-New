@@ -47,8 +47,7 @@ import Header from '../CommonScreens/Header';
 import { updateChildProfile } from '../../redux/actions/UpdateStudentProfile';
 import { selectUserInfo } from '../../redux/reducers/loginReducer';
 import CommonMessage from '../../../constants/CommonMessage';
-
-// import {SET_CHILD_INFO} from '../../redux/actions/actiontypes';
+import { getAllCoursesAPI, selectAllCoursesInfo } from '../../redux/reducers/GetAllCoursesReducer';
 
 const LandingScreen = ({ }) => {
   interface ChildInfo {
@@ -122,9 +121,12 @@ const LandingScreen = ({ }) => {
   //   classname = '',
   //   password = '',
   // } = childInfo || {};
+  const ExamAvailable = useAppSelector(selectAllCoursesInfo);
+  console.log(ExamAvailable, "==============ExamAvailable");
 
   useEffect(() => {
     navigation.addListener('focus', () => {
+      dispatch(getAllCoursesAPI());
       BackHandler.addEventListener('hardwareBackPress', () => {
         // navigation.goBack();
         BackHandler.exitApp();
@@ -140,48 +142,50 @@ const LandingScreen = ({ }) => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   const user = userInfo;
-  //   const userid = user._id;
-  //   const stageid = user.stageid;
-  //   const boardid = user.boardid;
-  //   const childid = user.childid;
+  useEffect(() => {
+    // const user = userInfo;
+    // const userid = user._id;
+    // const stageid = user.stageid;
+    // const boardid = user.boardid;
+    // const childid = user.childid;
 
-  //   dispatch(getChildDetailsAPI(userid));
-  // }, [userInfo])
-  
+    // dispatch(getChildDetailsAPI(userid));
+    dispatch(getAllCoursesAPI());
+
+  }, [])
+
 
   const ListColor = ['#fee2a3', '#f6c4b9', '#c3ccf5', '#76f0c7'];
 
-  const ExamAvailable = [
-    {
-      examName: "Exam 1",
-      contents: "Adarsha, Navodaya and Medhabruti",
-      image: require('../../../assets/OAV_logo.jpg'),
-      navigationfunc: () => { navigation.navigate('SubjectList',{stageid:'5', boardid:'1'}) }
-    },
-    {
-      examName: "Exam 2",
-      contents: "Adarsha, Navodaya and Medhabruti",
-      image: require('../../../assets/Jawahar_Navodaya_Vidyalaya_logo.png'),
-      navigationfunc: () => CommonMessage("Coming Soon !"),
-      // navigationfunc: () => { navigation.navigate('SubjectList',{stageid:stageid, boardid:boardid}) }
-    },
-    {
-      examName: "Exam 3",
-      contents: "Adarsha, Navodaya and Medhabruti",
-      image: require('../../../assets/teacher.jpg'),
-      navigationfunc: () => CommonMessage("Coming Soon !"),
-      // navigationfunc: () => { navigation.navigate('SubjectList',{stageid:stageid, boardid:boardid}) }
-    },
-    {
-      examName: "Exam 4",
-      contents: "Adarsha, Navodaya and Medhabruti",
-      image: require('../../../assets/test.png'),
-      navigationfunc: () => CommonMessage("Coming Soon !"),
-      // navigationfunc: () => { navigation.navigate('SubjectList',{stageid:stageid, boardid:boardid}) }
-    },
-  ]
+  // const ExamAvailable = [
+  //   {
+  //     examName: "Exam 1",
+  //     contents: "Adarsha, Navodaya and Medhabruti",
+  //     image: require('../../../assets/OAV_logo.jpg'),
+  //     navigationfunc: () => { navigation.navigate('SubjectList',{stageid:'5', boardid:'1'}) }
+  //   },
+  //   {
+  //     examName: "Exam 2",
+  //     contents: "Adarsha, Navodaya and Medhabruti",
+  //     image: require('../../../assets/Jawahar_Navodaya_Vidyalaya_logo.png'),
+  //     navigationfunc: () => CommonMessage("Coming Soon !"),
+  //     // navigationfunc: () => { navigation.navigate('SubjectList',{stageid:stageid, boardid:boardid}) }
+  //   },
+  //   {
+  //     examName: "Exam 3",
+  //     contents: "Adarsha, Navodaya and Medhabruti",
+  //     image: require('../../../assets/teacher.jpg'),
+  //     navigationfunc: () => CommonMessage("Coming Soon !"),
+  //     // navigationfunc: () => { navigation.navigate('SubjectList',{stageid:stageid, boardid:boardid}) }
+  //   },
+  //   {
+  //     examName: "Exam 4",
+  //     contents: "Adarsha, Navodaya and Medhabruti",
+  //     image: require('../../../assets/test.png'),
+  //     navigationfunc: () => CommonMessage("Coming Soon !"),
+  //     // navigationfunc: () => { navigation.navigate('SubjectList',{stageid:stageid, boardid:boardid}) }
+  //   },
+  // ]
 
   return (
     <SafeAreaView style={styles.container}>
@@ -238,15 +242,24 @@ const LandingScreen = ({ }) => {
             }}>
             {ExamAvailable.map((item, index) => {
               const {
-                examName = '',
-                contents = '',
+                slcourse = '',
+                courseid = '',
+                coursename = '',
+                description = '',
                 image = '',
-                navigationfunc = ''
+                createon = '',
+                updatedon = ''
               } = item
+
+              // console.log(item, "================item");
               return (
                 <TouchableOpacity
                   key={index}
-                  onPress={navigationfunc}
+                  onPress={() => {
+                    navigation.navigate('SubjectList',
+                      { stageid: '5', boardid: '1', coursename: coursename }
+                    )
+                  }}
                   style={{
                     justifyContent: 'center',
                     alignItems: 'center',
@@ -254,33 +267,47 @@ const LandingScreen = ({ }) => {
                     backgroundColor: ListColor[index % ListColor.length],
                     paddingVertical: 25,
                     width: device_width * 0.42,
-                    height: device_height * 0.25,
+                    minHeight: device_height * 0.25,
                     paddingHorizontal: 15,
                     margin: 10,
                     // borderWidth: 1,
                     borderRadius: 20,
                   }}>
-                  <FastImage
-                    style={{
-                      marginTop: 5,
-                      height: device_height * 0.15,
-                      width: device_width * 0.4,
-                      // borderWidth:1
-                    }}
-                    source={image}
-                    resizeMode='center'
-                  />
+                  {image != '' && image != null ?
+
+                    <FastImage
+                      style={{
+                        marginTop: 5,
+                        height: device_height * 0.15,
+                        width: device_width * 0.4,
+                        // borderWidth:1,
+                      }}
+                      source={{ uri: image }}
+                      resizeMode='contain'
+                    />
+                    :
+                    <FastImage
+                      style={{
+                        marginTop: 5,
+                        height: device_height * 0.15,
+                        width: device_width * 0.4,
+                        // borderWidth:1,
+                      }}
+                      source={require('../../../assets/teacher.jpg')}
+                      resizeMode='contain'
+                    />
+                  }
                   <Text
                     style={{
-                      borderTopWidth:1,
-                      borderColor:'#666',
-                      width:'120%',
+                      borderTopWidth: 1,
+                      borderColor: '#666',
+                      width: '120%',
                       fontSize: 20,
                       fontWeight: 'bold',
                       textAlign: 'center',
                       color: '#000'
                     }}>
-                    {examName}
+                    {coursename}
                   </Text>
                   <Text
                     style={{
@@ -289,7 +316,7 @@ const LandingScreen = ({ }) => {
                       textAlign: 'center',
                       color: '#333'
                     }}>
-                    {contents}
+                    {description}
                   </Text>
                 </TouchableOpacity>
               )

@@ -25,7 +25,8 @@ const Header = ({isbackIconShow = false, label1, label2, functionName}) => {
                 name="arrow-back"
                 size={30}
                 // backgroundColor={'#263d2d'}
-                color={'#fff'}
+                // color={'#fff'}
+                color={'darkgreen'}
                 onPress={() => functionName()}
               />
             </TouchableOpacity>
@@ -35,7 +36,8 @@ const Header = ({isbackIconShow = false, label1, label2, functionName}) => {
           <Text
             style={{
               fontSize: 20,
-              color: '#fff',
+              // color: '#fff',
+              color:'darkgreen',
               marginLeft: 10,
               marginTop:10,
               textTransform: 'capitalize',
