@@ -39,6 +39,8 @@ import AllOrdersData from "../reducers/GetAllOrdersReducer";
 import ChildProgressableData from "../reducers/GetChildProgressReducer";
 import YouTubeData from "../reducers/youtubeReducer";
 import LiveclassData from "../reducers/GetLiveClassData";
+import AllCoursesData from "../reducers/GetAllCoursesReducer";
+import AllSubjectsData from "../reducers/GetSubjectByCourseReducer";
 
 export const store = configureStore({
   reducer: {
@@ -83,6 +85,8 @@ export const store = configureStore({
     YouTubeList: YouTubeData,
     ChildProgress: ChildProgressableData,
     LiveClassList: LiveclassData,
+    Courses: AllCoursesData,
+    Subjects: AllSubjectsData,
   },
 });
 

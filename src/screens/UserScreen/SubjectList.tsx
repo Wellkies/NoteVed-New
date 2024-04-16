@@ -59,19 +59,8 @@ const SubjectList = ({ route }) => {
             scholarshipid: SchlrshipId,
         };
         dispatch(getSubjectByClassAPI(data));
-        dispatch(getAllProductAPI());
         return () => { };
     }, []);
-
-    //   const AllProduct = useAppSelector(selectAllProduct);
-    //   const ProductLoading = useAppSelector(selectAllProductStatus)
-    //   console.log(AllProduct, 'AllProduct.............');
-
-    //   const AllAddress = useAppSelector(selectAllAddressInfo);
-    //   // console.log(AllAddress, 'AllAddress.............');
-
-    //   const CartItem = useAppSelector(selectCartItemInfo);
-    //   // console.log(CartItem, 'CartItemlength.............');
 
     const SubjectByClass = useAppSelector(selectSubjectInfo);
     const SubLoading = useAppSelector(selectSubjectStatus);
@@ -109,27 +98,27 @@ const SubjectList = ({ route }) => {
         // boardid: string;
         classname: string;
     }
-    const {
-        _id: id = '',
-        // stageid = '',
-        // boardid = '',
-        childid = '',
-        stage = '',
-        scholarship = [],
-        name: userName = '',
-        fname = '',
-        gender = '',
-        lname = '',
-        email = '',
-        phone = '',
-        // cityname = '',
-        image = '',
-        age = '',
-        address = '',
-        // cityid = '',
-        language = '',
-        // coordinates='',
-    } = childInfo;
+    // const {
+    //     _id: id = '',
+    //     // stageid = '',
+    //     // boardid = '',
+    //     childid = '',
+    //     stage = '',
+    //     scholarship = [],
+    //     name: userName = '',
+    //     fname = '',
+    //     gender = '',
+    //     lname = '',
+    //     email = '',
+    //     phone = '',
+    //     // cityname = '',
+    //     image = '',
+    //     age = '',
+    //     address = '',
+    //     // cityid = '',
+    //     language = '',
+    //     // coordinates='',
+    // } = childInfo;
 
     useEffect(() => {
         navigation.addListener('focus', () => {
@@ -139,8 +128,6 @@ const SubjectList = ({ route }) => {
                 scholarshipid: SchlrshipId,
             };
             dispatch(getSubjectByClassAPI(data));
-            dispatch(getUserAllAddressAPI(childid));
-            dispatch(getCartItemAPI(childid));
             BackHandler.addEventListener('hardwareBackPress', () => {
                 // navigation.navigate('LandingScreen');
                 navigation.goBack()
@@ -303,23 +290,6 @@ const SubjectList = ({ route }) => {
                                                                     }}>
                                                                     {subject}
                                                                 </Text>
-                                                                {/* <Text
-                                                                style={{
-                                                                    fontWeight: '600',
-                                                                    color: '#aaa',
-                                                                    fontSize: 12,
-                                                                }}>
-                                                                {'NoteVed Publication'}
-                                                            </Text>
-                                                            <Text
-                                                                style={{
-                                                                    fontWeight: '800',
-                                                                    color: '#263d2d',
-                                                                    marginTop: 15,
-                                                                    fontSize: 16,
-                                                                }}>
-                                                                ₹ {productPrice}
-                                                            </Text> */}
                                                             </View>
                                                         </View>
                                                     </TouchableOpacity>

@@ -46,6 +46,7 @@ import { RootState } from '../../redux/store/Store';
 import Header from '../CommonScreens/Header';
 import { updateChildProfile } from '../../redux/actions/UpdateStudentProfile';
 import { selectUserInfo } from '../../redux/reducers/loginReducer';
+import CommonMessage from '../../../constants/CommonMessage';
 
 // import {SET_CHILD_INFO} from '../../redux/actions/actiontypes';
 
@@ -91,36 +92,36 @@ const LandingScreen = ({ }) => {
 
   const { t: trans, i18n } = useTranslation();
 
-  const {
-    _id: childID = '',
-    age: p_age = '',
-    childid = '',
-    image = '',
-    imagename = '',
-    fname = '',
-    lname = '',
-    phone = '',
-    name = '',
-    boardname = '',
-    fathername = '',
-    mothername = '',
-    // board = '',
-    subscriptionStartDate = '',
-    subscriptionEndDate = '',
-    isPremium = false,
-    parentid: parentId = '',
-    stage = '',
-    gender = '',
-    address = '',
-    alterphone = '',
-    schoolname = '',
-    language: userLang = '',
-    email = '',
-    stageid = '',
-    boardid = '',
-    classname = '',
-    password = '',
-  } = childInfo || {};
+  // const {
+  //   _id: childID = '',
+  //   age: p_age = '',
+  //   childid = '',
+  //   image = '',
+  //   imagename = '',
+  //   fname = '',
+  //   lname = '',
+  //   phone = '',
+  //   name = '',
+  //   boardname = '',
+  //   fathername = '',
+  //   mothername = '',
+  //   // board = '',
+  //   subscriptionStartDate = '',
+  //   subscriptionEndDate = '',
+  //   isPremium = false,
+  //   parentid: parentId = '',
+  //   stage = '',
+  //   gender = '',
+  //   address = '',
+  //   alterphone = '',
+  //   schoolname = '',
+  //   language: userLang = '',
+  //   email = '',
+  //   stageid = '',
+  //   boardid = '',
+  //   classname = '',
+  //   password = '',
+  // } = childInfo || {};
 
   useEffect(() => {
     navigation.addListener('focus', () => {
@@ -139,15 +140,15 @@ const LandingScreen = ({ }) => {
     };
   }, []);
 
-  useEffect(() => {
-    const user = userInfo;
-    const userid = user._id;
-    const stageid = user.stageid;
-    const boardid = user.boardid;
-    const childid = user.childid;
+  // useEffect(() => {
+  //   const user = userInfo;
+  //   const userid = user._id;
+  //   const stageid = user.stageid;
+  //   const boardid = user.boardid;
+  //   const childid = user.childid;
 
-    dispatch(getChildDetailsAPI(userid));
-  }, [userInfo])
+  //   dispatch(getChildDetailsAPI(userid));
+  // }, [userInfo])
   
 
   const ListColor = ['#fee2a3', '#f6c4b9', '#c3ccf5', '#76f0c7'];
@@ -157,25 +158,28 @@ const LandingScreen = ({ }) => {
       examName: "Exam 1",
       contents: "Adarsha, Navodaya and Medhabruti",
       image: require('../../../assets/OAV_logo.jpg'),
-      navigationfunc: () => { navigation.navigate('SubjectList',{stageid:stageid, boardid:boardid}) }
+      navigationfunc: () => { navigation.navigate('SubjectList',{stageid:'5', boardid:'1'}) }
     },
     {
       examName: "Exam 2",
       contents: "Adarsha, Navodaya and Medhabruti",
       image: require('../../../assets/Jawahar_Navodaya_Vidyalaya_logo.png'),
-      navigationfunc: () => { navigation.navigate('SubjectList',{stageid:stageid, boardid:boardid}) }
+      navigationfunc: () => CommonMessage("Coming Soon !"),
+      // navigationfunc: () => { navigation.navigate('SubjectList',{stageid:stageid, boardid:boardid}) }
     },
     {
       examName: "Exam 3",
       contents: "Adarsha, Navodaya and Medhabruti",
       image: require('../../../assets/teacher.jpg'),
-      navigationfunc: () => { navigation.navigate('SubjectList',{stageid:stageid, boardid:boardid}) }
+      navigationfunc: () => CommonMessage("Coming Soon !"),
+      // navigationfunc: () => { navigation.navigate('SubjectList',{stageid:stageid, boardid:boardid}) }
     },
     {
       examName: "Exam 4",
       contents: "Adarsha, Navodaya and Medhabruti",
       image: require('../../../assets/test.png'),
-      navigationfunc: () => { navigation.navigate('SubjectList',{stageid:stageid, boardid:boardid}) }
+      navigationfunc: () => CommonMessage("Coming Soon !"),
+      // navigationfunc: () => { navigation.navigate('SubjectList',{stageid:stageid, boardid:boardid}) }
     },
   ]
 

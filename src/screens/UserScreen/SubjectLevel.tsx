@@ -60,19 +60,8 @@ const SubjectLevel = ({ route }) => {
             scholarshipid: scholarshipId,
         };
         dispatch(getSubjectByClassAPI(data));
-        dispatch(getAllProductAPI());
         return () => { };
     }, []);
-
-    //   const AllProduct = useAppSelector(selectAllProduct);
-    //   const ProductLoading = useAppSelector(selectAllProductStatus)
-    //   console.log(AllProduct, 'AllProduct.............');
-
-    //   const AllAddress = useAppSelector(selectAllAddressInfo);
-    //   // console.log(AllAddress, 'AllAddress.............');
-
-    //   const CartItem = useAppSelector(selectCartItemInfo);
-    //   // console.log(CartItem, 'CartItemlength.............');
 
     const SubjectByClass = useAppSelector(selectSubjectInfo);
     const SubLoading = useAppSelector(selectSubjectStatus);
@@ -110,27 +99,27 @@ const SubjectLevel = ({ route }) => {
         // boardid: string;
         classname: string;
     }
-    const {
-        _id: id = '',
-        // stageid = '',
-        // boardid = '',
-        childid = '',
-        stage = '',
-        scholarship = [],
-        name: userName = '',
-        fname = '',
-        gender = '',
-        lname = '',
-        email = '',
-        phone = '',
-        // cityname = '',
-        image = '',
-        age = '',
-        address = '',
-        // cityid = '',
-        language = '',
-        // coordinates='',
-    } = childInfo;
+    // const {
+    //     _id: id = '',
+    //     // stageid = '',
+    //     // boardid = '',
+    //     childid = '',
+    //     stage = '',
+    //     scholarship = [],
+    //     name: userName = '',
+    //     fname = '',
+    //     gender = '',
+    //     lname = '',
+    //     email = '',
+    //     phone = '',
+    //     // cityname = '',
+    //     image = '',
+    //     age = '',
+    //     address = '',
+    //     // cityid = '',
+    //     language = '',
+    //     // coordinates='',
+    // } = childInfo;
 
     useEffect(() => {
         navigation.addListener('focus', () => {
@@ -140,8 +129,6 @@ const SubjectLevel = ({ route }) => {
                 scholarshipid: scholarshipId,
             };
             dispatch(getSubjectByClassAPI(data));
-            dispatch(getUserAllAddressAPI(childid));
-            dispatch(getCartItemAPI(childid));
             BackHandler.addEventListener('hardwareBackPress', () => {
                 // navigation.navigate('LandingScreen');
                 navigation.goBack()
@@ -222,7 +209,7 @@ const SubjectLevel = ({ route }) => {
                                                     subjectid,
                                                     boardid,
                                                     scholarshipId,
-                                                    childid,
+                                                    // childid,
                                                 };
                                                 return (
                                                     <TouchableOpacity
@@ -252,7 +239,7 @@ const SubjectLevel = ({ route }) => {
                                                                 Class: stageid,
                                                                 scholarshipid: scholarshipId,
                                                                 boardid: boardid,
-                                                                childId: childid,
+                                                                // childId: childid,
                                                                 scholarshipName: scholarshipName,
                                                                 showFeedback: false,
                                                             });
@@ -323,23 +310,6 @@ const SubjectLevel = ({ route }) => {
                                                                         }}>
                                                                         {`Level ${index + 1}`}
                                                                     </Text>
-                                                                    {/* <Text
-                                                                style={{
-                                                                    fontWeight: '600',
-                                                                    color: '#aaa',
-                                                                    fontSize: 12,
-                                                                }}>
-                                                                {'NoteVed Publication'}
-                                                            </Text>
-                                                            <Text
-                                                                style={{
-                                                                    fontWeight: '800',
-                                                                    color: '#263d2d',
-                                                                    marginTop: 15,
-                                                                    fontSize: 16,
-                                                                }}>
-                                                                ₹ {productPrice}
-                                                            </Text> */}
                                                                 </View>
                                                             </View>
                                                             <MaterialIcons

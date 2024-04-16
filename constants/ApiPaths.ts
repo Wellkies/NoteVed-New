@@ -18,7 +18,11 @@ export const REGISTER_CHILD_URL = API_URL + 'registerChild';
 export const UPDATE_CHILD_API = API_URL + 'updatechild';
 export const DELETE_CHILD_URL = API_URL + 'deletechild';
 
-// export const GET_CHILD_PROGRESS_URL = API_URL + 'getedchildProgress/';
+export const GET_ALL_COURSES_URL = API_URL + 'getCourse';
+export const GET_ALL_SUBJECTS_BY_COURSE_URL = API_URL + 'getAllsubject';
+export const GET_TOPICS_BY_SUBJECTID_URL = API_URL + 'getTopicbysubjectid/';
+export const GET_CONTENT_BY_TOPICID_URL = API_URL + 'getContentbytopicid/';
+
 export const GET_CHILD_PROGRESS_URL = API_URL + 'getChildonProgressDetils/';
 
 export const GET_ANSWER_BY_SUBMIT_URL = API_URL + 'postchildcontent';

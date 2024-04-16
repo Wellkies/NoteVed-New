@@ -59,11 +59,11 @@ function BottomTabNavigator() {
   };
   const {authToken,status,userInfo} = useAppSelector(selectUserInfo);
   // console.log(childInfo, 'childInfo..............');
-  const {childid = ''} = userInfo;
-  useEffect(() => {
-    // dispatch(getFCMnotificationAPI(undefined, childid));
-    getData();
-  }, [childid]);
+  // const {childid = ''} = userInfo;
+  // useEffect(() => {
+  //   // dispatch(getFCMnotificationAPI(undefined, childid));
+  //   getData();
+  // }, [childid]);
 
   const callBack = () => {
     // dispatch(getFCMnotificationAPI(undefined, childid));
@@ -184,17 +184,17 @@ function BottomTabNavigator() {
           //   tabBarButton: props => <CustomTabBarButton route="home" {...props} />,
           // }}
         />
-        <Tab.Screen
+        {/* <Tab.Screen
           name={ROUTES.PROFILE_TAB}
-          component={ProfileTabNavigation}
+          // component={ProfileTabNavigation}
           options={({route, navigation}) => ({
             title: trans('User Profile'),
           })}
           // options={{
           //   tabBarButton: props => <CustomTabBarButton route="home" {...props} />,
           // }}
-        />
-         <Tab.Screen
+        /> */}
+         {/* <Tab.Screen
           name={ROUTES.STORE_TAB}
           component={StoreTabNavigator}
           options={({route, navigation}) => ({
@@ -203,16 +203,15 @@ function BottomTabNavigator() {
           // options={{
           //   tabBarButton: props => <CustomTabBarButton route="home" {...props} />,
           // }}
-        /> 
-        {/* subjectName = '', chapterName = '', examSet = '' */}
+        />  */}
 
-        <Tab.Screen
+        {/* <Tab.Screen
           name={ROUTES.NOTIFICATION_TAB}
           component={NotificationTabNavigator}
           options={({route, navigation}) => ({
             title: trans('Notification'),
           })}
-        />
+        /> */}
       </Tab.Navigator>
     </>
   );
