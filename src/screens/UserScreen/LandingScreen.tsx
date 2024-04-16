@@ -195,9 +195,11 @@ const LandingScreen = ({ }) => {
           height: device_height,
           flex: 1,
           alignSelf: 'center',
+          backgroundColor:"#fff"
         }}
         resizeMode="cover"
-        source={require('../../../assets/0.png')}>
+        // source={require('../../../assets/testBG2.jpg')}
+        >
         {/* <Header
           label1={trans('Welcome to NoteVed')}
           label2={''}
@@ -209,7 +211,7 @@ const LandingScreen = ({ }) => {
             fontSize: 25,
             fontWeight: 'bold',
             textAlign: 'center',
-            color: 'gold',
+            color: '#EA7773',
             marginTop: 10,
             textTransform: 'uppercase'
           }}>
@@ -228,7 +230,7 @@ const LandingScreen = ({ }) => {
               fontWeight: 'bold',
               textAlign: 'left',
               marginLeft: 15,
-              color: '#fff'
+              color: '#000'
             }}>
             {`Choose one exam to continue`}
           </Text>

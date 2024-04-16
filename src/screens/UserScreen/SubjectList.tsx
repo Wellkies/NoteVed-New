@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Image,
   SafeAreaView,
@@ -9,19 +9,19 @@ import {
   BackHandler,
   ImageBackground,
 } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import i18n from 'i18next';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Colors from '../../../assets/Colors';
-import { device_height, device_width } from '../style';
+import {device_height, device_width} from '../style';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FastImage from 'react-native-fast-image';
 import LoadingScreen from '../CommonScreens/LoadingScreen';
-import { useNavigation } from '@react-navigation/native';
-import { selectStudentInfo } from '../../redux/reducers/StudentInfoReducer';
-import { useAppSelector } from '../../redux/store/reducerHook';
+import {useNavigation} from '@react-navigation/native';
+import {selectStudentInfo} from '../../redux/reducers/StudentInfoReducer';
+import {useAppSelector} from '../../redux/store/reducerHook';
 import {
   getAllProductAPI,
   selectAllProduct,
@@ -35,8 +35,8 @@ import {
   getCartItemAPI,
   selectCartItemInfo,
 } from '../../redux/reducers/GetCartItemReducer';
-import { getProductByIdAPI } from '../../redux/reducers/GetProductDetailsReducer';
-import { getChildAllOrdersAPI } from '../../redux/reducers/GetAllOrdersReducer';
+import {getProductByIdAPI} from '../../redux/reducers/GetProductDetailsReducer';
+import {getChildAllOrdersAPI} from '../../redux/reducers/GetAllOrdersReducer';
 import {
   getSubjectByClassAPI,
   selectSubjectInfo,
@@ -48,15 +48,19 @@ import {
 } from '../../redux/reducers/GetTopicBySubjectReducer';
 import CommonMessage from '../../../constants/CommonMessage';
 import Header from '../CommonScreens/Header';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import LinearGradient from 'react-native-linear-gradient';
-import { getAllSubByCourseAPI, selectAllSubjectsInfo, selectAllSubjectsStatus } from '../../redux/reducers/GetSubjectByCourseReducer';
+import {
+  getAllSubByCourseAPI,
+  selectAllSubjectsInfo,
+  selectAllSubjectsStatus,
+} from '../../redux/reducers/GetSubjectByCourseReducer';
 
-const SubjectList = ({ route }) => {
+const SubjectList = ({route}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch<any>();
-  const { t: trans, i18n } = useTranslation();
-  const { stageid = '', boardid = '', coursename = '' } = route.params;
+  const {t: trans, i18n} = useTranslation();
+  const {stageid = '', boardid = '', coursename = ''} = route.params;
   console.log(route.params, '===============route.params');
   // const [loading, setLoading] = useState(false);
   // const SchlrshipId = 'NVOOKADA1690811843420';
@@ -69,7 +73,7 @@ const SubjectList = ({ route }) => {
     // };
     // dispatch(getSubjectByClassAPI(data));
     dispatch(getAllSubByCourseAPI());
-    return () => { };
+    return () => {};
   }, []);
 
   const SubjectByCourse = useAppSelector(selectAllSubjectsInfo);
@@ -154,7 +158,7 @@ const SubjectList = ({ route }) => {
   }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{flex: 1}}>
       <ImageBackground
         style={{
           width: device_width,
@@ -162,9 +166,11 @@ const SubjectList = ({ route }) => {
           flex: 1,
           // alignSelf: 'center',
           borderWidth: 1,
+          backgroundColor: '#fff',
         }}
         resizeMode="cover"
-        source={require('../../../assets/testBG2.jpg')}>
+        // source={require('../../../assets/testBG2.jpg')}
+      >
         <Header
           label1={trans('Subject List')}
           label2={``}
@@ -198,8 +204,7 @@ const SubjectList = ({ route }) => {
                   height: device_height * 0.25,
                   paddingHorizontal: 25,
                   margin: 10,
-                  borderWidth: 2,
-                  borderColor:'darkgreen',
+                  //   borderWidth: 2,
                   borderRadius: 20,
                 }}>
                 <Text
@@ -229,14 +234,14 @@ const SubjectList = ({ route }) => {
                     {`To Prepare For ${coursename}`}
                   </Text>
                 </View>
-                <View style={{ marginTop: 10, width: '25%' }}>
+                <View style={{marginTop: 10, width: '25%'}}>
                   <TouchableOpacity
                     style={{
                       backgroundColor: '#474747',
                       padding: 5,
                       borderRadius: 50,
                     }}>
-                    <Text style={{ color: '#fff', textAlign: 'center' }}>
+                    <Text style={{color: '#fff', textAlign: 'center'}}>
                       {'Read More'}
                     </Text>
                   </TouchableOpacity>
@@ -265,7 +270,7 @@ const SubjectList = ({ route }) => {
                   style={{
                     fontWeight: '900',
                     color: '#f56759',
-                    fontSize: 19,
+                    fontSize: 20,
                     marginLeft: 15,
                     marginTop: 12,
                     marginBottom: 15,
@@ -273,10 +278,9 @@ const SubjectList = ({ route }) => {
                   {'Categories'}
                 </Text>
                 <ScrollView
-                  showsHorizontalScrollIndicator={true}
+                  showsHorizontalScrollIndicator={false}
                   persistentScrollbar={true}
-                  horizontal={true}
-                >
+                  horizontal={true}>
                   <View
                     style={{
                       flex: 1,
@@ -301,15 +305,23 @@ const SubjectList = ({ route }) => {
                             subjectid = '',
                             subjectname = '',
                           } = item;
-                          console.log(item, "item..................")
+                          console.log(item, 'item..................');
                           return (
                             <TouchableOpacity
-                              style={{
-                                // borderWidth: 1 
-                              }}
+                              style={
+                                {
+                                  // borderWidth: 1
+                                }
+                              }
                               key={index}
-                            //   onPress={navigationfunc}
-                            >
+                              onPress={() => {
+                                navigation.navigate('SubjectLevel', {
+                                  stageid: '5',
+                                  boardid: '1',
+                                  scholarshipId: 'NVOOKADA1690811843420',
+                                  coursename: coursename,
+                                });
+                              }}>
                               <LinearGradient
                                 colors={['#feecde', '#fdbead']}
                                 style={{
@@ -322,8 +334,8 @@ const SubjectList = ({ route }) => {
                                   height: device_height * 0.18,
                                   paddingHorizontal: 15,
                                   margin: 10,
-                                  borderWidth: 1,
-                                  borderColor:'darkgreen',
+                                  //   borderWidth: 1,
+                                  //   borderColor: 'darkgreen',
                                   borderRadius: 20,
                                 }}>
                                 <Text
@@ -339,7 +351,7 @@ const SubjectList = ({ route }) => {
                                 <View
                                   style={{
                                     borderColor: Colors.lightgrey,
-                                    borderWidth: 1.5,
+                                    // borderWidth: 1.5,
                                     // elevation: 5,
                                     // backgroundColor: '#fff',
                                     borderRadius: 50,
@@ -352,11 +364,11 @@ const SubjectList = ({ route }) => {
                                         width: 75,
                                         height: 75,
                                         resizeMode: 'cover',
-                                        right:-10,
+                                        right: -10,
                                         // borderRadius: 50,
                                         alignSelf: 'center',
                                       }}
-                                      source={{ uri: subjectImage }}
+                                      source={{uri: subjectImage}}
                                     />
                                   ) : (
                                     <Image
@@ -364,7 +376,7 @@ const SubjectList = ({ route }) => {
                                         width: 75,
                                         height: 75,
                                         resizeMode: 'cover',
-                                        right:-10,
+                                        right: -10,
                                         // borderRadius: 50,
                                         alignSelf: 'center',
                                       }}
