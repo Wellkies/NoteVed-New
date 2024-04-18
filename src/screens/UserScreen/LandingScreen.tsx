@@ -195,10 +195,10 @@ const LandingScreen = ({ }) => {
           height: device_height,
           flex: 1,
           alignSelf: 'center',
-          backgroundColor:"#fff"
+          backgroundColor:"#f6d4c9"
         }}
-        resizeMode="cover"
-        // source={require('../../../assets/testBG2.jpg')}
+        resizeMode="contain"
+        // source={require('../../../assets/testBG3.jpg')}
         >
         {/* <Header
           label1={trans('Welcome to NoteVed')}
@@ -209,9 +209,9 @@ const LandingScreen = ({ }) => {
         <Text
           style={{
             fontSize: 25,
-            fontWeight: 'bold',
+            fontWeight: '900',
             textAlign: 'center',
-            color: '#EA7773',
+            color: 'darkgreen',
             marginTop: 10,
             textTransform: 'uppercase'
           }}>
@@ -272,7 +272,9 @@ const LandingScreen = ({ }) => {
                     minHeight: device_height * 0.25,
                     paddingHorizontal: 15,
                     margin: 10,
-                    // borderWidth: 1,
+                    borderWidth: 1,
+                    borderColor:'#999',
+                    elevation:15,
                     borderRadius: 20,
                   }}>
                   {image != '' && image != null ?

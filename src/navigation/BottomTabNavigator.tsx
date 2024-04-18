@@ -89,7 +89,7 @@ function BottomTabNavigator() {
   // console.log(badgeCountdata, 'badgeCountdata......');
   return (
     <>
-      <StatusBar backgroundColor={'#263d2d'} barStyle="light-content" />
+      <StatusBar backgroundColor={'salmon'} barStyle="dark-content" />
       <Tab.Navigator
         backBehaviour="initialRoute"
         screenOptions={({route, navigation}) => ({
@@ -106,13 +106,13 @@ function BottomTabNavigator() {
           },
           tabBarStyle: {
             height: 60,
-            backgroundColor: '#263d2d',
+            backgroundColor: 'salmon',
             display: showTab,
           },
           // tabBarStyle: {height: 50, backgroundColor: '#def',display: 'flex',},
           // tabBarInactiveTintColor: '#f1a722',
-          tabBarInactiveTintColor: '#fff',
-          tabBarActiveTintColor: '#f1a722',
+          tabBarInactiveTintColor: '#999',
+          tabBarActiveTintColor: '#000',
           tabBarLabelStyle: {paddingBottom: 5},
           tabBarIcon: ({color, size, focused}) => {
             let iconName;

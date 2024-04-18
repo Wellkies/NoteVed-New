@@ -32,7 +32,8 @@ const LoadingScreen = ({flag}) => {
           // alignItems: 'center',
         }}
         resizeMode="cover"
-        source={require('../../../assets/0.png')}>
+        // source={require('../../../assets/0.png')}
+        >
 
       <View
         style={{
@@ -56,7 +57,7 @@ const LoadingScreen = ({flag}) => {
         {loading ? (
           <ActivityIndicator
             size={'large'}
-            color={'#f1a722'}
+            color={'crimson'}
             //visibility of Overlay Loading Spinner
             visible={loading}
             //Text with the Spinner

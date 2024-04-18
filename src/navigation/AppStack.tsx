@@ -61,7 +61,7 @@ const AppStack = (props) => {
 
   return (
     <>
-      <StatusBar backgroundColor={'#263d2d'} barStyle="light-content" />
+      <StatusBar backgroundColor={'salmon'} barStyle="dark-content" />
       <Stack.Navigator
         screenOptions={({ navigation }) => (
           navigation.getState().routes[navigation.getState().index].name ==

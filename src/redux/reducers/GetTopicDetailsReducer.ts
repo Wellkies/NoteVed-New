@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store/Store";
-import { getTopicBySubClassActionAPI } from "../actions/SubjectsAPI";
+import { getTopicsBySubIdActionAPI } from "../actions/CoursesAPI";
 
 interface TopicDetailsState {
   TopicDetailsInfo: Object[]; // Define UserInfo interface as per your data structure
@@ -17,7 +17,7 @@ const initialState: TopicDetailsState = {
 export const getTopicBySubIdAPI = createAsyncThunk<object, { state: RootState }>(
   "topicdetails/fetchTopicDetailsInfo",
   async (data: object, { getState }) => {
-    const response = await getTopicBySubClassActionAPI(data);
+    const response = await getTopicsBySubIdActionAPI(data);
     return response.data;
   }
 );

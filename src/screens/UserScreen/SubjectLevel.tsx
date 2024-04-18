@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Image,
   SafeAreaView,
@@ -9,19 +9,19 @@ import {
   BackHandler,
   ImageBackground,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import i18n from 'i18next';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Colors from '../../../assets/Colors';
-import {device_height, device_width} from '../style';
+import { device_height, device_width } from '../style';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FastImage from 'react-native-fast-image';
 import LoadingScreen from '../CommonScreens/LoadingScreen';
-import {useNavigation} from '@react-navigation/native';
-import {selectStudentInfo} from '../../redux/reducers/StudentInfoReducer';
-import {useAppSelector} from '../../redux/store/reducerHook';
+import { useNavigation } from '@react-navigation/native';
+import { selectStudentInfo } from '../../redux/reducers/StudentInfoReducer';
+import { useAppSelector } from '../../redux/store/reducerHook';
 import {
   getAllProductAPI,
   selectAllProduct,
@@ -35,8 +35,8 @@ import {
   getCartItemAPI,
   selectCartItemInfo,
 } from '../../redux/reducers/GetCartItemReducer';
-import {getProductByIdAPI} from '../../redux/reducers/GetProductDetailsReducer';
-import {getChildAllOrdersAPI} from '../../redux/reducers/GetAllOrdersReducer';
+import { getProductByIdAPI } from '../../redux/reducers/GetProductDetailsReducer';
+import { getChildAllOrdersAPI } from '../../redux/reducers/GetAllOrdersReducer';
 import {
   getSubjectByClassAPI,
   selectSubjectInfo,
@@ -48,39 +48,46 @@ import {
 } from '../../redux/reducers/GetTopicBySubjectReducer';
 import CommonMessage from '../../../constants/CommonMessage';
 import Header from '../CommonScreens/Header';
-import {useTranslation} from 'react-i18next';
-import {NavigationContainer} from '@react-navigation/native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { useTranslation } from 'react-i18next';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { getTopicBySubIdAPI, selectTopicDetailsInfo } from '../../redux/reducers/GetTopicDetailsReducer';
+import { selectTopicDetailsStatus } from '../../redux/reducers/GetTopicDetailsFormTopicIdReducer';
 
 const Tab = createBottomTabNavigator();
 
-const SubjectLevel = ({route}) => {
+const SubjectLevel = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch<any>();
-  const {t: trans, i18n} = useTranslation();
+  const { t: trans, i18n } = useTranslation();
+  const [selectedIndex, setSelectedIndex] = useState(1);
   const {
-    stageid = '',
-    boardid = '',
-    scholarshipId = '',
-    scholarshipName = '',
+    // stageid = '',
+    // boardid = '',
+    // scholarshipId = '',
+    // scholarshipName = '',
+    coursename = '',
+    subjectname = '',
+    subjectid = ''
   } = route.params;
   console.log(route.params, '===============route.params');
   // const [loading, setLoading] = useState(false);
   // const SchlrshipId = 'NVOOKADA1690811843420'
   useEffect(() => {
-    const data = {
-      stageid,
-      boardid,
-      scholarshipid: scholarshipId,
-    };
-    dispatch(getSubjectByClassAPI(data));
-    return () => {};
+    dispatch(getTopicBySubIdAPI(subjectid))
+    // const data = {
+    //   stageid,
+    //   boardid,
+    //   scholarshipid: scholarshipId,
+    // };
+    // dispatch(getSubjectByClassAPI(data));
+    return () => { };
   }, []);
 
-  const SubjectByClass = useAppSelector(selectSubjectInfo);
-  const SubLoading = useAppSelector(selectSubjectStatus);
+  const TopicBySubjectId = useAppSelector(selectTopicDetailsInfo);
+  const TopicLoad = useAppSelector(selectTopicDetailsStatus);
 
-  console.log(SubjectByClass, '==============SubjectByClass');
+  console.log(TopicBySubjectId, '==============TopicBySubjectId');
 
   const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
   interface ChildInfo {
@@ -137,12 +144,12 @@ const SubjectLevel = ({route}) => {
 
   useEffect(() => {
     navigation.addListener('focus', () => {
-      const data = {
-        stageid,
-        boardid,
-        scholarshipid: scholarshipId,
-      };
-      dispatch(getSubjectByClassAPI(data));
+      // const data = {
+      //   stageid,
+      //   boardid,
+      //   scholarshipid: scholarshipId,
+      // };
+      // dispatch(getSubjectByClassAPI(data));
       BackHandler.addEventListener('hardwareBackPress', () => {
         // navigation.navigate('LandingScreen');
         navigation.goBack();
@@ -159,18 +166,18 @@ const SubjectLevel = ({route}) => {
   }, []);
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <ImageBackground
         style={{
           width: device_width,
           height: device_height,
           flex: 1,
           alignSelf: 'center',
-          borderWidth: 1,
-          backgroundColor: '#fff',
+          // borderWidth: 1,
+          backgroundColor: '#feecde',
         }}
         resizeMode="cover"
-        // source={require('../../../assets/testBG2.jpg')}
+      // source={require('../../../assets/testBG2.jpg')}
       >
         <Header
           label1={trans('Subject Level')}
@@ -179,7 +186,7 @@ const SubjectLevel = ({route}) => {
           isbackIconShow={true}
           functionName={() => navigation.goBack()}
         />
-        {SubLoading == 'loading' ? (
+        {TopicLoad == 'loading' ? (
           <View
             style={{
               flex: 1,
@@ -189,7 +196,7 @@ const SubjectLevel = ({route}) => {
               width: device_width,
               // backgroundColor: Colors.secondary,
             }}>
-            <LoadingScreen flag={SubLoading == 'loading'} />
+            <LoadingScreen flag={TopicLoad == 'loading'} />
           </View>
         ) : (
           <>
@@ -202,9 +209,14 @@ const SubjectLevel = ({route}) => {
                   backgroundColor: '#febcac',
                   paddingVertical: 35,
                   height: device_height * 0.25,
+                  width: device_width * 0.94,
                   paddingHorizontal: 25,
-                  //   margin: 10,
-                  //   borderWidth: 2,
+                  alignSelf: 'center',
+                  borderRadius: 15,
+                  borderWidth: 1,
+                  borderColor: '#999',
+                  elevation: 15,
+                  marginTop: 10
                 }}>
                 <Text
                   style={{
@@ -240,7 +252,7 @@ const SubjectLevel = ({route}) => {
                   resizeMode="center"
                 />
               </TouchableOpacity>
-              <NavigationContainer independent={true}>
+              {/* <NavigationContainer independent={true}>
                 <Tab.Navigator>
                   <Tab.Screen
                     name="Screen1"
@@ -343,8 +355,96 @@ const SubjectLevel = ({route}) => {
                     }}
                   />
                 </Tab.Navigator>
-              </NavigationContainer>
+              </NavigationContainer> */}
+              <View style={{
+                flexDirection: 'row',
+                width: '100%',
+                alignItems: 'center',
+                marginVertical: 10,
 
+              }}>
+                {TopicBySubjectId.map((item, index) => {
+                  const {
+                    topicname = '',
+                    sltopic = '',
+                    id = '',
+                    subjectid = '',
+                    subjectname = '',
+                    slsubject = '',
+                    topicid = '',
+                    // topicname = '',
+                    // sltopic = '',
+                    topicimage = ''
+                  } = item;
+                  const isselectedBtn = sltopic == selectedIndex ? true : false;
+                  return (
+                    <View key={index}
+                      style={{
+                        width: device_width * 0.33,
+                        height: 55,
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}
+                    >
+                      {TopicBySubjectId.length == 0 ? (
+                        <></>
+                      ) : (
+                        <TouchableOpacity
+                          key={index}
+                          style={{
+                            width: '80%',
+                            height: 45,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            // borderRightWidth: 0.5,
+                            // paddingVertical: 10,
+                            // borderWidth: 1.5,
+                            // borderBottomWidth:0,
+                            borderRadius: 10,
+                            borderColor: isselectedBtn ? '#ee7c75' : '#fff',
+                            backgroundColor: isselectedBtn ? '#ee7c75' : '#fff',
+                            // paddingHorizontal:10,
+                            // borderBottomLeftRadius: index == 0 ? 15 : 0,
+                            // borderTopLeftRadius: index == 0 ? 15 : 0,
+                            // borderTopRightRadius: index == 2 ? 15 : 0,
+                            // borderTopRightRadius: index == 2 ? 15 : 0,
+                          }}
+                          onPress={() => {
+                            setSelectedIndex(sltopic);
+                            // setContentList(contentList);
+                          }}>
+                          <Text
+                            style={{
+                              fontSize: 16,
+                              fontWeight: '900',
+                              // color: isselectedBtn ? '#000' : '#ee7c75',
+                              color: '#000',
+                              // textDecorationLine: isselectedBtn
+                              //   ? 'underline'
+                              //   : 'none',
+                              textAlign: 'center',
+                            }}>
+                            {topicname}
+                          </Text>
+                        </TouchableOpacity>
+                      )}
+                    </View>
+                  );
+                })}
+              </View>
+              <View style={{
+                // marginVertical: 10,
+                width: '100%',
+                marginLeft: 20
+              }}>
+                <Text style={{
+                  fontWeight: '800',
+                  color: '#000',
+                  fontSize: 18
+                }}>
+                  Course Content
+                </Text>
+              </View>
               <View
                 style={{
                   flex: 1,
@@ -362,24 +462,22 @@ const SubjectLevel = ({route}) => {
                     // flexWrap: 'wrap',
                     // justifyContent: 'center',
                   }}>
-                  {SubjectByClass.length > 0 ? (
+                  {TopicBySubjectId.length > 0 ? (
                     <>
-                      {SubjectByClass.map((item, index) => {
+                      {TopicBySubjectId.map((item, index) => {
                         const {
                           subjectimage = '',
                           subject = '',
                           subjectid = '',
                         } = item;
-                        {
-                          /* console.log(item,"item..................") */
-                        }
-                        const Revdata = {
-                          stageid,
-                          subjectid,
-                          boardid,
-                          scholarshipId,
-                          // childid,
-                        };
+                        console.log(item, "item..................")
+                        // const Revdata = {
+                        //   stageid,
+                        //   subjectid,
+                        //   boardid,
+                        //   scholarshipId,
+                        //   // childid,
+                        // };
                         return (
                           <TouchableOpacity
                             key={index}
@@ -391,7 +489,7 @@ const SubjectLevel = ({route}) => {
                               borderColor: '#666',
                               borderRadius: 10,
                               // elevation: 10,
-                              backgroundColor: 'rgba(0,255,0,0.2)',
+                              backgroundColor: '#febcac',
                               alignItems: 'center',
                               paddingVertical: 5,
                               paddingHorizontal: 5,
@@ -400,16 +498,16 @@ const SubjectLevel = ({route}) => {
                             }}
                             // onPress={() => CommonMessage('We will update shortly !')}
                             onPress={async () => {
-                              dispatch(getTopicBySubClassAPI(Revdata));
+                              // dispatch(getTopicBySubClassAPI(Revdata));
                               navigation.navigate('SubjectsDetails', {
                                 subjectid: subjectid,
                                 subjectname: subject,
                                 subjectImage: subjectimage,
-                                Class: stageid,
-                                scholarshipid: scholarshipId,
-                                boardid: boardid,
+                                // Class: stageid,
+                                // scholarshipid: scholarshipId,
+                                // boardid: boardid,
                                 // childId: childid,
-                                scholarshipName: scholarshipName,
+                                // scholarshipName: scholarshipName,
                                 showFeedback: false,
                               });
                             }}>
@@ -432,30 +530,32 @@ const SubjectLevel = ({route}) => {
                                 }}>
                                 <View
                                   style={{
-                                    borderColor: Colors.lightgrey,
-                                    borderWidth: 1.5,
-                                    elevation: 5,
-                                    backgroundColor: '#fff',
-                                    borderRadius: 10,
+                                    width: 55,
+                                    height: 55,
+                                    // borderColor: Colors.lightgrey,
+                                    // borderWidth: 1.5,
+                                    // elevation: 5,
+                                    // backgroundColor: '#fff',
+                                    // borderRadius: 10,
                                   }}>
                                   {/* {subjectimage != '' ? (
-                                                                    <Image
-                                                                        style={{
-                                                                            width: 75,
-                                                                            height: 75,
-                                                                            resizeMode: 'cover',
-                                                                            borderRadius: 50,
-                                                                            alignSelf: 'center',
-                                                                        }}
-                                                                        source={{ uri: subjectimage }}
-                                                                    />
-                                                                ) : ( */}
+                                    <Image
+                                      style={{
+                                        width: 75,
+                                        height: 75,
+                                        resizeMode: 'cover',
+                                        borderRadius: 50,
+                                        alignSelf: 'center',
+                                      }}
+                                      source={{ uri: subjectimage }}
+                                    />
+                                  ) : ( */}
                                   <Image
                                     style={{
                                       width: 55,
                                       height: 55,
-                                      resizeMode: 'cover',
-                                      borderRadius: 15,
+                                      // resizeMode: 'cover',
+                                      // borderRadius: 15,
                                       alignSelf: 'center',
                                     }}
                                     source={require('../../../assets/test.png')}
@@ -473,7 +573,7 @@ const SubjectLevel = ({route}) => {
                                   <Text
                                     style={{
                                       fontWeight: '600',
-                                      color: '#fff',
+                                      color: '#333',
                                       fontSize: 14,
                                     }}>
                                     {`Level ${index + 1}`}
@@ -482,7 +582,7 @@ const SubjectLevel = ({route}) => {
                               </View>
                               <MaterialIcons
                                 name="chevron-right"
-                                color={'#f1a722'}
+                                color={'#333'}
                                 size={25}
                                 style={{
                                   marginLeft: 10,

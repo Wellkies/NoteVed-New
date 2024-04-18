@@ -52,15 +52,15 @@ const SubjectsDetails = ({ route }) => {
   const {
     subjectImage = '',
     scholarshipid = '',
-    boardid = '',
-    childId = '',
     subjectid = '',
     subjectname: subject = '',
-    Class = '',
-    scholarshipName = '',
     showFeedback = false,
   } = route.params;
   console.log(route.params, "=================route.params");
+  const boardid = '1'
+  const childId = '1713196100480'
+  const Class = '5'
+  const scholarshipName = 'adarsha'
   // console.log(childId, "childId................")
   const [highlightedIndex, setHighlightedIndex] = useState(0);
   const [quizList, setQuizList] = useState();
@@ -389,16 +389,18 @@ const SubjectsDetails = ({ route }) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <StatusBar backgroundColor={'#263d2d'} barStyle="light-content" />
+      {/* <StatusBar backgroundColor={'salmon'} barStyle="dark-content" /> */}
       <ImageBackground
         style={{
           width: device_width,
           height: device_height,
           flex: 1,
           alignSelf: 'center',
+          backgroundColor:'#feecde'
         }}
         resizeMode="cover"
-        source={require('../../../assets/0.png')}>
+        // source={require('../../../assets/0.png')}
+        >
         {RevisionLoading == 'loading' ? (
           <LoadingScreen flag={RevisionLoading == 'loading'} />
         ) : (

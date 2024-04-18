@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Image,
   SafeAreaView,
@@ -9,19 +9,19 @@ import {
   BackHandler,
   ImageBackground,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import i18n from 'i18next';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Colors from '../../../assets/Colors';
-import {device_height, device_width} from '../style';
+import { device_height, device_width } from '../style';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FastImage from 'react-native-fast-image';
 import LoadingScreen from '../CommonScreens/LoadingScreen';
-import {useNavigation} from '@react-navigation/native';
-import {selectStudentInfo} from '../../redux/reducers/StudentInfoReducer';
-import {useAppSelector} from '../../redux/store/reducerHook';
+import { useNavigation } from '@react-navigation/native';
+import { selectStudentInfo } from '../../redux/reducers/StudentInfoReducer';
+import { useAppSelector } from '../../redux/store/reducerHook';
 import {
   getAllProductAPI,
   selectAllProduct,
@@ -35,8 +35,8 @@ import {
   getCartItemAPI,
   selectCartItemInfo,
 } from '../../redux/reducers/GetCartItemReducer';
-import {getProductByIdAPI} from '../../redux/reducers/GetProductDetailsReducer';
-import {getChildAllOrdersAPI} from '../../redux/reducers/GetAllOrdersReducer';
+import { getProductByIdAPI } from '../../redux/reducers/GetProductDetailsReducer';
+import { getChildAllOrdersAPI } from '../../redux/reducers/GetAllOrdersReducer';
 import {
   getSubjectByClassAPI,
   selectSubjectInfo,
@@ -48,19 +48,20 @@ import {
 } from '../../redux/reducers/GetTopicBySubjectReducer';
 import CommonMessage from '../../../constants/CommonMessage';
 import Header from '../CommonScreens/Header';
-import {useTranslation} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import LinearGradient from 'react-native-linear-gradient';
 import {
   getAllSubByCourseAPI,
   selectAllSubjectsInfo,
   selectAllSubjectsStatus,
 } from '../../redux/reducers/GetSubjectByCourseReducer';
+import { getTopicBySubIdAPI } from '../../redux/reducers/GetTopicDetailsReducer';
 
-const SubjectList = ({route}) => {
+const SubjectList = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch<any>();
-  const {t: trans, i18n} = useTranslation();
-  const {stageid = '', boardid = '', coursename = ''} = route.params;
+  const { t: trans, i18n } = useTranslation();
+  const { stageid = '', boardid = '', coursename = '' } = route.params;
   console.log(route.params, '===============route.params');
   // const [loading, setLoading] = useState(false);
   // const SchlrshipId = 'NVOOKADA1690811843420';
@@ -73,7 +74,7 @@ const SubjectList = ({route}) => {
     // };
     // dispatch(getSubjectByClassAPI(data));
     dispatch(getAllSubByCourseAPI());
-    return () => {};
+    return () => { };
   }, []);
 
   const SubjectByCourse = useAppSelector(selectAllSubjectsInfo);
@@ -158,18 +159,18 @@ const SubjectList = ({route}) => {
   }, []);
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <ImageBackground
         style={{
           width: device_width,
           height: device_height,
           flex: 1,
           // alignSelf: 'center',
-          borderWidth: 1,
-          backgroundColor: '#fff',
+          // borderWidth: 1,
+          backgroundColor: '#feecde',
         }}
-        resizeMode="cover"
-        // source={require('../../../assets/testBG2.jpg')}
+        resizeMode="contain"
+      // source={require('../../../assets/testBG3.jpg')}
       >
         <Header
           label1={trans('Subject List')}
@@ -234,19 +235,19 @@ const SubjectList = ({route}) => {
                     {`To Prepare For ${coursename}`}
                   </Text>
                 </View>
-                <View style={{marginTop: 10, width: '25%'}}>
+                <View style={{ marginTop: 10, width: '25%' }}>
                   <TouchableOpacity
                     style={{
                       backgroundColor: '#474747',
                       padding: 5,
                       borderRadius: 50,
                     }}>
-                    <Text style={{color: '#fff', textAlign: 'center'}}>
+                    <Text style={{ color: '#fff', textAlign: 'center' }}>
                       {'Read More'}
                     </Text>
                   </TouchableOpacity>
                 </View>
-                <FastImage
+                {/* <FastImage
                   style={{
                     marginTop: 5,
                     height: device_height * 0.15,
@@ -255,7 +256,7 @@ const SubjectList = ({route}) => {
                   }}
                   // source={}
                   resizeMode="center"
-                />
+                /> */}
               </TouchableOpacity>
               <View
                 style={
@@ -269,7 +270,8 @@ const SubjectList = ({route}) => {
                 <Text
                   style={{
                     fontWeight: '900',
-                    color: '#f56759',
+                    // color: '#fff',
+                    color: '#000',
                     fontSize: 20,
                     marginLeft: 15,
                     marginTop: 12,
@@ -278,7 +280,7 @@ const SubjectList = ({route}) => {
                   {'Categories'}
                 </Text>
                 <ScrollView
-                  showsHorizontalScrollIndicator={false}
+                  showsHorizontalScrollIndicator={true}
                   persistentScrollbar={true}
                   horizontal={true}>
                   <View
@@ -308,18 +310,21 @@ const SubjectList = ({route}) => {
                           console.log(item, 'item..................');
                           return (
                             <TouchableOpacity
-                              style={
-                                {
-                                  // borderWidth: 1
-                                }
-                              }
+                              style={{
+                                // borderWidth: 1
+                                marginBottom: 10,
+                                backgroundColor:'#feecde'
+                              }}
                               key={index}
                               onPress={() => {
+                                dispatch(getTopicBySubIdAPI(subjectid))
                                 navigation.navigate('SubjectLevel', {
-                                  stageid: '5',
-                                  boardid: '1',
-                                  scholarshipId: 'NVOOKADA1690811843420',
+                                  // stageid: '5',
+                                  // boardid: '1',
+                                  // scholarshipId: 'NVOOKADA1690811843420',
                                   coursename: coursename,
+                                  subjectname: subjectname,
+                                  subjectid: subjectid
                                 });
                               }}>
                               <LinearGradient
@@ -327,24 +332,26 @@ const SubjectList = ({route}) => {
                                 style={{
                                   justifyContent: 'center',
                                   alignItems: 'center',
-                                  // backgroundColor: '#fee2a3',
+                                  backgroundColor: '#fee2a3',
                                   // backgroundColor: '#fdc0ae',
                                   paddingVertical: 25,
                                   width: device_width * 0.4,
-                                  height: device_height * 0.18,
+                                  height: device_height * 0.2,
                                   paddingHorizontal: 15,
-                                  margin: 10,
-                                  //   borderWidth: 1,
-                                  //   borderColor: 'darkgreen',
+                                  margin: 5,
+                                  elevation: 15,
+                                  borderWidth: 2,
+                                  borderColor: '#999',
                                   borderRadius: 20,
                                 }}>
                                 <Text
                                   style={{
-                                    width: '120%',
+                                    width: '100%',
                                     fontSize: 20,
                                     fontWeight: 'bold',
-                                    color: '#474747',
-                                    marginLeft: 30,
+                                    // borderWidth: 1,
+                                    color: '#333',
+                                    // marginLeft: 30,
                                   }}>
                                   {subjectname}
                                 </Text>
@@ -368,7 +375,7 @@ const SubjectList = ({route}) => {
                                         // borderRadius: 50,
                                         alignSelf: 'center',
                                       }}
-                                      source={{uri: subjectImage}}
+                                      source={{ uri: subjectImage }}
                                     />
                                   ) : (
                                     <Image
