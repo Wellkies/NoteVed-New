@@ -28,8 +28,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { useNavigation, useTheme } from '@react-navigation/native';
 import { Modal, RadioButton } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { LOGIN_URL } from '../../../constants/ApiPaths';
-// import axios from "axios";
 import Colors from '../../../assets/Colors';
 import CommonMessage from '../../../constants/CommonMessage';
 import {
@@ -44,14 +42,6 @@ import { device_height, device_width } from '../style';
 import { Avatar, Chip } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-
-// import {
-//   ParentRegister,
-//   RegisterNewChild,
-//   childPhoneVerifyAPI,
-//   getBoard,
-//   getStandard,
-// } from '../../redux/actions/Action';
 import { AuthContext } from '../../../context';
 // import {setLanguage} from '../../redux/actions/Action';
 import i18n from 'i18next';
@@ -63,17 +53,12 @@ import {
 } from '@react-native-google-signin/google-signin';
 // import CommonModalUser from '../UserScreens/CommonModalUser';
 import FastImage from 'react-native-fast-image';
-import { getStandard, selectStudentStandard } from '../../redux/reducers/StandardReducer';
-import { getBoard, selectStudentBoard } from '../../redux/reducers/BoardReducer';
-import { childPhoneVerifyAPI, selectVerifyPhInfo } from '../../redux/reducers/VerifyPhoneReducer';
 import { selectStudentLanguage, setLanguage } from '../../redux/reducers/languageReducer';
 import { useAppSelector } from '../../redux/store/reducerHook';
 import { RegisterNewChild } from '../../redux/actions/RegisterAPI';
 import { login } from '../../redux/reducers/loginReducer';
 import AsyncStorage from '../../utils/AsyncStorage';
 const { t: trans } = i18n;
-
-var Spinner = require('react-native-spinkit');
 
 const SignUpScreen5 = ({ route }) => {
   const navigation = useNavigation();
@@ -82,9 +67,10 @@ const SignUpScreen5 = ({ route }) => {
     fname = '',
     lname = '',
     st_phone = '',
-    st_age = '',
+    // st_age = '',
     gender = '',
     st_email = '',
+    alt_phone = '',
     father_name = '',
     parents_phone = '',
     password = '',
@@ -100,18 +86,8 @@ const SignUpScreen5 = ({ route }) => {
 
   const selectedLanguage = useAppSelector(selectStudentLanguage)
   console.log(selectedLanguage, "selectedLanguage**********")
-  const Standard = useAppSelector(selectStudentStandard);
-  const Board = useAppSelector(selectStudentBoard);
-  const VerifyPhone = useAppSelector(selectVerifyPhInfo);
-  console.log(VerifyPhone, "VerifyPhone**********")
 
   const { signOut } = useContext(AuthContext);
-  // console.log(
-  //   Standard,
-  //   'Standard.................',
-  //   Board,
-  //   'Board..............',
-  // );
   const [language, setLanguages] = useState([
     // {name: 'हिंदी', code: 'hi', isSelected: selectedLanguage === 'hindi'},
     { name: 'ଓଡିଆ', code: 'odia', isSelected: selectedLanguage === 'odia' },
@@ -138,48 +114,15 @@ const SignUpScreen5 = ({ route }) => {
     }
   };
 
-  const handleRadioChange = value => {
-    if (value == 'Male') {
-      setInfo({ ...info, gender: 'Male' });
-    } else if (value == 'Female') {
-      setInfo({ ...info, gender: 'Female' });
-    } else {
-      setInfo({ ...info, gender: 'others' });
-    }
-    setGenderError(false);
-    setGender(value);
-    // handleInputChange( "p_fname", f_name.trim())
-  };
-
   useEffect(() => {
     navigation.addListener('focus', () => {
-      setInputModal1(true);
       BackHandler.addEventListener('hardwareBackPress', () => {
-        try {
-          GoogleSignin.configure();
-          GoogleSignin.signOut();
-          // setState({ user: null }); // Remember to remove the user from your app's state as well
-        } catch (error) {
-          // console.error(error, '========signout error');
-        }
-        navigation.goBack();
-        setInfo({});
-        return true;
+        goBackFunction()
       });
     });
     return () => {
-      setInputModal1(true);
       BackHandler.removeEventListener('hardwareBackPress', () => {
-        try {
-          GoogleSignin.configure();
-          GoogleSignin.signOut();
-          // setState({ user: null }); // Remember to remove the user from your app's state as well
-        } catch (error) {
-          // console.error(error, '========signout error');
-        }
-        setInfo({});
-        navigation.goBack();
-        return true;
+        goBackFunction()
       });
     };
   }, []);
@@ -197,14 +140,6 @@ const SignUpScreen5 = ({ route }) => {
     navigation.goBack();
     return true;
   };
-
-  useEffect(() => {
-    if (phone != '') {
-      dispatch(childPhoneVerifyAPI(phone));
-    }
-    dispatch(getBoard());
-    dispatch(getStandard());
-  }, []);
 
   const data = [
     {
@@ -241,15 +176,31 @@ const SignUpScreen5 = ({ route }) => {
     },
   ];
 
+  const year = [
+    {
+      label: '2020',
+      value: '2020',
+    },
+    {
+      label: '2021',
+      value: '2021',
+    },
+    {
+      label: '2022',
+      value: '2022',
+    },
+    {
+      label: '2023',
+      value: '2023',
+    },
+    {
+      label: '2024',
+      value: '2024',
+    }
+  ];
+
   const { signIn } = React.useContext(AuthContext);
-  const [loading, setLoading] = React.useState(false);
-  const [infoModal, setInfoModal] = useState();
-  const [inputModal1, setInputModal1] = useState(false);
-  const [inputModal2, setInputModal2] = useState(false);
-  const [inputModal3, setInputModal3] = useState(false);
-  const [inputModal4, setInputModal4] = useState(false);
-  const [inputModal5, setInputModal5] = useState(false);
-  const [inputModal6, setInputModal6] = useState(false);
+
   const [info, setInfo] = useState({
     id: '',
     phone_secondary: '',
@@ -264,6 +215,7 @@ const SignUpScreen5 = ({ route }) => {
     lname: '',
     father_name: '',
     mother_name: '',
+    academyYear:'',
     st_age: '',
     school_name: '',
     board_name: 1,
@@ -286,34 +238,16 @@ const SignUpScreen5 = ({ route }) => {
   });
   const [dob, setDob] = useState('');
   const {
-    // fname,
-    // lname,
-    // st_phone,
-    // st_email,
-    father_phone,
-    // gender,
-    // father_name,
-    mother_name,
-    // parents_phone,
-    // st_age,
-    school_name,
-    board_name,
-    boardid,
-    stage,
-    stageid,
-    st_address,
+    st_age,
     ref_Code,
+    acdmy_year,
     id,
     username,
-    p_height_feet,
-    p_height_inch,
-    p_weight,
-    // password,
-    // confirmPassword,
     secureTextEntry,
     confirmSecureTextEntry,
   } = info;
   const [agevalue, setAgeValue] = useState('');
+  const [yearvalue, setyearValue] = useState('');
   // console.log(agevalue, 'agevalue..............');
   const [showprog, setshowprog] = useState(false);
   const [phoneerror, setPhoneerror] = useState(false);
@@ -326,7 +260,7 @@ const SignUpScreen5 = ({ route }) => {
   const [genderError, setGenderError] = useState(false);
   const [genderVal, setGender] = useState('');
   const [fatherNameError, setFatherNameError] = useState(false);
-  const [motherNameError, setMotherNameError] = useState(false);
+  const [academyYearError, setacademyYearError] = useState(false);
   const [ageError, setAgeError] = useState(false);
   const [standardError, setStandardError] = useState(false);
   const [boardError, setBoardError] = useState(false);
@@ -553,11 +487,6 @@ const SignUpScreen5 = ({ route }) => {
       fname != '' &&
       st_phone != '' &&
       gender != '' &&
-      father_name != '' &&
-      // mother_name != '' &&
-      board_name !== null && board_name !== undefined && 
-      stage !== null && stage !== undefined &&
-      school_name != '' &&
       st_age != '';
     const pswd_validate =
       otplogin == false && password != '' && confirmPassword != '';
@@ -578,10 +507,8 @@ const SignUpScreen5 = ({ route }) => {
       email_validate = emailRegex.test(st_email);
       fname_validate = name_reg.test(fname);
       lname_validate = name_reg.test(lname);
-      fathername_validate = name_reg.test(father_name);
-      schoolname_validate = name_reg.test(school_name);
       // mothername_validate = name_reg.test(info.mother_name);
-      console.log(phone_validate,"==============phone_validate");
+      console.log(phone_validate, "==============phone_validate");
     }
     if (
       phone == '' || pswdLogin == true
@@ -603,32 +530,11 @@ const SignUpScreen5 = ({ route }) => {
       } else {
         setFnameError(false);
       }
-      if (school_name == '' || schoolname_validate == false) {
-        setSchoolNameError(true);
-      } else {
-        setSchoolNameError(false);
-      }
-
-      // if (info.lname == '' || lname_validate == false) {
-      //   setLnameError(true);
-      // } else {
-      //   setLnameError(false);
-      // }
       if (gender == '') {
         setGenderError(true);
       } else {
         setGenderError(false);
       }
-      if (father_name == '' || fathername_validate == false) {
-        setFatherNameError(true);
-      } else {
-        setFatherNameError(false);
-      }
-      // if (mother_name == '' || mothername_validate == false) {
-      //   setMotherNameError(true);
-      // } else {
-      //   setMotherNameError(false);
-      // }
       if (otplogin == false && info.password == '') {
         setPasswordError(true);
       } else {
@@ -638,16 +544,6 @@ const SignUpScreen5 = ({ route }) => {
         setConfirmPasswordError(true);
       } else {
         setConfirmPasswordError(false);
-      }
-      if (board_name == null || board_name == undefined) {
-        setBoardError(true);
-      } else {
-        setBoardError(false);
-      }
-      if (stage == null || stage == undefined) {
-        setStandardError(true);
-      } else {
-        setStandardError(false);
       }
       if (st_age == '') {
         setAgeError(true);
@@ -791,41 +687,44 @@ const SignUpScreen5 = ({ route }) => {
       );
     } else {
       let confirmVal = handlePhoneNumber(st_phone);
-      console.log(confirmVal,'SignIn phone Screen', phone_validate);
+      // console.log(confirmVal, 'SignIn phone Screen', phone_validate);
       phone_validate = phoneRegex.test(confirmVal);
       if (phone_validate) {
         setshowprog(true);
-        const schoolBoardName = Board.find(rec => rec.boardid == board_name);
-        const ClassID = Standard.find(rec => rec.stageid == stage);
+        // const schoolBoardName = Board.find(rec => rec.boardid == board_name);
+        // const ClassID = Standard.find(rec => rec.stageid == stage);
         const bodydata = {
-          email: st_email,
-          phone: confirmVal,
-          age: st_age.value,
-          referralcode: ref_Code,
           fname: fname,
           lname: lname,
-          language: selectedLanguage,
-          stage: stage,
-          stageid: ClassID != undefined ? ClassID.stageid : '',
-          alterphone: parents_phone,
+          email: st_email,
+          phone: confirmVal,
+          alterphone:alt_phone,
+          age: st_age.value,
+          academicyear: acdmy_year.value,
+          // referralcode: ref_Code,
+          // language: selectedLanguage,
+          // stage: stage,
+          // stageid: ClassID != undefined ? ClassID.stageid : '',
+          // alterphone: parents_phone,
           password: password,
-          schoolname: school_name,
+          // schoolname: school_name,
           // schoolname: '',
           // address: st_address,
-          address: '',
+          // address: '',
           gender: gender,
           image: '',
           imagename: '',
-          boardname:
-            schoolBoardName != undefined ? schoolBoardName.boardname : '',
-          fathername: father_name,
+          // boardname:
+          //   schoolBoardName != undefined ? schoolBoardName.boardname : '',
+          // fathername: father_name,
           // mothername: mother_name,
-          mothername: '',
+          // mothername: '',
           name: fname + ' ' + lname,
+          status:'',
           isPremium: false,
           subscriptionStartDate: '',
           subscriptionEndDate: '',
-          boardid: schoolBoardName != undefined ? schoolBoardName.boardid : '',
+          // boardid: schoolBoardName != undefined ? schoolBoardName.boardid : '',
         };
         //   let uuu = await Apiconnect.postData_noauth('postdata/usersignup', inf);
         console.log(bodydata, '============RegisterNewChild bodydata');
@@ -836,13 +735,14 @@ const SignUpScreen5 = ({ route }) => {
   };
   const handleCallBack = (user: any, message: string, authtoken: string,data:any) => {
     console.log(user, authtoken,"user==============================");
-    
+
     if (user != undefined) {
       signIn(user, authtoken);
       dispatch(login(data))
+      // dispatch(clearChildProgressData())
        const tokenstore = AsyncStorage.storeObject("@auth_Token", authtoken)
-    const userdata = AsyncStorage.storeObject("@user", user)
-
+       const userdata = AsyncStorage.storeObject("@user", user)
+      
     }
     else if (message == 'User already registered') {
       // setInfoModal(true);
@@ -854,12 +754,13 @@ const SignUpScreen5 = ({ route }) => {
         CommonMessage(message);
       }
     }
-    // navigation.navigate('SignInScreen');
+    
   };
+
   const navigationFunction = () => {
-    setInfoModal(false);
     navigation.navigate('SignInScreen');
   };
+
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={'#263d2d'} barStyle="light-content" />
@@ -900,7 +801,8 @@ const SignUpScreen5 = ({ route }) => {
               textTransform: 'capitalize',
               fontWeight: '600',
             }}>
-            {trans(`New Account`)}
+            {/* {trans(`New Account`)} */}
+            {`New Account`}
           </Text>
         </View>
         <ScrollView showsVerticalScrollIndicator={false} style={{}}>
@@ -1017,13 +919,15 @@ const SignUpScreen5 = ({ route }) => {
                               // marginLeft: 5,
                               fontWeight: '700',
                             }}>
-                            {trans('Complete Your Registration ')}
+                            {/* {trans('Complete Your Registration ')} */}
+                            {'Complete Your Registration '}
                             <Text style={{ fontWeight: '900', fontSize: 16 }}>
-                              {trans('5/5')}
+                              {/* {trans('5/5')} */}
+                              {'5/5'}
                             </Text>
                           </Text>
                         </View>
-                        <View
+                        {/* <View
                           style={{
                             flexDirection: 'row',
                             // marginTop: 5,
@@ -1057,7 +961,8 @@ const SignUpScreen5 = ({ route }) => {
                             size={20}
                           />
                           <TextInput
-                            placeholder={trans(`Student's School Name`)}
+                            // placeholder={trans(`Student's School Name`)}
+                            placeholder={`Student's School Name`}
                             placeholderTextColor="#666666"
                             value={school_name}
                             style={{
@@ -1086,7 +991,7 @@ const SignUpScreen5 = ({ route }) => {
                                 marginTop: -3,
                                 marginLeft: 5,
                               }}>
-                              {trans('Please enter school name')}
+                              {trans('Please enter school name')} 
                             </Text>
                           </Animatable.View>
                         ) : schoolNameError ? (
@@ -1100,14 +1005,14 @@ const SignUpScreen5 = ({ route }) => {
                                 marginTop: -3,
                                 marginLeft: 5,
                               }}>
-                              {trans('Please enter school name')}
+                            {trans('Please enter school name')}
                             </Text>
                           </Animatable.View>
                         ) : (
                           <></>
-                        )}
+                        )} */}
 
-                        <View
+                        {/* <View
                           style={{
                             backgroundColor: '#fff',
                             elevation: 10,
@@ -1217,9 +1122,9 @@ const SignUpScreen5 = ({ route }) => {
                               {trans("Please Enter School's Board Name")}
                             </Text>
                           </Animatable.View>
-                        )}
+                        )} */}
 
-                        <View
+                        {/* <View
                           style={{
                             backgroundColor: '#fff',
                             elevation: 10,
@@ -1328,8 +1233,184 @@ const SignUpScreen5 = ({ route }) => {
                               {trans("Please Enter Student's Standard")}
                             </Text>
                           </Animatable.View>
-                        )}
+                        )} */}
+
                         <View
+                          style={{
+                            flexDirection: 'row',
+                            // marginTop: 5,
+                            borderBottomWidth: 1,
+                            borderBottomColor: '#f2f2f2',
+                            // paddingBottom: 5,
+                            marginVertical: 10,
+                            backgroundColor: '#fff',
+                            elevation: 10,
+                            borderRadius: 8,
+                            height: 50,
+                            paddingLeft: 15,
+                            // marginTop: Platform.OS === 'ios' ? 0 : 10,
+                            alignItems: 'center',
+                            borderWidth:
+                              st_age == '' ? 1 : ageError == true ? 1 : 0,
+                            borderColor:
+                              st_age == ''
+                                ? 'darkorange'
+                                : ageError == true
+                                  ? 'darkorange'
+                                  : '#fff',
+                          }}>
+                          <MaterialCommunityIcons
+                            name="face-recognition"
+                            color={'#263d2d'}
+                            size={20}
+                          />
+                          <Dropdown
+                            style={[styles.dropdown, { width: '90%' }]}
+                            placeholderStyle={styles.placeholderStyle}
+                            selectedTextStyle={styles.selectedTextStyle}
+                            // inputSearchStyle={styles.inputSearchStyle}
+                            iconStyle={styles.iconStyle}
+                            itemTextStyle={{ color: '#333' }}
+                            itemContainerStyle={{
+                              borderBottomWidth: 0.5,
+                              borderBottomColor: '#999',
+                            }}
+                            data={data}
+                            maxHeight={300}
+                            labelField="label"
+                            valueField="value"
+                            // placeholder={trans('Select your age')}
+                            placeholder={'Select your age'}
+                            searchPlaceholder="Select your age"
+                            value={st_age}
+                            setValue={agevalue}
+                            onChange={value =>
+                              handleInputChange('st_age', value)
+                            }
+                            // onFocus={value => handleInputChange('st_age', value)}
+                            onFocus={() => {
+                              // handleInputChange('cityid', cityid);
+                              // selectAreaForCity(cityid);
+                              setAgeValue(agevalue);
+                            }}
+                          />
+                        </View>
+                        <View
+                          style={{
+                            backgroundColor: '#dee',
+                            // marginTop: 10,
+                            paddingVertical: 5,
+                            paddingHorizontal: 10,
+                            alignItems: 'center',
+                            borderRadius: 3,
+                            // justifyContent: 'center',
+                            flexDirection: 'row',
+                          }}>
+                          <AntDesign
+                            // style={{padding:10}}
+                            name={'infocirlce'}
+                            size={15}
+                            color={'#263d2d'}
+                          />
+                          <Text
+                            style={{
+                              color: '#444',
+                              marginLeft: 10,
+                              fontWeight: '600',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                            }}>
+                            {/* {trans('Age Should Be In Between 9 - 17')} */}
+                            {'Age Should Be In Between 9 - 17'}
+                          </Text>
+                        </View>
+
+                        {st_age == '' ? (
+                          <Animatable.View
+                            animation="fadeInLeft"
+                            duration={500}>
+                            <Text
+                              style={{ color: 'darkorange', marginBottom: 10 }}>
+                              {/* {trans("Please Enter Student's Age")} */}
+                              {"Please Enter Student's Age"}
+                            </Text>
+                          </Animatable.View>
+                        ) : ageError ? (
+                          <Animatable.View
+                            animation="fadeInLeft"
+                            duration={500}>
+                            <Text
+                              style={{ color: 'darkorange', marginBottom: 10 }}>
+                              {/* {trans("Please Enter Student's Age")} */}
+                              {"Please Enter Student's Age"}
+                            </Text>
+                          </Animatable.View>
+                        ) : (
+                          <></>
+                        )}
+
+<View
+                          style={{
+                            flexDirection: 'row',
+                            // marginTop: 5,
+                            borderBottomWidth: 1,
+                            borderBottomColor: '#f2f2f2',
+                            // paddingBottom: 5,
+                            marginVertical: 10,
+                            backgroundColor: '#fff',
+                            elevation: 10,
+                            borderRadius: 8,
+                            height: 50,
+                            paddingLeft: 15,
+                            // marginTop: Platform.OS === 'ios' ? 0 : 10,
+                            alignItems: 'center',
+                            borderWidth:
+                              acdmy_year == '' ? 1 : academyYearError == true ? 1 : 0,
+                            borderColor:
+                              acdmy_year == ''
+                                ? 'darkorange'
+                                : academyYearError == true
+                                  ? 'darkorange'
+                                  : '#fff',
+                          }}>
+                          <MaterialCommunityIcons
+                            name="calendar-month-outline"
+                            color={'#263d2d'}
+                            size={20}
+                          />
+                          <Dropdown
+                            style={[styles.dropdown, { width: '90%' }]}
+                            placeholderStyle={styles.placeholderStyle}
+                            selectedTextStyle={styles.selectedTextStyle}
+                            // inputSearchStyle={styles.inputSearchStyle}
+                            iconStyle={styles.iconStyle}
+                            itemTextStyle={{ color: '#333' }}
+                            itemContainerStyle={{
+                              borderBottomWidth: 0.5,
+                              borderBottomColor: '#999',
+                            }}
+                            data={year}
+                            maxHeight={300}
+                            labelField="label"
+                            valueField="value"
+                            // placeholder={trans('Select your age')}
+                            placeholder={'Select academic year'}
+                            searchPlaceholder="Select academic year"
+                            value={acdmy_year}
+                            setValue={yearvalue}
+                            onChange={value =>
+                              handleInputChange('acdmy_year', value)
+                            }
+                            // onFocus={value => handleInputChange('st_age', value)}
+                            onFocus={() => {
+                              // handleInputChange('cityid', cityid);
+                              // selectAreaForCity(cityid);
+                              setyearValue(yearvalue);
+                            }}
+                          />
+                        </View>
+
+                        {/* <View
                           style={{
                             backgroundColor: '#fff',
                             elevation: 10,
@@ -1400,7 +1481,7 @@ const SignUpScreen5 = ({ route }) => {
                               </View>
                             ))}
                           </View>
-                        </View>
+                        </View> */}
                       </View>
                     </View>
                     <View
@@ -1415,7 +1496,7 @@ const SignUpScreen5 = ({ route }) => {
                       }}>
                       <TouchableOpacity
                         disabled={
-                          school_name != '' && board_name !== null && board_name !== undefined && stage !== null && stage !== undefined
+                          st_age != '' && st_age !== null && acdmy_year != '' && acdmy_year !== null
                             ? false
                             : true
                         }
@@ -1424,7 +1505,7 @@ const SignUpScreen5 = ({ route }) => {
                           width: '50%',
                           marginVertical: 5,
                           backgroundColor:
-                            school_name != '' && board_name !== null && board_name !== undefined && stage !== null && stage !== undefined
+                            st_age != '' && st_age !== null && acdmy_year != '' && acdmy_year !== null
                               ? '#a3b448'
                               : '#ccc',
                           marginHorizontal: 20,
@@ -1439,8 +1520,7 @@ const SignUpScreen5 = ({ route }) => {
                         <Text
                           style={{
                             color:
-                              school_name != '' &&
-                                board_name !== null && board_name !== undefined && stage !== null && stage !== undefined
+                              st_age != '' && st_age !== null && acdmy_year != '' && acdmy_year !== null
                                 ? '#333'
                                 : '#666',
                             fontSize: 13,
@@ -1448,7 +1528,8 @@ const SignUpScreen5 = ({ route }) => {
                             textAlign: 'center',
                             alignItems: 'center',
                           }}>
-                          {trans('Submit')}
+                          {/* {trans('Submit')} */}
+                          {'Submit'}
                         </Text>
                       </TouchableOpacity>
                     </View>
@@ -1514,647 +1595,6 @@ const SignUpScreen5 = ({ route }) => {
             {/* </View> */}
           </Animatable.View>
         </ScrollView>
-
-        {inputModal5 && (
-          <Modal transparent={true} visible={inputModal5}>
-            <View
-              style={{
-                backgroundColor: '#fff',
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                <View
-                  style={{
-                    borderRadius: 15,
-                    // borderWidth: 1,
-                    minHeight: device_height * 0.75,
-                    minWidth: device_width * 0.9,
-                    paddingHorizontal: 20,
-                    // marginHorizontal:10,
-                    backgroundColor: '#fff',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                  }}>
-                  <View>
-                    <View
-                      style={{
-                        alignItems: 'center',
-                        // borderWidth:1
-                      }}>
-                      <View>
-                        <View
-                          style={{
-                            alignItems: 'center',
-                            paddingVertical: 15,
-                            borderWidth: 1,
-                            borderColor: '#ccc',
-                            elevation: 10,
-                            width: device_width * 0.9,
-                            borderTopLeftRadius: 10,
-                            borderTopRightRadius: 10,
-                            backgroundColor: '#def',
-                            marginLeft: -30,
-                            marginRight: -30,
-                          }}>
-                          <Text
-                            style={{
-                              textAlign: 'center',
-                              width: device_width * 0.7,
-                              fontSize: 15,
-                              color: '#333',
-                              marginTop: 5,
-                              // marginLeft: 5,
-                              fontWeight: '700',
-                            }}>
-                            {trans('Complete Your Registration ')}
-                            <Text style={{ fontWeight: '900', fontSize: 16 }}>
-                              5/5
-                            </Text>
-                          </Text>
-                        </View>
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            // marginTop: 5,
-                            borderBottomWidth: 1,
-                            borderBottomColor: '#f2f2f2',
-                            // paddingBottom: 5,
-                            marginVertical: 10,
-                            backgroundColor: '#fff',
-                            elevation: 10,
-                            borderRadius: 8,
-                            height: 50,
-                            paddingLeft: 15,
-                            // marginTop: Platform.OS === 'ios' ? 0 : 5,
-                            alignItems: 'center',
-                            borderWidth:
-                              school_name == ''
-                                ? 1
-                                : schoolNameError == true
-                                  ? 1
-                                  : 0,
-                            borderColor:
-                              school_name == ''
-                                ? 'darkorange'
-                                : schoolNameError == true
-                                  ? 'darkorange'
-                                  : '#fff',
-                          }}>
-                          <FontAwesome5
-                            name="school"
-                            color={Colors.primary}
-                            size={20}
-                          />
-                          <TextInput
-                            placeholder={trans(`Student's School Name`)}
-                            placeholderTextColor="#666666"
-                            value={school_name}
-                            style={{
-                              color: '#333',
-                              flex: 1,
-                              paddingLeft: 10,
-                              fontSize: 15,
-                              fontWeight: '600',
-                            }}
-                            autoCapitalize="none"
-                            // onChangeText={(val) => textInputChange(val)}
-                            // onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
-                            onChangeText={val =>
-                              handleInputChange('school_name', val)
-                            }
-                          />
-                        </View>
-                        {school_name == '' ? (
-                          <Animatable.View
-                            animation="fadeInLeft"
-                            duration={500}>
-                            <Text
-                              style={{
-                                color: 'darkorange',
-                                marginBottom: 10,
-                                marginTop: -3,
-                                marginLeft: 5,
-                              }}>
-                              {trans('Please enter school name')}
-                            </Text>
-                          </Animatable.View>
-                        ) : schoolNameError ? (
-                          <Animatable.View
-                            animation="fadeInLeft"
-                            duration={500}>
-                            <Text
-                              style={{
-                                color: Colors.red,
-                                marginBottom: 10,
-                                marginTop: -3,
-                                marginLeft: 5,
-                              }}>
-                              {trans('Please enter school name')}
-                            </Text>
-                          </Animatable.View>
-                        ) : (
-                          <></>
-                        )}
-
-                        <View
-                          style={{
-                            backgroundColor: '#fff',
-                            elevation: 10,
-                            borderRadius: 8,
-                            borderBottomWidth: 1,
-                            borderBottomColor: '#f2f2f2',
-                            paddingVertical: 10,
-                          }}>
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              // marginTop: 5,
-                              borderBottomColor: '#f2f2f2',
-                              // paddingBottom: 5,
-                              backgroundColor: '#fff',
-                              borderRadius: 8,
-                              paddingLeft: 15,
-                              // marginTop: Platform.OS === 'ios' ? 0 : 5,
-                              alignItems: 'center',
-                            }}>
-                            <MaterialIcons
-                              name="school"
-                              color={Colors.primary}
-                              size={25}
-                            />
-                            <Text
-                              style={{
-                                color: '#333',
-                                flex: 1,
-                                paddingLeft: 10,
-                                color: '#666666',
-                                fontSize: 15,
-                                fontWeight: '600',
-                              }}>
-                              {trans(`Student's School Board`)}
-                            </Text>
-                          </View>
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              flexWrap: 'wrap',
-                              paddingHorizontal: 15,
-                            }}>
-                            {Board.map((row, index) => {
-                              const {
-                                boardname = '',
-                                boardid = '',
-                                isSelected = '',
-                              } = row;
-                              return (
-                                <TouchableOpacity
-                                  key={index}
-                                  onPress={() => {
-                                    handleInputChange(
-                                      'board_name',
-                                      boardid,
-                                      boardname,
-                                    );
-                                  }}
-                                  onFocus={() =>
-                                    handleInputChange('board_name', boardid)
-                                  }>
-                                  <Text
-                                    style={{
-                                      borderWidth: 1,
-                                      borderColor:
-                                        boardid !== null &&
-                                          info.board_name == boardid
-                                          ? '#fff'
-                                          : Colors.primary,
-                                      backgroundColor:
-                                        boardid !== null &&
-                                          info.board_name == boardid
-                                          ? Colors.primary
-                                          : '#fff',
-                                      paddingVertical: 7,
-                                      paddingHorizontal: 20,
-                                      borderRadius: 10,
-                                      margin: 5,
-                                    }}>
-                                    <Text
-                                      style={{
-                                        color:
-                                          boardid !== null &&
-                                            info.board_name == boardid
-                                            ? '#fff'
-                                            : Colors.primary,
-                                      }}>
-                                      {boardname}
-                                    </Text>
-                                  </Text>
-                                </TouchableOpacity>
-                              );
-                            })}
-                          </View>
-                        </View>
-                        {boardError && (
-                          <Animatable.View
-                            animation="fadeInLeft"
-                            duration={500}>
-                            <Text
-                              style={{
-                                color: Colors.red,
-                                // marginBottom: 5,
-                                marginTop: -3,
-                              }}>
-                              {trans("Please Enter School's Board Name")}
-                            </Text>
-                          </Animatable.View>
-                        )}
-
-                        <View
-                          style={{
-                            backgroundColor: '#fff',
-                            elevation: 10,
-                            borderRadius: 8,
-                            borderBottomWidth: 1,
-                            borderBottomColor: '#f2f2f2',
-                            paddingVertical: 10,
-                            marginTop: 10,
-                          }}>
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              // marginTop: 5,
-                              borderBottomColor: '#f2f2f2',
-                              // paddingBottom: 5,
-                              backgroundColor: '#fff',
-                              borderRadius: 8,
-                              paddingLeft: 15,
-                              // marginTop: Platform.OS === 'ios' ? 0 : 5,
-                              alignItems: 'center',
-                            }}>
-                            <MaterialCommunityIcons
-                              name="account-group"
-                              color={Colors.primary}
-                              size={25}
-                            />
-                            <Text
-                              style={{
-                                color: '#666',
-                                flex: 1,
-                                paddingLeft: 10,
-                                fontSize: 15,
-                                fontWeight: '600',
-                              }}>
-                              {trans(`Enter Student's Standard`)}
-                            </Text>
-                          </View>
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              flexWrap: 'wrap',
-                              paddingHorizontal: 15,
-                            }}>
-                            {Standard.map((row, index) => {
-                              const {
-                                classname = '',
-                                classid = '',
-                                isSelected = '',
-                                stage = '',
-                                stageid = '',
-                              } = row;
-                              return (
-                                <TouchableOpacity
-                                  onPress={() => {
-                                    handleInputChange('stage', stageid);
-                                  }}
-                                  onFocus={() =>
-                                    handleInputChange('stage', stageid)
-                                  }
-                                  key={index}>
-                                  <Text
-                                    style={{
-                                      borderWidth: 1,
-                                      borderColor:
-                                        stageid !== null &&
-                                          info.stage == stageid
-                                          ? '#fff'
-                                          : Colors.primary,
-                                      backgroundColor:
-                                        stageid !== null &&
-                                          info.stage == stageid
-                                          ? Colors.primary
-                                          : '#fff',
-                                      paddingVertical: 7,
-                                      paddingHorizontal: 20,
-                                      borderRadius: 10,
-                                      margin: 5,
-                                    }}>
-                                    <Text
-                                      style={{
-                                        color:
-                                          stageid !== null &&
-                                            info.stage == stageid
-                                            ? '#fff'
-                                            : '#2f60e2',
-                                      }}>
-                                      {stage}
-                                    </Text>
-                                  </Text>
-                                </TouchableOpacity>
-                              );
-                            })}
-                          </View>
-                        </View>
-                        {standardError && (
-                          <Animatable.View
-                            animation="fadeInLeft"
-                            duration={500}>
-                            <Text
-                              style={{
-                                color: Colors.red,
-                                marginTop: -3,
-                                // marginBottom: 5,
-                                width: '100%',
-                              }}>
-                              {trans("Please Enter Student's Standard")}
-                            </Text>
-                          </Animatable.View>
-                        )}
-                        <View
-                          style={{
-                            backgroundColor: '#fff',
-                            elevation: 10,
-                            borderRadius: 8,
-                            borderBottomWidth: 1,
-                            borderBottomColor: '#f2f2f2',
-                            paddingVertical: 10,
-                            marginTop: 10,
-                            paddingHorizontal: 20,
-                          }}>
-                          <View style={{ marginBottom: 10 }}>
-                            <Text
-                              style={{
-                                fontSize: 15,
-                                fontWeight: '700',
-                                color: Colors.primary,
-                              }}>
-                              {trans('Select Your Preferred Language')}
-                            </Text>
-                          </View>
-
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              justifyContent: 'flex-start',
-                              marginBottom: 5,
-                            }}>
-                            {language.map(({ name, code, isSelected }) => (
-                              <View key={code}>
-                                <Chip
-                                  mode={isSelected ? 'outlined' : 'flat'}
-                                  style={{
-                                    marginHorizontal: 5,
-                                    marginLeft: 0,
-                                    // padding: 2,
-                                    borderWidth: 1,
-                                    borderColor: Colors.primary,
-
-                                    // borderRadius: 5,
-                                    // backgroundColor: isSelected ? '#1E88E5' : '#fff',
-                                    paddingHorizontal: 5,
-                                    // paddingVertical: 5,
-                                    // width: '30%',
-                                    borderRadius: 10,
-                                    backgroundColor: isSelected
-                                      ? Colors.primary
-                                      : '#fff',
-                                  }}
-                                  selectedColor={'#fff'}
-                                  selected={isSelected}
-                                  onPress={() => {
-                                    i18n.changeLanguage(code);
-                                    setLanguage(code, dispatch);
-                                    setLanguages(prevState =>
-                                      prevState.map(lang =>
-                                        lang.code === code
-                                          ? { ...lang, isSelected: true }
-                                          : { ...lang, isSelected: false },
-                                      ),
-                                    );
-                                  }}
-                                  textStyle={{
-                                    color: isSelected ? '#fff' : Colors.primary,
-                                    fontWeight: 'bold',
-                                  }}>
-                                  {name}
-                                </Chip>
-                              </View>
-                            ))}
-                          </View>
-                        </View>
-                      </View>
-                    </View>
-                    <View
-                      style={{
-                        // borderWidth: 1,
-                        width: '100%',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        flexDirection: 'row',
-                        alignSelf: 'center',
-                        marginTop: 10,
-                      }}>
-                      <TouchableOpacity
-                        disabled={
-                          school_name != '' && board_name != '' && stage != ''
-                            ? false
-                            : true
-                        }
-                        style={{
-                          borderRadius: 10,
-                          width: '50%',
-                          marginVertical: 5,
-                          backgroundColor:
-                            school_name != '' && board_name != '' && stage != ''
-                              ? 'green'
-                              : '#ccc',
-                          marginHorizontal: 20,
-                          paddingVertical: 10,
-                          justifyContent: 'center',
-                        }}
-                        onPress={() => {
-                          submitForm();
-                          setInputModal5(false);
-                          // setInputModal6(true);
-                        }}>
-                        <Text
-                          style={{
-                            color:
-                              school_name != '' &&
-                                board_name != '' &&
-                                stage != ''
-                                ? 'white'
-                                : '#666',
-                            fontSize: 13,
-                            fontWeight: '600',
-                            textAlign: 'center',
-                            alignItems: 'center',
-                          }}>
-                          {trans('Submit')}
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </Modal>
-        )}
-
-        {infoModal && (
-          <Modal transparent={true} visible={infoModal}>
-            <View
-              style={{
-                backgroundColor: '#fff',
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <View
-                style={{
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flex: 1,
-                }}>
-                <View
-                  style={{
-                    borderRadius: 15,
-                    borderWidth: 1,
-                    minHeight: device_height * 0.35,
-                    minWidth: device_width * 0.8,
-                    backgroundColor: '#fff',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                  }}>
-                  <View>
-                    <View
-                      style={{
-                        alignItems: 'center',
-                      }}>
-                      <View style={{ alignItems: 'center', paddingVertical: 15 }}>
-                        <View
-                          style={{
-                            // borderWidth: 0.8,
-                            borderColor: 'green',
-                            borderRadius: 50,
-                            // padding: 10,
-                            elevation: 15,
-                            backgroundColor: '#dee',
-                          }}>
-                          <MaterialIcons
-                            name="info"
-                            color={'orange'}
-                            size={50}
-                          />
-                        </View>
-
-                        <Text
-                          style={{
-                            textAlign: 'center',
-                            width: device_width * 0.8,
-                            fontSize: 17,
-                            color: '#333',
-                            marginTop: 10,
-                            marginLeft: 10,
-                            fontWeight: '900',
-                          }}>
-                          {trans('User Already Registered with this number')}
-                        </Text>
-                        <Text
-                          style={{
-                            textAlign: 'center',
-                            width: device_width * 0.7,
-                            fontSize: 15,
-                            color: '#666',
-                            marginTop: 5,
-                            // marginLeft: 5,
-                            fontWeight: '500',
-                          }}>
-                          {trans('Please try new number or login instead')}
-                        </Text>
-                      </View>
-                      {/* <AntDesign
-                      name="closecircleo"
-                      style={{
-                        fontSize: 28,
-                        color: '#fff',
-                        position: 'absolute',
-                        top: 10,
-                        right: 10,
-                        // marginTop: 10,
-                        backgroundColor: 'crimson',
-                        borderRadius: 50,
-                      }}
-                      onPress={() => setLockedModalStatus(false)}
-                    /> */}
-                    </View>
-                    <View
-                      style={{
-                        // borderWidth: 1,
-                        paddingVertical: 15,
-                        alignItems: 'center',
-                        marginTop: 10,
-                        marginLeft: 10,
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        alignSelf: 'center',
-                        padding: 10,
-                      }}>
-                      <TouchableOpacity
-                        style={{
-                          borderRadius: 10,
-                          width: '30%',
-                          marginVertical: 5,
-                          borderWidth: 1,
-                          marginRight: 25,
-                          borderColor: 'white',
-                          backgroundColor: Colors.primary,
-                          // width: '100%',
-                          paddingVertical: 5,
-                          justifyContent: 'center',
-                        }}
-                        onPress={() => navigationFunction()}>
-                        <Text
-                          style={{
-                            color: 'white',
-                            fontSize: 15,
-                            fontWeight: 'bold',
-                            textAlign: 'center',
-                            alignItems: 'center',
-                          }}>
-                          {trans('OK')}
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </Modal>
-        )}
-        {/* {showprog && (
-        <Spinner
-          style={{
-            position: 'absolute',
-            top: device_height / 2.8,
-            left: device_width / 2.7,
-          }}
-          isVisible={showprog}
-          size={spinner_size}
-          type={spinner_typ}
-          color={spinner_color}
-        />
-      )} */}
       </ImageBackground>
     </View>
   );

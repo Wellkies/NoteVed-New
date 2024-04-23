@@ -50,18 +50,8 @@ import {
   setLanguage,
 } from '../../redux/reducers/languageReducer';
 import { uploadPhotoApi } from '../../redux/actions/UploadPhoto';
-import { getPreviousYearQuestionAPI } from '../../redux/reducers/GetPrevYearQuesReducer';
-import { getChildProbableQuestionDetailsAPI } from '../../redux/reducers/GetMostProbQuesReducer';
 import { getScholarshipByClassAPI } from '../../redux/reducers/GetAllScholarshipReducer';
 import { getUserbyId } from '../../redux/reducers/loginReducer';
-
-// import {
-//   decrement,
-//   increment,
-//   incrementAsync,
-//   incrementByAmount,
-//   selectCount,
-// } from '../redux/reducers/demoReducers';
 
 const EditProfile = ({ route }) => {
   interface ChildInfo {
@@ -152,40 +142,6 @@ const EditProfile = ({ route }) => {
   const [childAge, setChildAge] = useState('');
   const [isFocus, setIsFocus] = useState(false);
   const [scholarshipId, selectScholarshipId] = useState()
-  // const studentAge = [
-  //   {
-  //     label: '8',
-  //     value: '8',
-  //   },
-  //   {
-  //     label: '9',
-  //     value: '9',
-  //   },
-  //   {
-  //     label: '10',
-  //     value: '10',
-  //   },
-  //   {
-  //     label: '11',
-  //     value: '11',
-  //   },
-  //   {
-  //     label: '12',
-  //     value: '12',
-  //   },
-  //   {
-  //     label: '13',
-  //     value: '13',
-  //   },
-  //   {
-  //     label: '14',
-  //     value: '14',
-  //   },
-  //   {
-  //     label: '15',
-  //     value: '15',
-  //   },
-  // ];
 
   const data = [
     {
@@ -246,11 +202,11 @@ const EditProfile = ({ route }) => {
   }
 
   useEffect(() => {
-    asyncScholarship()
+    // asyncScholarship()
     navigation.addListener('focus', () => {
       dispatch(getChildDetailsAPI(childID));
-      dispatch(getStandard());
-      dispatch(getBoard());
+      // dispatch(getStandard());
+      // dispatch(getBoard());
       dispatch(setLanguage(userLang));
       // if (childId != '')
       //   // dispatch(getChildDetailsAPI(undefined, childId, setLoading));
@@ -267,8 +223,8 @@ const EditProfile = ({ route }) => {
     });
     // dispatch(getUserInfoAPI(undefined, signOut, setLoading));
 
-    dispatch(getBoard());
-    dispatch(getStandard());
+    // dispatch(getBoard());
+    // dispatch(getStandard());
   }, []);
   // const {language: selectedLanguage = ''} = useSelector(
   //   state => state.LanguageReducer,
@@ -287,16 +243,7 @@ const EditProfile = ({ route }) => {
 
     // {name: 'বাঙ্গালি', code: 'bn', isSelected: selectedLanguage === 'bn'},
   ]);
-  // console.log(Board, 'Board///////////////');
-  // const {userInfo = {}} = useSelector(state => state.UserInfoReducer);
-  // const {parentid = '', phone = ''} = userInfo;
-  // console.log(userInfo, '================userInfo');
-  // console.log(parentid, 'parentid........');
-  // const {childList = []} = useSelector(state => state.GetChildByParentReducer);
-  // const {childInfo = []} = useSelector(state => state.ChildDetailsReducer);
-  // const {user = []} = childInfo;
-  // let childid: Array<any>;
-  // let allProviders: Array<any>;
+
   const {
     _id: childID = '',
     age: p_age = '',
@@ -2088,63 +2035,16 @@ const EditProfile = ({ route }) => {
           </ScrollView>
           {/* </View> */}
         </View>
-
-        {/* <View>
-        <TouchableOpacity onPress={() => dispatch(increment())}>
-          <Text>+</Text>
-        </TouchableOpacity>
-        <Text>{count}</Text>
-        <TouchableOpacity onPress={() => dispatch(decrement())}>
-          <Text>-</Text>
-        </TouchableOpacity>
-      </View>
-      <View>
-        <TextInput
-          value={incrementAmount}
-          keyboardType="numeric"
-          onChangeText={setIncrementAmount}
-        />
-        <View>
-          <TouchableOpacity
-            onPress={() =>
-              dispatch(incrementByAmount(Number(incrementAmount) || 0))
-            }>
-            <Text>Add Amount</Text>
-          </TouchableOpacity>
-          {/* <AsyncButton
-            disabled={status !== 'idle'}
-            onPress={() =>
-              dispatch(incrementAsync(Number(incrementAmount) || 0))
-            }>
-            <Text>Add Async</Text>
-          </AsyncButton> 
-        </View>
-      </View> */}
       </ImageBackground>
     </View>
   );
 };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-//   greeting: {
-//     fontSize: 20,
-//     fontWeight: 'bold',
-//     margin: 16,
-//   },
-// });
 
 export default EditProfile;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: Colors.secondary,
-    // paddingHorizontal: 0.5,
   },
   dropdown: {
     height: 50,

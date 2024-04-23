@@ -6,6 +6,7 @@ import { useAppSelector } from '../redux/store/reducerHook'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { selectUserInfo, getDatafromAsync } from '../redux/reducers/loginReducer';
 import Storage from '../utils/AsyncStorage';
+
 export const RootNavigator = () => {
   const dispatch = useDispatch();
   React.useEffect(() => {
@@ -18,17 +19,17 @@ export const RootNavigator = () => {
     fetchData();
   }, []);
   const { authToken, status, userInfo } = useAppSelector(selectUserInfo);
-  console.log(authToken, "authToken");
+  // console.log(authToken, "authToken");
 
   return (
     <>
-      {/* {authToken == null || authToken == "" ? (
+      {userInfo == null || userInfo == "" ? (
         <RootStackScreen />
       ) : (
         <BottomTabNavigator />
-      )} */}
+      )}
 
-      <BottomTabNavigator />
+      {/* <BottomTabNavigator /> */}
     </>
   );
 }

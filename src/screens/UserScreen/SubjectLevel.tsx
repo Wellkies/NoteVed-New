@@ -8,6 +8,7 @@ import {
   ScrollView,
   BackHandler,
   ImageBackground,
+  ActivityIndicator,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -53,6 +54,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { getTopicBySubIdAPI, selectTopicDetailsInfo } from '../../redux/reducers/GetTopicDetailsReducer';
 import { selectTopicDetailsStatus } from '../../redux/reducers/GetTopicDetailsFormTopicIdReducer';
+import { getContentByTopicIdAPI, selectContentDetailsInfo, selectContentDetailsStatus } from '../../redux/reducers/GetContentDetailsReducer';
+import { handleSetExamName } from '../../redux/reducers/ExamTestNameReducer';
 
 const Tab = createBottomTabNavigator();
 
@@ -61,6 +64,7 @@ const SubjectLevel = ({ route }) => {
   const dispatch = useDispatch<any>();
   const { t: trans, i18n } = useTranslation();
   const [selectedIndex, setSelectedIndex] = useState(1);
+  const [topicId, setTopicId] = useState('')
   const {
     // stageid = '',
     // boardid = '',
@@ -73,8 +77,23 @@ const SubjectLevel = ({ route }) => {
   console.log(route.params, '===============route.params');
   // const [loading, setLoading] = useState(false);
   // const SchlrshipId = 'NVOOKADA1690811843420'
-  useEffect(() => {
-    dispatch(getTopicBySubIdAPI(subjectid))
+  const TopicBySubjectId = useAppSelector(selectTopicDetailsInfo);
+  const TopicLoad = useAppSelector(selectTopicDetailsStatus);
+
+  const filterData = TopicBySubjectId.map((rec) => rec.topicid)
+  // TopicBySubjectId.filter((rec) => rec.sltopic == 1)
+  const topicID = filterData[0]
+  console.log(
+    topicID, "================topicID***************",
+    topicId, "=============topicId******************",
+    filterData);
+    // console.log(TopicBySubjectId, '==============TopicBySubjectId');
+    useEffect(() => {
+      dispatch(getTopicBySubIdAPI(subjectid))
+      // setTopicId(topicID)
+      dispatch(getContentByTopicIdAPI(topicID))
+    // setTimeout(() => {
+    // }, 2000)
     // const data = {
     //   stageid,
     //   boardid,
@@ -82,12 +101,11 @@ const SubjectLevel = ({ route }) => {
     // };
     // dispatch(getSubjectByClassAPI(data));
     return () => { };
-  }, []);
+  }, [topicID]);
 
-  const TopicBySubjectId = useAppSelector(selectTopicDetailsInfo);
-  const TopicLoad = useAppSelector(selectTopicDetailsStatus);
-
-  console.log(TopicBySubjectId, '==============TopicBySubjectId');
+  const ContentByTopicId = useAppSelector(selectContentDetailsInfo);
+  const ContentLoad = useAppSelector(selectContentDetailsStatus);
+  console.log(ContentByTopicId, '==============ContentByTopicId');
 
   const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
   interface ChildInfo {
@@ -165,6 +183,11 @@ const SubjectLevel = ({ route }) => {
     };
   }, []);
 
+  const handleTabSelect = (sltopic, topicid) => {
+    setSelectedIndex(sltopic);
+    dispatch(getContentByTopicIdAPI(topicid))
+  }
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ImageBackground
@@ -226,7 +249,7 @@ const SubjectLevel = ({ route }) => {
                     color: '#474747',
                     // marginLeft:30,
                   }}>
-                  {'Logical Reasoning'}
+                  {subjectname}
                 </Text>
                 <View>
                   <Text
@@ -365,16 +388,14 @@ const SubjectLevel = ({ route }) => {
               }}>
                 {TopicBySubjectId.map((item, index) => {
                   const {
+                    id = '',
                     topicname = '',
                     sltopic = '',
-                    id = '',
+                    topicid = '',
+                    topicimage = '',
                     subjectid = '',
                     subjectname = '',
                     slsubject = '',
-                    topicid = '',
-                    // topicname = '',
-                    // sltopic = '',
-                    topicimage = ''
                   } = item;
                   const isselectedBtn = sltopic == selectedIndex ? true : false;
                   return (
@@ -396,21 +417,13 @@ const SubjectLevel = ({ route }) => {
                             height: 45,
                             justifyContent: 'center',
                             alignItems: 'center',
-                            // borderRightWidth: 0.5,
-                            // paddingVertical: 10,
-                            // borderWidth: 1.5,
-                            // borderBottomWidth:0,
                             borderRadius: 10,
                             borderColor: isselectedBtn ? '#ee7c75' : '#fff',
                             backgroundColor: isselectedBtn ? '#ee7c75' : '#fff',
-                            // paddingHorizontal:10,
-                            // borderBottomLeftRadius: index == 0 ? 15 : 0,
-                            // borderTopLeftRadius: index == 0 ? 15 : 0,
-                            // borderTopRightRadius: index == 2 ? 15 : 0,
-                            // borderTopRightRadius: index == 2 ? 15 : 0,
                           }}
                           onPress={() => {
-                            setSelectedIndex(sltopic);
+                            handleTabSelect(sltopic, topicid)
+                            // setSelectedIndex(sltopic);
                             // setContentList(contentList);
                           }}>
                           <Text
@@ -462,83 +475,153 @@ const SubjectLevel = ({ route }) => {
                     // flexWrap: 'wrap',
                     // justifyContent: 'center',
                   }}>
-                  {TopicBySubjectId.length > 0 ? (
+                  {ContentLoad == 'loading' ? (
+                    <View
+                      style={{
+                        // flex: 1,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        height: device_height * 0.5,
+                        width: device_width,
+                        // backgroundColor: Colors.secondary,
+                      }}>
+                      <ActivityIndicator
+                        size={'large'}
+                        color={'crimson'}
+                        visible={ContentLoad}
+                      />
+                    </View>
+                  ) : (
                     <>
-                      {TopicBySubjectId.map((item, index) => {
-                        const {
-                          subjectimage = '',
-                          subject = '',
-                          subjectid = '',
-                        } = item;
-                        console.log(item, "item..................")
-                        // const Revdata = {
-                        //   stageid,
-                        //   subjectid,
-                        //   boardid,
-                        //   scholarshipId,
-                        //   // childid,
-                        // };
-                        return (
-                          <TouchableOpacity
-                            key={index}
-                            style={{
-                              width: device_width * 0.95,
-                              marginHorizontal: 10,
-                              marginVertical: 5,
-                              borderWidth: 1,
-                              borderColor: '#666',
-                              borderRadius: 10,
-                              // elevation: 10,
-                              backgroundColor: '#febcac',
-                              alignItems: 'center',
-                              paddingVertical: 5,
-                              paddingHorizontal: 5,
-                              flexDirection: 'row',
-                              justifyContent: 'space-around',
-                            }}
-                            // onPress={() => CommonMessage('We will update shortly !')}
-                            onPress={async () => {
-                              // dispatch(getTopicBySubClassAPI(Revdata));
-                              navigation.navigate('SubjectsDetails', {
-                                subjectid: subjectid,
-                                subjectname: subject,
-                                subjectImage: subjectimage,
-                                // Class: stageid,
-                                // scholarshipid: scholarshipId,
-                                // boardid: boardid,
-                                // childId: childid,
-                                // scholarshipName: scholarshipName,
-                                showFeedback: false,
-                              });
-                            }}>
-                            <View
-                              style={{
-                                flexDirection: 'row',
-                                justifyContent: 'space-between',
-                                alignItems: 'center',
-                                paddingHorizontal: 10,
-                              }}>
-                              <View
+                      {ContentByTopicId.length > 0 ? (
+                        <>
+                          {ContentByTopicId.map((item, index) => {
+                            const {
+                              _id = '',
+                              contentid = '',
+                              slcontent = '',
+                              contentimage = '',
+                              contentset = '',
+                              concepts = [],
+                              isLock = false,
+                              isPremium = true,
+                              quiz = [],
+                              slsubject = '',
+                              sltopic = '',
+                              subjectid = '',
+                              subjectimage = '',
+                              subjectname = '',
+                              timeDuration = '',
+                              topicid = '',
+                              topicimage = '',
+                              topicname = '',
+                              videos = []
+                            } = item
+
+                            // console.log(item, "item..................")
+                            // const Revdata = {
+                            //   stageid,
+                            //   subjectid,
+                            //   boardid,
+                            //   scholarshipId,
+                            //   // childid,
+                            // };
+                            return (
+                              <TouchableOpacity
+                                key={index}
                                 style={{
+                                  width: device_width * 0.95,
+                                  marginHorizontal: 10,
+                                  marginVertical: 5,
+                                  borderWidth: 1,
+                                  borderColor: '#666',
+                                  borderRadius: 10,
+                                  // elevation: 10,
+                                  backgroundColor: '#febcac',
                                   alignItems: 'center',
                                   paddingVertical: 5,
                                   paddingHorizontal: 5,
                                   flexDirection: 'row',
-                                  // justifyContent: 'space-around',
-                                  // borderWidth:1,
-                                  width: device_width * 0.8,
+                                  justifyContent: 'space-around',
+                                }}
+                                onPress={async () => {
+                                  // let quizData = [...ContentQuiz];
+                                  // if (isReattempt) {
+                                  //   quizData = quizData.map(rec => {
+                                  //     return {
+                                  //       ...rec,
+                                  //       selectedAns: '',
+                                  //     };
+                                  //   });
+                                  // }
+
+                                  // dispatch(
+                                  //   handleSetExamName('SubjectRevision')
+                                  // );
+                                  navigation.navigate('MockTests', {
+                                    screenName: 'ExamSets',
+                                    subjectName: subjectname,
+                                    chapterName: topicname,
+                                    examSet: contentset,
+                                    contentid: contentid,
+                                    isReattempt: false,
+                                    // studentdata: studentdata,
+                                    ExamQuestionsets: quiz,
+                                    // scholarshipid: scholarshipid,
+                                    // boardid: boardid,
+                                    // scholarshipName: scholarshipName,
+                                    subjectId: subjectid,
+                                    timeDuration: timeDuration,
+                                    is2ndAvailable: index,
+                                    topicid: topicid,
+                                  });
+
+                                  // dispatch(getTopicBySubClassAPI(Revdata));
+                                  // navigation.navigate('SubjectsDetails', {
+                                  //   subjectid: subjectid,
+                                  //   subjectname: subjectname,
+                                  //   subjectImage: subjectimage,
+                                  //   quiz: quiz,
+                                  //   contentid: contentid ,
+                                  //   slcontent: slcontent,
+                                  //   contentimage: contentimage,
+                                  //   contentset: contentset,
+                                  //   slsubject: slsubject ,
+                                  //   sltopic: sltopic ,
+                                  //   timeDuration: timeDuration ,
+                                  //   topicid: topicid ,
+                                  //   topicimage: topicimage ,
+                                  //   topicname: topicname ,
+                                  // });
                                 }}>
                                 <View
                                   style={{
-                                    width: 55,
-                                    height: 55,
-                                    // borderColor: Colors.lightgrey,
-                                    // borderWidth: 1.5,
-                                    // elevation: 5,
-                                    // backgroundColor: '#fff',
-                                    // borderRadius: 10,
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    paddingHorizontal: 10,
                                   }}>
-                                  {/* {subjectimage != '' ? (
+                                  <View
+                                    style={{
+                                      alignItems: 'center',
+                                      paddingVertical: 5,
+                                      paddingHorizontal: 5,
+                                      flexDirection: 'row',
+                                      // justifyContent: 'space-around',
+                                      // borderWidth:1,
+                                      width: device_width * 0.8,
+                                    }}>
+                                    <View
+                                      style={{
+                                        width: 55,
+                                        height: 55,
+                                        // borderColor: Colors.lightgrey,
+                                        // borderWidth: 1.5,
+                                        // elevation: 5,
+                                        // backgroundColor: '#fff',
+                                        // borderRadius: 10,
+                                      }}>
+                                      {/* {subjectimage != '' ? (
                                     <Image
                                       style={{
                                         width: 75,
@@ -550,86 +633,88 @@ const SubjectLevel = ({ route }) => {
                                       source={{ uri: subjectimage }}
                                     />
                                   ) : ( */}
-                                  <Image
+                                      <Image
+                                        style={{
+                                          width: 55,
+                                          height: 55,
+                                          // resizeMode: 'cover',
+                                          // borderRadius: 15,
+                                          alignSelf: 'center',
+                                        }}
+                                        source={require('../../../assets/test.png')}
+                                      />
+                                      {/* )} */}
+                                    </View>
+                                    <View
+                                      style={{
+                                        justifyContent: 'flex-start',
+                                        // backgroundColor: Colors.white,
+                                        width: device_width * 0.5,
+                                        // borderWidth: 1,
+                                        paddingHorizontal: 15,
+                                      }}>
+                                      <Text
+                                        style={{
+                                          fontWeight: '600',
+                                          color: '#333',
+                                          fontSize: 14,
+                                        }}>
+                                        {`${contentset}`}
+                                      </Text>
+                                    </View>
+                                  </View>
+                                  <MaterialIcons
+                                    name="chevron-right"
+                                    color={'#333'}
+                                    size={25}
                                     style={{
-                                      width: 55,
-                                      height: 55,
-                                      // resizeMode: 'cover',
-                                      // borderRadius: 15,
-                                      alignSelf: 'center',
+                                      marginLeft: 10,
+                                      fontWeight: '900',
                                     }}
-                                    source={require('../../../assets/test.png')}
                                   />
-                                  {/* )} */}
                                 </View>
-                                <View
-                                  style={{
-                                    justifyContent: 'flex-start',
-                                    // backgroundColor: Colors.white,
-                                    width: device_width * 0.5,
-                                    // borderWidth: 1,
-                                    paddingHorizontal: 15,
-                                  }}>
-                                  <Text
-                                    style={{
-                                      fontWeight: '600',
-                                      color: '#333',
-                                      fontSize: 14,
-                                    }}>
-                                    {`Level ${index + 1}`}
-                                  </Text>
-                                </View>
-                              </View>
-                              <MaterialIcons
-                                name="chevron-right"
-                                color={'#333'}
-                                size={25}
-                                style={{
-                                  marginLeft: 10,
-                                  fontWeight: '900',
-                                }}
-                              />
-                            </View>
-                          </TouchableOpacity>
-                        );
-                      })}
-                    </>
-                  ) : (
-                    <>
-                      <View
-                        style={{
-                          backgroundColor: 'burlywood',
-                          paddingVertical: 15,
-                          paddingHorizontal: 15,
-                          marginVertical: 10,
-                          marginHorizontal: 15,
-                          // borderRadius: 7,
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          flexDirection: 'row',
-                        }}>
-                        <AntDesign
-                          style={{
-                            marginHorizontal: 10,
-                            borderWidth: 0,
-                          }}
-                          name={'infocirlce'}
-                          size={30}
-                          color={'darkgreen'}
-                        />
-                        <Text
-                          style={{
-                            color: '#333',
-                            fontWeight: '700',
-                            fontSize: 15,
-                            textAlign: 'center',
-                            // borderWidth: 1,
-                            // borderLeftWidth:1,
-                            width: '85%',
-                          }}>
-                          {trans('Currently No Content Added')}
-                        </Text>
-                      </View>
+                              </TouchableOpacity>
+                            );
+                          })}
+                        </>
+                      ) : (
+                        <>
+                          <View
+                            style={{
+                              backgroundColor: 'burlywood',
+                              paddingVertical: 15,
+                              paddingHorizontal: 15,
+                              marginVertical: 10,
+                              marginHorizontal: 15,
+                              // borderRadius: 7,
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              flexDirection: 'row',
+                            }}>
+                            <AntDesign
+                              style={{
+                                marginHorizontal: 10,
+                                borderWidth: 0,
+                              }}
+                              name={'infocirlce'}
+                              size={30}
+                              color={'darkgreen'}
+                            />
+                            <Text
+                              style={{
+                                color: '#333',
+                                fontWeight: '700',
+                                fontSize: 15,
+                                textAlign: 'center',
+                                // borderWidth: 1,
+                                // borderLeftWidth:1,
+                                width: '85%',
+                              }}>
+                              {trans('Currently No Content Added')}
+                            </Text>
+                          </View>
+                        </>
+                      )}
                     </>
                   )}
                 </View>

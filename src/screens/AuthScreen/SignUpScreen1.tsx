@@ -43,17 +43,8 @@ import { device_height, device_width } from '../style';
 import { Avatar, Chip } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-// import {
-//   ParentRegister,
-//   RegisterNewChild,
-//   childPhoneVerifyAPI,
-//   getBoard,
-//   getStandard,
-// } from '../../redux/actions/Action';
 import { AuthContext } from '../../../context';
-// import {setLanguage} from '../../redux/actions/Action';
 import i18n from 'i18next';
-import { Dropdown } from 'react-native-element-dropdown';
 import {
   GoogleSignin,
   GoogleSigninButton,
@@ -70,8 +61,6 @@ import { childPhoneVerifyAPI, selectVerifyPhInfo } from '../../redux/reducers/Ve
 import { RegisterNewChild } from '../../redux/actions/RegisterAPI';
 const { t: trans } = i18n;
 
-// var Spinner = require('react-native-spinkit');
-
 const SignUpScreen1 = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch<any>();
@@ -85,10 +74,10 @@ const SignUpScreen1 = ({ route }) => {
   } = route.params;
   console.log(route.params, '==================route.params');
 
-  const selectedLanguage = useAppSelector(selectStudentLanguage)
-  console.log(selectedLanguage, "selectedLanguage**********")
-  const Standard = useAppSelector(selectStudentStandard);
-  const Board = useAppSelector(selectStudentBoard);
+  // const selectedLanguage = useAppSelector(selectStudentLanguage)
+  // console.log(selectedLanguage, "selectedLanguage**********")
+  // const Standard = useAppSelector(selectStudentStandard);
+  // const Board = useAppSelector(selectStudentBoard);
   const VerifyPhone = useAppSelector(selectVerifyPhInfo);
   console.log(VerifyPhone, "VerifyPhone**********")
 
@@ -104,24 +93,20 @@ const SignUpScreen1 = ({ route }) => {
   //   // '==newuser',
   // );
   const { signOut } = useContext(AuthContext);
-  // console.log(
-  //   Standard,
-  //   'Standard.................',
-  //   Board,
-  //   'Board..............',
-  // );
-  const [language, setLanguages] = useState([
-    // {name: 'हिंदी', code: 'hi', isSelected: selectedLanguage === 'hindi'},
-    { name: 'ଓଡିଆ', code: 'odia', isSelected: selectedLanguage === 'odia' },
-    {
-      name: 'English',
-      code: 'english',
-      isSelected: selectedLanguage === 'english',
-    },
-    // {name: 'हिंदी', code: 'hindi', isSelected: selectedLanguage === 'hindi'},
+  // const [language, setLanguages] = useState([
+  //   // {name: 'हिंदी', code: 'hi', isSelected: selectedLanguage === 'hindi'},
+  //   { name: 'ଓଡିଆ', code: 'odia', isSelected: selectedLanguage === 'odia' },
+  //   {
+  //     name: 'English',
+  //     code: 'english',
+  //     isSelected: selectedLanguage === 'english',
+  //   },
+  //   // {name: 'हिंदी', code: 'hindi', isSelected: selectedLanguage === 'hindi'},
 
-    // {name: 'বাঙ্গালি', code: 'bn', isSelected: selectedLanguage === 'bn'},
-  ]);
+  //   // {name: 'বাঙ্গালি', code: 'bn', isSelected: selectedLanguage === 'bn'},
+  // ]);
+
+  const [language, setLanguages] = useState('english')
 
 
   // const googleSignOut = async () => {
@@ -199,9 +184,9 @@ const SignUpScreen1 = ({ route }) => {
     if (phone != '') {
       dispatch(childPhoneVerifyAPI(phone));
     }
-    dispatch(getBoard());
-    dispatch(getStandard());
-    i18n.changeLanguage(selectedLanguage);
+    // dispatch(getBoard());
+    // dispatch(getStandard());
+    // i18n.changeLanguage(selectedLanguage);
   }, []);
 
   const data = [
@@ -324,19 +309,19 @@ const SignUpScreen1 = ({ route }) => {
   const [schoolNameError, setSchoolNameError] = useState(false);
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
 
-  const updateSecureTextEntry = () => {
-    setInfo({
-      ...info,
-      secureTextEntry: !info.secureTextEntry,
-    });
-  };
+  // const updateSecureTextEntry = () => {
+  //   setInfo({
+  //     ...info,
+  //     secureTextEntry: !info.secureTextEntry,
+  //   });
+  // };
 
-  const updateConfirmSecureTextEntry = () => {
-    setInfo({
-      ...info,
-      confirmSecureTextEntry: !info.confirmSecureTextEntry,
-    });
-  };
+  // const updateConfirmSecureTextEntry = () => {
+  //   setInfo({
+  //     ...info,
+  //     confirmSecureTextEntry: !info.confirmSecureTextEntry,
+  //   });
+  // };
 
   const handleInputChange = (inputName: string, inputValue: string) => {
     if (inputName == 'st_phone') {
@@ -367,30 +352,30 @@ const SignUpScreen1 = ({ route }) => {
     //     setMotherNameError(false);
     //   }
     // }
-    else if (inputName == 'parents_phone') {
-      if (inputValue != '') {
-        if (phoneRegex.test(inputValue)) {
-          setAltPhoneError(false);
-        } else {
-          setAltPhoneError(true);
-        }
-      } else {
-        setAltPhoneError(false);
-      }
-    } else if (inputName == 'school_name') {
-      if (!name_reg.test(inputValue)) {
-        setSchoolNameError(true);
-      } else {
-        setSchoolNameError(false);
-      }
-    } else if (inputName == 'board_name') {
-      // console.log(inputName, 'inputName.........');
-      if (inputValue.length == '') {
-        setBoardError(true);
-      } else {
-        ////console.log(present_zip.length, 'length');
-        setBoardError(false);
-      }
+    // else if (inputName == 'parents_phone') {
+    //   if (inputValue != '') {
+    //     if (phoneRegex.test(inputValue)) {
+    //       setAltPhoneError(false);
+    //     } else {
+    //       setAltPhoneError(true);
+    //     }
+    //   } else {
+    //     setAltPhoneError(false);
+    //   }
+    // } else if (inputName == 'school_name') {
+    //   if (!name_reg.test(inputValue)) {
+    //     setSchoolNameError(true);
+    //   } else {
+    //     setSchoolNameError(false);
+    //   }
+    // } else if (inputName == 'board_name') {
+    //   // console.log(inputName, 'inputName.........');
+    //   if (inputValue.length == '') {
+    //     setBoardError(true);
+    //   } else {
+    //     ////console.log(present_zip.length, 'length');
+    //     setBoardError(false);
+    //   }
 
       // if (inputValue == 1) {
       // setLanguage('odia', dispatch);
@@ -413,24 +398,16 @@ const SignUpScreen1 = ({ route }) => {
       //     ),
       //   );
       // }
-    } else if (inputName == 'stage') {
-      // console.log(inputName, 'inputName.........');
-      if (inputValue.length == '') {
-        setStandardError(true);
-      } else {
-        ////console.log(present_zip.length, 'length');
-        setStandardError(false);
-      }
-    } else if (inputName == 'st_age') {
-      if (inputValue.length != '' || inputValue != undefined) {
-        // if (inputValue >=20)
-        setAgeError(false);
-      } else {
-        setAgeError(true);
-      }
-    }
-    //  else if (inputName == 'st_age') {
-    //   if (inputValue > 0 && inputValue <= 20) {
+    // } else if (inputName == 'stage') {
+    //   // console.log(inputName, 'inputName.........');
+    //   if (inputValue.length == '') {
+    //     setStandardError(true);
+    //   } else {
+    //     ////console.log(present_zip.length, 'length');
+    //     setStandardError(false);
+    //   }
+    // } else if (inputName == 'st_age') {
+    //   if (inputValue.length != '' || inputValue != undefined) {
     //     // if (inputValue >=20)
     //     setAgeError(false);
     //   } else {
@@ -537,322 +514,323 @@ const SignUpScreen1 = ({ route }) => {
   const phone_regex_without_91_validate = phoneRegexWithout91.test(st_phone);
   // console.log(email_regex_validate,"========email_regex_validate");
 
-  const submitForm = async () => {
-    // console.log(st_age.value,"=============st_age");
-    const validate =
-      fname != '' &&
-      st_phone != '' &&
-      gender != '' &&
-      father_name != '' &&
-      // mother_name != '' &&
-      board_name !== '' &&
-      stage != '' &&
-      school_name != '' &&
-      st_age != '';
-    const pswd_validate =
-      otplogin == false && password != '' && confirmPassword != '';
+  // const submitForm = async () => {
+  //   // console.log(st_age.value,"=============st_age");
+  //   const validate =
+  //     fname != '' &&
+  //     st_phone != '' &&
+  //     gender != '' &&
+  //     father_name != '' &&
+  //     // mother_name != '' &&
+  //     board_name !== '' &&
+  //     stage != '' &&
+  //     school_name != '' &&
+  //     st_age != '';
+  //   const pswd_validate =
+  //     otplogin == false && password != '' && confirmPassword != '';
 
-    // info.p_pass == '';
-    // info.gender == '';
-    let fname_validate = false;
-    let lname_validate = false;
-    let phone_validate = false;
-    let fathername_validate = false;
-    // let mothername_validate = false;
-    let email_validate = false;
-    let schoolname_validate = false;
-    // //console.log(phone_validate, 'phone_validate')
+  //   // info.p_pass == '';
+  //   // info.gender == '';
+  //   let fname_validate = false;
+  //   let lname_validate = false;
+  //   let phone_validate = false;
+  //   let fathername_validate = false;
+  //   // let mothername_validate = false;
+  //   let email_validate = false;
+  //   let schoolname_validate = false;
+  //   // //console.log(phone_validate, 'phone_validate')
 
-    if (info.st_phone || info.fname) {
-      phone_validate = phoneRegex.test(info.st_phone);
-      email_validate = emailRegex.test(info.st_email);
-      fname_validate = name_reg.test(info.fname);
-      lname_validate = name_reg.test(info.lname);
-      fathername_validate = name_reg.test(info.father_name);
-      schoolname_validate = name_reg.test(info.school_name);
-      // mothername_validate = name_reg.test(info.mother_name);
-    }
-    if (
-      phone == '' || pswdLogin == true
-        ? validate == false && pswd_validate == false
-        : validate == false
-    ) {
-      // if (email_validate == false) {
-      //   setEmailError(true);
-      // } else {
-      //   setEmailError(false);
-      // }
-      if (info.st_phone == '' || phone_validate == false) {
-        setPhoneerror(true);
-      } else {
-        setPhoneerror(false);
-      }
-      if (info.fname == '' || fname_validate == false) {
-        setFnameError(true);
-      } else {
-        setFnameError(false);
-      }
-      if (info.school_name == '' || schoolname_validate == false) {
-        setSchoolNameError(true);
-      } else {
-        setSchoolNameError(false);
-      }
+  //   if (info.st_phone || info.fname) {
+  //     phone_validate = phoneRegex.test(info.st_phone);
+  //     email_validate = emailRegex.test(info.st_email);
+  //     fname_validate = name_reg.test(info.fname);
+  //     lname_validate = name_reg.test(info.lname);
+  //     fathername_validate = name_reg.test(info.father_name);
+  //     schoolname_validate = name_reg.test(info.school_name);
+  //     // mothername_validate = name_reg.test(info.mother_name);
+  //   }
+  //   if (
+  //     phone == '' || pswdLogin == true
+  //       ? validate == false && pswd_validate == false
+  //       : validate == false
+  //   ) {
+  //     // if (email_validate == false) {
+  //     //   setEmailError(true);
+  //     // } else {
+  //     //   setEmailError(false);
+  //     // }
+  //     if (info.st_phone == '' || phone_validate == false) {
+  //       setPhoneerror(true);
+  //     } else {
+  //       setPhoneerror(false);
+  //     }
+  //     if (info.fname == '' || fname_validate == false) {
+  //       setFnameError(true);
+  //     } else {
+  //       setFnameError(false);
+  //     }
+  //     if (info.school_name == '' || schoolname_validate == false) {
+  //       setSchoolNameError(true);
+  //     } else {
+  //       setSchoolNameError(false);
+  //     }
 
-      // if (info.lname == '' || lname_validate == false) {
-      //   setLnameError(true);
-      // } else {
-      //   setLnameError(false);
-      // }
-      if (info.gender == '') {
-        setGenderError(true);
-      } else {
-        setGenderError(false);
-      }
-      if (info.father_name == '' || fathername_validate == false) {
-        setFatherNameError(true);
-      } else {
-        setFatherNameError(false);
-      }
-      // if (info.mother_name == '' || mothername_validate == false) {
-      //   setMotherNameError(true);
-      // } else {
-      //   setMotherNameError(false);
-      // }
-      if (otplogin == false && info.password == '') {
-        setPasswordError(true);
-      } else {
-        setPasswordError(false);
-      }
-      if (otplogin == false && info.confirmPassword == '') {
-        setConfirmPasswordError(true);
-      } else {
-        setConfirmPasswordError(false);
-      }
-      if (info.board_name == '') {
-        setBoardError(true);
-      } else {
-        setBoardError(false);
-      }
-      if (info.stage == '') {
-        setStandardError(true);
-      } else {
-        setStandardError(false);
-      }
-      if (info.st_age == '') {
-        setAgeError(true);
-      } else {
-        setAgeError(false);
-      }
-      // if (info.phone_secondary == '' || phone_validate == false) {
-      //   // //console.log(phone_validate, 'phone_validate');
-      //   setPhoneError(true);
-      // } else {
-      //   setPhoneError(false);
-    } else if (fnameError == true) {
-      ToastAndroid.showWithGravityAndOffset(
-        'Please enter your first name',
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
-        25,
-        50,
-      );
-    } else if (lnameError == true) {
-      ToastAndroid.showWithGravityAndOffset(
-        'Please enter your last name',
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
-        25,
-        50,
-      );
-      // } else if (phoneerror == true) {
-      //   ToastAndroid.showWithGravityAndOffset(
-      //     'Please enter valid phone number',
-      //     ToastAndroid.LONG,
-      //     ToastAndroid.BOTTOM,
-      //     25,
-      //     50,
-      //   );
-    } else if (fatherNameError == true) {
-      ToastAndroid.showWithGravityAndOffset(
-        `Please Enter Guardian's Name`,
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
-        25,
-        50,
-      );
-    } else if (schoolNameError == true) {
-      ToastAndroid.showWithGravityAndOffset(
-        `Please Enter Student's School Name`,
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
-        25,
-        50,
-      );
-    }
-    // else if (motherNameError == true) {
-    //   ToastAndroid.showWithGravityAndOffset(
-    //     `Please Enter Mother's Name`,
-    //     ToastAndroid.LONG,
-    //     ToastAndroid.BOTTOM,
-    //     25,
-    //     50,
-    //   );
-    // }
-    else if (passwordError == true) {
-      ToastAndroid.showWithGravityAndOffset(
-        `Please Enter Valid Password`,
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
-        25,
-        50,
-      );
-    } else if (mismatchError == true) {
-      ToastAndroid.showWithGravityAndOffset(
-        `Password Didn't Matched`,
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
-        25,
-        50,
-      );
-    } else if (confirmPasswordError == true) {
-      ToastAndroid.showWithGravityAndOffset(
-        `Please Enter Valid Password`,
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
-        25,
-        50,
-      );
-    } else if (genderError == true) {
-      ToastAndroid.showWithGravityAndOffset(
-        `Please Enter Your Gender`,
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
-        25,
-        50,
-      );
-    } else if (boardError == true) {
-      ToastAndroid.showWithGravityAndOffset(
-        `Please Enter Student's Board Name`,
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
-        25,
-        50,
-      );
-    } else if (standardError == true) {
-      ToastAndroid.showWithGravityAndOffset(
-        `Please Enter Student's Standard Name`,
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
-        25,
-        50,
-      );
-    } else if (ageError == true) {
-      ToastAndroid.showWithGravityAndOffset(
-        `Please Enter Student's Age`,
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
-        25,
-        50,
-      );
-      // } else if (altPhoneError == true) {
-      //   ToastAndroid.showWithGravityAndOffset(
-      //     `Please Enter Valid Phone Number`,
-      //     ToastAndroid.LONG,
-      //     ToastAndroid.BOTTOM,
-      //     25,
-      //     50,
-      //   );
-    } else if (emailError == true) {
-      ToastAndroid.showWithGravityAndOffset(
-        'Please enter valid email id',
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
-        25,
-        50,
-      );
-    } else if (refCodeError == true) {
-      ToastAndroid.showWithGravityAndOffset(
-        'Please enter valid referal code',
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
-        25,
-        50,
-      );
-    } else {
-      let confirmVal = handlePhoneNumber(info.st_phone);
-      //console.log(confirmVal,'SignIn phone Screen');
-      phone_validate = phoneRegex.test(confirmVal);
-      if (phone_validate) {
-        setshowprog(true);
-        const schoolBoardName = Board.find(rec => rec.boardid == board_name);
-        const ClassID = Standard.find(rec => rec.stageid == stage);
-        const bodydata = {
-          // email: info.st_email,
-          // phone: confirmVal,
-          // age: info.st_age,
-          // referralcode: ref_Code,
-          // fname: info.fname,
-          // lname: info.lname,
-          // language: selectedLanguage,
+  //     // if (info.lname == '' || lname_validate == false) {
+  //     //   setLnameError(true);
+  //     // } else {
+  //     //   setLnameError(false);
+  //     // }
+  //     if (info.gender == '') {
+  //       setGenderError(true);
+  //     } else {
+  //       setGenderError(false);
+  //     }
+  //     if (info.father_name == '' || fathername_validate == false) {
+  //       setFatherNameError(true);
+  //     } else {
+  //       setFatherNameError(false);
+  //     }
+  //     // if (info.mother_name == '' || mothername_validate == false) {
+  //     //   setMotherNameError(true);
+  //     // } else {
+  //     //   setMotherNameError(false);
+  //     // }
+  //     if (otplogin == false && info.password == '') {
+  //       setPasswordError(true);
+  //     } else {
+  //       setPasswordError(false);
+  //     }
+  //     if (otplogin == false && info.confirmPassword == '') {
+  //       setConfirmPasswordError(true);
+  //     } else {
+  //       setConfirmPasswordError(false);
+  //     }
+  //     if (info.board_name == '') {
+  //       setBoardError(true);
+  //     } else {
+  //       setBoardError(false);
+  //     }
+  //     if (info.stage == '') {
+  //       setStandardError(true);
+  //     } else {
+  //       setStandardError(false);
+  //     }
+  //     if (info.st_age == '') {
+  //       setAgeError(true);
+  //     } else {
+  //       setAgeError(false);
+  //     }
+  //     // if (info.phone_secondary == '' || phone_validate == false) {
+  //     //   // //console.log(phone_validate, 'phone_validate');
+  //     //   setPhoneError(true);
+  //     // } else {
+  //     //   setPhoneError(false);
+  //   } else if (fnameError == true) {
+  //     ToastAndroid.showWithGravityAndOffset(
+  //       'Please enter your first name',
+  //       ToastAndroid.LONG,
+  //       ToastAndroid.BOTTOM,
+  //       25,
+  //       50,
+  //     );
+  //   } else if (lnameError == true) {
+  //     ToastAndroid.showWithGravityAndOffset(
+  //       'Please enter your last name',
+  //       ToastAndroid.LONG,
+  //       ToastAndroid.BOTTOM,
+  //       25,
+  //       50,
+  //     );
+  //     // } else if (phoneerror == true) {
+  //     //   ToastAndroid.showWithGravityAndOffset(
+  //     //     'Please enter valid phone number',
+  //     //     ToastAndroid.LONG,
+  //     //     ToastAndroid.BOTTOM,
+  //     //     25,
+  //     //     50,
+  //     //   );
+  //   } else if (fatherNameError == true) {
+  //     ToastAndroid.showWithGravityAndOffset(
+  //       `Please Enter Guardian's Name`,
+  //       ToastAndroid.LONG,
+  //       ToastAndroid.BOTTOM,
+  //       25,
+  //       50,
+  //     );
+  //   } else if (schoolNameError == true) {
+  //     ToastAndroid.showWithGravityAndOffset(
+  //       `Please Enter Student's School Name`,
+  //       ToastAndroid.LONG,
+  //       ToastAndroid.BOTTOM,
+  //       25,
+  //       50,
+  //     );
+  //   }
+  //   // else if (motherNameError == true) {
+  //   //   ToastAndroid.showWithGravityAndOffset(
+  //   //     `Please Enter Mother's Name`,
+  //   //     ToastAndroid.LONG,
+  //   //     ToastAndroid.BOTTOM,
+  //   //     25,
+  //   //     50,
+  //   //   );
+  //   // }
+  //   else if (passwordError == true) {
+  //     ToastAndroid.showWithGravityAndOffset(
+  //       `Please Enter Valid Password`,
+  //       ToastAndroid.LONG,
+  //       ToastAndroid.BOTTOM,
+  //       25,
+  //       50,
+  //     );
+  //   } else if (mismatchError == true) {
+  //     ToastAndroid.showWithGravityAndOffset(
+  //       `Password Didn't Matched`,
+  //       ToastAndroid.LONG,
+  //       ToastAndroid.BOTTOM,
+  //       25,
+  //       50,
+  //     );
+  //   } else if (confirmPasswordError == true) {
+  //     ToastAndroid.showWithGravityAndOffset(
+  //       `Please Enter Valid Password`,
+  //       ToastAndroid.LONG,
+  //       ToastAndroid.BOTTOM,
+  //       25,
+  //       50,
+  //     );
+  //   } else if (genderError == true) {
+  //     ToastAndroid.showWithGravityAndOffset(
+  //       `Please Enter Your Gender`,
+  //       ToastAndroid.LONG,
+  //       ToastAndroid.BOTTOM,
+  //       25,
+  //       50,
+  //     );
+  //   } else if (boardError == true) {
+  //     ToastAndroid.showWithGravityAndOffset(
+  //       `Please Enter Student's Board Name`,
+  //       ToastAndroid.LONG,
+  //       ToastAndroid.BOTTOM,
+  //       25,
+  //       50,
+  //     );
+  //   } else if (standardError == true) {
+  //     ToastAndroid.showWithGravityAndOffset(
+  //       `Please Enter Student's Standard Name`,
+  //       ToastAndroid.LONG,
+  //       ToastAndroid.BOTTOM,
+  //       25,
+  //       50,
+  //     );
+  //   } else if (ageError == true) {
+  //     ToastAndroid.showWithGravityAndOffset(
+  //       `Please Enter Student's Age`,
+  //       ToastAndroid.LONG,
+  //       ToastAndroid.BOTTOM,
+  //       25,
+  //       50,
+  //     );
+  //     // } else if (altPhoneError == true) {
+  //     //   ToastAndroid.showWithGravityAndOffset(
+  //     //     `Please Enter Valid Phone Number`,
+  //     //     ToastAndroid.LONG,
+  //     //     ToastAndroid.BOTTOM,
+  //     //     25,
+  //     //     50,
+  //     //   );
+  //   } else if (emailError == true) {
+  //     ToastAndroid.showWithGravityAndOffset(
+  //       'Please enter valid email id',
+  //       ToastAndroid.LONG,
+  //       ToastAndroid.BOTTOM,
+  //       25,
+  //       50,
+  //     );
+  //   } else if (refCodeError == true) {
+  //     ToastAndroid.showWithGravityAndOffset(
+  //       'Please enter valid referal code',
+  //       ToastAndroid.LONG,
+  //       ToastAndroid.BOTTOM,
+  //       25,
+  //       50,
+  //     );
+  //   } else {
+  //     let confirmVal = handlePhoneNumber(info.st_phone);
+  //     //console.log(confirmVal,'SignIn phone Screen');
+  //     phone_validate = phoneRegex.test(confirmVal);
+  //     if (phone_validate) {
+  //       setshowprog(true);
+  //       const schoolBoardName = Board.find(rec => rec.boardid == board_name);
+  //       const ClassID = Standard.find(rec => rec.stageid == stage);
+  //       const bodydata = {
+  //         // email: info.st_email,
+  //         // phone: confirmVal,
+  //         // age: info.st_age,
+  //         // referralcode: ref_Code,
+  //         // fname: info.fname,
+  //         // lname: info.lname,
+  //         // language: selectedLanguage,
 
-          email: info.st_email,
-          phone: confirmVal,
-          age: st_age.value,
-          referralcode: ref_Code,
-          fname: info.fname,
-          lname: info.lname,
-          language: selectedLanguage,
-          stage: info.stage,
-          stageid: ClassID != undefined ? ClassID.stageid : '',
-          alterphone: parents_phone,
-          password: password,
-          schoolname: school_name,
-          // schoolname: '',
-          // address: info.st_address,
-          address: '',
-          gender: gender,
-          image: '',
-          imagename: '',
-          boardname:
-            schoolBoardName != undefined ? schoolBoardName.boardname : '',
-          fathername: father_name,
-          // mothername: mother_name,
-          mothername: '',
-          name: info.fname + ' ' + info.lname,
-          isPremium: false,
-          subscriptionStartDate: '',
-          subscriptionEndDate: '',
-          boardid: schoolBoardName != undefined ? schoolBoardName.boardid : '',
-        };
-        //   let uuu = await Apiconnect.postData_noauth('postdata/usersignup', inf);
-        console.log(bodydata, '============RegisterNewChild bodydata');
+  //         email: info.st_email,
+  //         phone: confirmVal,
+  //         age: st_age.value,
+  //         referralcode: ref_Code,
+  //         fname: info.fname,
+  //         lname: info.lname,
+  //         language: selectedLanguage,
+  //         stage: info.stage,
+  //         stageid: ClassID != undefined ? ClassID.stageid : '',
+  //         alterphone: parents_phone,
+  //         password: password,
+  //         schoolname: school_name,
+  //         // schoolname: '',
+  //         // address: info.st_address,
+  //         address: '',
+  //         gender: gender,
+  //         image: '',
+  //         imagename: '',
+  //         boardname:
+  //           schoolBoardName != undefined ? schoolBoardName.boardname : '',
+  //         fathername: father_name,
+  //         // mothername: mother_name,
+  //         mothername: '',
+  //         name: info.fname + ' ' + info.lname,
+  //         isPremium: false,
+  //         subscriptionStartDate: '',
+  //         subscriptionEndDate: '',
+  //         boardid: schoolBoardName != undefined ? schoolBoardName.boardid : '',
+  //       };
+  //       //   let uuu = await Apiconnect.postData_noauth('postdata/usersignup', inf);
+  //       console.log(bodydata, '============RegisterNewChild bodydata');
 
-        dispatch(RegisterNewChild(bodydata, handleCallBack));
-      }
-    }
-  };
+  //       dispatch(RegisterNewChild(bodydata, handleCallBack));
+  //     }
+  //   }
+  // };
 
-  const handleCallBack = (user, message, authtoken) => {
-    if (user != undefined) signIn(user, authtoken);
-    else if (message == 'User already registered') {
-      // setInfoModal(true);
-      CommonMessage(message);
+  // const handleCallBack = (user, message, authtoken) => {
+  //   if (user != undefined) signIn(user, authtoken);
+  //   else if (message == 'User already registered') {
+  //     // setInfoModal(true);
+  //     CommonMessage(message);
 
-      // CommonMessage("User already registered ! Please Signin instead")
-    } else {
-      if (message != '') {
-        CommonMessage(message);
-      }
-    }
-    // navigation.navigate('SignInScreen');
-  };
-  const navigationFunction = () => {
-    setInfoModal(false);
-    navigation.navigate('SignInScreen');
-  };
+  //     // CommonMessage("User already registered ! Please Signin instead")
+  //   } else {
+  //     if (message != '') {
+  //       CommonMessage(message);
+  //     }
+  //   }
+  //   // navigation.navigate('SignInScreen');
+  // };
+
+  // const navigationFunction = () => {
+  //   setInfoModal(false);
+  //   navigation.navigate('SignInScreen');
+  // };
+
   return (
     <View style={styles.container}>
-      {/* <StatusBar backgroundColor={Colors.secondary} barStyle="dark-content" /> */}
       <StatusBar backgroundColor={'#263d2d'} barStyle="light-content" />
       <ImageBackground
         style={{
@@ -899,20 +877,6 @@ const SignUpScreen1 = ({ route }) => {
             {trans(`New Account`)}
           </Text>
         </View>
-
-        {/* <Text
-        style={{
-          fontSize: 16,
-          color: '#777',
-          marginLeft: 10,
-          // textTransform: 'capitalize',
-          fontWeight: '600',
-          textAlign: 'center',
-          width: '55%',
-          alignSelf: 'center',
-        }}>
-        {trans(`Start by entering your details below`)}
-      </Text> */}
         <ScrollView showsVerticalScrollIndicator={false} style={{}}>
           <Animatable.View
             style={{ top: 10 }}
@@ -937,11 +901,6 @@ const SignUpScreen1 = ({ route }) => {
               // borderTopLeftRadius: 30,
               // borderTopRightRadius: 30,
               paddingHorizontal: 20,
-              // paddingVertical: 10,
-              // marginVertical: 10,
-              // minHeight: device_height * 0.55,
-              // minWidth: device_width * 0.9,
-              // position:'absolute',
               marginTop: -30,
               // borderWidth:1,
               zIndex: -1,
@@ -1002,9 +961,11 @@ const SignUpScreen1 = ({ route }) => {
                               // marginLeft: 5,
                               fontWeight: '700',
                             }}>
-                            {trans('Complete Your Registration ')}
+                            {/* {trans('Complete Your Registration ')} */}
+                            {'Complete Your Registration '}
                             <Text style={{ fontWeight: '900', fontSize: 16 }}>
-                              {trans('1/5')}
+                              {/* {trans('1/5')} */}
+                              {'1/4'}
                             </Text>
                           </Text>
                         </View>
@@ -1038,7 +999,8 @@ const SignUpScreen1 = ({ route }) => {
                             size={22}
                           />
                           <TextInput
-                            placeholder={trans(`Student's first name *`)}
+                            // placeholder={trans(`Student's first name *`)}
+                            placeholder={`Student's first name *`}
                             placeholderTextColor="#666666"
                             value={fname}
                             style={{
@@ -1054,21 +1016,7 @@ const SignUpScreen1 = ({ route }) => {
                             }
                           />
                         </View>
-                        {/* {fnameError && (
-                            <Animatable.View
-                              animation="fadeInLeft"
-                              duration={500}>
-                              <Text
-                                style={{
-                                  color: Colors.red,
-                                  marginBottom: 5,
-                                  marginTop: 5,
-                                  marginLeft: 5,
-                                }}>
-                                {trans('Please enter valid first name')}
-                              </Text>
-                            </Animatable.View>
-                          )} */}
+                        
                         {fname == '' ? (
                           <Animatable.View
                             animation="fadeInLeft"
@@ -1082,7 +1030,8 @@ const SignUpScreen1 = ({ route }) => {
                                 textAlign: 'left',
                                 marginLeft: 5,
                               }}>
-                              {trans('Please enter valid first name')}
+                              {/* {trans('Please enter valid first name')} */}
+                              {'Please enter valid first name'}
                             </Text>
                           </Animatable.View>
                         ) : fnameError ? (
@@ -1096,7 +1045,8 @@ const SignUpScreen1 = ({ route }) => {
                                 marginTop: 5,
                                 marginLeft: 5,
                               }}>
-                              {trans('Please enter valid first name')}
+                              {/* {trans('Please enter valid first name')} */}
+                              {'Please enter valid first name'}
                             </Text>
                           </Animatable.View>
                         ) : (
@@ -1121,7 +1071,8 @@ const SignUpScreen1 = ({ route }) => {
                             size={22}
                           />
                           <TextInput
-                            placeholder={trans(`Student's last name`)}
+                            // placeholder={trans(`Student's last name`)}
+                            placeholder={`Student's last name`}
                             placeholderTextColor="#666666"
                             value={lname}
                             style={{
@@ -1148,7 +1099,8 @@ const SignUpScreen1 = ({ route }) => {
                                 marginTop: -3,
                                 marginLeft: 5,
                               }}>
-                              {trans('Please enter valid last name')}
+                              {/* {trans('Please enter valid last name')} */}
+                              {'Please enter valid last name'}
                             </Text>
                           </Animatable.View>
                         )}
@@ -1190,7 +1142,8 @@ const SignUpScreen1 = ({ route }) => {
                             {'+91  |'}
                           </Text>
                           <TextInput
-                            placeholder={trans(`Student's Phone Number`)}
+                            // placeholder={trans(`Student's Phone Number`)}
+                            placeholder={`Student's Phone Number`}
                             placeholderTextColor="#666666"
                             value={st_phone}
                             style={{
@@ -1223,7 +1176,8 @@ const SignUpScreen1 = ({ route }) => {
                                 // marginTop: -10,
                                 marginLeft: 5,
                               }}>
-                              {trans('User already registered !')}
+                              {/* {trans('User already registered !')} */}
+                              {'User already registered !'}
                             </Text>
                           </Animatable.View>
                         ) : VerifyPhone != undefined && Object.keys(VerifyPhone).length !== 0 &&
@@ -1246,7 +1200,8 @@ const SignUpScreen1 = ({ route }) => {
                                 size={17}
                               />
                               {'  '}
-                              {trans('New user !')}
+                              {/* {trans('New user !')} */}
+                              {'New user !'}
                             </Text>
                           </Animatable.View>
                         ) : (
@@ -1263,7 +1218,8 @@ const SignUpScreen1 = ({ route }) => {
                                 marginTop: -3,
                                 marginLeft: 5,
                               }}>
-                              {trans('Please enter 10 digit phone number')}
+                              {/* {trans('Please enter 10 digit phone number')} */}
+                              {'Please enter 10 digit phone number'}
                             </Text>
                           </Animatable.View>
                         ) : (
@@ -1278,7 +1234,8 @@ const SignUpScreen1 = ({ route }) => {
                                   // marginTop: -10,
                                   marginLeft: 5,
                                 }}>
-                                {trans('Please enter 10 digit phone number')}
+                                {/* {trans('Please enter 10 digit phone number')} */}
+                                {'Please enter 10 digit phone number'}
                               </Text>
                             </Animatable.View>
                           )
@@ -1355,7 +1312,8 @@ const SignUpScreen1 = ({ route }) => {
                             textAlign: 'center',
                             alignItems: 'center',
                           }}>
-                          {trans('Next')}
+                          {/* {trans('Next')} */}
+                          {'Next'}
                         </Text>
                       </TouchableOpacity>
                     </View>
@@ -1363,47 +1321,6 @@ const SignUpScreen1 = ({ route }) => {
                 </View>
               </View>
             </View>
-
-            {/* <View
-            style={{
-              flexDirection: 'row',
-              marginTop: 5,
-              borderBottomWidth: 1,
-              borderBottomColor: '#f2f2f2',
-              paddingBottom: 5,
-              marginVertical: 10,
-              backgroundColor: '#fff',
-              elevation: 10,
-              borderRadius: 18,
-              height: 60,
-              paddingLeft: 15,
-              marginTop: Platform.OS === 'ios' ? 0 : 5,
-              alignItems: 'center',
-            }}>
-            <FontAwesome name="address-card" color={Colors.primary} size={20} />
-            <TextInput
-              placeholder={trans(`Enter Your Address`)}
-              placeholderTextColor="#666666"
-              value={st_address}
-              style={{
-                color: '#333',
-                flex: 1,
-                // marginTop: Platform.OS === 'ios' ? 0 : -12,
-                paddingLeft: 10,
-                // color: '#05375a',
-                // backgroundColor: '#fff',
-                // elevation: 10,
-                // borderRadius: 18,
-                // height: 60,
-                fontSize: 18,
-                fontWeight: '600',
-              }}
-              autoCapitalize="none"
-              // onChangeText={(val) => textInputChange(val)}
-              // onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
-              onChangeText={val => handleInputChange('st_address', val)}
-            />
-          </View> */}
 
             {/* <View style={[styles.button, {}]}> */}
             {/* <Text
@@ -1463,532 +1380,6 @@ const SignUpScreen1 = ({ route }) => {
             {/* </View> */}
           </Animatable.View>
         </ScrollView>
-
-        {/* {inputModal1 && (
-          <Modal transparent={true} visible={inputModal1}>
-            <View
-              style={{
-                backgroundColor: '#fff',
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                <View
-                  style={{
-                    borderRadius: 15,
-                    // borderWidth: 1,
-                    minHeight: device_height * 0.55,
-                    minWidth: device_width * 0.9,
-                    paddingHorizontal: 20,
-                    backgroundColor: '#fff',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                  }}>
-                  <View>
-                    <View
-                      style={{
-                        alignItems: 'center',
-                        // borderWidth:1
-                      }}>
-                      <View>
-                        <View
-                          style={{
-                            alignItems: 'center',
-                            paddingVertical: 15,
-                            borderWidth: 1,
-                            borderColor: '#ccc',
-                            elevation: 10,
-                            width: device_width * 0.9,
-                            borderTopLeftRadius: 10,
-                            borderTopRightRadius: 10,
-                            backgroundColor: '#def',
-                            marginLeft: -27,
-                            marginRight: -27,
-                          }}>
-                          <Text
-                            style={{
-                              textAlign: 'center',
-                              width: device_width * 0.7,
-                              fontSize: 15,
-                              color: '#333',
-                              marginTop: 5,
-                              // marginLeft: 5,
-                              fontWeight: '700',
-                            }}>
-                            {trans('Complete Your Registration ')}
-                            <Text style={{fontWeight: '900', fontSize: 16}}>
-                              1/5
-                            </Text>
-                          </Text>
-                        </View>
-                        <View
-                          style={{
-                            // marginTop: 5,
-                            // paddingBottom: 5,
-                            // marginTop: Platform.OS === 'ios' ? 0 : -12,
-                            flexDirection: 'row',
-                            borderBottomWidth: 1,
-                            borderBottomColor: '#f2f2f2',
-                            marginVertical: 10,
-                            backgroundColor: '#fff',
-                            elevation: 10,
-                            borderRadius: 8,
-                            height: 50,
-                            paddingLeft: 20,
-                            alignItems: 'center',
-                            borderWidth:
-                              fname == '' ? 1 : fnameError == true ? 1 : 0,
-                            borderColor:
-                              fname == ''
-                                ? 'red'
-                                : fnameError == true
-                                ? 'red'
-                                : '#fff',
-                          }}>
-                          <FontAwesome
-                            name="user"
-                            color={Colors.primary}
-                            size={22}
-                          />
-                          <TextInput
-                            placeholder={trans(`Student's first name *`)}
-                            placeholderTextColor="#666666"
-                            value={fname}
-                            style={{
-                              color: '#333',
-                              flex: 1,
-                              fontSize: 15,
-                              fontWeight: '600',
-                              paddingLeft: 10,
-                            }}
-                            autoCapitalize="none"
-                            onChangeText={val =>
-                              handleInputChange('fname', val)
-                            }
-                          />
-                        </View>
-                        {/* {fnameError && (
-                            <Animatable.View
-                              animation="fadeInLeft"
-                              duration={500}>
-                              <Text
-                                style={{
-                                  color: Colors.red,
-                                  marginBottom: 5,
-                                  marginTop: 5,
-                                  marginLeft: 5,
-                                }}>
-                                {trans('Please enter valid first name')}
-                              </Text>
-                            </Animatable.View>
-                          )} */}
-        {/* {fname == '' ? (
-                          <Animatable.View
-                            animation="fadeInLeft"
-                            style={{alignItems: 'flex-start'}}
-                            duration={500}>
-                            <Text
-                              style={{
-                                color: Colors.red,
-                                marginBottom: 5,
-                                marginTop: -3,
-                                textAlign: 'left',
-                                marginLeft: 5,
-                              }}>
-                              {trans('Please enter valid first name')}
-                            </Text>
-                          </Animatable.View>
-                        ) : fnameError ? (
-                          <Animatable.View
-                            animation="fadeInLeft"
-                            duration={500}>
-                            <Text
-                              style={{
-                                color: Colors.red,
-                                marginBottom: 5,
-                                marginTop: 5,
-                                marginLeft: 5,
-                              }}>
-                              {trans('Please enter valid first name')}
-                            </Text>
-                          </Animatable.View>
-                        ) : (
-                          <></>
-                        )}
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            borderBottomWidth: 1,
-                            borderBottomColor: '#f2f2f2',
-                            marginVertical: 10,
-                            backgroundColor: '#fff',
-                            elevation: 10,
-                            borderRadius: 8,
-                            height: 50,
-                            paddingLeft: 20,
-                            alignItems: 'center',
-                          }}>
-                          <FontAwesome
-                            name="user"
-                            color={Colors.primary}
-                            size={22}
-                          />
-                          <TextInput
-                            placeholder={trans(`Student's last name`)}
-                            placeholderTextColor="#666666"
-                            value={lname}
-                            style={{
-                              color: '#333',
-                              flex: 1,
-                              fontSize: 15,
-                              fontWeight: '600',
-                              paddingLeft: 10,
-                            }}
-                            autoCapitalize="none"
-                            onChangeText={val =>
-                              handleInputChange('lname', val)
-                            }
-                          />
-                        </View>
-                        {lnameError && (
-                          <Animatable.View
-                            animation="fadeInLeft"
-                            duration={500}>
-                            <Text
-                              style={{
-                                color: Colors.red,
-                                marginBottom: 5,
-                                marginTop: -3,
-                                marginLeft: 5,
-                              }}>
-                              {trans('Please enter valid last name')}
-                            </Text>
-                          </Animatable.View>
-                        )}
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            borderBottomWidth: 1,
-                            borderBottomColor: '#f2f2f2',
-                            marginVertical: 10,
-                            backgroundColor: '#fff',
-                            elevation: 10,
-                            borderRadius: 8,
-                            height: 50,
-                            paddingLeft: 20,
-                            alignItems: 'center',
-                            borderWidth:
-                              st_phone == '' ? 1 : phoneerror == true ? 1 : 0,
-                            borderColor:
-                              st_phone == ''
-                                ? 'red'
-                                : phoneerror == true
-                                ? 'red'
-                                : '#fff',
-                          }}>
-                          <FontAwesome5
-                            name="phone-alt"
-                            color={Colors.primary}
-                            size={20}
-                          />
-                          <Text
-                            style={{
-                              color: '#666',
-                              // flex: 1,
-                              paddingLeft: 10,
-                              fontSize: 15,
-                              fontWeight: '600',
-                              marginBottom: 2,
-                            }}>
-                            {'+91  |'}
-                          </Text>
-                          <TextInput
-                            placeholder={trans(`Student's Phone Number`)}
-                            placeholderTextColor="#666666"
-                            value={st_phone}
-                            style={{
-                              color: '#333',
-                              flex: 1,
-                              fontSize: 15,
-                              fontWeight: '600',
-                              paddingLeft: 10,
-                            }}
-                            autoCapitalize="none"
-                            // maxLength={13}
-                            onChangeText={val =>
-                              handleInputChange('st_phone', val)
-                            }
-                          />
-                        </View>
-                        {Object.keys(VerifyPhone).length > 0 &&
-                        phone_regex_without_91_validate == true &&
-                        VerifyPhone.data.newUser == false &&
-                        VerifyPhone.data.message ===
-                          'User already registered' ? (
-                          <Animatable.View
-                            animation="fadeInLeft"
-                            duration={500}>
-                            <Text
-                              style={{
-                                color: Colors.red,
-                                marginBottom: 10,
-                                // marginTop: -10,
-                                marginLeft: 5,
-                              }}>
-                              {trans('User already registered !')}
-                            </Text>
-                          </Animatable.View>
-                        ) : Object.keys(VerifyPhone).length > 0 &&
-                          phone_regex_without_91_validate == true &&
-                          VerifyPhone.data.newUser == true &&
-                          VerifyPhone.data.message === 'User not registered' ? (
-                          <Animatable.View
-                            animation="fadeInLeft"
-                            duration={500}>
-                            <Text
-                              style={{
-                                color: 'green',
-                                marginBottom: 10,
-                                // marginTop: -10,
-                                marginLeft: 5,
-                              }}>
-                              <Feather
-                                name="check-circle"
-                                color="green"
-                                size={17}
-                              />
-                              {'  '}
-                              {trans('New user !')}
-                            </Text>
-                          </Animatable.View>
-                        ) : (
-                          <></>
-                        )}
-                        {st_phone == '' ? (
-                          <Animatable.View
-                            animation="fadeInLeft"
-                            duration={500}>
-                            <Text
-                              style={{
-                                color: Colors.red,
-                                marginBottom: 10,
-                                marginTop: -3,
-                                marginLeft: 5,
-                              }}>
-                              {trans('Please enter 10 digit phone number')}
-                            </Text>
-                          </Animatable.View>
-                        ) : (
-                          phoneerror && (
-                            <Animatable.View
-                              animation="fadeInLeft"
-                              duration={500}>
-                              <Text
-                                style={{
-                                  color: Colors.red,
-                                  marginBottom: 10,
-                                  // marginTop: -10,
-                                  marginLeft: 5,
-                                }}>
-                                {trans('Please enter 10 digit phone number')}
-                              </Text>
-                            </Animatable.View>
-                          )
-                        )}
-                      </View>
-                    </View>
-                    <View
-                      style={{
-                        // borderWidth: 1,
-                        width: '100%',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        flexDirection: 'row',
-                        alignSelf: 'center',
-                        marginTop: 10,
-                      }}>
-                      <TouchableOpacity
-                        disabled={st_phone != '' && fname != '' ? false : true}
-                        style={{
-                          borderRadius: 10,
-                          width: '30%',
-                          marginVertical: 5,
-                          backgroundColor:
-                            st_phone != '' && fname != ''
-                              ? Colors.primary
-                              : '#ccc',
-                          paddingVertical: 10,
-                          justifyContent: 'center',
-                        }}
-                        onPress={() => {
-                          setInputModal1(false);
-                          setInputModal2(true);
-                        }}>
-                        <Text
-                          style={{
-                            color:
-                              st_phone != '' && fname != '' ? 'white' : '#666',
-                            fontSize: 13,
-                            fontWeight: '600',
-                            textAlign: 'center',
-                            alignItems: 'center',
-                          }}>
-                          {trans('Next')}
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </Modal>
-        )}  */}
-
-        {infoModal && (
-          <Modal transparent={true} visible={infoModal}>
-            <View
-              style={{
-                backgroundColor: '#fff',
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <View
-                style={{
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flex: 1,
-                }}>
-                <View
-                  style={{
-                    borderRadius: 15,
-                    borderWidth: 1,
-                    minHeight: device_height * 0.35,
-                    minWidth: device_width * 0.8,
-                    backgroundColor: '#fff',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                  }}>
-                  <View>
-                    <View
-                      style={{
-                        alignItems: 'center',
-                      }}>
-                      <View style={{ alignItems: 'center', paddingVertical: 15 }}>
-                        <View
-                          style={{
-                            // borderWidth: 0.8,
-                            borderColor: 'green',
-                            borderRadius: 50,
-                            // padding: 10,
-                            elevation: 15,
-                            backgroundColor: '#dee',
-                          }}>
-                          <MaterialIcons
-                            name="info"
-                            color={'orange'}
-                            size={50}
-                          />
-                        </View>
-
-                        <Text
-                          style={{
-                            textAlign: 'center',
-                            width: device_width * 0.8,
-                            fontSize: 17,
-                            color: '#333',
-                            marginTop: 10,
-                            marginLeft: 10,
-                            fontWeight: '900',
-                          }}>
-                          {trans('User Already Registered with this number')}
-                        </Text>
-                        <Text
-                          style={{
-                            textAlign: 'center',
-                            width: device_width * 0.7,
-                            fontSize: 15,
-                            color: '#666',
-                            marginTop: 5,
-                            // marginLeft: 5,
-                            fontWeight: '500',
-                          }}>
-                          {trans('Please try new number or login instead')}
-                        </Text>
-                      </View>
-                      {/* <AntDesign
-                      name="closecircleo"
-                      style={{
-                        fontSize: 28,
-                        color: '#fff',
-                        position: 'absolute',
-                        top: 10,
-                        right: 10,
-                        // marginTop: 10,
-                        backgroundColor: 'crimson',
-                        borderRadius: 50,
-                      }}
-                      onPress={() => setLockedModalStatus(false)}
-                    /> */}
-                    </View>
-                    <View
-                      style={{
-                        // borderWidth: 1,
-                        paddingVertical: 15,
-                        alignItems: 'center',
-                        marginTop: 10,
-                        marginLeft: 10,
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        alignSelf: 'center',
-                        padding: 10,
-                      }}>
-                      <TouchableOpacity
-                        style={{
-                          borderRadius: 10,
-                          width: '30%',
-                          marginVertical: 5,
-                          borderWidth: 1,
-                          marginRight: 25,
-                          borderColor: 'white',
-                          backgroundColor: Colors.primary,
-                          // width: '100%',
-                          paddingVertical: 5,
-                          justifyContent: 'center',
-                        }}
-                        onPress={() => navigationFunction()}>
-                        <Text
-                          style={{
-                            color: 'white',
-                            fontSize: 15,
-                            fontWeight: 'bold',
-                            textAlign: 'center',
-                            alignItems: 'center',
-                          }}>
-                          {trans('OK')}
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </Modal>
-        )}
-        {/* {showprog && (
-        <Spinner
-          style={{
-            position: 'absolute',
-            top: device_height / 2.8,
-            left: device_width / 2.7,
-          }}
-          isVisible={showprog}
-          size={spinner_size}
-          type={spinner_typ}
-          color={spinner_color}
-        />
-      )} */}
       </ImageBackground>
     </View>
   );
@@ -1999,7 +1390,6 @@ export default SignUpScreen1;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: Colors.secondary,
   },
   header: {
     flex: 0.8,

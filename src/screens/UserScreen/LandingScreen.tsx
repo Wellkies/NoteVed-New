@@ -91,38 +91,38 @@ const LandingScreen = ({ }) => {
 
   const { t: trans, i18n } = useTranslation();
 
-  // const {
-  //   _id: childID = '',
-  //   age: p_age = '',
-  //   childid = '',
-  //   image = '',
-  //   imagename = '',
-  //   fname = '',
-  //   lname = '',
-  //   phone = '',
-  //   name = '',
-  //   boardname = '',
-  //   fathername = '',
-  //   mothername = '',
-  //   // board = '',
-  //   subscriptionStartDate = '',
-  //   subscriptionEndDate = '',
-  //   isPremium = false,
-  //   parentid: parentId = '',
-  //   stage = '',
-  //   gender = '',
-  //   address = '',
-  //   alterphone = '',
-  //   schoolname = '',
-  //   language: userLang = '',
-  //   email = '',
-  //   stageid = '',
-  //   boardid = '',
-  //   classname = '',
-  //   password = '',
-  // } = childInfo || {};
+  const {
+    _id: childID = '',
+    age: p_age = '',
+    childid = '',
+    image = '',
+    imagename = '',
+    fname = '',
+    lname = '',
+    phone = '',
+    name = '',
+    boardname = '',
+    fathername = '',
+    mothername = '',
+    // board = '',
+    subscriptionStartDate = '',
+    subscriptionEndDate = '',
+    isPremium = false,
+    parentid: parentId = '',
+    stage = '',
+    gender = '',
+    address = '',
+    alterphone = '',
+    schoolname = '',
+    language: userLang = '',
+    email = '',
+    stageid = '',
+    boardid = '',
+    classname = '',
+    password = '',
+  } = childInfo || {};
   const ExamAvailable = useAppSelector(selectAllCoursesInfo);
-  console.log(ExamAvailable, "==============ExamAvailable");
+  // console.log(ExamAvailable, "==============ExamAvailable");
 
   useEffect(() => {
     navigation.addListener('focus', () => {
@@ -143,13 +143,13 @@ const LandingScreen = ({ }) => {
   }, []);
 
   useEffect(() => {
-    // const user = userInfo;
-    // const userid = user._id;
+    const user = userInfo;
+    const userid = user._id;
     // const stageid = user.stageid;
     // const boardid = user.boardid;
     // const childid = user.childid;
 
-    // dispatch(getChildDetailsAPI(userid));
+    dispatch(getChildDetailsAPI(userid));
     dispatch(getAllCoursesAPI());
 
   }, [])

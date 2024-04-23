@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 //Storing a value in Async storage
 const storeValue = async (storage_Key:string, value:any) => {
   try {
-    console.log(storage_Key,value,"in async--------------");
+    console.log(storage_Key,value,"in async-------storeValue-------");
     
     await AsyncStorage.setItem(storage_Key, value);
   } catch (error) {
@@ -14,7 +14,7 @@ const storeValue = async (storage_Key:string, value:any) => {
 //Storing an object in Async storage
 const storeObject = async (storage_Key:string, value:any) => {
   try {
-    console.log(storage_Key,value,"in async--------------");
+    console.log(storage_Key,value,"in async-------storeObject-------");
 
     const jsonValue = JSON.stringify(value);
     await AsyncStorage.setItem(storage_Key, jsonValue);

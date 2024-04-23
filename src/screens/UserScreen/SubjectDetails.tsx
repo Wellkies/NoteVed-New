@@ -50,17 +50,23 @@ const SubjectsDetails = ({ route }) => {
   const dispatch = useDispatch<any>();
   // const scholarshipid = 'Navodaya1690353664697';
   const {
-    subjectImage = '',
-    scholarshipid = '',
-    subjectid = '',
-    subjectname: subject = '',
-    showFeedback = false,
+    subjectid='',
+    subjectname='',
+    subjectImage='',
+    quiz='',
+    contentid='' ,
+    slcontent='',
+    contentimage='',
+    contentset='',
+    slsubject='' ,
+    sltopic='' ,
+    timeDuration='' ,
+    topicid='' ,
+    topicimage='' ,
+    topicname='' ,
   } = route.params;
   console.log(route.params, "=================route.params");
-  const boardid = '1'
-  const childId = '1713196100480'
-  const Class = '5'
-  const scholarshipName = 'adarsha'
+
   // console.log(childId, "childId................")
   const [highlightedIndex, setHighlightedIndex] = useState(0);
   const [quizList, setQuizList] = useState();
@@ -199,7 +205,7 @@ const SubjectsDetails = ({ route }) => {
     isPremium = '',
     // coordinates='',
   } = childInfo;
-  //
+  
   const isReattempt = true;
 
   const selectedhandler = (index, name) => {
@@ -389,7 +395,6 @@ const SubjectsDetails = ({ route }) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      {/* <StatusBar backgroundColor={'salmon'} barStyle="dark-content" /> */}
       <ImageBackground
         style={{
           width: device_width,

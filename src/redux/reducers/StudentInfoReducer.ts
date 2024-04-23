@@ -4,20 +4,6 @@ import { getChildDetailsAPIAction } from "../actions/StudentInfo"; // Assuming y
 import AsyncStorage from "../../utils/AsyncStorage";
 import { dispatch } from "../store/reducerHook";
 import { updateUser } from "./loginReducer";
-// import Storage from '../../utils/AsyncStorage';
-// import { useEffect, useState } from "react";
-
-// const [idData, setIdData] = useState()
-//   const asyncData = async () => {
-//     const token = await Storage.getObject('@auth_Token');
-//     const user = await Storage.getObject('@user');
-//     setIdData(user._id)
-//     // console.log(token, 'asynctok', user, 'asyncuser----------------------------------------------------');
-//   };
-
-//   useEffect(() => {
-//     asyncData()
-//   }, [])
 
 interface StudentState {
   StudentInfo: Object; // Define UserInfo interface as per your data structure

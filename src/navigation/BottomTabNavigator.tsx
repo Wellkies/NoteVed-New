@@ -30,6 +30,7 @@ import { selectUserInfo} from '../redux/reducers/loginReducer';
 //   getFCMnotificationAPI,
 // } from '../redux/actions/Action';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getChildDetailsAPI } from '../redux/reducers/StudentInfoReducer';
 // const Stack = createStackNavigator();
 function BottomTabNavigator() {
   const dispatch = useDispatch();
@@ -48,22 +49,22 @@ function BottomTabNavigator() {
   };
   const getData = async () => {
     let Data = '';
-    await AsyncStorage.getItem('userInfo').then(data => {
+    await AsyncStorage.getItem('@user').then(data => {
       Data = JSON.parse(data);
     });
-    // console.log(Data, signOut,'Data&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
+    console.log(Data,'Data&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
     // if (Data != null && Data._id != null)
       // dispatch(
         // getChildDetailsAPI(undefined, undefined, Data._id, undefined, callBack),
       // );
   };
   const {authToken,status,userInfo} = useAppSelector(selectUserInfo);
-  // console.log(childInfo, 'childInfo..............');
-  // const {childid = ''} = userInfo;
-  // useEffect(() => {
-  //   // dispatch(getFCMnotificationAPI(undefined, childid));
-  //   getData();
-  // }, [childid]);
+  const {childid = ''} = userInfo;
+  console.log(childid, 'childid..............');
+  useEffect(() => {
+    // dispatch(getFCMnotificationAPI(undefined, childid));
+    getData();
+  }, [childid]);
 
   const callBack = () => {
     // dispatch(getFCMnotificationAPI(undefined, childid));
@@ -87,9 +88,10 @@ function BottomTabNavigator() {
   //   item => item.readstatus === 'true',
   // ).length;
   // console.log(badgeCountdata, 'badgeCountdata......');
+
   return (
     <>
-      <StatusBar backgroundColor={'salmon'} barStyle="dark-content" />
+      <StatusBar backgroundColor={'#263d2d'} barStyle="light-content" />
       <Tab.Navigator
         backBehaviour="initialRoute"
         screenOptions={({route, navigation}) => ({
@@ -106,13 +108,13 @@ function BottomTabNavigator() {
           },
           tabBarStyle: {
             height: 60,
-            backgroundColor: 'salmon',
+            backgroundColor: '#263d2d',
             display: showTab,
           },
           // tabBarStyle: {height: 50, backgroundColor: '#def',display: 'flex',},
           // tabBarInactiveTintColor: '#f1a722',
-          tabBarInactiveTintColor: '#999',
-          tabBarActiveTintColor: '#000',
+          tabBarInactiveTintColor: '#fff',
+          tabBarActiveTintColor: '#f1a722',
           tabBarLabelStyle: {paddingBottom: 5},
           tabBarIcon: ({color, size, focused}) => {
             let iconName;
@@ -184,17 +186,17 @@ function BottomTabNavigator() {
           //   tabBarButton: props => <CustomTabBarButton route="home" {...props} />,
           // }}
         />
-        {/* <Tab.Screen
+        <Tab.Screen
           name={ROUTES.PROFILE_TAB}
-          // component={ProfileTabNavigation}
+          component={ProfileTabNavigation}
           options={({route, navigation}) => ({
             title: trans('User Profile'),
           })}
           // options={{
           //   tabBarButton: props => <CustomTabBarButton route="home" {...props} />,
           // }}
-        /> */}
-         {/* <Tab.Screen
+        />
+         <Tab.Screen
           name={ROUTES.STORE_TAB}
           component={StoreTabNavigator}
           options={({route, navigation}) => ({
@@ -203,15 +205,16 @@ function BottomTabNavigator() {
           // options={{
           //   tabBarButton: props => <CustomTabBarButton route="home" {...props} />,
           // }}
-        />  */}
+        /> 
+        {/* subjectName = '', chapterName = '', examSet = '' */}
 
-        {/* <Tab.Screen
+        <Tab.Screen
           name={ROUTES.NOTIFICATION_TAB}
           component={NotificationTabNavigator}
           options={({route, navigation}) => ({
             title: trans('Notification'),
           })}
-        /> */}
+        />
       </Tab.Navigator>
     </>
   );

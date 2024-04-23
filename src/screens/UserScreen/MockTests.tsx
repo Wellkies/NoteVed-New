@@ -13,36 +13,16 @@ import {
 import React, {useEffect, useState, useRef} from 'react';
 import Colors from '../../../assets/Colors';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-// import CommonModal from '../AppScreens/CommonScreens/CommonModal';
-
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-// import {
-//   answerReattemptSubmitApi,
-//   answerSubmitApi,
-//   createBelow90PercentageBSEApi,
-//   createBelow90PercentageOtherApi,
-//   createabove90PercentageBSEApi,
-//   createabove90PercentageOtherApi,
-//   getChildDetailsAPI,
-//   getContentQuizAPI,
-//   getTopicBySubClassAPI,
-//   getUserInfoAPI,
-// } from '../../redux/actions/Action';
 import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
-// import CountdownTimer from './CountdownTimer';
-// import {CountdownCircleTimer} from 'react-native-countdown-circle-timer';
 import * as Progress from 'react-native-progress';
-
 import {device_height, device_width} from '../style';
 import {
   markCalculation,
   // remainingTimerdata,
 } from '../../../constants/Constants';
 import WebView from 'react-native-webview';
-
-import AsyncStorage from '@react-native-async-storage/async-storage';
-// import LoadingScreen from '../AppScreens/LoadingScreen';
 import {useNavigation} from '@react-navigation/native';
 import {useAppSelector} from '../../redux/store/reducerHook';
 import {
@@ -75,6 +55,7 @@ import {
   getTopicDetailsAPI,
   selectTopicDetails,
 } from '../../redux/reducers/GetTopicDetailsFormTopicIdReducer';
+import { selectContentDetailsInfo, selectContentDetailsStatus } from '../../redux/reducers/GetContentDetailsReducer';
 
 const MockTests = ({route}) => {
   const dispatch = useDispatch<any>();
@@ -99,12 +80,10 @@ const MockTests = ({route}) => {
     is2ndAvailable = '',
     topicid = '',
   } = route.params;
-  console.log(contentid, 'contentid........?///////////////');
-  // const {ContentQuiz = [], ContentLoading = true} = useSelector(
-  //   state => state.GetContentQuizReducer,
-  // );
-  const ContentQuiz = useAppSelector(selectContentQuiz);
-  const ContentLoading = useAppSelector(selectContentQuizStatus);
+  console.log(route.params, 'route.params........?///////////////');
+
+  const ContentQuiz = useAppSelector(selectContentDetailsInfo);
+  const ContentLoading = useAppSelector(selectContentDetailsStatus);
   console.log(ContentQuiz, 'ContentQuiz..........');
   // {
   // const quizz = ContentQuiz.map(rec => rec.quiz);
@@ -113,32 +92,12 @@ const MockTests = ({route}) => {
     (a, b) => a.questionno - b.questionno,
   );
 
-  // if(ContentLoading==false)
-  // {
-
-  // if(quizz.length>0){
-  // quiz=quizz[0]
-
-  // }
-
-  // }
-  // else{
-  //   quiz=[]
-  // }
-  // }
-  // else{
-  //   quiz=[]
-  // }
-  //
   const timeDurationValue = timeDuration.length
     ? parseInt(timeDuration) * 60
     : '';
 
   // const timeDurationValue = 120
-  const [isPlaying, setIsPlaying] = React.useState(true);
   const [loading, setLoading] = useState(false);
-
-  const [selectedStep, setSelectedStep] = useState(1);
   const [Questionlist, setQuestionlist] = useState(
     sortedQuestionList[0]?.quiz ? sortedQuestionList[0].quiz : [],
   );
@@ -147,13 +106,8 @@ const MockTests = ({route}) => {
   const [quitModalStatus, setQuitModalStatus] = useState(false);
   const [skipModalStatus, setSkipModalStatus] = useState(false);
   const [clearSkipModalStatus, setClearSkipModalStatus] = useState(false);
-
-  const [isProgress, setIsProgress] = React.useState(true);
   const [progressdata, setProgressdata] = useState(0);
 
-  // const {childInfo = []} = useSelector(state => state.ChildDetailsReducer);
-  //
-  // console.log(ContentQuiz, 'ContentQuiz', Questionlist);
   const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
   interface ChildInfo {
     _id: string;
@@ -185,17 +139,17 @@ const MockTests = ({route}) => {
     boardid: string;
     classname: string;
   }
-  const {
-    _id: id = '',
-    childid = '',
-    name: childName = '',
-    stage = '',
-    stageid = '',
-    image: c_image = '',
-    age: C_age = '',
-    phone = '',
-    name = '',
-  } = childInfo;
+  // const {
+  //   _id: id = '',
+  //   childid = '',
+  //   name: childName = '',
+  //   stage = '',
+  //   stageid = '',
+  //   image: c_image = '',
+  //   age: C_age = '',
+  //   phone = '',
+  //   name = '',
+  // } = childInfo;
   // console.log(childInfo, 'childInfo..............');
   const TopicList = useAppSelector(selectTopicDetails);
   console.log(TopicList, 'TopicList//////////////////////');
@@ -210,31 +164,31 @@ const MockTests = ({route}) => {
     );
   }
 
-  const handleUnlockChapter = () => {
-    const revisionbody = {
-      childid: childid,
-      subjectDetails: [
-        {
-          subjectid: subjectId,
-          subject: subjectName,
-          completestatus: 'false',
-          topicDetails: [
-            {
-              topicid: TopicId,
-              topic: chapterName,
-              completestatus: 'true',
-            },
-          ],
-        },
-      ],
-    };
-    console.log(
-      revisionbody,
-      '********************revisionbody................**************************************************************************************',
-    );
+  // const handleUnlockChapter = () => {
+  //   const revisionbody = {
+  //     childid: childid,
+  //     subjectDetails: [
+  //       {
+  //         subjectid: subjectId,
+  //         subject: subjectName,
+  //         completestatus: 'false',
+  //         topicDetails: [
+  //           {
+  //             topicid: TopicId,
+  //             topic: chapterName,
+  //             completestatus: 'true',
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   };
+  //   console.log(
+  //     revisionbody,
+  //     '********************revisionbody***********************',
+  //   );
 
-    AddChildRevisionAPI(revisionbody);
-  };
+  //   AddChildRevisionAPI(revisionbody);
+  // };
 
   const handleselectAnswer = (answerid: string, index: number) => {
     let questions = [...Questionlist];
@@ -243,12 +197,6 @@ const MockTests = ({route}) => {
       selectedAns: answerid,
     };
     setQuestionlist(questions);
-  };
-
-  const handleQuitTest = () => {
-    setQuitModalStatus(false);
-    // setCurrentIndex(0);
-    navigation.goBack();
   };
 
   const handleClearAndSkipQuestion = async (answerid, index) => {
@@ -272,10 +220,12 @@ const MockTests = ({route}) => {
     setCurrentIndex(currentIndex + 1);
     handlePress();
   };
+
   const handlePrevious = async () => {
     setCurrentIndex(currentIndex - 1);
     handlePreviousPress();
   };
+
   const handleNavigation = () => {
     navigation.navigate('ScoreBoard', {
       screenName: screenName,
@@ -297,50 +247,7 @@ const MockTests = ({route}) => {
     });
   };
   const handleCallback = async () => {
-    // let AsyncData = {};
-    // try {
-    //   await AsyncStorage.getItem('TopicApiData').then(data => {
-    //     AsyncData = JSON.parse(data);
-    //   });
-    // } catch (error) {
-    //   //   // Error retrieving data
-    // }
-    //
-    // let {
-    //   // stageid = '',
-    //   // subjectId = '',
-    //   // boardid = '',
-    //   // scholarshipid = '',
-    //   // childid = '',
-
-    //   stageid = '',
-    //   subjectId = '',
-    //   boardid = '',
-    //   scholarshipid = '',
-    //   childid = '',
-    // } = AsyncData;
-
-    console.log(
-      stageid,
-      subjectId,
-      boardid,
-      scholarshipid,
-      childid,
-      'getTopicBySubClassAPI-------',
-    );
     setCurrentIndex(0);
-    // dispatch(
-    //   getTopicBySubClassAPI(
-    //     undefined,
-    //     stageid,
-    //     subjectId,
-    //     boardid,
-    //     scholarshipid,
-    //     childid,
-    //     setLoading,
-    //     handleNavigation,
-    //   ),
-    // );
     const TopicData = {
       Class: boardid,
       subjectId,
@@ -352,48 +259,10 @@ const MockTests = ({route}) => {
 
     dispatch(getTopicBySubClassAPI(TopicData));
     handleNavigation();
-
-    // console.log(
-    //   stageid,
-    //   subjectId,
-    //   boardid,
-    //   scholarshipid,
-    //   childid,
-    //   '========================scholarshipid################',
-    // );
-    // handleNavigation();
     return true;
   };
 
-  // const handleError=()=>{
-  //   navigation.navigate('UserHome')
-  // }
-
   const handleAnswerSubmit = () => {
-    // let no_of_Attempts = 0;
-    // let Skipped = 0;
-    // let Wronganswer = 0;
-    // let securemark = 0;
-    // Questionlist.map((item, index) => {
-    //   const {selectedAns = '', answer = ''} = item;
-
-    //   if (selectedAns != '' && selectedAns == answer) {
-    //     securemark += 1;
-    //   }
-    //   if (selectedAns != '') {
-    //     no_of_Attempts += 1;
-    //   } else {
-    //     Skipped += 1;
-    //   }
-    //   if (selectedAns != '' && selectedAns !== answer) {
-    //     Wronganswer += 1;
-    //   }
-    // });
-
-    // let quizData = [...quiz];
-    // const submitData = quizData.map(row => {
-    //   return {...row, selectedAns: row.answer};
-    // });
     const {
       no_of_Attempts = 0,
       correctanswer = 0,
@@ -406,28 +275,14 @@ const MockTests = ({route}) => {
     console.log(
       percentage,
       'percentage...................',
-      stageid,
-      'stageid.......................',
     );
     if (isReattempt) {
       let bodyReattemptAnswerData = {
         id: studentdata[0]._id,
-        // parentid: parentid,
-        // name: childName,
-        // age: C_age,
-        // stage: stage,
-        // contentid: contentid,
-        // subject: subjectName,
-        // topic: chapterName,
-        // contentset: examSet,
-        // totalmark: Questionlist.length,
         securmark: correctanswer,
         quiz: Questionlist,
         percentage: percentage,
-        // quiz: submitData,
-
-        // securmark,wrongmark,skipmark, quiz ,subjectIamge,topicImage,contentImage,isPremium,
-      };
+       };
       const below90Body = {
         phone: phone,
         userName: name,
@@ -538,56 +393,42 @@ const MockTests = ({route}) => {
     totalmark = 0,
     percentage = 0,
   } = markCalculation(Questionlist);
-  //setQuitModalStatus(true);=====================
+
   const handleBackButtonClick = () => {
     setQuitModalStatus(true);
     return true;
   };
+
+  // useEffect(() => {
+  //   const TopicDetails = {
+  //     Class: stageid,
+  //     subjectId,
+  //     boardid,
+  //     scholarshipid,
+  //     topicid,
+  //     childId: childid,
+  //   };
+  //   dispatch(getTopicDetailsAPI(TopicDetails));
+  //   dispatch(handleSetTopicIdForRevision(topicid));
+
+  //   const contentData = {
+  //     contentid,
+  //   };
+  //   dispatch(getContentQuizAPI(contentData));
+  // }, []);
+
   useEffect(() => {
-    const TopicDetails = {
-      Class: stageid,
-      subjectId,
-      boardid,
-      scholarshipid,
-      topicid,
-      childId: childid,
-    };
-
-    // console.log(TopicDetails, 'TopicDetails/////////////////>>>>>>>>>>>>>>>>');
-    dispatch(getTopicDetailsAPI(TopicDetails));
-    dispatch(handleSetTopicIdForRevision(topicid));
-
-    const contentData = {
-      contentid,
-    };
-    dispatch(getContentQuizAPI(contentData));
-  }, []);
-
-  useEffect(() => {
-    dispatch(handleSetTopicIdForRevision(topicid));
-    // setModalStatus(false);
-    // dispatch(getContentQuizAPI(contentid));
+    // dispatch(handleSetTopicIdForRevision(topicid));
     navigation.addListener('focus', () => {
-      // dispatch(getContentQuizAPI(contentid));
-      const contentData = {
-        contentid,
-      };
-      dispatch(getContentQuizAPI(contentData));
+      // const contentData = {
+      //   contentid,
+      // };
+      // dispatch(getContentQuizAPI(contentData));
       BackHandler.addEventListener('hardwareBackPress', () =>
         handleBackButtonClick(),
       );
-
       setModalStatus(false);
-      // dispatch(getUserInfoAPI(undefined, undefined, setLoading));
-      if (id != '') dispatch(getChildDetailsAPI(childid));
-      // undefined,
-      // undefined,
-      // undefined,
-      // setLoading,
-      // undefined,
-      //   ),
-      // );
-
+      // if (id != '') dispatch(getChildDetailsAPI(childid));
       if (progressdata == 0) handlePress();
     });
     return () => {
@@ -598,33 +439,15 @@ const MockTests = ({route}) => {
   }, []);
 
   useEffect(() => {
-    if (isReattempt == false) {
-      if (quiz?.length > 0) {
-        // let list = [...quiz];
-        //
-
-        // const data = list.map((rec, index) => {
-        //   let optionList = [];
-        //   if (rec.option.length > 0) {
-        //
-        //     rec.option.map((item, idx) => {
-        //       let keydata = Object.keys(item);
-        //       let Valuedata = Object.values(item);
-        //       optionList.push({label: keydata[0], value: Valuedata[0]});
-        //     });
-        //   }
-        //   //
-        //   return {...rec, option: optionList};
-        // });
-        //
-        setQuestionlist(quiz);
-      }
-    } else {
-      if (quiz?.length > 0) setQuestionlist(quiz);
-    }
+    // if (isReattempt == false) {
+    //   if (quiz?.length > 0) {
+    //     setQuestionlist(quiz);
+    //   }
+    // } else {
+    //   if (quiz?.length > 0) setQuestionlist(quiz);
+    // }
+    if (quiz?.length > 0) setQuestionlist(quiz);
   }, [ContentQuiz]);
-
-  const handleReattemptSubmit = () => {};
 
   const handlePress = () => {
     let newprogressdata = parseFloat(progressdata) + 1 / Questionlist?.length;
@@ -705,7 +528,6 @@ const MockTests = ({route}) => {
                   }}>
                   {trans('Quit Test')}
                 </Text>
-                {/* <FontAwesome5 style={{color: '#fff'}} name="power-off" size={18} /> */}
               </TouchableOpacity>
             </View>
           </View>

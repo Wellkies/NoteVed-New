@@ -45,10 +45,10 @@ export const userSlice = createSlice({
       state.authToken = null;
       AsyncStorage.clearStorage();
       AsyncStorage.removeValue("@user")
-      AsyncStorage.removeValue("@auth_Token")
+      // AsyncStorage.removeValue("@auth_Token")
       // await AsyncStorage.removeItem('userToken');
       // await AsyncStorage.removeItem('newUser');
-      // await AsyncStorage.removeItem('userInfo');
+      AsyncStorage.removeValue('userInfo');
     },
     updateUser: (state, action) => {           
       state.userInfo = action.payload

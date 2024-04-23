@@ -9,40 +9,33 @@ import {
   ImageBackground,
   TextInput,
 } from 'react-native';
-import React, { useContext, useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Iconz from 'react-native-vector-icons/Entypo';
-import { Image } from 'react-native';
+import {Image} from 'react-native';
 //   import Header from '../AppScreens/CommonScreens/Header';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { useDispatch, useSelector } from 'react-redux';
-import { Avatar } from 'react-native-paper';
+import {useDispatch, useSelector} from 'react-redux';
+import {Avatar} from 'react-native-paper';
 import Colors from '../../../assets/Colors';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 //   import CommonModal from '../AppScreens/CommonScreens/CommonModal';
-import { Modal } from 'react-native-paper';
+import {Modal} from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-//   import {
-//     deleteChildApi,
-//     deleteUserAccountApi,
-//     getChildDetailsAPI,
-//     getDiwaliCouponAPI,
-//     getUserInfoAPI,
-//   } from '../../redux/actions/Action';
-import { AuthContext } from '../../../context';
-import { useTranslation } from 'react-i18next';
+import {AuthContext} from '../../../context';
+import {useTranslation} from 'react-i18next';
 //   import CommonModalUser from './CommonModalUser';
 import Share from 'react-native-share';
 import CommonMessage from '../../../constants/CommonMessage';
 import FastImage from 'react-native-fast-image';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import DeviceInfo from 'react-native-device-info';
-import { device_height, device_width } from '../style';
+import {device_height, device_width} from '../style';
 import LinearGradient from 'react-native-linear-gradient';
-import { useNavigation } from '@react-navigation/native';
-import { TypedUseSelectorHook } from 'react-redux';
-import { RootState, AppDispatch } from '../../redux/store/Store';
+import {useNavigation} from '@react-navigation/native';
+import {TypedUseSelectorHook} from 'react-redux';
+import {RootState, AppDispatch} from '../../redux/store/Store';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {
@@ -52,18 +45,20 @@ import {
 } from '../../redux/reducers/StudentInfoReducer';
 import Header from '../CommonScreens/Header';
 import CommonModalUser from '../CommonScreens/CommonModalUser';
-import { logout } from '../../redux/reducers/loginReducer';
-import { deleteUserAccountActionApi } from '../../redux/actions/deleteUserAccountApi';
+import {logout, selectUserInfo} from '../../redux/reducers/loginReducer';
+import {deleteUserAccountActionApi} from '../../redux/actions/deleteUserAccountApi';
 import {
   CheckDeviceTokenApi,
   selectDeviceToken,
 } from '../../redux/reducers/GetDeviceTokenReducer';
 import Storage from '../../utils/AsyncStorage';
-import { setLanguage } from '../../redux/reducers/languageReducer';
+import {setLanguage} from '../../redux/reducers/languageReducer';
+// import AsyncStorage from '../../utils/AsyncStorage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const currentappVersion = DeviceInfo.getVersion();
 
-const UserProfile = ({ }) => {
+const UserProfile = ({}) => {
   interface ChildInfo {
     _id: string;
     age: string;
@@ -98,9 +93,10 @@ const UserProfile = ({ }) => {
   const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
   const count = useAppSelector(selectStudentStatus);
   const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
+  const {authToken,status,userInfo} = useAppSelector(selectUserInfo);
 
-  // console.log(childInfo, 'in STUDENT PROFILE.............');
-  const { t: trans, i18n } = useTranslation();
+  console.log(userInfo, 'in STUDENT PROFILE.............');
+  const {t: trans, i18n} = useTranslation();
   const [modalStatus, setModalStatus] = useState(false);
   const [deleteModalStatus, setDeleteModalStatus] = useState(false);
   const [sucessDeleteStatus, setsucessDeleteStatus] = useState(false);
@@ -115,36 +111,47 @@ const UserProfile = ({ }) => {
     const authValue = await Storage.removeValue('@auth_Token');
     const User = await Storage.removeValue('@user');
     dispatch(setLanguage(language));
+    console.log(language,"language######################################")
+    if(language=='')
+    {
+      dispatch(setLanguage('english'));
+    }
+    // Storage.storeObject("@user_lang",language)
+    AsyncStorage.setItem("@user_lang", language);
+    // AsyncStorage.setItem('fcmToken', fcmToken);
     dispatch(logout());
   };
+
+  // };
+
   // const dispatch = useDispatch();
   const CheckToken = useAppSelector(selectDeviceToken);
   // console.log(
   //   CheckToken,
   //   '$$$$$$$$$$$$$$$$$$$$$$$$$$$CheckToken....................',
   // );
-  const tokenCheck = async () => {
-    const authValue = await Storage.getObject('@auth_Token');
-    // setGetAuthdata(authValue);
-    // console.log(getAuthdata,"getAuthdata///////////",authValue)
-    const tokenData = {
-      childid: childid,
-      devicetoken: authValue,
-    };
-    console.log(tokenData, 'tokenData................');
-    dispatch(CheckDeviceTokenApi(tokenData));
-    // if (CheckToken != undefined) {
-    if (CheckToken != undefined && CheckToken.message == 'Token not found!') {
-      console.log('*****************', CheckToken.message);
-      navigation.navigate('ExpiredTokenScreen');
-    }
-    // }
-  };
+  // const tokenCheck = async () => {
+  //   const authValue = await Storage.getObject('@auth_Token');
+  //   // setGetAuthdata(authValue);
+  //   // console.log("getAuthdata///////////",authValue)
+  //   const tokenData = {
+  //     childid: childid,
+  //     devicetoken: authValue,
+  //   };
+  //   // console.log(tokenData, 'tokenData................####################');
+  //   dispatch(CheckDeviceTokenApi(tokenData));
+  //   // if (CheckToken != undefined) {
+  //   if (CheckToken != undefined && CheckToken.message == 'Token not found!') {
+  //     console.log('*****************', CheckToken.message);
+  //     navigation.navigate('ExpiredTokenScreen');
+  //   }
+  //   // }
+  // };
 
   useEffect(() => {
-    tokenCheck();
+    // tokenCheck();
     navigation.addListener('focus', () => {
-      tokenCheck();
+      // tokenCheck();
       dispatch(getChildDetailsAPI(id));
       setSelectedIndex(1);
       BackHandler.addEventListener('hardwareBackPress', () => {
@@ -188,7 +195,7 @@ const UserProfile = ({ }) => {
     address = '',
     language = '',
     // coordinates='',
-  } = childInfo;
+  } = userInfo;
   // console.log(language, 'language..........');
   const [loading, setLoading] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(1);
@@ -227,11 +234,11 @@ const UserProfile = ({ }) => {
   ];
   const [info, setInfo] = useState(false);
 
-  const { reason = '' } = info;
+  const {reason = ''} = info;
 
   const handleInputChange = (inputName: string, inputValue: string) => {
     if (inputName == 'reason') {
-      setInfo(Info => ({ ...Info, [inputName]: inputValue }));
+      setInfo(Info => ({...Info, [inputName]: inputValue}));
     }
   };
   const handleDelete = () => {
@@ -263,7 +270,7 @@ const UserProfile = ({ }) => {
     Logout();
   };
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{flex: 1}}>
       <ImageBackground
         style={{
           width: device_width,
@@ -291,7 +298,7 @@ const UserProfile = ({ }) => {
                 flexDirection: 'row',
                 alignItems: 'center',
               }}>
-              <Text style={{ fontSize: 14, fontWeight: '700', color: '#fff' }}>
+              <Text style={{fontSize: 14, fontWeight: '700', color: '#fff'}}>
                 {trans('Version')} : {currentappVersion}
               </Text>
             </TouchableOpacity>
@@ -305,7 +312,7 @@ const UserProfile = ({ }) => {
             justifyContent: 'center',
           }}>
           {TabButton.map((item, index) => {
-            const { label = '', btnId = '', isSelected = '' } = item;
+            const {label = '', btnId = '', isSelected = ''} = item;
 
             const isselectedBtn = btnId == selectedIndex ? true : false;
             return (
@@ -336,7 +343,7 @@ const UserProfile = ({ }) => {
                   onPress={() => {
                     setSelectedIndex(btnId);
                     index == 1
-                      ? navigation.navigate('EditProfile', { childId: childid })
+                      ? navigation.navigate('EditProfile', {childId: childid})
                       : '';
                     // setContentList(contentList);
                   }}>
@@ -370,7 +377,7 @@ const UserProfile = ({ }) => {
           })}
         </View>
 
-        <View style={{ paddingHorizontal: 10 }}>
+        <View style={{paddingHorizontal: 10}}>
           <View
             style={{
               // backgroundColor: '#fff',
@@ -388,9 +395,9 @@ const UserProfile = ({ }) => {
                   onPress={() => {
                     handleChoosePhoto();
                   }}
-                  source={image ? { uri: image } : null}
+                  source={image ? {uri: image} : null}
                   size={120}
-                  style={{ backgroundColor: '#fff' }}
+                  style={{backgroundColor: '#fff'}}
                 />
               ) : gender == 'Male' ? (
                 <Avatar.Image
@@ -603,7 +610,7 @@ const UserProfile = ({ }) => {
                         source={require('../../../assets/add-user.png')}
                         style={[styles.iconStyle, {height: 30, width: 30}]}
                       /> */}
-                    <Text style={[styles.middleOptionsText, { marginLeft: 15 }]}>
+                    <Text style={[styles.middleOptionsText, {marginLeft: 15}]}>
                       {trans('Invite a Friend')}
                     </Text>
                   </View>
@@ -639,19 +646,24 @@ const UserProfile = ({ }) => {
                       style={[styles.iconStyle, {height: 25, width: 25}]}
                     /> */}
 
-                  <Text style={[styles.middleOptionsText, { marginLeft: 20 }]}>
+                  <Text style={[styles.middleOptionsText, {marginLeft: 20}]}>
                     {trans('Help')}
                   </Text>
                 </View>
                 <Iconz name="chevron-small-right" size={20} color={'#f1a722'} />
               </View>
             </TouchableOpacity>
-            {/* <TouchableOpacity
+            <TouchableOpacity
               onPress={() => {
                 setModalStatus(true);
                 // navigation.navigate('Kids_Profile', {childId: id});
               }}>
               <View style={styles.middleOptions}>
+                {/* <Image
+                source={require('../../../assets/plus.png')}
+                style={styles.iconStyle}
+              /> */}
+
                 <View style={styles.options}>
                   <View
                     style={{
@@ -667,7 +679,7 @@ const UserProfile = ({ }) => {
                       style={styles.iconStyle}
                     />
 
-                    <Text style={[styles.middleOptionsText, { marginLeft: 15 }]}>
+                    <Text style={[styles.middleOptionsText, {marginLeft: 15}]}>
                       {trans('Log Out')}
                     </Text>
                   </View>
@@ -678,9 +690,9 @@ const UserProfile = ({ }) => {
                   />
                 </View>
               </View>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
 
-            {/* <TouchableOpacity
+            <TouchableOpacity
               onPress={() => {
                 setDeleteModalStatus(true);
                 // navigation.navigate('Kids_Profile', {childId: id});
@@ -701,7 +713,7 @@ const UserProfile = ({ }) => {
                       style={styles.iconStyle}
                     />
 
-                    <Text style={[styles.middleOptionsText, { marginLeft: 15 }]}>
+                    <Text style={[styles.middleOptionsText, {marginLeft: 15}]}>
                       {trans('Delete Account')}
                     </Text>
                   </View>
@@ -712,8 +724,16 @@ const UserProfile = ({ }) => {
                   />
                 </View>
               </View>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
           </View>
+          {/* <View
+            style={{
+              backgroundColor: '#fff',
+              padding: 10,
+              marginHorizontal: 10,
+            }}>
+            
+          </View> */}
         </ScrollView>
         {modalStatus && (
           <CommonModalUser
@@ -750,7 +770,7 @@ const UserProfile = ({ }) => {
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <View style={{ alignItems: 'flex-end', justifyContent: 'center' }}>
+            <View style={{alignItems: 'flex-end', justifyContent: 'center'}}>
               <View
                 style={{
                   borderRadius: 15,
@@ -778,7 +798,7 @@ const UserProfile = ({ }) => {
                       name="delete"
                       color={'#FFB901'}
                       size={35}
-                    // style={styles.iconStyle}
+                      // style={styles.iconStyle}
                     />
                   </View>
                   <View
@@ -952,9 +972,9 @@ const UserProfile = ({ }) => {
                             onChangeText={val =>
                               handleInputChange('reason', val)
                             }
-                          // onChangeText={onChangeText}
-                          // onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
-                          //   onChangeText={val => handleInputChange('parents_phone', val)}
+                            // onChangeText={onChangeText}
+                            // onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
+                            //   onChangeText={val => handleInputChange('parents_phone', val)}
                           />
                         </View>
                       ) : (
@@ -1129,7 +1149,7 @@ const UserProfile = ({ }) => {
                 //   alignItems:'center'
                 //   paddingHorizontal: 20,
               }}>
-              <Text style={{ color: '#fff', padding: 5 }}>
+              <Text style={{color: '#fff', padding: 5}}>
                 {trans(
                   'We will keep all your account information safe for the next 90 days. During this period, you can revive your account by logging in. After 90 days, all data will be permanently deleted.',
                 )}

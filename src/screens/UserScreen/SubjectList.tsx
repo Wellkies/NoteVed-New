@@ -80,7 +80,7 @@ const SubjectList = ({ route }) => {
   const SubjectByCourse = useAppSelector(selectAllSubjectsInfo);
   const SubLoading = useAppSelector(selectAllSubjectsStatus);
 
-  console.log(SubjectByCourse, '==============SubjectByCourse');
+  // console.log(SubjectByCourse, '==============SubjectByCourse');
 
   const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
   interface ChildInfo {
@@ -298,16 +298,12 @@ const SubjectList = ({ route }) => {
                       <>
                         {SubjectByCourse.map((item, index) => {
                           const {
-                            // subjectimage = '',
-                            // subject = '',
-                            // subjectid = '',
-
                             _id = '',
                             subjectImage = '',
                             subjectid = '',
                             subjectname = '',
                           } = item;
-                          console.log(item, 'item..................');
+                          // console.log(item, 'item..................');
                           return (
                             <TouchableOpacity
                               style={{

@@ -44,14 +44,6 @@ import { device_height, device_width } from '../style';
 import { Avatar, Chip } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-
-// import {
-//   ParentRegister,
-//   RegisterNewChild,
-//   childPhoneVerifyAPI,
-//   getBoard,
-//   getStandard,
-// } from '../../redux/actions/Action';
 import { AuthContext } from '../../../context';
 // import {setLanguage} from '../../redux/actions/Action';
 import i18n from 'i18next';
@@ -94,10 +86,10 @@ const SignUpScreen3 = ({ route }) => {
 
   const selectedLanguage = useAppSelector(selectStudentLanguage)
   console.log(selectedLanguage, "selectedLanguage**********")
-  const Standard = useAppSelector(selectStudentStandard);
-  const Board = useAppSelector(selectStudentBoard);
-  const VerifyPhone = useAppSelector(selectVerifyPhInfo);
-  console.log(VerifyPhone, "VerifyPhone**********")
+  // const Standard = useAppSelector(selectStudentStandard);
+  // const Board = useAppSelector(selectStudentBoard);
+  // const VerifyPhone = useAppSelector(selectVerifyPhInfo);
+  // console.log(VerifyPhone, "VerifyPhone**********")
 
   const { signOut } = useContext(AuthContext);
   // console.log(
@@ -147,7 +139,6 @@ const SignUpScreen3 = ({ route }) => {
 
   useEffect(() => {
     navigation.addListener('focus', () => {
-      setInputModal1(true);
       BackHandler.addEventListener('hardwareBackPress', () => {
         try {
           GoogleSignin.configure();
@@ -162,7 +153,6 @@ const SignUpScreen3 = ({ route }) => {
       });
     });
     return () => {
-      setInputModal1(true);
       BackHandler.removeEventListener('hardwareBackPress', () => {
         try {
           GoogleSignin.configure();
@@ -192,13 +182,13 @@ const SignUpScreen3 = ({ route }) => {
     return true;
   };
 
-  useEffect(() => {
-    if (phone != '') {
-      dispatch(childPhoneVerifyAPI(phone));
-    }
-    dispatch(getBoard());
-    dispatch(getStandard());
-  }, []);
+  // useEffect(() => {
+  //   if (phone != '') {
+  //     dispatch(childPhoneVerifyAPI(phone));
+  //   }
+  //   dispatch(getBoard());
+  //   dispatch(getStandard());
+  // }, []);
 
   const data = [
     {
@@ -541,318 +531,321 @@ const SignUpScreen3 = ({ route }) => {
   const phone_regex_without_91_validate = phoneRegexWithout91.test(st_phone);
   // console.log(email_regex_validate,"========email_regex_validate");
 
-  const submitForm = async () => {
-    // console.log(st_age.value,"=============st_age");
-    const validate =
-      fname != '' &&
-      st_phone != '' &&
-      gender != '' &&
-      father_name != '' &&
-      // mother_name != '' &&
-      board_name !== '' &&
-      stage != '' &&
-      school_name != '' &&
-      st_age != '';
-    const pswd_validate =
-      otplogin == false && password != '' && confirmPassword != '';
+  // const submitForm = async () => {
+  //   // console.log(st_age.value,"=============st_age");
+  //   const validate =
+  //     fname != '' &&
+  //     st_phone != '' &&
+  //     gender != '' &&
+  //     father_name != '' &&
+  //     // mother_name != '' &&
+  //     board_name !== '' &&
+  //     stage != '' &&
+  //     school_name != '' &&
+  //     st_age != '';
+  //   const pswd_validate =
+  //     otplogin == false && password != '' && confirmPassword != '';
 
-    // info.p_pass == '';
-    // info.gender == '';
-    let fname_validate = false;
-    let lname_validate = false;
-    let phone_validate = false;
-    let fathername_validate = false;
-    // let mothername_validate = false;
-    let email_validate = false;
-    let schoolname_validate = false;
-    // //console.log(phone_validate, 'phone_validate')
+  //   // info.p_pass == '';
+  //   // info.gender == '';
+  //   let fname_validate = false;
+  //   let lname_validate = false;
+  //   let phone_validate = false;
+  //   let fathername_validate = false;
+  //   // let mothername_validate = false;
+  //   let email_validate = false;
+  //   let schoolname_validate = false;
+  //   // //console.log(phone_validate, 'phone_validate')
 
-    if (info.st_phone || info.fname) {
-      phone_validate = phoneRegex.test(info.st_phone);
-      email_validate = emailRegex.test(info.st_email);
-      fname_validate = name_reg.test(info.fname);
-      lname_validate = name_reg.test(info.lname);
-      fathername_validate = name_reg.test(info.father_name);
-      schoolname_validate = name_reg.test(info.school_name);
-      // mothername_validate = name_reg.test(info.mother_name);
-    }
-    if (
-      phone == '' || pswdLogin == true
-        ? validate == false && pswd_validate == false
-        : validate == false
-    ) {
-      // if (email_validate == false) {
-      //   setEmailError(true);
-      // } else {
-      //   setEmailError(false);
-      // }
-      if (info.st_phone == '' || phone_validate == false) {
-        setPhoneerror(true);
-      } else {
-        setPhoneerror(false);
-      }
-      if (info.fname == '' || fname_validate == false) {
-        setFnameError(true);
-      } else {
-        setFnameError(false);
-      }
-      if (info.school_name == '' || schoolname_validate == false) {
-        setSchoolNameError(true);
-      } else {
-        setSchoolNameError(false);
-      }
+  //   if (info.st_phone || info.fname) {
+  //     phone_validate = phoneRegex.test(info.st_phone);
+  //     email_validate = emailRegex.test(info.st_email);
+  //     fname_validate = name_reg.test(info.fname);
+  //     lname_validate = name_reg.test(info.lname);
+  //     fathername_validate = name_reg.test(info.father_name);
+  //     schoolname_validate = name_reg.test(info.school_name);
+  //     // mothername_validate = name_reg.test(info.mother_name);
+  //   }
+  //   if (
+  //     phone == '' || pswdLogin == true
+  //       ? validate == false && pswd_validate == false
+  //       : validate == false
+  //   ) {
+  //     // if (email_validate == false) {
+  //     //   setEmailError(true);
+  //     // } else {
+  //     //   setEmailError(false);
+  //     // }
+  //     if (info.st_phone == '' || phone_validate == false) {
+  //       setPhoneerror(true);
+  //     } else {
+  //       setPhoneerror(false);
+  //     }
+  //     if (info.fname == '' || fname_validate == false) {
+  //       setFnameError(true);
+  //     } else {
+  //       setFnameError(false);
+  //     }
+  //     if (info.school_name == '' || schoolname_validate == false) {
+  //       setSchoolNameError(true);
+  //     } else {
+  //       setSchoolNameError(false);
+  //     }
 
-      // if (info.lname == '' || lname_validate == false) {
-      //   setLnameError(true);
-      // } else {
-      //   setLnameError(false);
-      // }
-      if (info.gender == '') {
-        setGenderError(true);
-      } else {
-        setGenderError(false);
-      }
-      if (info.father_name == '' || fathername_validate == false) {
-        setFatherNameError(true);
-      } else {
-        setFatherNameError(false);
-      }
-      // if (info.mother_name == '' || mothername_validate == false) {
-      //   setMotherNameError(true);
-      // } else {
-      //   setMotherNameError(false);
-      // }
-      if (otplogin == false && info.password == '') {
-        setPasswordError(true);
-      } else {
-        setPasswordError(false);
-      }
-      if (otplogin == false && info.confirmPassword == '') {
-        setConfirmPasswordError(true);
-      } else {
-        setConfirmPasswordError(false);
-      }
-      if (info.board_name == '') {
-        setBoardError(true);
-      } else {
-        setBoardError(false);
-      }
-      if (info.stage == '') {
-        setStandardError(true);
-      } else {
-        setStandardError(false);
-      }
-      if (info.st_age == '') {
-        setAgeError(true);
-      } else {
-        setAgeError(false);
-      }
-      // if (info.phone_secondary == '' || phone_validate == false) {
-      //   // //console.log(phone_validate, 'phone_validate');
-      //   setPhoneError(true);
-      // } else {
-      //   setPhoneError(false);
-    } else if (fnameError == true) {
-      ToastAndroid.showWithGravityAndOffset(
-        'Please enter your first name',
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
-        25,
-        50,
-      );
-    } else if (lnameError == true) {
-      ToastAndroid.showWithGravityAndOffset(
-        'Please enter your last name',
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
-        25,
-        50,
-      );
-      // } else if (phoneerror == true) {
-      //   ToastAndroid.showWithGravityAndOffset(
-      //     'Please enter valid phone number',
-      //     ToastAndroid.LONG,
-      //     ToastAndroid.BOTTOM,
-      //     25,
-      //     50,
-      //   );
-    } else if (fatherNameError == true) {
-      ToastAndroid.showWithGravityAndOffset(
-        `Please Enter Guardian's Name`,
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
-        25,
-        50,
-      );
-    } else if (schoolNameError == true) {
-      ToastAndroid.showWithGravityAndOffset(
-        `Please Enter Student's School Name`,
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
-        25,
-        50,
-      );
-    }
-    // else if (motherNameError == true) {
-    //   ToastAndroid.showWithGravityAndOffset(
-    //     `Please Enter Mother's Name`,
-    //     ToastAndroid.LONG,
-    //     ToastAndroid.BOTTOM,
-    //     25,
-    //     50,
-    //   );
-    // }
-    else if (passwordError == true) {
-      ToastAndroid.showWithGravityAndOffset(
-        `Please Enter Valid Password`,
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
-        25,
-        50,
-      );
-    } else if (mismatchError == true) {
-      ToastAndroid.showWithGravityAndOffset(
-        `Password Didn't Matched`,
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
-        25,
-        50,
-      );
-    } else if (confirmPasswordError == true) {
-      ToastAndroid.showWithGravityAndOffset(
-        `Please Enter Valid Password`,
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
-        25,
-        50,
-      );
-    } else if (genderError == true) {
-      ToastAndroid.showWithGravityAndOffset(
-        `Please Enter Your Gender`,
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
-        25,
-        50,
-      );
-    } else if (boardError == true) {
-      ToastAndroid.showWithGravityAndOffset(
-        `Please Enter Student's Board Name`,
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
-        25,
-        50,
-      );
-    } else if (standardError == true) {
-      ToastAndroid.showWithGravityAndOffset(
-        `Please Enter Student's Standard Name`,
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
-        25,
-        50,
-      );
-    } else if (ageError == true) {
-      ToastAndroid.showWithGravityAndOffset(
-        `Please Enter Student's Age`,
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
-        25,
-        50,
-      );
-      // } else if (altPhoneError == true) {
-      //   ToastAndroid.showWithGravityAndOffset(
-      //     `Please Enter Valid Phone Number`,
-      //     ToastAndroid.LONG,
-      //     ToastAndroid.BOTTOM,
-      //     25,
-      //     50,
-      //   );
-    } else if (emailError == true) {
-      ToastAndroid.showWithGravityAndOffset(
-        'Please enter valid email id',
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
-        25,
-        50,
-      );
-    } else if (refCodeError == true) {
-      ToastAndroid.showWithGravityAndOffset(
-        'Please enter valid referal code',
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
-        25,
-        50,
-      );
-    } else {
-      let confirmVal = handlePhoneNumber(info.st_phone);
-      //console.log(confirmVal,'SignIn phone Screen');
-      phone_validate = phoneRegex.test(confirmVal);
-      if (phone_validate) {
-        setshowprog(true);
-        const schoolBoardName = Board.find(rec => rec.boardid == board_name);
-        const ClassID = Standard.find(rec => rec.stageid == stage);
-        const bodydata = {
-          // email: info.st_email,
-          // phone: confirmVal,
-          // age: info.st_age,
-          // referralcode: ref_Code,
-          // fname: info.fname,
-          // lname: info.lname,
-          // language: selectedLanguage,
+  //     // if (info.lname == '' || lname_validate == false) {
+  //     //   setLnameError(true);
+  //     // } else {
+  //     //   setLnameError(false);
+  //     // }
+  //     if (info.gender == '') {
+  //       setGenderError(true);
+  //     } else {
+  //       setGenderError(false);
+  //     }
+  //     if (info.father_name == '' || fathername_validate == false) {
+  //       setFatherNameError(true);
+  //     } else {
+  //       setFatherNameError(false);
+  //     }
+  //     // if (info.mother_name == '' || mothername_validate == false) {
+  //     //   setMotherNameError(true);
+  //     // } else {
+  //     //   setMotherNameError(false);
+  //     // }
+  //     if (otplogin == false && info.password == '') {
+  //       setPasswordError(true);
+  //     } else {
+  //       setPasswordError(false);
+  //     }
+  //     if (otplogin == false && info.confirmPassword == '') {
+  //       setConfirmPasswordError(true);
+  //     } else {
+  //       setConfirmPasswordError(false);
+  //     }
+  //     if (info.board_name == '') {
+  //       setBoardError(true);
+  //     } else {
+  //       setBoardError(false);
+  //     }
+  //     if (info.stage == '') {
+  //       setStandardError(true);
+  //     } else {
+  //       setStandardError(false);
+  //     }
+  //     if (info.st_age == '') {
+  //       setAgeError(true);
+  //     } else {
+  //       setAgeError(false);
+  //     }
+  //     // if (info.phone_secondary == '' || phone_validate == false) {
+  //     //   // //console.log(phone_validate, 'phone_validate');
+  //     //   setPhoneError(true);
+  //     // } else {
+  //     //   setPhoneError(false);
+  //   } else if (fnameError == true) {
+  //     ToastAndroid.showWithGravityAndOffset(
+  //       'Please enter your first name',
+  //       ToastAndroid.LONG,
+  //       ToastAndroid.BOTTOM,
+  //       25,
+  //       50,
+  //     );
+  //   } else if (lnameError == true) {
+  //     ToastAndroid.showWithGravityAndOffset(
+  //       'Please enter your last name',
+  //       ToastAndroid.LONG,
+  //       ToastAndroid.BOTTOM,
+  //       25,
+  //       50,
+  //     );
+  //     // } else if (phoneerror == true) {
+  //     //   ToastAndroid.showWithGravityAndOffset(
+  //     //     'Please enter valid phone number',
+  //     //     ToastAndroid.LONG,
+  //     //     ToastAndroid.BOTTOM,
+  //     //     25,
+  //     //     50,
+  //     //   );
+  //   } else if (fatherNameError == true) {
+  //     ToastAndroid.showWithGravityAndOffset(
+  //       `Please Enter Guardian's Name`,
+  //       ToastAndroid.LONG,
+  //       ToastAndroid.BOTTOM,
+  //       25,
+  //       50,
+  //     );
+  //   } else if (schoolNameError == true) {
+  //     ToastAndroid.showWithGravityAndOffset(
+  //       `Please Enter Student's School Name`,
+  //       ToastAndroid.LONG,
+  //       ToastAndroid.BOTTOM,
+  //       25,
+  //       50,
+  //     );
+  //   }
+  //   // else if (motherNameError == true) {
+  //   //   ToastAndroid.showWithGravityAndOffset(
+  //   //     `Please Enter Mother's Name`,
+  //   //     ToastAndroid.LONG,
+  //   //     ToastAndroid.BOTTOM,
+  //   //     25,
+  //   //     50,
+  //   //   );
+  //   // }
+  //   else if (passwordError == true) {
+  //     ToastAndroid.showWithGravityAndOffset(
+  //       `Please Enter Valid Password`,
+  //       ToastAndroid.LONG,
+  //       ToastAndroid.BOTTOM,
+  //       25,
+  //       50,
+  //     );
+  //   } else if (mismatchError == true) {
+  //     ToastAndroid.showWithGravityAndOffset(
+  //       `Password Didn't Matched`,
+  //       ToastAndroid.LONG,
+  //       ToastAndroid.BOTTOM,
+  //       25,
+  //       50,
+  //     );
+  //   } else if (confirmPasswordError == true) {
+  //     ToastAndroid.showWithGravityAndOffset(
+  //       `Please Enter Valid Password`,
+  //       ToastAndroid.LONG,
+  //       ToastAndroid.BOTTOM,
+  //       25,
+  //       50,
+  //     );
+  //   } else if (genderError == true) {
+  //     ToastAndroid.showWithGravityAndOffset(
+  //       `Please Enter Your Gender`,
+  //       ToastAndroid.LONG,
+  //       ToastAndroid.BOTTOM,
+  //       25,
+  //       50,
+  //     );
+  //   } else if (boardError == true) {
+  //     ToastAndroid.showWithGravityAndOffset(
+  //       `Please Enter Student's Board Name`,
+  //       ToastAndroid.LONG,
+  //       ToastAndroid.BOTTOM,
+  //       25,
+  //       50,
+  //     );
+  //   } else if (standardError == true) {
+  //     ToastAndroid.showWithGravityAndOffset(
+  //       `Please Enter Student's Standard Name`,
+  //       ToastAndroid.LONG,
+  //       ToastAndroid.BOTTOM,
+  //       25,
+  //       50,
+  //     );
+  //   } else if (ageError == true) {
+  //     ToastAndroid.showWithGravityAndOffset(
+  //       `Please Enter Student's Age`,
+  //       ToastAndroid.LONG,
+  //       ToastAndroid.BOTTOM,
+  //       25,
+  //       50,
+  //     );
+  //     // } else if (altPhoneError == true) {
+  //     //   ToastAndroid.showWithGravityAndOffset(
+  //     //     `Please Enter Valid Phone Number`,
+  //     //     ToastAndroid.LONG,
+  //     //     ToastAndroid.BOTTOM,
+  //     //     25,
+  //     //     50,
+  //     //   );
+  //   } else if (emailError == true) {
+  //     ToastAndroid.showWithGravityAndOffset(
+  //       'Please enter valid email id',
+  //       ToastAndroid.LONG,
+  //       ToastAndroid.BOTTOM,
+  //       25,
+  //       50,
+  //     );
+  //   } else if (refCodeError == true) {
+  //     ToastAndroid.showWithGravityAndOffset(
+  //       'Please enter valid referal code',
+  //       ToastAndroid.LONG,
+  //       ToastAndroid.BOTTOM,
+  //       25,
+  //       50,
+  //     );
+  //   } else {
+  //     let confirmVal = handlePhoneNumber(info.st_phone);
+  //     //console.log(confirmVal,'SignIn phone Screen');
+  //     phone_validate = phoneRegex.test(confirmVal);
+  //     if (phone_validate) {
+  //       setshowprog(true);
+  //       const schoolBoardName = Board.find(rec => rec.boardid == board_name);
+  //       const ClassID = Standard.find(rec => rec.stageid == stage);
+  //       const bodydata = {
+  //         // email: info.st_email,
+  //         // phone: confirmVal,
+  //         // age: info.st_age,
+  //         // referralcode: ref_Code,
+  //         // fname: info.fname,
+  //         // lname: info.lname,
+  //         // language: selectedLanguage,
 
-          email: info.st_email,
-          phone: confirmVal,
-          age: st_age.value,
-          referralcode: ref_Code,
-          fname: info.fname,
-          lname: info.lname,
-          language: selectedLanguage,
-          stage: info.stage,
-          stageid: ClassID != undefined ? ClassID.stageid : '',
-          alterphone: parents_phone,
-          password: password,
-          schoolname: school_name,
-          // schoolname: '',
-          // address: info.st_address,
-          address: '',
-          gender: gender,
-          image: '',
-          imagename: '',
-          boardname:
-            schoolBoardName != undefined ? schoolBoardName.boardname : '',
-          fathername: father_name,
-          // mothername: mother_name,
-          mothername: '',
-          name: info.fname + ' ' + info.lname,
-          isPremium: false,
-          subscriptionStartDate: '',
-          subscriptionEndDate: '',
-          boardid: schoolBoardName != undefined ? schoolBoardName.boardid : '',
-        };
-        //   let uuu = await Apiconnect.postData_noauth('postdata/usersignup', inf);
-        console.log(bodydata, '============RegisterNewChild bodydata');
+  //         email: info.st_email,
+  //         phone: confirmVal,
+  //         age: st_age.value,
+  //         referralcode: ref_Code,
+  //         fname: info.fname,
+  //         lname: info.lname,
+  //         language: selectedLanguage,
+  //         stage: info.stage,
+  //         stageid: ClassID != undefined ? ClassID.stageid : '',
+  //         alterphone: parents_phone,
+  //         password: password,
+  //         schoolname: school_name,
+  //         // schoolname: '',
+  //         // address: info.st_address,
+  //         address: '',
+  //         gender: gender,
+  //         image: '',
+  //         imagename: '',
+  //         boardname:
+  //           schoolBoardName != undefined ? schoolBoardName.boardname : '',
+  //         fathername: father_name,
+  //         // mothername: mother_name,
+  //         mothername: '',
+  //         name: info.fname + ' ' + info.lname,
+  //         isPremium: false,
+  //         subscriptionStartDate: '',
+  //         subscriptionEndDate: '',
+  //         boardid: schoolBoardName != undefined ? schoolBoardName.boardid : '',
+  //       };
+  //       //   let uuu = await Apiconnect.postData_noauth('postdata/usersignup', inf);
+  //       console.log(bodydata, '============RegisterNewChild bodydata');
 
-        dispatch(RegisterNewChild(bodydata, handleCallBack));
-      }
-    }
-  };
-  const handleCallBack = (user: any, message: string, authtoken: string) => {
-    if (user != undefined) signIn(user, authtoken);
-    else if (message == 'User already registered') {
-      // setInfoModal(true);
-      CommonMessage(message);
+  //       dispatch(RegisterNewChild(bodydata, handleCallBack));
+  //     }
+  //   }
+  // };
 
-      // CommonMessage("User already registered ! Please Signin instead")
-    } else {
-      if (message != '') {
-        CommonMessage(message);
-      }
-    }
-    // navigation.navigate('SignInScreen');
-  };
-  const navigationFunction = () => {
-    setInfoModal(false);
-    navigation.navigate('SignInScreen');
-  };
+  // const handleCallBack = (user: any, message: string, authtoken: string) => {
+  //   if (user != undefined) signIn(user, authtoken);
+  //   else if (message == 'User already registered') {
+  //     // setInfoModal(true);
+  //     CommonMessage(message);
+
+  //     // CommonMessage("User already registered ! Please Signin instead")
+  //   } else {
+  //     if (message != '') {
+  //       CommonMessage(message);
+  //     }
+  //   }
+  //   // navigation.navigate('SignInScreen');
+  // };
+
+  // const navigationFunction = () => {
+  //   setInfoModal(false);
+  //   navigation.navigate('SignInScreen');
+  // };
+
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={'#263d2d'} barStyle="light-content" />
@@ -898,7 +891,8 @@ const SignUpScreen3 = ({ route }) => {
               textTransform: 'capitalize',
               fontWeight: '600',
             }}>
-            {trans(`New Account`)}
+            {/* {trans(`New Account`)} */}
+            {`New Account`}
           </Text>
         </View>
         <FastImage
@@ -1002,9 +996,11 @@ const SignUpScreen3 = ({ route }) => {
                             // marginLeft: 5,
                             fontWeight: '700',
                           }}>
-                          {trans('Complete Your Registration ')}
+                          {/* {trans('Complete Your Registration ')} */}
+                          {'Complete Your Registration '}
                           <Text style={{ fontWeight: '900', fontSize: 16 }}>
-                            {trans('3/5')}
+                            {/* {trans('3/5')} */}
+                            {'3/5'}
                           </Text>
                         </Text>
                       </View>
@@ -1042,7 +1038,8 @@ const SignUpScreen3 = ({ route }) => {
                           size={23}
                         />
                         <TextInput
-                          placeholder={trans(`Enter Guardian's  Name`)}
+                          // placeholder={trans(`Enter Guardian's  Name`)}
+                          placeholder={`Enter Guardian's  Name`}
                           placeholderTextColor="#666666"
                           value={father_name}
                           style={{
@@ -1073,13 +1070,15 @@ const SignUpScreen3 = ({ route }) => {
                       {father_name == '' ? (
                         <Animatable.View animation="fadeInLeft" duration={500}>
                           <Text style={{ color: 'darkorange', marginBottom: 10 }}>
-                            {trans("Please Enter Guardian's Name")}
+                            {/* {trans("Please Enter Guardian's Name")} */}
+                            {"Please Enter Guardian's Name"}
                           </Text>
                         </Animatable.View>
                       ) : fatherNameError ? (
                         <Animatable.View animation="fadeInLeft" duration={500}>
                           <Text style={{ color: 'darkorange', marginBottom: 10 }}>
-                            {trans("Please Enter Guardian's Name")}
+                            {/* {trans("Please Enter Guardian's Name")} */}
+                            {"Please Enter Guardian's Name"}
                           </Text>
                         </Animatable.View>
                       ) : (
@@ -1161,7 +1160,8 @@ const SignUpScreen3 = ({ route }) => {
                         }}>
                         <Iconz name="old-phone" color={'#263d2d'} size={22} />
                         <TextInput
-                          placeholder={trans(`Guardian's Mobile Number`)}
+                          // placeholder={trans(`Guardian's Mobile Number`)}
+                          placeholder={`Guardian's Mobile Number`}
                           placeholderTextColor="#666666"
                           maxLength={13}
                           value={parents_phone}
@@ -1189,7 +1189,8 @@ const SignUpScreen3 = ({ route }) => {
                               marginTop: -3,
                               marginLeft: 5,
                             }}>
-                            {trans('Please enter valid phone number')}
+                            {/* {trans('Please enter valid phone number')} */}
+                            {'Please enter valid phone number'}
                           </Text>
                         </Animatable.View>
                       )}
@@ -1230,21 +1231,7 @@ const SignUpScreen3 = ({ route }) => {
                           otplogin: otplogin,
                           emailLogin: emailLogin,
                           pswdLogin: pswdLogin,
-
-                          // fname:firstName='',
-                          // lname:lastName='',
-                          // st_phone:phoneNum='',
-                          // st_age:s_age='',
-                          // gender:s_gender='',
-                          // st_email:s_email='',
-                          // phone = '',
-                          // email = '',
-                          // otplogin = false,
-                          // emailLogin = '',
-                          // pswdLogin = false,
                         });
-                        // setInputModal3(false);
-                        // setInputModal4(true);
                       }}>
                       <Text
                         style={{
@@ -1254,7 +1241,8 @@ const SignUpScreen3 = ({ route }) => {
                           textAlign: 'center',
                           alignItems: 'center',
                         }}>
-                        {trans('Next')}
+                        {/* {trans('Next')} */}
+                        {'Next'}
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -1273,508 +1261,8 @@ const SignUpScreen3 = ({ route }) => {
                 resizeMode="contain"
               />
             </View>
-
-            {/* <View style={[styles.button, {}]}> */}
-            {/* <Text
-              style={[
-                styles.text_footer,
-                {
-                  color: '#666',
-                  fontWeight: 'bold',
-                  // textAlign: 'left',
-                  alignSelf: 'flex-start',
-                },
-              ]}>
-              Have Referral Code ?
-            </Text>
-
-            <View
-              style={[
-                styles.action,
-                {
-                  marginBottom: 20,
-                  borderBottomColor: '#fff',
-                  paddingVertical: 10,
-                },
-              ]}>
-              {/* <FontAwesome name="user-o" color={'#333'} size={20} /> 
-              <TextInput
-                placeholder="Enter code"
-                placeholderTextColor="#999"
-                value={ref_Code}
-                style={{
-                  color: '#999',
-                  flex: 1,
-                  marginTop: Platform.OS === 'ios' ? 0 : -12,
-                  paddingLeft: 10,
-                  // color: '#05375a',
-                  backgroundColor: '#fff',
-                  elevation: 10,
-                  borderRadius: 15,
-                  height: 50,
-                  fontSize: 18,
-                  fontWeight: '600',
-                }}
-                autoCapitalize="none"
-                // onChangeText={(val) => textInputChange(val)}
-                // onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
-                onChangeText={val => handleInputChange('ref_Code', val)}
-              />
-            </View>
-
-            {refCodeError && (
-              <Animatable.View animation="fadeInLeft" duration={500}>
-                <Text style={{color: Colors.red, marginBottom: 10}}>
-                  Please enter valid referal code
-                </Text>
-              </Animatable.View>
-            )} */}
-            {/* </View> */}
           </Animatable.View>
         </ScrollView>
-        {inputModal3 && (
-          <Modal transparent={true} visible={inputModal3}>
-            <View
-              style={{
-                backgroundColor: '#fff',
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                <View
-                  style={{
-                    borderRadius: 15,
-                    // borderWidth: 1,
-                    minHeight: device_height * 0.5,
-                    minWidth: device_width * 0.9,
-                    paddingHorizontal: 20,
-                    // marginHorizontal:10,
-                    backgroundColor: '#fff',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                  }}>
-                  <View>
-                    <View
-                      style={{
-                        alignItems: 'center',
-                        // borderWidth:1
-                      }}>
-                      <View>
-                        <View
-                          style={{
-                            alignItems: 'center',
-                            paddingVertical: 15,
-                            borderWidth: 1,
-                            borderColor: '#ccc',
-                            elevation: 10,
-                            width: device_width * 0.9,
-                            borderTopLeftRadius: 10,
-                            borderTopRightRadius: 10,
-                            backgroundColor: '#def',
-                            marginLeft: -27,
-                            marginRight: -27,
-                          }}>
-                          <Text
-                            style={{
-                              textAlign: 'center',
-                              width: device_width * 0.7,
-                              fontSize: 15,
-                              color: '#333',
-                              marginTop: 5,
-                              // marginLeft: 5,
-                              fontWeight: '700',
-                            }}>
-                            {trans('Complete Your Registration ')}
-                            <Text style={{ fontWeight: '900', fontSize: 16 }}>
-                              3/5
-                            </Text>
-                          </Text>
-                        </View>
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            // marginTop: 5,
-                            borderBottomWidth: 1,
-                            borderBottomColor: '#f2f2f2',
-                            // paddingBottom: 5,
-                            marginVertical: 10,
-                            backgroundColor: '#fff',
-                            elevation: 10,
-                            borderRadius: 8,
-                            height: 50,
-                            paddingLeft: 20,
-                            // marginTop: Platform.OS === 'ios' ? 0 : 5,
-                            alignItems: 'center',
-                            borderWidth:
-                              father_name == ''
-                                ? 1
-                                : fatherNameError == true
-                                  ? 1
-                                  : 0,
-                            borderColor:
-                              father_name == ''
-                                ? 'darkorange'
-                                : fatherNameError == true
-                                  ? 'darkorange'
-                                  : '#fff',
-                          }}>
-                          <FontAwesome5
-                            name="user-tie"
-                            color={Colors.primary}
-                            size={23}
-                          />
-                          <TextInput
-                            placeholder={trans(`Enter Guardian's  Name`)}
-                            placeholderTextColor="#666666"
-                            value={father_name}
-                            style={{
-                              color: '#333',
-                              flex: 1,
-                              paddingLeft: 10,
-                              fontSize: 15,
-                              fontWeight: '600',
-                            }}
-                            autoCapitalize="none"
-                            // onChangeText={(val) => textInputChange(val)}
-                            // onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
-                            onChangeText={val =>
-                              handleInputChange('father_name', val)
-                            }
-                          />
-                        </View>
-                        {/* {fatherNameError && (
-                            <Animatable.View
-                              animation="fadeInLeft"
-                              duration={500}>
-                              <Text
-                                style={{color: Colors.red, marginBottom: 10}}>
-                                {trans("Please Enter Guardian's Name")}
-                              </Text>
-                            </Animatable.View>
-                          )} */}
-                        {father_name == '' ? (
-                          <Animatable.View
-                            animation="fadeInLeft"
-                            duration={500}>
-                            <Text style={{ color: Colors.red, marginBottom: 10 }}>
-                              {trans("Please Enter Guardian's Name")}
-                            </Text>
-                          </Animatable.View>
-                        ) : fatherNameError ? (
-                          <Animatable.View
-                            animation="fadeInLeft"
-                            duration={500}>
-                            <Text style={{ color: Colors.red, marginBottom: 10 }}>
-                              {trans("Please Enter Guardian's Name")}
-                            </Text>
-                          </Animatable.View>
-                        ) : (
-                          <></>
-                        )}
-
-                        {/* <View
-                            style={{
-                              flexDirection: 'row',
-                              marginTop: 5,
-                              borderBottomWidth: 1,
-                              borderBottomColor: '#f2f2f2',
-                              paddingBottom: 5,
-                              marginVertical: 10,
-                              backgroundColor: '#fff',
-                              elevation: 10,
-                              borderRadius: 18,
-                              height: 60,
-                              paddingLeft: 15,
-                              marginTop: Platform.OS === 'ios' ? 0 : 5,
-                              alignItems: 'center',
-                            }}>
-                            <MaterialCommunityIcons
-                              name="mother-nurse"
-                              color={Colors.primary}
-                              size={30}
-                            />
-                            <TextInput
-                              placeholder={trans(`Enter Mother's  Name`)}
-                              placeholderTextColor="#666666"
-                              value={mother_name}
-                              style={{
-                                color: '#333',
-                                flex: 1,
-                                // marginTop: Platform.OS === 'ios' ? 0 : -12,
-                                paddingLeft: 10,
-                                // color: '#05375a',
-                                // backgroundColor: '#fff',
-                                // elevation: 10,
-                                // borderRadius: 18,
-                                // height: 60,
-                                fontSize: 18,
-                                fontWeight: '600',
-                              }}
-                              autoCapitalize="none"
-                              // onChangeText={(val) => textInputChange(val)}
-                              // onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
-                              onChangeText={val =>
-                                handleInputChange('mother_name', val)
-                              }
-                            />
-                          </View>
-                          {motherNameError && (
-                            <Animatable.View
-                              animation="fadeInLeft"
-                              duration={500}>
-                              <Text
-                                style={{color: Colors.red, marginBottom: 10}}>
-                                {trans("Please Enter Mother's Name")}
-                              </Text>
-                            </Animatable.View>
-                          )} */}
-
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            // marginTop: 5,
-                            borderBottomWidth: 1,
-                            borderBottomColor: '#f2f2f2',
-                            // paddingBottom: 5,
-                            marginVertical: 10,
-                            backgroundColor: '#fff',
-                            elevation: 10,
-                            borderRadius: 8,
-                            height: 50,
-                            paddingLeft: 20,
-                            // marginTop: Platform.OS === 'ios' ? 0 : 5,
-                            alignItems: 'center',
-                          }}>
-                          <Iconz
-                            name="old-phone"
-                            color={Colors.primary}
-                            size={22}
-                          />
-                          <TextInput
-                            placeholder={trans(`Guardian's Mobile Number`)}
-                            placeholderTextColor="#666666"
-                            value={parents_phone}
-                            style={{
-                              color: '#333',
-                              flex: 1,
-                              paddingLeft: 10,
-                              fontSize: 15,
-                              fontWeight: '600',
-                            }}
-                            autoCapitalize="none"
-                            // onChangeText={(val) => textInputChange(val)}
-                            // onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
-                            onChangeText={val =>
-                              handleInputChange('parents_phone', val)
-                            }
-                          />
-                        </View>
-                        {altPhoneError && (
-                          <Animatable.View
-                            animation="fadeInLeft"
-                            duration={500}>
-                            <Text
-                              style={{
-                                color: Colors.red,
-                                marginBottom: 10,
-                                marginTop: -3,
-                                marginLeft: 5,
-                              }}>
-                              {trans('Please enter valid phone number')}
-                            </Text>
-                          </Animatable.View>
-                        )}
-                      </View>
-                    </View>
-                    <View
-                      style={{
-                        // borderWidth: 1,
-                        width: '100%',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        flexDirection: 'row',
-                        alignSelf: 'center',
-                        marginTop: 10,
-                      }}>
-                      <TouchableOpacity
-                        disabled={father_name != '' && altPhoneError == false ? false : true}
-                        style={{
-                          borderRadius: 10,
-                          width: '30%',
-                          marginVertical: 5,
-                          backgroundColor:
-                            father_name != '' && altPhoneError == false ? Colors.primary : '#ccc',
-                          paddingVertical: 10,
-                          justifyContent: 'center',
-                        }}
-                        onPress={() => {
-                          setInputModal3(false);
-                          setInputModal4(true);
-                        }}>
-                        <Text
-                          style={{
-                            color: father_name != '' && altPhoneError == false ? 'white' : '#666',
-                            fontSize: 13,
-                            fontWeight: '600',
-                            textAlign: 'center',
-                            alignItems: 'center',
-                          }}>
-                          {trans('Next')}
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </Modal>
-        )}
-
-        {infoModal && (
-          <Modal transparent={true} visible={infoModal}>
-            <View
-              style={{
-                backgroundColor: '#fff',
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <View
-                style={{
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flex: 1,
-                }}>
-                <View
-                  style={{
-                    borderRadius: 15,
-                    borderWidth: 1,
-                    minHeight: device_height * 0.35,
-                    minWidth: device_width * 0.8,
-                    backgroundColor: '#fff',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                  }}>
-                  <View>
-                    <View
-                      style={{
-                        alignItems: 'center',
-                      }}>
-                      <View style={{ alignItems: 'center', paddingVertical: 15 }}>
-                        <View
-                          style={{
-                            // borderWidth: 0.8,
-                            borderColor: 'green',
-                            borderRadius: 50,
-                            // padding: 10,
-                            elevation: 15,
-                            backgroundColor: '#dee',
-                          }}>
-                          <MaterialIcons
-                            name="info"
-                            color={'orange'}
-                            size={50}
-                          />
-                        </View>
-
-                        <Text
-                          style={{
-                            textAlign: 'center',
-                            width: device_width * 0.8,
-                            fontSize: 17,
-                            color: '#333',
-                            marginTop: 10,
-                            marginLeft: 10,
-                            fontWeight: '900',
-                          }}>
-                          {trans('User Already Registered with this number')}
-                        </Text>
-                        <Text
-                          style={{
-                            textAlign: 'center',
-                            width: device_width * 0.7,
-                            fontSize: 15,
-                            color: '#666',
-                            marginTop: 5,
-                            // marginLeft: 5,
-                            fontWeight: '500',
-                          }}>
-                          {trans('Please try new number or login instead')}
-                        </Text>
-                      </View>
-                      {/* <AntDesign
-                      name="closecircleo"
-                      style={{
-                        fontSize: 28,
-                        color: '#fff',
-                        position: 'absolute',
-                        top: 10,
-                        right: 10,
-                        // marginTop: 10,
-                        backgroundColor: 'crimson',
-                        borderRadius: 50,
-                      }}
-                      onPress={() => setLockedModalStatus(false)}
-                    /> */}
-                    </View>
-                    <View
-                      style={{
-                        // borderWidth: 1,
-                        paddingVertical: 15,
-                        alignItems: 'center',
-                        marginTop: 10,
-                        marginLeft: 10,
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        alignSelf: 'center',
-                        padding: 10,
-                      }}>
-                      <TouchableOpacity
-                        style={{
-                          borderRadius: 10,
-                          width: '30%',
-                          marginVertical: 5,
-                          borderWidth: 1,
-                          marginRight: 25,
-                          borderColor: 'white',
-                          backgroundColor: Colors.primary,
-                          // width: '100%',
-                          paddingVertical: 5,
-                          justifyContent: 'center',
-                        }}
-                        onPress={() => navigationFunction()}>
-                        <Text
-                          style={{
-                            color: 'white',
-                            fontSize: 15,
-                            fontWeight: 'bold',
-                            textAlign: 'center',
-                            alignItems: 'center',
-                          }}>
-                          {trans('OK')}
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </Modal>
-        )}
-        {/* {showprog && (
-        <Spinner
-          style={{
-            position: 'absolute',
-            top: device_height / 2.8,
-            left: device_width / 2.7,
-          }}
-          isVisible={showprog}
-          size={spinner_size}
-          type={spinner_typ}
-          color={spinner_color}
-        />
-      )} */}
       </ImageBackground>
     </View>
   );
@@ -1785,7 +1273,6 @@ export default SignUpScreen3;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: Colors.secondary,
   },
   header: {
     flex: 0.8,

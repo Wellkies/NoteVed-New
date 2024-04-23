@@ -90,7 +90,7 @@ export const getTopicsBySubIdActionAPI = async (data = {}) => {
 
 export const getContentByTopicIdActionAPI = async (data = {}) => {
   const url = GET_CONTENT_BY_TOPICID_URL + data;
-  console.log(url, "GET_CONTENT_BY_TOPICID_URL=======================");
+  console.log(url, "GET_CONTENT_BY_TOPICID_URL=======================", data, "========data");
   const token = await AsyncStorage.getObject("@auth_Token");
   const requestOptions = {
     method: "GET",
