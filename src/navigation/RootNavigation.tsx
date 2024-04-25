@@ -19,6 +19,7 @@ export const RootNavigator = () => {
     fetchData();
   }, []);
   const { authToken, status, userInfo } = useAppSelector(selectUserInfo);
+  
   // console.log(authToken, "authToken");
 
   return (

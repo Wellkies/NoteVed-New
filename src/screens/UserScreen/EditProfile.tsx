@@ -51,9 +51,17 @@ import {
 } from '../../redux/reducers/languageReducer';
 import { uploadPhotoApi } from '../../redux/actions/UploadPhoto';
 import { getScholarshipByClassAPI } from '../../redux/reducers/GetAllScholarshipReducer';
-import { getUserbyId } from '../../redux/reducers/loginReducer';
+import { getUserbyId, selectUserInfo } from '../../redux/reducers/loginReducer';
+import AsyncStorage from '../../utils/AsyncStorage';
 
 const EditProfile = ({ route }) => {
+
+  const navigation = useNavigation();
+  const dispatch = useDispatch<any>();
+  const { t: trans, i18n } = useTranslation();
+  const { childId = '' } = route.params;
+  console.log(childId, '===================childId route.params');
+
   interface ChildInfo {
     _id: string;
     age: string;
@@ -83,12 +91,11 @@ const EditProfile = ({ route }) => {
     boardid: string;
     classname: string;
   }
-  const navigation = useNavigation();
-
-  const dispatch = useDispatch<any>();
   const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
   const count = useAppSelector(selectStudentStatus);
-  const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
+  // const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
+  const {authToken,status,userInfo} = useAppSelector(selectUserInfo);
+
   // console.log(childInfo, 'childInfo..........');
   const Standard = useAppSelector(selectStudentStandard);
   const standardsts = useAppSelector(selectStudentStandardStatus);
@@ -101,9 +108,6 @@ const EditProfile = ({ route }) => {
 
   // console.log(selectedLanguage, 'selectedLanguage..........');
   ///////////////////
-  const { t: trans, i18n } = useTranslation();
-  const { childId = '' } = route.params;
-  console.log(childId, '===================childId route.params');
   const [loading, setLoading] = useState(false);
   const [userLoading, setUserLoading] = useState(false);
   // const {signOut} = useContext(AuthContext);
@@ -205,9 +209,10 @@ const EditProfile = ({ route }) => {
     // asyncScholarship()
     navigation.addListener('focus', () => {
       dispatch(getChildDetailsAPI(childID));
+      dispatch(getUserbyId(childID))
       // dispatch(getStandard());
       // dispatch(getBoard());
-      dispatch(setLanguage(userLang));
+      // dispatch(setLanguage(userLang));
       // if (childId != '')
       //   // dispatch(getChildDetailsAPI(undefined, childId, setLoading));
       //   dispatch(
@@ -226,12 +231,7 @@ const EditProfile = ({ route }) => {
     // dispatch(getBoard());
     // dispatch(getStandard());
   }, []);
-  // const {language: selectedLanguage = ''} = useSelector(
-  //   state => state.LanguageReducer,
-  // );
-  // const {Standard = {}} = useSelector(state => state.GetAllStandardReucer);
-  // const {Board = {}} = useSelector(state => state.GetAllBoardReducer);
-  // const selectedLanguage = 'odia';
+  
   const [language, setLanguages] = useState([
     { name: 'ଓଡିଆ', code: 'odia', isSelected: selectedLanguage === 'odia' },
     {
@@ -254,27 +254,27 @@ const EditProfile = ({ route }) => {
     lname = '',
     phone = '',
     name = '',
-    boardname = '',
-    fathername = '',
-    mothername = '',
+    // boardname = '',
+    // fathername = '',
+    // mothername = '',
     // board = '',
-    subscriptionStartDate = '',
-    subscriptionEndDate = '',
+    // subscriptionStartDate = '',
+    // subscriptionEndDate = '',
     isPremium = false,
-    parentid: parentId = '',
-    stage = '',
+    // parentid: parentId = '',
+    // stage = '',
     gender = '',
-    address = '',
+    // address = '',
     alterphone = '',
-    schoolname = '',
-    language: userLang = '',
+    // schoolname = '',
+    // language: userLang = '',
     email = '',
-    stageid = '',
-    boardid = '',
-    classname = '',
-  } = childInfo;
+    // stageid = '',
+    // boardid = '',
+    // classname = '',
+  } = userInfo;
   console.log(
-    childID, "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm"
+    userInfo, "==================userInfo======================"
   );
   const [value, setValue] = useState(p_age);
   console.log(value, 'value......................');
@@ -283,26 +283,26 @@ const EditProfile = ({ route }) => {
     _id: childID,
     firstName: fname,
     lastname: lname,
-    schoolBoard: boardid != '' ? boardid : 1,
-    father_name: fathername != '' ? fathername : '',
+    // schoolBoard: boardid != '' ? boardid : 1,
+    // father_name: fathername != '' ? fathername : '',
     // mother_name: mothername != '' ? mothername : '',
-    mother_name: '',
-    SubscriptionStartDate:
-      subscriptionStartDate != '' ? subscriptionStartDate : '',
-    SubscriptionEndDate: subscriptionEndDate != '' ? subscriptionEndDate : '',
-    IsPremium: isPremium,
-    phone_secondary: phone,
-    standard: stageid != '' ? stageid : '5',
+    // mother_name: '',
+    // SubscriptionStartDate:
+    //   subscriptionStartDate != '' ? subscriptionStartDate : '',
+    // SubscriptionEndDate: subscriptionEndDate != '' ? subscriptionEndDate : '',
+    // IsPremium: isPremium,
+    phone: phone,
+    // standard: stageid != '' ? stageid : '5',
     age: p_age != '' ? p_age : '',
     p_image: image,
     p_imagename: imagename,
     st_gender: gender,
-    parents_phone: alterphone,
-    school_name: schoolname,
+    phone_secondary: alterphone,
+    // school_name: schoolname,
     // school_name: '',
     // st_address: address,
-    st_address: '',
-    language: userLang,
+    // st_address: '',
+    // language: userLang,
     st_email: email,
   });
   const {
@@ -310,26 +310,26 @@ const EditProfile = ({ route }) => {
     firstName,
     lastname,
     phone_secondary,
-    standard,
-    schoolBoard,
-    father_name,
-    mother_name,
-    parents_phone,
+    // standard,
+    // schoolBoard,
+    // father_name,
+    // mother_name,
+    // parents_phone,
     st_gender,
     st_email,
-    school_name,
-    st_address,
+    // school_name,
+    // st_address,
     // emailid,
     age,
-    SubscriptionStartDate,
-    SubscriptionEndDate,
-    IsPremium,
+    // SubscriptionStartDate,
+    // SubscriptionEndDate,
+    // IsPremium,
     p_image,
     p_imagename,
   } = info;
 
   useEffect(() => {
-    if (childId != '' && Object.keys(childInfo).length != 0) {
+    if (childId != '' && Object.keys(userInfo).length != 0) {
       const {
         _id: childID = '',
         age: p_age = '',
@@ -353,47 +353,47 @@ const EditProfile = ({ route }) => {
         address = '',
         alterphone = '',
         schoolname = '',
-      } = childInfo;
+      } = userInfo;
       // console.log(childInfo, 'childInfo===============');
       setInfo({
         _id: childID,
         firstName: fname,
         lastname: lname,
-        schoolBoard: boardid != '' ? boardid : 1,
-        father_name: fathername != '' ? fathername : '',
+        // schoolBoard: boardid != '' ? boardid : 1,
+        // father_name: fathername != '' ? fathername : '',
         // mother_name: mothername != '' ? mothername : '',
-        mother_name: '',
+        // mother_name: '',
 
-        SubscriptionStartDate:
-          subscriptionStartDate != '' ? subscriptionStartDate : '',
-        SubscriptionEndDate:
-          subscriptionEndDate != '' ? subscriptionEndDate : '',
-        IsPremium: isPremium,
-        phone_secondary: phone,
-        standard: stageid != '' ? stageid : '5',
+        // SubscriptionStartDate:
+        //   subscriptionStartDate != '' ? subscriptionStartDate : '',
+        // SubscriptionEndDate:
+        //   subscriptionEndDate != '' ? subscriptionEndDate : '',
+        // IsPremium: isPremium,
+        phone: phone,
+        // standard: stageid != '' ? stageid : '5',
         age: p_age != '' ? p_age : '',
         p_image: image,
         p_imagename: imagename,
         // gender: gender,
         st_email: email != '' ? email : '',
-        parents_phone: alterphone != '' ? alterphone : '',
-        school_name: schoolname != '' ? schoolname : '',
+        phone_secondary: alterphone != '' ? alterphone : '',
+        // school_name: schoolname != '' ? schoolname : '',
         // school_name: '',
         // st_address: address != '' ? address : '',
-        st_address: '',
+        // st_address: '',
         st_gender: gender,
-        language: userLang,
+        // language: userLang,
       });
-      setLanguage(userLang);
-      setLanguages(prevState =>
-        prevState.map(lang =>
-          lang.code === userLang
-            ? { ...lang, isSelected: true }
-            : { ...lang, isSelected: false },
-        ),
-      );
+      // setLanguage(userLang);
+      // setLanguages(prevState =>
+      //   prevState.map(lang =>
+      //     lang.code === userLang
+      //       ? { ...lang, isSelected: true }
+      //       : { ...lang, isSelected: false },
+      //   ),
+      // );
     }
-  }, [childId, childInfo]);
+  }, [childId, userInfo]);
 
   // console.log(info, '=========================info');
   const handleRadioChange = value => {
@@ -408,6 +408,7 @@ const EditProfile = ({ route }) => {
     setGender(value);
     // handleInputChange( "p_fname", f_name.trim())
   };
+
   const handleInputChange = (inputName, inputValue) => {
     // console.log(inputValue,classid, 'classid');
     // const name_reg = /^[A-Za-z]{2,}$/;
@@ -565,11 +566,11 @@ const EditProfile = ({ route }) => {
       // lastname !== '' &&
       // lastname !== '' &&
       st_gender !== '' &&
-      standard !== '' &&
-      schoolBoard != '' &&
-      father_name !== '' &&
+      // standard !== '' &&
+      // schoolBoard != '' &&
+      // father_name !== '' &&
       // mother_name !== '' &&
-      school_name !== '' &&
+      // school_name !== '' &&
       // weight !== '' &&
       age !== '';
     // !zipError
@@ -586,63 +587,65 @@ const EditProfile = ({ route }) => {
     // console.log(age.value, 'ClassID..............',schoolBoardName,"schoolBoardName..");
     const updatebodyData = {
       id: _id,
-      parentid: '',
-      name: firstName + ' ' + lastname,
       fname: firstName,
       lname: lastname,
-      stage: ClassID != undefined ? ClassID.stage : '',
-      age: age.value,
-      boardname: schoolBoardName != undefined ? schoolBoardName.boardname : '',
-      fathername: father_name,
-      // mothername: mother_name,
-      mothername: '',
+      name: firstName + ' ' + lastname,
+      gender: st_gender,
+      email: st_email,
+      phone:phone,
+      alterphone: phone_secondary,
+      password: '',
       image: p_image,
       imagename: p_imagename,
-      subscriptionStartDate: SubscriptionStartDate,
-      subscriptionEndDate: SubscriptionEndDate,
-      isPremium: IsPremium,
-      boardid: schoolBoard,
-      stageid: standard,
-      classname: standard,
-      language: selectedLanguage,
-      email: st_email,
-      alterphone: parents_phone,
-      password: '',
-      schoolname: school_name,
+      age: age.value,
+      status:'',
+      // parentid: '',
+      // stage: ClassID != undefined ? ClassID.stage : '',
+      // boardname: schoolBoardName != undefined ? schoolBoardName.boardname : '',
+      // fathername: father_name,
+      // mothername: mother_name,
+      // mothername: '',
+      // subscriptionStartDate: SubscriptionStartDate,
+      // subscriptionEndDate: SubscriptionEndDate,
+      // isPremium: IsPremium,
+      // boardid: schoolBoard,
+      // stageid: standard,
+      // classname: standard,
+      // language: selectedLanguage,
+      // schoolname: school_name,
       // schoolname: '',
       // address: st_address,
-      address: '',
-      gender: st_gender,
+      // address: '',
     };
 
     console.log(
       updatebodyData,
-      '$$$$$$$$$$$$$$$$$$$$$$$$$$$$updatebodyData//////////////',
+      '...............updatebodyData//////////////',
     );
     // setImageData({image: imageUrl, imagename: originalname});
     // setInfo({...info, p_image: result.assets[0].uri})
     const { image: Child_imageUrl = '', imagename: child_imageName = '' } =
       imageData;
 
-    const bodyData = {
-      parentid: '',
-      fname: firstName,
-      lname: lastname,
-      name: firstName + ' ' + lastname,
-      stage: ClassID != undefined ? ClassID.stage : '',
-      age: age,
-      boardname: schoolBoardName != undefined ? schoolBoardName.boardname : '',
-      fathername: father_name,
-      mothername: mother_name,
-      image: p_image,
-      imagename: p_imagename,
-      subscriptionStartDate: SubscriptionStartDate,
-      subscriptionEndDate: SubscriptionEndDate,
-      isPremium: false,
-      boardid: schoolBoard,
-      stageid: standard,
-      classname: standard,
-    };
+    // const bodyData = {
+    //   parentid: '',
+    //   fname: firstName,
+    //   lname: lastname,
+    //   name: firstName + ' ' + lastname,
+    //   stage: ClassID != undefined ? ClassID.stage : '',
+    //   age: age,
+    //   boardname: schoolBoardName != undefined ? schoolBoardName.boardname : '',
+    //   fathername: father_name,
+    //   mothername: mother_name,
+    //   image: p_image,
+    //   imagename: p_imagename,
+    //   subscriptionStartDate: SubscriptionStartDate,
+    //   subscriptionEndDate: SubscriptionEndDate,
+    //   isPremium: false,
+    //   boardid: schoolBoard,
+    //   stageid: standard,
+    //   classname: standard,
+    // };
     // console.log(bodyData, 'register bodyData//////////////');
     let phone_validate = false;
     let fname_validate = false;
@@ -653,18 +656,18 @@ const EditProfile = ({ route }) => {
     if (
       info.age ||
       info.firstName ||
-      info.lastname ||
-      info.father_name ||
-      info.mother_name ||
-      info.schoolBoard ||
-      info.standard
+      info.lastname 
+      // info.father_name ||
+      // info.mother_name ||
+      // info.schoolBoard ||
+      // info.standard
       // info.present_zip
     ) {
       phone_validate = phoneRegex.test(info.phone_secondary);
       fname_validate = name_reg.test(info.firstName);
       lname_validate = name_reg.test(info.lastname);
-      fathername_validate = name_reg.test(info.father_name);
-      mothername_validate = name_reg.test(info.mother_name);
+      // fathername_validate = name_reg.test(info.father_name);
+      // mothername_validate = name_reg.test(info.mother_name);
       // zip_validate = zip_regex.test(info.present_zip);
     }
     if (validForm == false) {
@@ -685,47 +688,47 @@ const EditProfile = ({ route }) => {
       //   setLnameError(false);
       // }
 
-      if (info.father_name == '' || fathername_validate == false) {
-        setFatherNameError(true);
-      } else {
-        setFatherNameError(false);
-      }
+      // if (info.father_name == '' || fathername_validate == false) {
+      //   setFatherNameError(true);
+      // } else {
+      //   setFatherNameError(false);
+      // }
       // if (info.mother_name == '' || mothername_validate == false) {
       //   setMotherNameError(true);
       // } else {
       //   setMotherNameError(false);
       // }
-      if (info.schoolBoard == '') {
-        setBoardError(true);
-      } else {
-        setBoardError(false);
-      }
+      // if (info.schoolBoard == '') {
+      //   setBoardError(true);
+      // } else {
+      //   setBoardError(false);
+      // }
       if (info.st_gender == '') {
         setGenderError(true);
       } else {
         setGenderError(false);
       }
-      if (info.school_name == '') {
-        setSchoolNameError(true);
-      } else {
-        setSchoolNameError(false);
-      }
-      // if (info.age == '') {
-      //   setAgeError(true);
+      // if (info.school_name == '') {
+      //   setSchoolNameError(true);
       // } else {
-      //   setAgeError(false);
+      //   setSchoolNameError(false);
       // }
+      if (info.age == '') {
+        setAgeError(true);
+      } else {
+        setAgeError(false);
+      }
       // if (info.phone_secondary == '' || phone_validate == false) {
       //   // //console.log(phone_validate, 'phone_validate');
       //   setPhoneError(true);
       // } else {
       //   setPhoneError(false);
       // }
-      if (info.standard == '') {
-        setStandardError(true);
-      } else {
-        setStandardError(false);
-      }
+      // if (info.standard == '') {
+      //   setStandardError(true);
+      // } else {
+      //   setStandardError(false);
+      // }
 
       ToastAndroid.showWithGravityAndOffset(
         trans('Please Enter Valid Input'),
@@ -824,9 +827,7 @@ const EditProfile = ({ route }) => {
       // dispatch(
       updateChildProfile(
         updatebodyData,
-        // setLoading,
         handleUpdateCallback,
-        // false,
       );
       // );
     }
@@ -836,15 +837,16 @@ const EditProfile = ({ route }) => {
     // setChildList({...childList[0],...updatebodyData})
     // console.log(childList, 'childList=======');
     console.log(updatebodyData, 'updatebodyData????????????????????????');
-    const data = childInfo;
+    const data = userInfo;
     const childListData = [{ ...data, ...updatebodyData }];
+    const user = AsyncStorage.storeObject("@user", childListData);
     dispatch(getChildDetailsAPI(childID));
     dispatch(getUserbyId(childID))
-    const scholardata = {
-      stageid,
-      boardid,
-    };
-    dispatch(getScholarshipByClassAPI(scholardata));
+    // const scholardata = {
+    //   stageid,
+    //   boardid,
+    // };
+    // dispatch(getScholarshipByClassAPI(scholardata));
     ToastAndroid.showWithGravityAndOffset(
       trans(`Student Data Updated Successfully`),
       ToastAndroid.LONG,
@@ -868,21 +870,7 @@ const EditProfile = ({ route }) => {
     // navigation.navigate('UserHome');
     navigation.goBack();
   };
-  // const commonCallback = async () => {
-  //   dispatch(
-  //     getChildDetailsAPI(undefined, signOut, childID, setLoading, undefined),
-  //   );
-  //   dispatch(
-  //     getScholarshipByClassAPI(
-  //       undefined,
-  //       stageid,
-  //       boardid,
-  //       childid,
-  //       undefined,
-  //       undefined,
-  //     ),
-  //   );
-  // };
+
   const handleImageCallback = (imageUrl: string, originalname: string) => {
     // if (childID != '') {
     console.log('handleImageCallbackhandleImageCallbackvvvvvvvvvvvvvvv');
@@ -954,7 +942,7 @@ const EditProfile = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor={'#263d2d'} barStyle="light-content" />
+      {/* <StatusBar backgroundColor={'#263d2d'} barStyle="light-content" /> */}
 
       <ImageBackground
         style={{
@@ -1315,7 +1303,7 @@ const EditProfile = ({ route }) => {
                 </Text>
               </Animatable.View>
             )}
-            <View style={[styles.action, { marginTop: 10 }]}>
+            {/* <View style={[styles.action, { marginTop: 10 }]}>
               <FontAwesome5 name="user-tie" color={'#FFB901'} size={20} />
 
               <TextInput
@@ -1348,7 +1336,7 @@ const EditProfile = ({ route }) => {
                   {trans("Please Enter Guardian's Name")}
                 </Text>
               </Animatable.View>
-            )}
+            )} */}
 
             {/* <View style={[styles.action, {marginTop: 10}]}>
                 <MaterialCommunityIcons
@@ -1393,9 +1381,9 @@ const EditProfile = ({ route }) => {
             <View style={[styles.action, { marginTop: 10 }]}>
               <Icon name="old-phone" color={'#FFB901'} size={22} />
               <TextInput
-                placeholder={trans(`Guardian's Mobile Number`)}
+                placeholder={trans(`Alternate Mobile Number`)}
                 placeholderTextColor={'#aaa'}
-                value={parents_phone}
+                value={phone_secondary}
                 style={[
                   styles.textInput,
                   {
@@ -1413,7 +1401,7 @@ const EditProfile = ({ route }) => {
                 autoCapitalize="none"
                 // onChangeText={(val) => textInputChange(val)}
                 // onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
-                onChangeText={val => handleInputChange('parents_phone', val)}
+                onChangeText={val => handleInputChange('phone_secondary', val)}
               />
             </View>
 
@@ -1426,7 +1414,7 @@ const EditProfile = ({ route }) => {
               </Animatable.View>
             )}
 
-            <View style={[styles.action, { marginTop: 10 }]}>
+            {/* <View style={[styles.action, { marginTop: 10 }]}>
               <FontAwesome5 name="school" color={'#FFB901'} size={20} />
               <TextInput
                 placeholder={trans(`Student's School Name`)}
@@ -1462,8 +1450,8 @@ const EditProfile = ({ route }) => {
                   {trans('Please enter school name')}
                 </Text>
               </Animatable.View>
-            )}
-            <View
+            )} */}
+            {/* <View
               style={[
                 {
                   justifyContent: 'space-between',
@@ -1496,28 +1484,6 @@ const EditProfile = ({ route }) => {
                   }}>
                   {trans('Select Standard')}
                 </Text>
-                {/* <TextInput
-                  placeholder={trans("Enter Student's standard")}
-                  keyboardType={'numeric'}
-                  placeholderTextColor={'#aaa'}
-                  value={standard}
-                  style={[
-                    // styles.textInput,
-                    {
-                      width: '70%',
-                      marginTop: Platform.OS === 'ios' ? 0 : -12,
-                      paddingLeft: 10,
-                      // borderWidth:1,
-                      color: "#fff",
-                      fontWeight: 'bold',
-                      color: "#fff",
-                    },
-                  ]}
-                  autoCapitalize="none"
-                  // onChangeText={(val) => textInputChange(val)}
-                  // onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
-                  onChangeText={val => handleInputChange('standard', val)}
-                /> */}
               </View>
 
               <Text
@@ -1531,8 +1497,8 @@ const EditProfile = ({ route }) => {
                 }}>
                 {trans('Standard')}
               </Text>
-            </View>
-            <View
+            </View> */}
+            {/* <View
               style={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -1601,8 +1567,8 @@ const EditProfile = ({ route }) => {
                   {trans("Please Enter Student's Standard")}
                 </Text>
               </Animatable.View>
-            )}
-            <View
+            )} */}
+            {/* <View
               style={[
                 // styles.action,
                 {
@@ -1627,22 +1593,6 @@ const EditProfile = ({ route }) => {
                   }}>
                   {trans('Select Board')}
                 </Text>
-                {/* <TextInput
-                  placeholder={trans("Student's School Board")}
-                  placeholderTextColor={'#aaa'}
-                  value={schoolBoard}
-                  style={[
-                    styles.textInput,
-                    {
-                      width: '70%',
-                      color: "#fff",
-                    },
-                  ]}
-                  autoCapitalize="none"
-                  // onChangeText={(val) => textInputChange(val)}
-                  // onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
-                  onChangeText={val => handleInputChange('schoolBoard', val)}
-                /> */}
               </View>
 
               <Text
@@ -1657,8 +1607,8 @@ const EditProfile = ({ route }) => {
                 }}>
                 {trans('Board')}
               </Text>
-            </View>
-            <View
+            </View> */}
+            {/* <View
               style={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -1720,7 +1670,7 @@ const EditProfile = ({ route }) => {
                   {trans("Please Enter School's Board Name")}
                 </Text>
               </Animatable.View>
-            )}
+            )} */}
             {/* <View style={styles.action}>
               <MaterialIcons
                 name="school"
@@ -1864,7 +1814,7 @@ const EditProfile = ({ route }) => {
                   onChangeText={val => handleInputChange('st_address', val)}
                 />
               </View> */}
-            <View style={{ padding: 5 }}>
+            {/* <View style={{ padding: 5 }}>
               <Text
                 style={{
                   fontSize: 16,
@@ -1931,7 +1881,7 @@ const EditProfile = ({ route }) => {
                   </Chip>
                 </View>
               ))}
-            </View>
+            </View> */}
 
             {/* <View style={styles.action}>
               <MaterialIcons
