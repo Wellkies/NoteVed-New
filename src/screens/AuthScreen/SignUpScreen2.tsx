@@ -328,11 +328,13 @@ const SignUpScreen2 = ({ route }) => {
           // borderRadius: 25,
           flex: 1,
           alignSelf: 'center',
+          backgroundColor: '#272727'
           // justifyContent: 'center',
           // alignItems: 'center',
         }}
-        resizeMode="cover"
-        source={require('../../../assets/0.png')}>
+        // resizeMode="cover"
+        // source={require('../../../assets/0.png')}
+        >
         <View
           style={{
             flexDirection: 'row',
@@ -383,8 +385,8 @@ const SignUpScreen2 = ({ route }) => {
                 // borderWidth: 1,
                 marginLeft: -30,
               }}
-              source={require('../../../assets/c.png')}
-              resizeMode="contain"
+              // source={require('../../../assets/c.png')}
+              // resizeMode="contain"
             />
           </Animatable.View>
           <Animatable.View
@@ -1026,8 +1028,8 @@ const SignUpScreen2 = ({ route }) => {
                 // borderWidth: 1,
                 // marginLeft: -30,
               }}
-              source={require('../../../assets/b.png')}
-              resizeMode="contain"
+              // source={require('../../../assets/b.png')}
+              // resizeMode="contain"
             />
           </Animatable.View>
         </ScrollView>

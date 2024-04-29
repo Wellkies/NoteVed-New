@@ -59,7 +59,10 @@ const ROUTES = {
   MYCART:'MyCart',
   EDITPROFILE:'EditProfile',
   VIDEOSOLUTIONSCREEN:'VideoSolutionScreen',
-  YOUTUBELIST:'YoutibeList'
+  YOUTUBELIST:'YoutibeList',
+  REVIEWS: 'Reviews',
+  PRICING :'Pricing',
+  DETAILS: 'Details',
 };
 
 export default ROUTES;

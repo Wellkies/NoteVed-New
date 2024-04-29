@@ -770,9 +770,11 @@ const SignUpScreen5 = ({ route }) => {
           height: device_height,
           flex: 1,
           alignSelf: 'center',
+          backgroundColor: '#272727'
         }}
-        resizeMode="cover"
-        source={require('../../../assets/0.png')}>
+        // resizeMode="cover"
+        // source={require('../../../assets/0.png')}
+        >
         <View
           style={{
             flexDirection: 'row',
@@ -836,8 +838,8 @@ const SignUpScreen5 = ({ route }) => {
                     width: device_width * 0.6,
                     marginLeft: -30,
                   }}
-                  source={require('../../../assets/hh.png')}
-                  resizeMode="contain"
+                  // source={require('../../../assets/hh.png')}
+                  // resizeMode="contain"
                 />
               </Animatable.View>
               <Animatable.View
@@ -859,8 +861,8 @@ const SignUpScreen5 = ({ route }) => {
                     // borderWidth: 1,
                     // marginLeft: -30,
                   }}
-                  source={require('../../../assets/i.png')}
-                  resizeMode="contain"
+                  // source={require('../../../assets/i.png')}
+                  // resizeMode="contain"
                 />
               </Animatable.View>
             </View>

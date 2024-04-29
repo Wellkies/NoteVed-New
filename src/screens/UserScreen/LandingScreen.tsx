@@ -155,7 +155,9 @@ const LandingScreen = ({ }) => {
   }, [])
 
 
-  const ListColor = ['#fee2a3', '#f6c4b9', '#c3ccf5', '#76f0c7'];
+  // const ListColor = ['#fee2a3', '#f6c4b9', '#c3ccf5', '#76f0c7'];
+
+  const ListColor = ['#50C878', '#00FF7F', '#1dfc8c', '#50C878'];
 
   // const ExamAvailable = [
   //   {
@@ -195,7 +197,7 @@ const LandingScreen = ({ }) => {
           height: device_height,
           flex: 1,
           alignSelf: 'center',
-          backgroundColor:"#f6d4c9"
+          backgroundColor:"#404040"
         }}
         resizeMode="contain"
         // source={require('../../../assets/testBG3.jpg')}
@@ -211,7 +213,7 @@ const LandingScreen = ({ }) => {
             fontSize: 25,
             fontWeight: '900',
             textAlign: 'center',
-            color: 'darkgreen',
+            color: 'white',
             marginTop: 10,
             textTransform: 'uppercase'
           }}>
@@ -230,7 +232,7 @@ const LandingScreen = ({ }) => {
               fontWeight: 'bold',
               textAlign: 'left',
               marginLeft: 15,
-              color: '#000'
+              color: 'white'
             }}>
             {`Choose one exam to continue`}
           </Text>
@@ -267,6 +269,7 @@ const LandingScreen = ({ }) => {
                     alignItems: 'center',
                     // backgroundColor: '#fee2a3',
                     backgroundColor: ListColor[index % ListColor.length],
+                    //backgroundColor: '#1dfc8c',
                     paddingVertical: 25,
                     width: device_width * 0.42,
                     minHeight: device_height * 0.25,
@@ -275,7 +278,7 @@ const LandingScreen = ({ }) => {
                     borderWidth: 1,
                     borderColor:'#999',
                     elevation:15,
-                    borderRadius: 20,
+                    borderRadius: 10,
                   }}>
                   {image != '' && image != null ?
 
@@ -309,7 +312,7 @@ const LandingScreen = ({ }) => {
                       fontSize: 20,
                       fontWeight: 'bold',
                       textAlign: 'center',
-                      color: '#000'
+                      color: '#000',
                     }}>
                     {coursename}
                   </Text>
@@ -318,7 +321,7 @@ const LandingScreen = ({ }) => {
                       fontSize: 14,
                       fontWeight: '700',
                       textAlign: 'center',
-                      color: '#333'
+                      color: '#333',
                     }}>
                     {description}
                   </Text>

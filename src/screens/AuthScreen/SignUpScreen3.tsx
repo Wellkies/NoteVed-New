@@ -905,8 +905,8 @@ const SignUpScreen3 = ({ route }) => {
             position: 'absolute',
             bottom: -5,
           }}
-          source={require('../../../assets/jungle.png')}
-          resizeMode="contain"
+          // source={require('../../../assets/jungle.png')}
+          // resizeMode="contain"
         />
         <ScrollView showsVerticalScrollIndicator={false} style={{}}>
           <Animatable.View
