@@ -5,6 +5,7 @@ import {
   CREATE_CHILD_ABOVE_90_PERCENTAGE_OTHER_URL,
   CREATE_CHILD_BELOW_90_PERCENTAGE_BSE_URL,
   CREATE_CHILD_BELOW_90_PERCENTAGE_OTHER_URL,
+  EDZ_ANSWER_SUBMIT_URL,
   GET_ANSWER_BY_SUBMIT_URL,
   GET_CHILD_REVISION_DETAILS_URL,
   GET_CONTENT_QUIZ_URL,
@@ -273,17 +274,17 @@ export const answerReattemptSubmitApi = async (
 };
 
 export const answerSubmitApi = async (bodydata: any, callBack: any) => {
-  const url = GET_ANSWER_BY_SUBMIT_URL;
+  const url = EDZ_ANSWER_SUBMIT_URL;
   console.log(
     url,
-    'GET_ANSWER_BY_SUBMIT_URL...........url...........................',
+    'EDZ_ANSWER_SUBMIT_URL............................',
   );
-  const token = await AsyncStorage.getObject('@auth_Token');
+  // const token = await AsyncStorage.getObject('@auth_Token');
   const requestOptions = {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+      // Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(bodydata),
   };
@@ -294,12 +295,12 @@ export const answerSubmitApi = async (bodydata: any, callBack: any) => {
 
     console.log(
       response,
-      'GET_ANSWER_BY_SUBMIT_URL.........response..........',
+      'EDZ_ANSWER_SUBMIT_URL.........response..........',
     );
     // const Data = await response.data;
     const Data = await response.json();
 
-    console.log(Data, 'Data........................');
+    console.log(Data, 'EDZ_ANSWER_SUBMIT_URL_responseData........................');
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
@@ -308,7 +309,7 @@ export const answerSubmitApi = async (bodydata: any, callBack: any) => {
       return {data: Data};
     }
   } catch (error) {
-    console.log(error, 'GET_ANSWER_BY_SUBMIT_URL.....error.......');
+    console.log(error, 'EDZ_ANSWER_SUBMIT_URL.....error.......');
 
     throw error;
   }
