@@ -10,21 +10,21 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
-import React, {useEffect, useState, useRef} from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Colors from '../../../assets/Colors';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {useDispatch, useSelector} from 'react-redux';
-import {useTranslation} from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import * as Progress from 'react-native-progress';
-import {device_height, device_width} from '../style';
+import { device_height, device_width } from '../style';
 import {
   markCalculation,
   // remainingTimerdata,
 } from '../../../constants/Constants';
 import WebView from 'react-native-webview';
-import {useNavigation} from '@react-navigation/native';
-import {useAppSelector} from '../../redux/store/reducerHook';
+import { useNavigation } from '@react-navigation/native';
+import { useAppSelector } from '../../redux/store/reducerHook';
 import {
   getContentQuizAPI,
   selectContentQuiz,
@@ -36,7 +36,7 @@ import {
   getChildDetailsAPI,
   selectStudentInfo,
 } from '../../redux/reducers/StudentInfoReducer';
-import {getTopicBySubClassAPI} from '../../redux/reducers/GetTopicBySubjectReducer';
+import { getTopicBySubClassAPI } from '../../redux/reducers/GetTopicBySubjectReducer';
 import LoadingScreen from '../CommonScreens/LoadingScreen';
 import {
   AddChildRevisionAPI,
@@ -56,12 +56,13 @@ import {
   selectTopicDetails,
 } from '../../redux/reducers/GetTopicDetailsFormTopicIdReducer';
 import { selectContentDetailsInfo, selectContentDetailsStatus } from '../../redux/reducers/GetContentDetailsReducer';
+import { selectUserInfo } from '../../redux/reducers/loginReducer';
 
-const MockTests = ({route}) => {
+const MockTests = ({ route }) => {
   const dispatch = useDispatch<any>();
   const navigation = useNavigation();
   const scrollRef = useRef();
-  const {t: trans, i18n} = useTranslation();
+  const { t: trans, i18n } = useTranslation();
 
   const {
     screenName = '',
@@ -109,6 +110,8 @@ const MockTests = ({route}) => {
   const [progressdata, setProgressdata] = useState(0);
 
   const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
+  const { authToken, status, userInfo } = useAppSelector(selectUserInfo);
+
   interface ChildInfo {
     _id: string;
     age: string;
@@ -139,18 +142,18 @@ const MockTests = ({route}) => {
     boardid: string;
     classname: string;
   }
-  // const {
-  //   _id: id = '',
-  //   childid = '',
-  //   name: childName = '',
-  //   stage = '',
-  //   stageid = '',
-  //   image: c_image = '',
-  //   age: C_age = '',
-  //   phone = '',
-  //   name = '',
-  // } = childInfo;
-  // console.log(childInfo, 'childInfo..............');
+  const {
+    _id: id = '',
+    childid = '',
+    name: childName = '',
+    stage = '',
+    stageid = '',
+    image: c_image = '',
+    age: C_age = '',
+    phone = '',
+    name = '',
+  } = userInfo;
+  console.log(userInfo, 'userInfo..............');
   const TopicList = useAppSelector(selectTopicDetails);
   console.log(TopicList, 'TopicList//////////////////////');
   const TopicId = useAppSelector(selectTopicId);
@@ -276,113 +279,116 @@ const MockTests = ({route}) => {
       percentage,
       'percentage...................',
     );
-    if (isReattempt) {
-      let bodyReattemptAnswerData = {
-        id: studentdata[0]._id,
-        securmark: correctanswer,
-        quiz: Questionlist,
-        percentage: percentage,
-       };
-      const below90Body = {
-        phone: phone,
-        userName: name,
-      };
-      const above90Body = {
-        phone: phone,
-        userName: name,
-        totalmark: totalmark,
-        correctanswer: correctanswer,
-        wrongresponse: Wronganswer,
-        skippedquestion: Skipped,
-        percentagescored: percentage,
-      };
-      console.log(above90Body, 'above90Body/////////////');
-      if (boardid == 1 && percentage >= 90) {
-        createabove90PercentageBSEApi(above90Body, undefined);
-      } else if (boardid !== 1 && percentage >= 90) {
-        createabove90PercentageOtherApi(above90Body, undefined);
-      } else if (boardid == 1 && percentage < 90) {
-        createBelow90PercentageBSEApi(below90Body, undefined);
-      } else if (boardid !== 1 && percentage < 90) {
-        createBelow90PercentageOtherApi(below90Body, undefined);
-      } else {
-      }
-      // console.log( ContentIndex != -1 ,
-      //   ContentIndex == selectedTopic.reviewquestionsets.length - 1 ,
-      //   percentage >= 90,"*****************************")
-      if (
-        ContentIndex != -1 &&
-        ContentIndex == selectedTopic.reviewquestionsets.length - 1 &&
-        percentage >= 90
-      ) {
-        handleUnlockChapter();
-      }
-      // dispatch(
-      //   // answerReattemptSubmitApi(bodyReattemptAnswerData, handleCallback,handleError),
-      answerReattemptSubmitApi(
-        bodyReattemptAnswerData,
-        handleCallback,
-        //   setLoading,
-        // ),
-      );
-    } else {
-      const bodyAnswerData = {
-        childid: childid,
-        parentid: '',
-        name: childName,
-        age: C_age,
-        stage: stage,
-        stageid: stageid,
-        contentid: contentid,
-        subject: subjectName,
-        topic: chapterName,
-        contentset: examSet,
-        totalmark: Questionlist.length,
-        securmark: correctanswer,
-        quiz: Questionlist,
-        // quiz: submitData,
-        subjectIamge: '',
-        topicImage: '',
-        contentImage: '',
-        isPremium: false,
-        percentage: percentage,
-      };
-      const below90Body = {
-        phone: phone,
-        userName: name,
-      };
-      const above90Body = {
-        phone: phone,
-        userName: name,
-        totalmark: totalmark,
-        correctanswer: correctanswer,
-        wrongresponse: Wronganswer,
-        skippedquestion: Skipped,
-        percentagescored: percentage,
-      };
-      if (boardid == 1 && percentage >= 90) {
-        createabove90PercentageBSEApi(above90Body, undefined);
-      } else if (boardid != 1 && percentage >= 90) {
-        createabove90PercentageOtherApi(above90Body, undefined);
-      } else if (boardid == 1 && percentage < 90) {
-        createBelow90PercentageBSEApi(below90Body, undefined);
-      } else if (boardid != 1 && percentage < 90) {
-        createBelow90PercentageOtherApi(below90Body, undefined);
-      } else {
-      }
-      // console.log( ContentIndex != -1 ,
-      //   ContentIndex == selectedTopic.reviewquestionsets.length - 1 ,
-      //   percentage >= 90,"*****************************")
-      if (
-        ContentIndex != -1 &&
-        ContentIndex == selectedTopic.reviewquestionsets.length - 1 &&
-        percentage >= 90
-      ) {
-        handleUnlockChapter();
-      }
-      // dispatch(answerSubmitApi(bodyAnswerData, handleCallback,handleError));
-      answerSubmitApi(bodyAnswerData, handleCallback);
-    }
+    // if (isReattempt) {
+    //   let bodyReattemptAnswerData = {
+    //     id: studentdata[0]._id,
+    //     securmark: correctanswer,
+    //     quiz: Questionlist,
+    //     percentage: percentage,
+    //    };
+    //   const below90Body = {
+    //     phone: phone,
+    //     userName: name,
+    //   };
+    //   const above90Body = {
+    //     phone: phone,
+    //     userName: name,
+    //     totalmark: totalmark,
+    //     correctanswer: correctanswer,
+    //     wrongresponse: Wronganswer,
+    //     skippedquestion: Skipped,
+    //     percentagescored: percentage,
+    //   };
+    //   console.log(above90Body, 'above90Body/////////////');
+    //   if (boardid == 1 && percentage >= 90) {
+    //     createabove90PercentageBSEApi(above90Body, undefined);
+    //   } else if (boardid !== 1 && percentage >= 90) {
+    //     createabove90PercentageOtherApi(above90Body, undefined);
+    //   } else if (boardid == 1 && percentage < 90) {
+    //     createBelow90PercentageBSEApi(below90Body, undefined);
+    //   } else if (boardid !== 1 && percentage < 90) {
+    //     createBelow90PercentageOtherApi(below90Body, undefined);
+    //   } else {
+    //   }
+    //   // console.log( ContentIndex != -1 ,
+    //   //   ContentIndex == selectedTopic.reviewquestionsets.length - 1 ,
+    //   //   percentage >= 90,"*****************************")
+    //   if (
+    //     ContentIndex != -1 &&
+    //     ContentIndex == selectedTopic.reviewquestionsets.length - 1 &&
+    //     percentage >= 90
+    //   ) {
+    //     handleUnlockChapter();
+    //   }
+    //   // dispatch(
+    //   //   // answerReattemptSubmitApi(bodyReattemptAnswerData, handleCallback,handleError),
+    //   answerReattemptSubmitApi(
+    //     bodyReattemptAnswerData,
+    //     handleCallback,
+    //     //   setLoading,
+    //     // ),
+    //   );
+    // } else {
+    const bodyAnswerData = {
+      childid: childid,
+      name: childName,
+      age: C_age,
+      // parentid: '',
+      // stage: stage,
+      // stageid: stageid,
+      contentid: contentid,
+      subjectid: subjectId,
+      subject: subjectName,
+      topicid: topicid,
+      topic: chapterName,
+      contentset: examSet,
+      totalmark: Questionlist.length,
+      securmark: correctanswer,
+      percentage: percentage,
+      wrongmark: Wronganswer,
+      skipmark: Skipped,
+      quiz: Questionlist,
+      // quiz: submitData,
+      subjectimage: '',
+      topicimage: '',
+      contentimage: '',
+      isPremium: false,
+    };
+    const below90Body = {
+      phone: phone,
+      userName: name,
+    };
+    const above90Body = {
+      phone: phone,
+      userName: name,
+      totalmark: totalmark,
+      correctanswer: correctanswer,
+      wrongresponse: Wronganswer,
+      skippedquestion: Skipped,
+      percentagescored: percentage,
+    };
+    // if (boardid == 1 && percentage >= 90) {
+    //   createabove90PercentageBSEApi(above90Body, undefined);
+    // } else if (boardid != 1 && percentage >= 90) {
+    //   createabove90PercentageOtherApi(above90Body, undefined);
+    // } else if (boardid == 1 && percentage < 90) {
+    //   createBelow90PercentageBSEApi(below90Body, undefined);
+    // } else if (boardid != 1 && percentage < 90) {
+    //   createBelow90PercentageOtherApi(below90Body, undefined);
+    // } else {
+    // }
+    // // console.log( ContentIndex != -1 ,
+    // //   ContentIndex == selectedTopic.reviewquestionsets.length - 1 ,
+    // //   percentage >= 90,"*****************************")
+    // if (
+    //   ContentIndex != -1 &&
+    //   ContentIndex == selectedTopic.reviewquestionsets.length - 1 &&
+    //   percentage >= 90
+    // ) {
+    //   handleUnlockChapter();
+    // }
+    answerSubmitApi(bodyAnswerData, handleCallback);
+    // }
   };
 
   const {
@@ -462,7 +468,7 @@ const MockTests = ({route}) => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       {ContentLoading == 'loading' ? (
         <LoadingScreen flag={ContentLoading == 'loading'} />
       ) : (
@@ -494,7 +500,7 @@ const MockTests = ({route}) => {
           }}>
           {trans('Mock Test')}
         </Text> */}
-            <View style={{height: 40, marginHorizontal: 20}}>
+            <View style={{ height: 40, marginHorizontal: 20 }}>
               {timeDurationValue ? (
                 <CommonTimer
                   duration={timeDurationValue}
@@ -504,7 +510,7 @@ const MockTests = ({route}) => {
                 <></>
               )}
             </View>
-            <View style={{position: 'absolute', top: 0, right: 10}}>
+            <View style={{ position: 'absolute', top: 0, right: 10 }}>
               <TouchableOpacity
                 onPress={() => {
                   // navigation.navigate('Kids_Profile', {childId: id});
@@ -556,7 +562,7 @@ const MockTests = ({route}) => {
                 progress={progressdata}
                 width={300}
                 height={7}
-                style={{marginTop: -5}}
+                style={{ marginTop: -5 }}
               />
             </View>
             <Text
@@ -569,9 +575,8 @@ const MockTests = ({route}) => {
                   marginTop: 10,
                 },
               ]}>
-              {`${trans('Qs.')} ( ${currentIndex + 1}/${
-                Questionlist?.length
-              } )`}
+              {`${trans('Qs.')} ( ${currentIndex + 1}/${Questionlist?.length
+                } )`}
             </Text>
             <ScrollView
               showsVerticalScrollIndicator={true}
@@ -585,7 +590,7 @@ const MockTests = ({route}) => {
                 // minWidth: device_width * 0.8,
               }}
               persistentScrollbar={true}>
-              <View style={{width: '100%'}}>
+              <View style={{ width: '100%' }}>
                 <View
                   style={{
                     // borderWidth: 1,
@@ -657,7 +662,7 @@ const MockTests = ({route}) => {
                       <Text
                         style={[
                           styles.question,
-                          {textAlign: 'center', color: '#fff'},
+                          { textAlign: 'center', color: '#fff' },
                         ]}>
                         {Questionlist[currentIndex]?.question}
                       </Text>
@@ -696,8 +701,8 @@ const MockTests = ({route}) => {
                 justifyContent: 'space-between',
               }}>
               {Questionlist[currentIndex]?.option?.map((item, indx) => {
-                const {label = '', value = '', contenttype = ''} = item;
-                const {selectedAns = ''} = Questionlist[currentIndex];
+                const { label = '', value = '', contenttype = '' } = item;
+                const { selectedAns = '' } = Questionlist[currentIndex];
                 const selectedItem = label == selectedAns;
 
                 return (
@@ -764,7 +769,7 @@ const MockTests = ({route}) => {
               paddingHorizontal: 10,
             }}>
             <TouchableOpacity
-              style={{padding: 15}}
+              style={{ padding: 15 }}
               disabled={currentIndex == 0}
               onPress={() => {
                 handlePrevious();
@@ -774,9 +779,9 @@ const MockTests = ({route}) => {
                 //   animated: true,
                 // });
               }}>
-              <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
+              <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
                 <FontAwesome
-                  style={{color: currentIndex == 0 ? '#bbb' : '#f1a722'}}
+                  style={{ color: currentIndex == 0 ? '#bbb' : '#f1a722' }}
                   name="chevron-left"
                   size={16}
                 />
@@ -873,7 +878,7 @@ const MockTests = ({route}) => {
                 </TouchableOpacity>
               </View>
             ) : (
-              <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
+              <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
                 <TouchableOpacity
                   disabled={currentIndex == Questionlist.length - 1}
                   style={{
@@ -951,9 +956,8 @@ const MockTests = ({route}) => {
           // label2={`${'You have only attempted ${no_of_Attempts} questions out of  ${Questionlist.length}'}`}
           label2={`${trans(
             'You have only attempted',
-          )} ${no_of_Attempts} ${trans('questions out of')} ${
-            Questionlist.length
-          } ${trans('questions ')}`}
+          )} ${no_of_Attempts} ${trans('questions out of')} ${Questionlist.length
+            } ${trans('questions ')}`}
           // label2={`${trans('You have only attempted ')${no_of_Attempts} questions out of} ${
           //   Questionlist.length}
           // }questions ')}`}

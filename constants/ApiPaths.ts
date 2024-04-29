@@ -21,6 +21,7 @@ export const DELETE_CHILD_URL = API_URL + 'deletechild';
 
 //===============================NEW PROJECT================================//
 export const EDZ_REGISTER_NEW_CHILD_URL = API_URL + 'edzcreateChild';
+export const EDZ_PHONE_NUM_VERIFY_URL = API_URL + 'edzphoneNumbercheck/';
 export const EDZ_LOGIN_WITH_PASSWORD_URL = API_URL + 'edzchildlogiusingpassword';
 export const GET_CHILD_DETAILS_URL = API_URL + 'edzgetChildbyid/';
 export const GET_ALL_COURSES_URL = API_URL + 'getCourse';
@@ -28,7 +29,8 @@ export const GET_ALL_SUBJECTS_BY_COURSE_URL = API_URL + 'getAllsubject';
 export const GET_TOPICS_BY_SUBJECTID_URL = API_URL + 'getTopicbysubjectid/';
 export const GET_CONTENT_BY_TOPICID_URL = API_URL + 'edzgetContentbytopicid/';
 export const GET_ALL_CHILD_CONTENT_URL = API_URL + 'edzgetAllchildContent/';
-export const EDZ_PHONE_NUM_VERIFY_URL = API_URL + 'edzphoneNumbercheck/';
+export const EDZ_ANSWER_SUBMIT_URL = API_URL + 'edzcreatechildcontent';
+export const EDZ_UPDATE_CHILD_API = API_URL + 'edzupdateChild';
 
 //=========================================================================//
 

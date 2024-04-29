@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Image,
   SafeAreaView,
@@ -9,19 +9,19 @@ import {
   BackHandler,
   ImageBackground,
 } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import i18n from 'i18next';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Colors from '../../../assets/Colors';
-import { device_height, device_width } from '../style';
+import {device_height, device_width} from '../style';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FastImage from 'react-native-fast-image';
 import LoadingScreen from '../CommonScreens/LoadingScreen';
-import { useNavigation } from '@react-navigation/native';
-import { selectStudentInfo } from '../../redux/reducers/StudentInfoReducer';
-import { useAppSelector } from '../../redux/store/reducerHook';
+import {useNavigation} from '@react-navigation/native';
+import {selectStudentInfo} from '../../redux/reducers/StudentInfoReducer';
+import {useAppSelector} from '../../redux/store/reducerHook';
 import {
   getAllProductAPI,
   selectAllProduct,
@@ -35,8 +35,8 @@ import {
   getCartItemAPI,
   selectCartItemInfo,
 } from '../../redux/reducers/GetCartItemReducer';
-import { getProductByIdAPI } from '../../redux/reducers/GetProductDetailsReducer';
-import { getChildAllOrdersAPI } from '../../redux/reducers/GetAllOrdersReducer';
+import {getProductByIdAPI} from '../../redux/reducers/GetProductDetailsReducer';
+import {getChildAllOrdersAPI} from '../../redux/reducers/GetAllOrdersReducer';
 import {
   getSubjectByClassAPI,
   selectSubjectInfo,
@@ -48,20 +48,20 @@ import {
 } from '../../redux/reducers/GetTopicBySubjectReducer';
 import CommonMessage from '../../../constants/CommonMessage';
 import Header from '../CommonScreens/Header';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import LinearGradient from 'react-native-linear-gradient';
 import {
   getAllSubByCourseAPI,
   selectAllSubjectsInfo,
   selectAllSubjectsStatus,
 } from '../../redux/reducers/GetSubjectByCourseReducer';
-import { getTopicBySubIdAPI } from '../../redux/reducers/GetTopicDetailsReducer';
+import {getTopicBySubIdAPI} from '../../redux/reducers/GetTopicDetailsReducer';
 
-const SubjectList = ({ route }) => {
+const SubjectList = ({route}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch<any>();
-  const { t: trans, i18n } = useTranslation();
-  const { stageid = '', boardid = '', coursename = '' } = route.params;
+  const {t: trans, i18n} = useTranslation();
+  const {stageid = '', boardid = '', coursename = ''} = route.params;
   console.log(route.params, '===============route.params');
   // const [loading, setLoading] = useState(false);
   // const SchlrshipId = 'NVOOKADA1690811843420';
@@ -74,7 +74,7 @@ const SubjectList = ({ route }) => {
     // };
     // dispatch(getSubjectByClassAPI(data));
     dispatch(getAllSubByCourseAPI());
-    return () => { };
+    return () => {};
   }, []);
 
   const SubjectByCourse = useAppSelector(selectAllSubjectsInfo);
@@ -157,9 +157,9 @@ const SubjectList = ({ route }) => {
       });
     };
   }, []);
-
+  const ListColor = ['#50C878', '#00FF7F', '#1dfc8c', '#50C878'];
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{flex: 1}}>
       <ImageBackground
         style={{
           width: device_width,
@@ -167,18 +167,75 @@ const SubjectList = ({ route }) => {
           flex: 1,
           // alignSelf: 'center',
           // borderWidth: 1,
-          backgroundColor: '#feecde',
+          //backgroundColor: '#121212',
+          backgroundColor: '#404040'
         }}
         resizeMode="contain"
-      // source={require('../../../assets/testBG3.jpg')}
+        // source={require('../../../assets/testBG3.jpg')}
       >
-        <Header
+        {/* <Header
           label1={trans('Subject List')}
           label2={``}
           // label2={`${trans('Std')}-${stage}`}
           isbackIconShow={true}
           functionName={() => navigation.goBack()}
-        />
+        /> */}
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginLeft: 10,
+            paddingTop: 10,
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+            }}>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                fontSize: 30,
+                color: 'white',
+              }}>
+              {'Example App'}
+            </Text>
+          </View>
+          <View
+            style={{
+              marginRight: 10,
+            }}>
+            <TouchableOpacity>
+              <MaterialIcons
+                style={{
+                  fontWeight: 'bold',
+                  color: '#1dfc8c',
+                }}
+                name="menu"
+                size={50}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginBottom: 10,
+            marginLeft: 10,
+          }}>
+          <Text
+            style={{
+              //fontWeight: 'bold',
+              fontSize: 18,
+              alignItems: 'center',
+              // fontStyle: 'italic',
+              color: '#1dfc8c',
+            }}>
+            {'Hello'}
+          </Text>
+        </View>
         {SubLoading == 'loading' ? (
           <View
             style={{
@@ -194,13 +251,19 @@ const SubjectList = ({ route }) => {
         ) : (
           <>
             <ScrollView showsVerticalScrollIndicator={true}>
-              <TouchableOpacity
-                disabled={true}
+              <View
+                //disabled={true}
                 //   onPress={navigationfunc}
                 style={{
                   // backgroundColor: '#fee2a3',
-                  backgroundColor: '#fec993',
-                  paddingVertical: 25,
+                  //backgroundColor: '#fec993',
+                  //paddingVertical: 25,
+                  flex: 1,
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignContent: 'center',
+                  backgroundColor: '#00FF7F',
+                  paddingVertical: 20,
                   width: device_width * 0.95,
                   height: device_height * 0.25,
                   paddingHorizontal: 25,
@@ -208,44 +271,75 @@ const SubjectList = ({ route }) => {
                   //   borderWidth: 2,
                   borderRadius: 20,
                 }}>
-                <Text
-                  style={{
-                    // width: '120%',
-                    fontSize: 50,
-                    fontWeight: 'bold',
-                    color: '#474747',
-                    // marginLeft:30,
-                  }}>
-                  {'3 Sutras'}
-                </Text>
-                <View
-                  style={{
-                    width: '60%',
-                    borderBottomWidth: 0.5,
-                    paddingBottom: 15,
-                  }}>
+                <View>
                   <Text
                     style={{
                       // width: '120%',
-                      fontSize: 20,
-                      fontWeight: '400',
-                      color: '#474747',
+                      fontSize: 40,
+                      fontWeight: 'bold',
+                      color: 'black',
                       // marginLeft:30,
                     }}>
-                    {`To Prepare For ${coursename}`}
+                    {'3 Sutras'}
                   </Text>
-                </View>
-                <View style={{ marginTop: 10, width: '25%' }}>
-                  <TouchableOpacity
+                  <View
                     style={{
-                      backgroundColor: '#474747',
-                      padding: 5,
-                      borderRadius: 50,
+                      width: '83%',
+                      borderBottomWidth: 0.5,
+                      paddingBottom: 10,
+                      borderColor: 'black',
                     }}>
-                    <Text style={{ color: '#fff', textAlign: 'center' }}>
-                      {'Read More'}
+                    <Text
+                      style={{
+                        // width: '120%',
+                        fontSize: 24,
+                        fontWeight: '400',
+                        color: 'black',
+                        // marginLeft:30,
+                      }}>
+                      {`To Prepare For ${coursename}`}
                     </Text>
-                  </TouchableOpacity>
+                  </View>
+                  <View
+                    style={{
+                      marginTop: 20,
+                      width: '44%',
+                    }}>
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: 'black',
+                        padding: 2,
+                        // borderRadius: 50,
+                        borderRadius: 20,
+                      }}>
+                      <Text style={{color: '#fff', textAlign: 'center'}}>
+                        {'Read More'}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    // width: '100%',
+                    // height: '100%',
+                    // marginTop:32,
+                    // marginRight:32,
+                    position: 'absolute',
+                    right: 0,
+                    bottom: 0,
+                  }}>
+                  <Image
+                    style={{
+                      width: 180,
+                      height: 180,
+                      resizeMode: 'contain',
+                      paddingLeft: 10,
+                      // right: -10,
+                      // borderRadius: 50,
+                      // alignSelf: 'center',
+                    }}
+                    source={require('../../../assets/p1.png')}
+                  />
                 </View>
                 {/* <FastImage
                   style={{
@@ -257,7 +351,7 @@ const SubjectList = ({ route }) => {
                   // source={}
                   resizeMode="center"
                 /> */}
-              </TouchableOpacity>
+              </View>
               <View
                 style={
                   {
@@ -267,20 +361,31 @@ const SubjectList = ({ route }) => {
                     // backgroundColor: Colors.secondary,
                   }
                 }>
-                <Text
-                  style={{
-                    fontWeight: '900',
-                    // color: '#fff',
-                    color: '#000',
-                    fontSize: 20,
-                    marginLeft: 15,
-                    marginTop: 12,
-                    marginBottom: 15,
-                  }}>
-                  {'Categories'}
-                </Text>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <Text
+                    style={{
+                      fontWeight: '900',
+                      // color: '#fff',
+                      color: '#00FF7F',
+                      fontSize: 20,
+                      marginLeft: 15,
+                      marginTop: 12,
+                      marginBottom: 15,
+                    }}>
+                    {'Categories'}
+                  </Text>
+                  <View
+                    style={{
+                      flex: 1,
+                      height: 1,
+                      backgroundColor: 'blue',
+                      marginLeft: 10,
+                      marginRight: 15,
+                    }}
+                  />
+                </View>
                 <ScrollView
-                  showsHorizontalScrollIndicator={true}
+                  showsHorizontalScrollIndicator={false}
                   persistentScrollbar={true}
                   horizontal={true}>
                   <View
@@ -306,88 +411,88 @@ const SubjectList = ({ route }) => {
                           // console.log(item, 'item..................');
                           return (
                             <TouchableOpacity
-                              style={{
-                                // borderWidth: 1
-                                marginBottom: 10,
-                                backgroundColor:'#feecde'
-                              }}
                               key={index}
                               onPress={() => {
-                                dispatch(getTopicBySubIdAPI(subjectid))
+                                dispatch(getTopicBySubIdAPI(subjectid));
                                 navigation.navigate('SubjectLevel', {
                                   // stageid: '5',
                                   // boardid: '1',
                                   // scholarshipId: 'NVOOKADA1690811843420',
                                   coursename: coursename,
                                   subjectname: subjectname,
-                                  subjectid: subjectid
+                                  subjectid: subjectid,
                                 });
+                              }}
+                              // <LinearGradient
+                              style={{
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                backgroundColor:
+                                  ListColor[index % ListColor.length],
+                                //backgroundColor: '#fee2a3',
+                                // backgroundColor: '#fdc0ae',
+                                paddingVertical: 25,
+                                width: device_width * 0.35,
+                                height: device_height * 0.15,
+                                // width: device_width * 0.4,
+                                // height: device_height * 0.2,
+                                paddingHorizontal: 15,
+                                margin: 5,
+                                //elevation: 15,
+                                borderWidth: 2,
+                                borderColor: '#999',
+                                borderRadius: 20,
+                                marginBottom: 10,
                               }}>
-                              <LinearGradient
-                                colors={['#feecde', '#fdbead']}
+                              <Text
                                 style={{
-                                  justifyContent: 'center',
-                                  alignItems: 'center',
-                                  backgroundColor: '#fee2a3',
-                                  // backgroundColor: '#fdc0ae',
-                                  paddingVertical: 25,
-                                  width: device_width * 0.4,
-                                  height: device_height * 0.2,
-                                  paddingHorizontal: 15,
-                                  margin: 5,
-                                  elevation: 15,
-                                  borderWidth: 2,
-                                  borderColor: '#999',
-                                  borderRadius: 20,
+                                  width: '100%',
+                                  fontSize: 18,
+                                  fontWeight: 'bold',
+                                  color: 'white',
+                                  // borderWidth: 1,
+                                  //color: '#333',
+                                  // marginLeft: 30,
                                 }}>
-                                <Text
-                                  style={{
-                                    width: '100%',
-                                    fontSize: 20,
-                                    fontWeight: 'bold',
-                                    // borderWidth: 1,
-                                    color: '#333',
-                                    // marginLeft: 30,
-                                  }}>
-                                  {subjectname}
-                                </Text>
-                                <View
-                                  style={{
-                                    borderColor: Colors.lightgrey,
-                                    // borderWidth: 1.5,
-                                    // elevation: 5,
-                                    // backgroundColor: '#fff',
-                                    borderRadius: 50,
-                                    marginLeft: 50,
-                                    marginTop: 20,
-                                  }}>
-                                  {subjectImage != '' ? (
-                                    <Image
-                                      style={{
-                                        width: 75,
-                                        height: 75,
-                                        resizeMode: 'cover',
-                                        right: -10,
-                                        // borderRadius: 50,
-                                        alignSelf: 'center',
-                                      }}
-                                      source={{ uri: subjectImage }}
-                                    />
-                                  ) : (
-                                    <Image
-                                      style={{
-                                        width: 75,
-                                        height: 75,
-                                        resizeMode: 'cover',
-                                        right: -10,
-                                        // borderRadius: 50,
-                                        alignSelf: 'center',
-                                      }}
-                                      source={require('../../../assets/test.png')}
-                                    />
-                                  )}
-                                </View>
-                              </LinearGradient>
+                                {subjectname}
+                              </Text>
+                              <View
+                                style={{
+                                  borderColor: Colors.lightgrey,
+                                  // borderWidth: 1.5,
+                                  // elevation: 5,
+                                  // backgroundColor: '#fff',
+                                  borderRadius: 50,
+                                  marginLeft: 50,
+                                  marginTop: 20,
+                                }}>
+                                {subjectImage != '' ? (
+                                  <Image
+                                    style={{
+                                      width: 50,
+                                      height: 50,
+                                      resizeMode: 'cover',
+                                      right: -10,
+                                      // borderRadius: 50,
+                                      alignSelf: 'center',
+                                    }}
+                                    source={{uri: subjectImage}}
+                                  />
+                                ) : (
+                                  <Image
+                                    style={{
+                                      width: 75,
+                                      height: 75,
+                                      resizeMode: 'cover',
+                                      right: -10,
+                                      // borderRadius: 50,
+                                      alignSelf: 'center',
+                                    }}
+                                    source={require('../../../assets/test.png')}
+                                  />
+                                )}
+                              </View>
+                              {/* </LinearGradient> */}
                             </TouchableOpacity>
                           );
                         })}
@@ -432,6 +537,120 @@ const SubjectList = ({ route }) => {
                     )}
                   </View>
                 </ScrollView>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    paddingTop: 10,
+                    marginRight: 10,
+                    marginLeft: 10,
+                  }}>
+                  <View
+                    style={{
+                      paddingBottom: 10,
+                    }}>
+                    <Text
+                      style={{
+                        fontWeight: '900',
+                        fontSize: 18,
+                        color: '#00FF7F',
+                      }}>
+                      {'Level Cleared'}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      paddingBottom: 10,
+                    }}>
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: 'blue',
+                        borderRadius: 10,
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          color: 'white',
+                          textAlign: 'center',
+                          paddingHorizontal: 10,
+                          paddingVertical: 2,
+                        }}>
+                        {'Details'}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    borderRadius: 20,
+                    borderWidth: 1,
+                    borderColor: '#00FF7F',
+                    padding: 40,
+                    marginVertical: 10,
+                    marginHorizontal: 14,
+                    flex: 1,
+                  }}></View>
+              </View>
+              <View
+                style={{
+                  borderRadius: 20,
+                  backgroundColor: 'blue',
+                  padding: 15,
+                  marginVertical: 10,
+                  marginHorizontal: 14,
+                }}>
+                <View
+                  style={{
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      fontWeight: '600',
+                      color: 'yellow',
+                    }}>
+                    {trans('Congratulations')}
+                  </Text>
+                  <Text
+                    style={{
+                      color: 'white',
+                      fontSize: 14,
+                      marginTop: 5,
+                    }}>
+                    {trans('You are level 4 certified learner')}
+                  </Text>
+                  <TouchableOpacity>
+                    <Text
+                      style={{
+                        color: 'white',
+                        fontSize: 16,
+                        marginTop: 5,
+                        textDecorationLine: 'underline'
+                      }}>
+                      {trans('Download Certificate')}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View
+                  style={{
+                    position: 'absolute',
+                    right: 15,
+                    //bottom: 0,
+                    top:20,
+                  }}>
+                  <Image
+                    style={{
+                      width: 53,
+                      height: 53,
+                      resizeMode: 'contain',                      
+                    }}
+                    source={require('../../../assets/p2.png')}
+                  />
+                </View>
               </View>
             </ScrollView>
           </>

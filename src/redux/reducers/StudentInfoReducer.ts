@@ -22,7 +22,6 @@ export const getChildDetailsAPI = createAsyncThunk<
 >("student/fetchStudentInfo", async (id: string, { getState }) => {
   console.log(id, "id..........................");
   const response = await getChildDetailsAPIAction(id);
-
   return response.data;
 });
 

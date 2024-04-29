@@ -1,13 +1,17 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import { ROUTES } from '../../constants';
-import { Image, StatusBar, Text, View } from 'react-native';
+import {createStackNavigator} from '@react-navigation/stack';
+import {ROUTES} from '../../constants';
+import {Image, StatusBar, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { NavigationContainer, DarkTheme, NavigatorScreenParams } from '@react-navigation/native';
+import {
+  NavigationContainer,
+  DarkTheme,
+  NavigatorScreenParams,
+} from '@react-navigation/native';
 import Colors from '../../assets/Colors';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { useTranslation } from 'react-i18next';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {useTranslation} from 'react-i18next';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import UserHome from '../screens/UserScreen/UserHome';
 import SubjectsDetails from '../screens/UserScreen/SubjectDetails';
@@ -35,21 +39,24 @@ import LiveClassList from '../screens/UserScreen/LiveClassList';
 import LandingScreen from '../screens/UserScreen/LandingScreen';
 import SubjectList from '../screens/UserScreen/SubjectList';
 import SubjectLevel from '../screens/UserScreen/SubjectLevel';
+import Reviews from '../screens/UserScreen/Reviews';
+import Pricing from '../screens/UserScreen/Pricing';
+import Details from '../screens/UserScreen/Details';
 
 export type RootStackParamList = {
-  AppStack: NavigatorScreenParams<AppStackParamList>
-}
+  AppStack: NavigatorScreenParams<AppStackParamList>;
+};
 
 export type AppStackParamList = {
-  UserHome: undefined
+  UserHome: undefined;
   SubjectsDetails: undefined;
-}
+};
 
-const RootStack = createNativeStackNavigator<RootStackParamList>()
+const RootStack = createNativeStackNavigator<RootStackParamList>();
 const Stack = createStackNavigator<AppStackParamList>();
 
-const AppStack = (props) => {
-  const { t: trans, i18n } = useTranslation();
+const AppStack = props => {
+  const {t: trans, i18n} = useTranslation();
 
   const mytheme = {
     ...DarkTheme,
@@ -57,26 +64,26 @@ const AppStack = (props) => {
       ...DarkTheme.colors,
     },
   };
-  const { hideTabbar } = props;
+  const {hideTabbar} = props;
 
   return (
     <>
       <StatusBar backgroundColor={'salmon'} barStyle="dark-content" />
       <Stack.Navigator
-        screenOptions={({ navigation }) => (
+        screenOptions={({navigation}) => (
           navigation.getState().routes[navigation.getState().index].name ==
             'MockTests' ||
-            navigation.getState().routes[navigation.getState().index].name ==
+          navigation.getState().routes[navigation.getState().index].name ==
             'PrevMockTest' ||
-            navigation.getState().routes[navigation.getState().index].name ==
+          navigation.getState().routes[navigation.getState().index].name ==
             'VideoScreen' ||
-            navigation.getState().routes[navigation.getState().index].name ==
+          navigation.getState().routes[navigation.getState().index].name ==
             'NotificationMockTest' ||
-            navigation.getState().routes[navigation.getState().index].name ==
+          navigation.getState().routes[navigation.getState().index].name ==
             'MaintenanceModal' ||
-            navigation.getState().routes[navigation.getState().index].name ==
+          navigation.getState().routes[navigation.getState().index].name ==
             'ExpiredTokenScreen' ||
-            navigation.getState().routes[navigation.getState().index].name ==
+          navigation.getState().routes[navigation.getState().index].name ==
             'ProbableMockTest'
             ? props.hideTabbar(true)
             : props.hideTabbar(false),
@@ -84,79 +91,85 @@ const AppStack = (props) => {
             headerShown:
               navigation.getState().routes[navigation.getState().index].name ==
                 'UserHome' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'LandingScreen' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'SubjectList' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'SubjectLevel' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'EditProfile' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'PrevMockTest' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
+                'Reviews' ||
+              navigation.getState().routes[navigation.getState().index].name ==
+                'Pricing' ||
+              navigation.getState().routes[navigation.getState().index].name ==
+                'Details' ||
+              navigation.getState().routes[navigation.getState().index].name ==
                 'ProbableMockTest' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'MaintenanceModal' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'ExpiredTokenScreen' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'ProbQuestion' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'PrevYearQues' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'ProductDetails' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'MyCart' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'SubjectsDetails' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'ExamSets' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'AnswerSheet' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'PrevYearAnswersheet' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'ProgressChart' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'PrevSubjectList' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'ProbSubjectList' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'LiveClassList' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'Youtubevideo' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'Profile' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'MockTests' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'Notification' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'ScoreBoard' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'SolutionScreen' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'PremiumAccess' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'PremiumPurchase' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'NotificationMockTest' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'NotificationScoreBoard' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'NotificationQuestion' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'ContactUs' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'YoutibeList' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'ProductDetails' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'ProductList' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'VideoSolutionScreen' ||
-                navigation.getState().routes[navigation.getState().index].name ==
+              navigation.getState().routes[navigation.getState().index].name ==
                 'VideoScreen'
                 ? false
                 : true,
@@ -171,44 +184,43 @@ const AppStack = (props) => {
             },
           }
         )}
-        initialRouteName={'LANDINGSCREEN'}
-      >
+        initialRouteName={'LANDINGSCREEN'}>
         <Stack.Screen
           name={ROUTES.LANDINGSCREEN}
           component={LandingScreen}
-        // options={({ route, navigation }) => ({
-        //   title: 'LandingScreen',
-        //   headerLeft: () => (
-        //     <Icon.Button
-        //       name="ios-chevron-back-outline"
-        //       size={25}
-        //       backgroundColor={Colors.primary}
-        //       onPress={() => navigation.goBack()}></Icon.Button>
-        //   ),
-        // })}
+          // options={({ route, navigation }) => ({
+          //   title: 'LandingScreen',
+          //   headerLeft: () => (
+          //     <Icon.Button
+          //       name="ios-chevron-back-outline"
+          //       size={25}
+          //       backgroundColor={Colors.primary}
+          //       onPress={() => navigation.goBack()}></Icon.Button>
+          //   ),
+          // })}
         />
 
         <Stack.Screen
           name={ROUTES.SUBJECT_LIST}
           component={SubjectList}
-        // options={({ navigation }) => ({
-        //   title: trans('Answersheet'),
-        //   headerLeft: () => (
-        //     <MaterialIcons.Button
-        //       name="keyboard-arrow-left"
-        //       size={30}
-        //       backgroundColor={Colors.secondary}
-        //       color={Colors.primary}
-        //       onPress={() => navigation.goBack()}
-        //     />
-        //   ),
-        // })}
+          // options={({ navigation }) => ({
+          //   title: trans('Answersheet'),
+          //   headerLeft: () => (
+          //     <MaterialIcons.Button
+          //       name="keyboard-arrow-left"
+          //       size={30}
+          //       backgroundColor={Colors.secondary}
+          //       color={Colors.primary}
+          //       onPress={() => navigation.goBack()}
+          //     />
+          //   ),
+          // })}
         />
 
         <Stack.Screen
           name={ROUTES.SUBJECT_LEVEL}
           component={SubjectLevel}
-          options={({ route, navigation }) => ({
+          options={({route, navigation}) => ({
             headerLeft: () => (
               <MaterialIcons.Button
                 name="keyboard-arrow-left"
@@ -220,20 +232,21 @@ const AppStack = (props) => {
             ),
           })}
         />
+
         <Stack.Screen
           name={'UserHome'}
           component={UserHome}
-        // options={({navigation}) => ({
-        //   title: (),
-        // })}
-        // name={ROUTES.HOME}
-        // component={Home}
+          // options={({navigation}) => ({
+          //   title: (),
+          // })}
+          // name={ROUTES.HOME}
+          // component={Home}
         />
 
         <Stack.Screen
           name={ROUTES.ANSWERSHEET}
           component={AnswerSheet}
-          options={({ navigation }) => ({
+          options={({navigation}) => ({
             title: trans('Answersheet'),
             headerLeft: () => (
               <MaterialIcons.Button
@@ -246,11 +259,58 @@ const AppStack = (props) => {
             ),
           })}
         />
-
+        <Stack.Screen
+          name={ROUTES.REVIEWS}
+          component={Reviews}
+          options={({navigation}) => ({
+            title: trans(''),
+            headerLeft: () => (
+              <MaterialIcons.Button
+                name="keyboard-arrow-left"
+                size={30}
+                backgroundColor={Colors.secondary}
+                color={Colors.primary}
+                onPress={() => navigation.goBack()}
+              />
+            ),
+          })}
+        />
+        <Stack.Screen
+          name={ROUTES.PRICING}
+          component={Pricing}
+          options={({navigation}) => ({
+            title: trans(''),
+            headerLeft: () => (
+              <MaterialIcons.Button
+                name="keyboard-arrow-left"
+                size={30}
+                backgroundColor={Colors.secondary}
+                color={Colors.primary}
+                onPress={() => navigation.goBack()}
+              />
+            ),
+          })}
+        />
+        <Stack.Screen
+          name={ROUTES.DETAILS}
+          component={Details}
+          options={({navigation}) => ({
+            title: trans(''),
+            headerLeft: () => (
+              <MaterialIcons.Button
+                name="keyboard-arrow-left"
+                size={30}
+                backgroundColor={Colors.secondary}
+                color={Colors.primary}
+                onPress={() => navigation.goBack()}
+              />
+            ),
+          })}
+        />
         <Stack.Screen
           name={ROUTES.SOLUTIONSCREEN}
           component={SolutionScreen}
-          options={({ navigation }) => ({
+          options={({navigation}) => ({
             title: 'View Solution',
             headerLeft: () => (
               <MaterialIcons.Button
@@ -266,7 +326,7 @@ const AppStack = (props) => {
         <Stack.Screen
           name={ROUTES.VIDEOTUTORIALSCREEN}
           component={VideoScreen}
-          options={({ navigation }) => ({
+          options={({navigation}) => ({
             // title: 'Answersheet',
             // headerLeft: () => (
             //   <Icon.Button
@@ -280,7 +340,7 @@ const AppStack = (props) => {
         <Stack.Screen
           name={ROUTES.SCOREBOARD}
           component={ScoreBoard}
-          options={({ navigation }) => ({
+          options={({navigation}) => ({
             // title: "Scoreboard",
             headerLeft: () => (
               <MaterialIcons.Button
@@ -296,8 +356,8 @@ const AppStack = (props) => {
         <Stack.Screen
           name={ROUTES.EDITPROFILE}
           component={EditProfile}
-          options={({ navigation }) => ({
-            title: trans("Edit Profile"),
+          options={({navigation}) => ({
+            title: trans('Edit Profile'),
             headerLeft: () => (
               <MaterialIcons.Button
                 name="keyboard-arrow-left"
@@ -313,7 +373,7 @@ const AppStack = (props) => {
         <Stack.Screen
           name={ROUTES.EXAMSETS}
           component={ExamSets}
-          options={({ navigation }) => ({
+          options={({navigation}) => ({
             title: trans('Exam Set'),
             // headerLeft: () => (
             //   <Icon.Button
@@ -325,9 +385,9 @@ const AppStack = (props) => {
           })}
         />
         <Stack.Screen
-          name='SubjectsDetails'
+          name="SubjectsDetails"
           component={SubjectsDetails}
-          options={({ route, navigation }) => ({
+          options={({route, navigation}) => ({
             title: 'Subject Details',
             // title: route.params.isTodaysFlag == true ? 'Todays Appointment' : 'Clinics List',
             headerLeft: () => (
@@ -344,7 +404,7 @@ const AppStack = (props) => {
         <Stack.Screen
           name={ROUTES.MOCKTESTS}
           component={MockTests}
-          options={({ navigation }) => ({
+          options={({navigation}) => ({
             title: 'Mock Test',
             headerLeft: () => (
               <MaterialIcons.Button
@@ -360,7 +420,7 @@ const AppStack = (props) => {
         <Stack.Screen
           name={ROUTES.PREV_QUESTION}
           component={PrevYearQues}
-          options={({ route, navigation }) => ({
+          options={({route, navigation}) => ({
             title: 'Previous Year Questions',
             headerLeft: () => (
               <MaterialIcons.Button
@@ -376,7 +436,7 @@ const AppStack = (props) => {
         <Stack.Screen
           name={ROUTES.PROBABLE_QUESTION}
           component={ProbQuestion}
-          options={({ route, navigation }) => ({
+          options={({route, navigation}) => ({
             title: 'Probable Questions',
             headerLeft: () => (
               <MaterialIcons.Button
@@ -407,7 +467,7 @@ const AppStack = (props) => {
         <Stack.Screen
           name={ROUTES.PREVMOCKTEST}
           component={PrevMockTest}
-          options={({ route, navigation }) => ({
+          options={({route, navigation}) => ({
             // title: 'Probable Questions',
             headerLeft: () => (
               <MaterialIcons.Button
@@ -423,7 +483,7 @@ const AppStack = (props) => {
         <Stack.Screen
           name={ROUTES.PROBABLEMOCKTEST}
           component={ProbableMockTest}
-          options={({ route, navigation }) => ({
+          options={({route, navigation}) => ({
             // title: 'Probable Questions',
             headerLeft: () => (
               <MaterialIcons.Button
@@ -439,7 +499,7 @@ const AppStack = (props) => {
         <Stack.Screen
           name={ROUTES.MAINTENANCE}
           component={MaintenanceModal}
-          options={({ route, navigation }) => ({
+          options={({route, navigation}) => ({
             // title: 'Probable Questions',
             headerLeft: () => (
               <MaterialIcons.Button
@@ -455,7 +515,7 @@ const AppStack = (props) => {
         <Stack.Screen
           name={ROUTES.EXPIREDTOKENSCREEN}
           component={ExpiredTokenScreen}
-          options={({ route, navigation }) => ({
+          options={({route, navigation}) => ({
             // title: 'Probable Questions',
             headerLeft: () => (
               <MaterialIcons.Button
@@ -472,7 +532,7 @@ const AppStack = (props) => {
         <Stack.Screen
           name={ROUTES.PREMIUMACCESS}
           component={PremiumAccess}
-          options={({ route, navigation }) => ({
+          options={({route, navigation}) => ({
             title: 'Available Scholarship',
             headerLeft: () => (
               <Icon.Button
@@ -486,7 +546,7 @@ const AppStack = (props) => {
         <Stack.Screen
           name={ROUTES.YOUTUBELIST}
           component={YoutibeList}
-          options={({ route, navigation }) => ({
+          options={({route, navigation}) => ({
             title: 'Available Scholarship',
             headerLeft: () => (
               <Icon.Button
@@ -501,7 +561,7 @@ const AppStack = (props) => {
         <Stack.Screen
           name={ROUTES.PREMIUMPURCHASE}
           component={PremiumPurchase}
-          options={({ route, navigation }) => ({
+          options={({route, navigation}) => ({
             title: 'Purchase',
             headerLeft: () => (
               <Icon.Button
@@ -529,7 +589,7 @@ const AppStack = (props) => {
         <Stack.Screen
           name={ROUTES.YOUTUBEVIDEO}
           component={Youtubevideo}
-          options={({ route, navigation }) => ({
+          options={({route, navigation}) => ({
             title: 'Purchase',
             headerLeft: () => (
               <Icon.Button
@@ -543,7 +603,7 @@ const AppStack = (props) => {
         <Stack.Screen
           name={ROUTES.LIVECLASSLIST}
           component={LiveClassList}
-          options={({ route, navigation }) => ({
+          options={({route, navigation}) => ({
             title: 'Purchase',
             headerLeft: () => (
               <Icon.Button
@@ -557,7 +617,7 @@ const AppStack = (props) => {
         <Stack.Screen
           name={ROUTES.PREV_SUB_LIST}
           component={PrevSubjectList}
-          options={({ route, navigation }) => ({
+          options={({route, navigation}) => ({
             title: 'Subject List',
             headerLeft: () => (
               <MaterialIcons.Button
@@ -573,7 +633,7 @@ const AppStack = (props) => {
         <Stack.Screen
           name={ROUTES.PROB_SUB_LIST}
           component={ProbSubjectList}
-          options={({ route, navigation }) => ({
+          options={({route, navigation}) => ({
             title: 'Subject List',
             headerLeft: () => (
               <MaterialIcons.Button
@@ -707,7 +767,7 @@ const AppStack = (props) => {
         <Stack.Screen
           name={ROUTES.VIDEOSOLUTIONSCREEN}
           component={VideoSolutionScreen}
-          options={({ route, navigation }) => ({
+          options={({route, navigation}) => ({
             // title: 'Probable Questions',
             headerLeft: () => (
               <MaterialIcons.Button

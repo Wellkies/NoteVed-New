@@ -868,9 +868,11 @@ const SignInScreen = ({ route }) => {
           height: device_height,
           flex: 1,
           alignSelf: 'center',
+          backgroundColor: '#272727'
         }}
-        resizeMode="cover"
-        source={require('../../../assets/0.png')}>
+        // resizeMode="cover"
+        // source={require('../../../assets/0.png')}
+        >
         <StatusBar backgroundColor={'#263d2d'} barStyle="light-content" />
         <View
           style={{
@@ -1017,8 +1019,9 @@ const SignInScreen = ({ route }) => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}
-                  resizeMode="cover"
-                  source={require('../../../assets/01.png')}>
+                  // resizeMode="cover"
+                  // source={require('../../../assets/01.png')}
+                  >
                   <Text
                     style={{
                       color: '#000',
@@ -1229,8 +1232,9 @@ const SignInScreen = ({ route }) => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}
-                  resizeMode="cover"
-                  source={require('../../../assets/01.png')}>
+                  // resizeMode="cover"
+                  // source={require('../../../assets/01.png')}
+                  >
                   <Text
                     style={{
                       fontSize: 15,
@@ -2319,22 +2323,34 @@ const SignInScreen = ({ route }) => {
                   // borderWidth:1
                 }
               }>
-              <ImageBackground
+              {/* <ImageBackground */}
+              <View
                 style={{
                   // borderRadius: 50,
                   // borderWidth: 1,
-                  width: device_width * 1.28,
-                  height: device_height * 0.7,
+                  // width: device_width * 1.28,
+                  // height: device_height * 0.7,
                   // marginTop:-50,
                   // paddingTop: 20,
                   // borderRadius: 25,
                   // flex: 1,
+                  backgroundColor: '#00FF7F',
+                  paddingVertical: 20,
+                  width: device_width * 1.28,
+                  height: device_height * 0.5,
+                  //paddingHorizontal: 22,
                   alignSelf: 'center',
                   justifyContent: 'center',
                   alignItems: 'center',
+                  margin: 10,
+                  borderRadius: 20,
+                  marginBottom: 10,
+                  paddingBottom: 10,
+                  paddingTop: 20,
                 }}
-                resizeMode="cover"
-                source={require('../../../assets/01.png')}>
+                // resizeMode="cover"
+                // source={require('../../../assets/01.png')}
+                >
                 <Text
                   style={{
                     color: '#000',
@@ -2502,8 +2518,8 @@ const SignInScreen = ({ route }) => {
                   <Text
                     style={{
                       color: '#000',
-                      fontSize: 11,
-                      fontWeight: '600',
+                      fontSize: 14,
+                      fontWeight: '700',
                       // marginLeft: 15,
                     }}>
                     {/* {'ସାଇନ୍ ଇନ୍ କରି, ମୁଁ ଏହାକୁ ଗ୍ରହଣ କରେ'} */}
@@ -2519,9 +2535,9 @@ const SignInScreen = ({ route }) => {
                         navigation.navigate('TermAndConditions');
                       }}
                       style={{
-                        fontSize: 11,
+                        fontSize: 14,
                         // color: '#f1a722',
-                        color: 'green',
+                        color: 'blue',
                         textDecorationLine: 'underline',
                         fontWeight: '600',
                       }}>
@@ -2590,7 +2606,7 @@ const SignInScreen = ({ route }) => {
                   </TouchableOpacity>
                   {/* </View> */}
                 </View>
-              </ImageBackground>
+              </View>
               <View
                 style={{
                   flexDirection: 'row',
@@ -2601,6 +2617,7 @@ const SignInScreen = ({ route }) => {
                   top: -15,
                   width: device_width * 0.98,
                   alignSelf: 'center',
+                  paddingTop: 15
                   // backgroundColor:userBlink ? Colors.secondary : 'crimson'
                 }}>
                 <TouchableOpacity
@@ -2713,7 +2730,7 @@ const SignInScreen = ({ route }) => {
                     style={{
                       textDecorationLine: 'underline',
                       color: '#f1a722',
-                      fontSize: 11,
+                      fontSize: 12,
                       fontWeight: '600',
                     }}>
                     {/* {'ପାସୱାର୍ଡ ଭୁଲି ଯାଇଛନ୍ତି କି ?'} */}
@@ -3424,7 +3441,8 @@ const SignInScreen = ({ route }) => {
               // alignItems: 'center',
             }}
             resizeMode="cover"
-            source={require('../../../assets/0.png')}>
+            source={require('../../../assets/0.png')}
+            >
             <View
               style={{
                 // backgroundColor: '#fff',
@@ -3702,8 +3720,8 @@ const SignInScreen = ({ route }) => {
                     marginTop: -30,
                     marginBottom: -15,
                   }}
-                  source={require('../../../assets/resting1.png')}
-                  resizeMode="contain"
+                  // source={require('../../../assets/resting1.png')}
+                  // resizeMode="contain"
                 />
                 <FastImage
                   style={{
@@ -3715,8 +3733,8 @@ const SignInScreen = ({ route }) => {
                     // position:'absolute', bottom:-23
                     // marginTop:-8
                   }}
-                  source={require('../../../assets/grass.png')}
-                  resizeMode="contain"
+                  // source={require('../../../assets/grass.png')}
+                  // resizeMode="contain"
                 />
               </View>
             </View>
@@ -3776,8 +3794,8 @@ const SignInScreen = ({ route }) => {
                       // backgroundColor:'rgba(0,255,0,0.1)',
                       // top: 20,
                     }}
-                    resizeMode="cover"
-                    source={require('../../../assets/snake.png')}
+                    // resizeMode="cover"
+                    // source={require('../../../assets/snake.png')}
                   />
                 </View>
                 {/* // <
@@ -3794,8 +3812,8 @@ const SignInScreen = ({ route }) => {
                     // backgroundColor:'rgba(0,255,0,0.1)',
                     // top: 20,
                   }}
-                  resizeMode="contain"
-                  source={require('../../../assets/grass.png')}
+                  // resizeMode="contain"
+                  // source={require('../../../assets/grass.png')}
                 />
                 <AntDesign
                   name="closecircleo"

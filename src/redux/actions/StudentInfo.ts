@@ -1,12 +1,8 @@
-import {
-  GET_CHILD_DETAILS_URL,
-  GET_CHILD_INFO_URL,
-} from "../../../constants/ApiPaths";
+import { GET_CHILD_DETAILS_URL } from "../../../constants/ApiPaths";
 import axios from "axios";
 import AsyncStorage from "../../utils/AsyncStorage";
 
-export const getChildDetailsAPIAction = async (id = "") => {
-  // const url =GET_CHILD_INFO_URL + id;
+export const getChildDetailsAPIAction = async (id: any) => {
   const url = GET_CHILD_DETAILS_URL + id;
   console.log(url, "GET_CHILD_DETAILS_URL...........................");
   // const token = await AsyncStorage.getObject('@auth_Token');
