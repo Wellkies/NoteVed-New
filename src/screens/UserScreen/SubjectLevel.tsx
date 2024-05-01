@@ -209,7 +209,7 @@ const SubjectLevel = ({route}) => {
           flex: 1,
           alignSelf: 'center',
           // borderWidth: 1,
-          backgroundColor: '#272727',
+          backgroundColor: '#282828',
         }}
         resizeMode="cover"
         // source={require('../../../assets/testBG2.jpg')}
@@ -242,7 +242,7 @@ const SubjectLevel = ({route}) => {
                 style={{
                   // backgroundColor: '#fee2a3',
                   //backgroundColor: '#febcac',
-                  backgroundColor: '#1dfc8c',
+                  backgroundColor: '#0DFF8F',
                   // paddingVertical: 35,
                   // height: device_height * 0.25,
                   // width: device_width * 0.94,
@@ -267,7 +267,7 @@ const SubjectLevel = ({route}) => {
                     name="arrow-back"
                     size={33}
                     // onPress={() => navigation.goBack()}
-                    style={{color: '#474747'}}
+                    style={{color: '#4C4C4C'}}
                   />
                 </TouchableOpacity>
                 <View
@@ -279,7 +279,7 @@ const SubjectLevel = ({route}) => {
                       width: '50%',
                       fontSize: 27,
                       fontWeight: '500',
-                      color: '#474747',
+                      color: '#4C4C4C',
                       marginLeft: 4,
                     }}>
                     {subjectname}
@@ -293,7 +293,7 @@ const SubjectLevel = ({route}) => {
                         // width: '120%',
                         fontSize: 16,
                         fontWeight: '400',
-                        color: '#474747',
+                        color: '#4C4C4C',
                         marginLeft: 4,
                       }}>
                       {`Duration: 15 Days, 11+ Courses`}
@@ -323,8 +323,10 @@ const SubjectLevel = ({route}) => {
                   }}>
                   <Image
                     style={{
-                      width: 260,
-                      height: 260,
+                      // width: 260,
+                      // height: 260,
+                      width: device_width * 0.62,
+                      height: device_height * 0.30,
                       resizeMode: 'contain',
                       transform: [{rotate: '136deg'}],
                     }}
@@ -483,10 +485,10 @@ const SubjectLevel = ({route}) => {
                             // borderWidth: 1.5,
                             // borderBottomWidth:0,
                             borderRadius: 10,
-                            borderColor: isselectedBtn ? '#ee7c75' : '#fff',
+                            borderColor: isselectedBtn ? '#ee7c75' : '#FFFFFF',
                             backgroundColor: isselectedBtn
-                              ? '#197305'
-                              : '#272727',
+                              ? '#047B45'
+                              : '#282828',
                             // paddingHorizontal:10,
                             // borderBottomLeftRadius: index == 0 ? 15 : 0,
                             // borderTopLeftRadius: index == 0 ? 15 : 0,
@@ -504,7 +506,7 @@ const SubjectLevel = ({route}) => {
                               fontWeight: '900',
                               // color: isselectedBtn ? '#000' : '#ee7c75',
                               //color: '#000',
-                              color: 'white',
+                              color: '#FFFFFF',
                               // textDecorationLine: isselectedBtn
                               //   ? 'underline'
                               //   : 'none',
@@ -729,8 +731,8 @@ const SubjectLevel = ({route}) => {
                                           name="dot-single"
                                           size={20}
                                           style={{
-                                            backgroundColor: '#289C0E',
-                                            color: 'white',
+                                            backgroundColor: '#00DC5E',
+                                            color: '#FFFFFF',
                                             borderRadius: 20,
                                             padding: 5,
                                           }}
@@ -773,7 +775,7 @@ const SubjectLevel = ({route}) => {
                                       <Text
                                         style={{
                                           fontWeight: '600',
-                                          color: 'white',
+                                          color: '#FFFFFF',
                                           fontSize: 15,
                                         }}>
                                         {`${contentset}`}
@@ -784,8 +786,8 @@ const SubjectLevel = ({route}) => {
                                     name="play-arrow"
                                     size={30}
                                     style={{
-                                      backgroundColor: '#289C0E',
-                                      color: 'white',
+                                      backgroundColor: '#00DC5E',
+                                      color: '#FFFFFF',
                                       borderRadius: 20,
                                       padding: 5,
                                     }}
