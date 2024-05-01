@@ -94,7 +94,7 @@ import {
   selectTopicId,
 } from '../../redux/reducers/GetTopicIdReducer.ts';
 import {getChildProgressAPI} from '../../redux/reducers/GetChildProgressReducer.ts';
-import { selectUserInfo } from '../../redux/reducers/loginReducer.ts';
+import {selectUserInfo} from '../../redux/reducers/loginReducer.ts';
 // import PaymentReminderModal from './CommonScreens/PaymentReminderModal.js';
 
 const ScoreBoard = ({route}) => {
@@ -146,7 +146,7 @@ const ScoreBoard = ({route}) => {
 
   // const {childInfo = {}} = useSelector(state => state.ChildDetailsReducer);
   const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
-  const { authToken, status, userInfo } = useAppSelector(selectUserInfo);
+  const {authToken, status, userInfo} = useAppSelector(selectUserInfo);
   interface ChildInfo {
     _id: string;
     age: string;
@@ -759,7 +759,7 @@ const ScoreBoard = ({route}) => {
   const TopStudent = useAppSelector(selectTopStudent);
   // console.log(TopStudent,"TopStudent.............")
   const ProbableTopStudent = useAppSelector(selectProbTopStudent);
-// console.log(ProbableTopStudent,"ProbableTopStudent//////////////")
+  // console.log(ProbableTopStudent,"ProbableTopStudent//////////////")
   const ListColor = ['#fee2a3', '#f6c4b9', '#c3ccf5', '#76f0c7'];
 
   useEffect(() => {
@@ -838,9 +838,11 @@ const ScoreBoard = ({route}) => {
           height: device_height,
           flex: 1,
           alignSelf: 'center',
+          backgroundColor: '#272727',
         }}
         resizeMode="cover"
-        source={require('../../../assets/0.png')}>
+        // source={require('../../../assets/0.png')}
+      >
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={{paddingHorizontal: 10}}>
@@ -850,7 +852,8 @@ const ScoreBoard = ({route}) => {
               options={{fileName: 'Test_Result', format: 'png', quality: 0.9}}
               style={{
                 // flex:1,
-                backgroundColor: 'rgba(0,255,0, 0.1)',
+                // backgroundColor: 'rgba(0,255,0, 0.1)',
+                backgroundColor: '#272727',
                 height: device_height * 0.7,
                 width: device_width,
                 // alignItems:'center',
@@ -866,7 +869,8 @@ const ScoreBoard = ({route}) => {
                   marginHorizontal: 10,
                   justifyContent: 'center',
                   alignItems: 'center',
-                  backgroundColor: 'rgba(0,255,0, 0.1)',
+                  // backgroundColor: 'rgba(0,255,0, 0.1)',
+                  backgroundColor: '#272727',
                   borderWidth: 2,
                   height: '43%',
                   // borderColor: '#FFB901',
@@ -1446,7 +1450,7 @@ const ScoreBoard = ({route}) => {
             zIndex: -1,
             justifyContent: 'flex-start',
           }}>
-          <ImageBackground
+          {/* <ImageBackground
             style={{
               height: device_height * 0.25,
               width: device_width,
@@ -1456,7 +1460,7 @@ const ScoreBoard = ({route}) => {
               // borderWidth:1
             }}
             source={require('../../../assets/jungle.png')}
-            resizeMode="contain"></ImageBackground>
+            resizeMode="contain"></ImageBackground> */}
         </View>
         {/* {reminderModal && (
           <PaymentReminderModal
