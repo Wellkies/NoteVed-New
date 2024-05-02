@@ -29,7 +29,7 @@ function ProfileTabNavigation() {
   //   const Clinicparams={isTodaysFlag : false, isbookingAppointment : false}
   return (
     <>
-      <StatusBar backgroundColor={'#263d2d'} barStyle="light-content" />
+      <StatusBar backgroundColor={'#272727'} barStyle="light-content" />
 
       <Stack.Navigator
         screenOptions={({route, navigation}) => ({

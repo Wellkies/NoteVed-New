@@ -83,19 +83,21 @@ const MockTests = ({route}) => {
     scholarshipName = '',
     is2ndAvailable = '',
     topicid = '',
+    ExamQuestionsets: ContentQuiz = [],
   } = route.params;
   console.log(route.params, 'route.params........?///////////////');
 
-  const ContentQuiz = useAppSelector(selectContentDetailsInfo);
+  // const ContentQuiz = useAppSelector(selectContentDetailsInfo);
   const ContentLoading = useAppSelector(selectContentDetailsStatus);
   console.log(ContentQuiz, 'ContentQuiz..........');
   // {
   // const quizz = ContentQuiz.map(rec => rec.quiz);
-  let quiz = ContentQuiz[0]?.quiz ? ContentQuiz[0].quiz : [];
+  let quiz = ContentQuiz[0] ? ContentQuiz[0] : [];
+ 
   const sortedQuestionList = ContentQuiz.slice().sort(
     (a, b) => a.questionno - b.questionno,
   );
-
+  
   const timeDurationValue = timeDuration.length
     ? parseInt(timeDuration) * 60
     : '';
@@ -103,7 +105,7 @@ const MockTests = ({route}) => {
   // const timeDurationValue = 120
   const [loading, setLoading] = useState(false);
   const [Questionlist, setQuestionlist] = useState(
-    sortedQuestionList[0]?.quiz ? sortedQuestionList[0].quiz : [],
+    sortedQuestionList ? sortedQuestionList : [],
   );
   const [currentIndex, setCurrentIndex] = useState(0);
   const [modalStatus, setModalStatus] = useState(false);
