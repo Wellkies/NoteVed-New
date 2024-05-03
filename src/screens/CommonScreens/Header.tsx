@@ -7,7 +7,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 const Header = ({isbackIconShow = false, label1, label2, functionName}) => {
   return (
     <View>
-      <StatusBar backgroundColor={'salmon'} barStyle="dark-content" />
+      <StatusBar backgroundColor={'#272727'} barStyle="light-content" />
       <View
         style={{
           flexDirection: 'row',

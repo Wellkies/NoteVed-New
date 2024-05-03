@@ -51,7 +51,7 @@ const Details = () => {
             flex: 1,
             // alignSelf: 'center',
             // borderWidth: 1,
-            backgroundColor: '#404040',
+            backgroundColor: '#282828',
           }}
           resizeMode="contain"
           // source={require('../../../assets/testBG3.jpg')}
@@ -75,7 +75,7 @@ const Details = () => {
               <MaterialIcons
                 name="arrow-back"
                 size={28}
-                style={{color: 'white'}}
+                style={{color: '#FFFFFF'}}
               />
             </TouchableOpacity>
             <View
@@ -87,7 +87,7 @@ const Details = () => {
               }}>
               <Text
                 style={{
-                  color: 'white',
+                  color: '#FFFFFF',
                   fontWeight: 'bold',
                   fontSize: 18,
                 }}>
@@ -104,7 +104,7 @@ const Details = () => {
                 name="dots-three-vertical"
                 size={20}
                 style={{
-                  color: 'white',
+                  color: '#FFFFFF',
                   fontWeight: 'bold',
                   fontSize: 18,
                 }}
@@ -114,7 +114,7 @@ const Details = () => {
           <View
             style={{
               alignContent: 'center',
-              backgroundColor: '#1dfc8c',
+              backgroundColor: '#0DFF8F',
               paddingVertical: 20,
               width: device_width * 0.95,
               height: device_height * 0.38,
@@ -176,7 +176,7 @@ const Details = () => {
               <View>
                 <Text
                   style={{
-                    color: 'black',
+                    color: '#000',
                     fontWeight: '500',
                     fontSize: 16,
                   }}>
@@ -185,7 +185,7 @@ const Details = () => {
 
                 <Text
                   style={{
-                    color: 'black',
+                    color: '#000',
                     fontWeight: '300',
                   }}>
                   {trans(
@@ -199,14 +199,14 @@ const Details = () => {
                 style={{
                   right: 10,
                   bottom: -2,
-                  color: 'black',
+                  color: '#000',
                 }}
               />
               <Text
                 style={{
                   right: 10,
                   marginBottom: 20,
-                  color: 'black',
+                  color: '#000',
                 }}>
                 {trans('5.0')}
               </Text>
@@ -229,7 +229,7 @@ const Details = () => {
               </TouchableOpacity>
               <Text
                 style={{
-                  color: 'black',
+                  color: '#000',
                   top: -10,
                   left: -5,
                 }}>
@@ -248,7 +248,7 @@ const Details = () => {
               </TouchableOpacity>
               <Text
                 style={{
-                  color: 'black',
+                  color: '#000',
                   top: -10,
                   left: -5,
                 }}>
@@ -275,7 +275,7 @@ const Details = () => {
             }}>
             <Text
               style={{
-                color: 'white',
+                color: '#FFFFFF',
                 fontWeight: '400',
                 fontSize: 20,
               }}>
@@ -289,7 +289,7 @@ const Details = () => {
               }}>
               <Text
                 style={{
-                  color: 'white',
+                  color: '#FFFFFF',
                   fontWeight: '400',
                   fontSize: 12,
                 }}>
@@ -305,7 +305,7 @@ const Details = () => {
                 flexDirection: 'row',
                 //justifyContent: 'center',
                 alignContent: 'center',
-                backgroundColor: 'white',
+                backgroundColor: '#FFFFFF',
                 width: device_width * 0.95,
                 height: device_height * 0.08,
                 marginHorizontal: 10,
@@ -336,7 +336,7 @@ const Details = () => {
                 }}>
                 <Text
                   style={{
-                    color: 'black',
+                    color: '#000',
                     fontWeight: '700',
                     fontSize: 16,
                   }}>
@@ -357,7 +357,7 @@ const Details = () => {
                 flexDirection: 'row',
                 //justifyContent: 'center',
                 alignContent: 'center',
-                backgroundColor: 'white',
+                backgroundColor: '#FFFFFF',
                 width: device_width * 0.95,
                 height: device_height * 0.08,
                 marginHorizontal: 10,
@@ -389,7 +389,7 @@ const Details = () => {
                 }}>
                 <Text
                   style={{
-                    color: 'black',
+                    color: '#000',
                     fontWeight: '700',
                     fontSize: 16,
                   }}>
@@ -410,7 +410,7 @@ const Details = () => {
                 flexDirection: 'row',
                 //justifyContent: 'center',
                 alignContent: 'center',
-                backgroundColor: 'white',
+                backgroundColor: '#FFFFFF',
                 width: device_width * 0.95,
                 height: device_height * 0.08,
                 marginHorizontal: 10,
@@ -442,7 +442,7 @@ const Details = () => {
                 }}>
                 <Text
                   style={{
-                    color: 'black',
+                    color: '#000',
                     fontWeight: '700',
                     fontSize: 16,
                   }}>

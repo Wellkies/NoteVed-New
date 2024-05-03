@@ -56,6 +56,10 @@ import {
   selectAllSubjectsStatus,
 } from '../../redux/reducers/GetSubjectByCourseReducer';
 import {getTopicBySubIdAPI} from '../../redux/reducers/GetTopicDetailsReducer';
+import {
+  getAllCoursesAPI,
+  selectAllCoursesInfo,
+} from '../../redux/reducers/GetAllCoursesReducer';
 
 const SubjectList = ({route}) => {
   const navigation = useNavigation();
@@ -77,8 +81,31 @@ const SubjectList = ({route}) => {
     return () => {};
   }, []);
 
-  const SubjectByCourse = useAppSelector(selectAllSubjectsInfo);
+  useEffect(() => {
+    navigation.addListener('focus', () => {
+      dispatch(getAllCoursesAPI());
+      BackHandler.addEventListener('hardwareBackPress', () => {
+        // navigation.goBack();
+        BackHandler.exitApp();
+        return true;
+      });
+    });
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', () => {
+        BackHandler.exitApp();
+        // navigation.goBack();
+        return true;
+      });
+    };
+  }, []);
+
+  useEffect(() => {
+    dispatch(getAllCoursesAPI());
+  }, []);
+
+  // const SubjectByCourse = useAppSelector(selectAllSubjectsInfo);
   const SubLoading = useAppSelector(selectAllSubjectsStatus);
+  const SubjectByCourse = useAppSelector(selectAllCoursesInfo);
 
   // console.log(SubjectByCourse, '==============SubjectByCourse');
 
@@ -157,7 +184,7 @@ const SubjectList = ({route}) => {
       });
     };
   }, []);
-  const ListColor = ['#50C878', '#00FF7F', '#1dfc8c', '#50C878'];
+  const ListColor = ['#0AC671', '#06A05A', '#0ED76D'];
   return (
     <SafeAreaView style={{flex: 1}}>
       <ImageBackground
@@ -167,8 +194,8 @@ const SubjectList = ({route}) => {
           flex: 1,
           // alignSelf: 'center',
           // borderWidth: 1,
-          //backgroundColor: '#121212',
-          backgroundColor: '#404040'
+          backgroundColor: '#222222',
+          //backgroundColor: '#404040'
         }}
         resizeMode="contain"
         // source={require('../../../assets/testBG3.jpg')}
@@ -197,7 +224,7 @@ const SubjectList = ({route}) => {
               style={{
                 fontWeight: 'bold',
                 fontSize: 30,
-                color: 'white',
+                color: '#FFFFFF',
               }}>
               {'Example App'}
             </Text>
@@ -210,7 +237,7 @@ const SubjectList = ({route}) => {
               <MaterialIcons
                 style={{
                   fontWeight: 'bold',
-                  color: '#1dfc8c',
+                  color: '#0DFF8F',
                 }}
                 name="menu"
                 size={50}
@@ -231,7 +258,7 @@ const SubjectList = ({route}) => {
               fontSize: 18,
               alignItems: 'center',
               // fontStyle: 'italic',
-              color: '#1dfc8c',
+              color: '#0DFF8F',
             }}>
             {'Hello'}
           </Text>
@@ -262,7 +289,7 @@ const SubjectList = ({route}) => {
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                   alignContent: 'center',
-                  backgroundColor: '#00FF7F',
+                  backgroundColor: '#0DFF8F',
                   paddingVertical: 20,
                   width: device_width * 0.95,
                   height: device_height * 0.25,
@@ -284,9 +311,10 @@ const SubjectList = ({route}) => {
                   </Text>
                   <View
                     style={{
-                      width: '83%',
+                      //width: '83%',
+                      width: device_width * 0.4,
                       borderBottomWidth: 0.5,
-                      paddingBottom: 10,
+                      paddingBottom: 12,
                       borderColor: 'black',
                     }}>
                     <Text
@@ -303,16 +331,17 @@ const SubjectList = ({route}) => {
                   <View
                     style={{
                       marginTop: 20,
-                      width: '44%',
+                      width: device_width * 0.3,
+                      //width: '44%',
                     }}>
                     <TouchableOpacity
                       style={{
-                        backgroundColor: 'black',
+                        backgroundColor: '#000000',
                         padding: 2,
                         // borderRadius: 50,
                         borderRadius: 20,
                       }}>
-                      <Text style={{color: '#fff', textAlign: 'center'}}>
+                      <Text style={{color: '#FFFFFF', textAlign: 'center'}}>
                         {'Read More'}
                       </Text>
                     </TouchableOpacity>
@@ -330,8 +359,10 @@ const SubjectList = ({route}) => {
                   }}>
                   <Image
                     style={{
-                      width: 180,
-                      height: 180,
+                      // width: 180,
+                      // height: 180,
+                      width: device_width * 0.4,
+                      height: device_height * 0.2,
                       resizeMode: 'contain',
                       paddingLeft: 10,
                       // right: -10,
@@ -365,8 +396,7 @@ const SubjectList = ({route}) => {
                   <Text
                     style={{
                       fontWeight: '900',
-                      // color: '#fff',
-                      color: '#00FF7F',
+                      color: '#2EFFA1',
                       fontSize: 20,
                       marginLeft: 15,
                       marginTop: 12,
@@ -378,7 +408,7 @@ const SubjectList = ({route}) => {
                     style={{
                       flex: 1,
                       height: 1,
-                      backgroundColor: 'blue',
+                      backgroundColor: '#195FF2',
                       marginLeft: 10,
                       marginRight: 15,
                     }}
@@ -397,40 +427,52 @@ const SubjectList = ({route}) => {
                       alignItems: 'center',
                       flexWrap: 'nowrap',
                       //   justifyContent: 'center',
-                      width: '100%',
+                      //width: '100%',
+                      width: device_width * 2,
                     }}>
                     {SubjectByCourse.length > 0 ? (
                       <>
                         {SubjectByCourse.map((item, index) => {
                           const {
-                            _id = '',
-                            subjectImage = '',
-                            subjectid = '',
-                            subjectname = '',
+                            slcourse = '',
+                            courseid = '',
+                            coursename = '',
+                            description = '',
+                            image = '',
+                            createon = '',
+                            updatedon = '',
                           } = item;
+                          // const {
+                          //   _id = '',
+                          //   subjectImage = '',
+                          //   subjectid = '',
+                          //   subjectname = '',
+                          // } = item;
                           // console.log(item, 'item..................');
                           return (
                             <TouchableOpacity
                               key={index}
                               onPress={() => {
-                                dispatch(getTopicBySubIdAPI(subjectid));
+                                dispatch(getTopicBySubIdAPI(courseid));
                                 navigation.navigate('SubjectLevel', {
                                   // stageid: '5',
                                   // boardid: '1',
                                   // scholarshipId: 'NVOOKADA1690811843420',
+                                  // coursename: coursename,
+                                  // subjectname: subjectname,
+                                  // subjectid: subjectid,
                                   coursename: coursename,
-                                  subjectname: subjectname,
-                                  subjectid: subjectid,
+                                  subjectname: description,
+                                  subjectid: courseid,
                                 });
                               }}
-                              // <LinearGradient
+                              //<LinearGradient
+                              //colors={[ '#289C0E','#00FF7F']}
                               style={{
                                 justifyContent: 'center',
                                 alignItems: 'center',
                                 backgroundColor:
                                   ListColor[index % ListColor.length],
-                                //backgroundColor: '#fee2a3',
-                                // backgroundColor: '#fdc0ae',
                                 paddingVertical: 25,
                                 width: device_width * 0.35,
                                 height: device_height * 0.15,
@@ -439,8 +481,8 @@ const SubjectList = ({route}) => {
                                 paddingHorizontal: 15,
                                 margin: 5,
                                 //elevation: 15,
-                                borderWidth: 2,
-                                borderColor: '#999',
+                                borderWidth: 0.5,
+                                borderColor: '#FFFFFF',
                                 borderRadius: 20,
                                 marginBottom: 10,
                               }}>
@@ -449,13 +491,23 @@ const SubjectList = ({route}) => {
                                   width: '100%',
                                   fontSize: 18,
                                   fontWeight: 'bold',
-                                  color: 'white',
+                                  color: '#FFFFFF',
                                   // borderWidth: 1,
                                   //color: '#333',
                                   // marginLeft: 30,
                                 }}>
-                                {subjectname}
+                                {coursename}
                               </Text>
+                              {/* <Text
+                                style={{
+                                  width: '100%',
+                                  fontSize: 13,
+                                  fontWeight: '700',
+                                  //textAlign: 'center',
+                                  color: '#333',
+                                }}>
+                                {description}
+                              </Text> */}
                               <View
                                 style={{
                                   borderColor: Colors.lightgrey,
@@ -466,7 +518,7 @@ const SubjectList = ({route}) => {
                                   marginLeft: 50,
                                   marginTop: 20,
                                 }}>
-                                {subjectImage != '' ? (
+                                {image != '' ? (
                                   <Image
                                     style={{
                                       width: 50,
@@ -476,7 +528,7 @@ const SubjectList = ({route}) => {
                                       // borderRadius: 50,
                                       alignSelf: 'center',
                                     }}
-                                    source={{uri: subjectImage}}
+                                    source={{uri: image}}
                                   />
                                 ) : (
                                   <Image
@@ -554,7 +606,7 @@ const SubjectList = ({route}) => {
                       style={{
                         fontWeight: '900',
                         fontSize: 18,
-                        color: '#00FF7F',
+                        color: '#2EFFA1',
                       }}>
                       {'Level Cleared'}
                     </Text>
@@ -564,14 +616,18 @@ const SubjectList = ({route}) => {
                       paddingBottom: 10,
                     }}>
                     <TouchableOpacity
+                      onPress={() => {
+                        navigation.navigate('Details');
+                      }}
                       style={{
-                        backgroundColor: 'blue',
+                        backgroundColor: '#195FF2',
                         borderRadius: 10,
+                        width: device_width * 0.2,
                       }}>
                       <Text
                         style={{
                           fontSize: 16,
-                          color: 'white',
+                          color: '#FFFFFF',
                           textAlign: 'center',
                           paddingHorizontal: 10,
                           paddingVertical: 2,
@@ -587,7 +643,7 @@ const SubjectList = ({route}) => {
                     justifyContent: 'space-between',
                     borderRadius: 20,
                     borderWidth: 1,
-                    borderColor: '#00FF7F',
+                    borderColor: '#2EFFA1',
                     padding: 40,
                     marginVertical: 10,
                     marginHorizontal: 14,
@@ -597,27 +653,29 @@ const SubjectList = ({route}) => {
               <View
                 style={{
                   borderRadius: 20,
-                  backgroundColor: 'blue',
-                  padding: 15,
-                  marginVertical: 10,
-                  marginHorizontal: 14,
+                  backgroundColor: '#195FF2',
+                  width: device_width * 0.92,
+                  height: device_height * 0.11,
+                  marginVertical: 12,
+                  marginHorizontal: 15,
                 }}>
                 <View
                   style={{
                     flexDirection: 'column',
                     justifyContent: 'space-between',
+                    margin: 10,
                   }}>
                   <Text
                     style={{
                       fontSize: 20,
                       fontWeight: '600',
-                      color: 'yellow',
+                      color: '#F5FF00',
                     }}>
                     {trans('Congratulations')}
                   </Text>
                   <Text
                     style={{
-                      color: 'white',
+                      color: '#FFFFFF',
                       fontSize: 14,
                       marginTop: 5,
                     }}>
@@ -626,10 +684,10 @@ const SubjectList = ({route}) => {
                   <TouchableOpacity>
                     <Text
                       style={{
-                        color: 'white',
+                        color: '#FFFFFF',
                         fontSize: 16,
                         marginTop: 5,
-                        textDecorationLine: 'underline'
+                        textDecorationLine: 'underline',
                       }}>
                       {trans('Download Certificate')}
                     </Text>
@@ -640,13 +698,13 @@ const SubjectList = ({route}) => {
                     position: 'absolute',
                     right: 15,
                     //bottom: 0,
-                    top:20,
+                    top: 20,
                   }}>
                   <Image
                     style={{
                       width: 53,
                       height: 53,
-                      resizeMode: 'contain',                      
+                      resizeMode: 'contain',
                     }}
                     source={require('../../../assets/p2.png')}
                   />

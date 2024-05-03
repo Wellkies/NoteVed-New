@@ -63,8 +63,14 @@ import {
   selectContentDetailsInfo,
   selectContentDetailsStatus,
 } from '../../redux/reducers/GetContentDetailsReducer';
+import {
+  getAllSubByCourseAPI,
+  selectAllSubjectsInfo,
+  selectAllSubjectsStatus,
+} from '../../redux/reducers/GetSubjectByCourseReducer';
 import {handleSetExamName} from '../../redux/reducers/ExamTestNameReducer';
 import {ProgressBar} from 'react-native-paper';
+import {selectUserInfo} from '../../redux/reducers/loginReducer';
 
 const Tab = createBottomTabNavigator();
 
@@ -103,7 +109,11 @@ const SubjectLevel = ({route}) => {
   useEffect(() => {
     dispatch(getTopicBySubIdAPI(subjectid));
     // setTopicId(topicID)
-    dispatch(getContentByTopicIdAPI(topicID));
+    const data = {
+      topicid: topicID,
+      childid: childid,
+    };
+    dispatch(getContentByTopicIdAPI(data));
     // setTimeout(() => {
     // }, 2000)
     // const data = {
@@ -116,10 +126,16 @@ const SubjectLevel = ({route}) => {
   }, [topicID]);
 
   const ContentByTopicId = useAppSelector(selectContentDetailsInfo);
+  const {reviewquestionsets = []} = ContentByTopicId[0]
+    ? ContentByTopicId[0]
+    : [];
   const ContentLoad = useAppSelector(selectContentDetailsStatus);
   console.log(ContentByTopicId, '==============ContentByTopicId');
+  console.log(reviewquestionsets, '==============reviewquestionsets');
 
   const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
+
+  const {authToken, status, userInfo} = useAppSelector(selectUserInfo);
   interface ChildInfo {
     _id: string;
     age: string;
@@ -150,27 +166,27 @@ const SubjectLevel = ({route}) => {
     // boardid: string;
     classname: string;
   }
-  // const {
-  //     _id: id = '',
-  //     // stageid = '',
-  //     // boardid = '',
-  //     childid = '',
-  //     stage = '',
-  //     scholarship = [],
-  //     name: userName = '',
-  //     fname = '',
-  //     gender = '',
-  //     lname = '',
-  //     email = '',
-  //     phone = '',
-  //     // cityname = '',
-  //     image = '',
-  //     age = '',
-  //     address = '',
-  //     // cityid = '',
-  //     language = '',
-  //     // coordinates='',
-  // } = childInfo;
+  const {
+    _id: id = '',
+    // stageid = '',
+    // boardid = '',
+    childid = '',
+    stage = '',
+    scholarship = [],
+    name: userName = '',
+    fname = '',
+    gender = '',
+    lname = '',
+    email = '',
+    phone = '',
+    // cityname = '',
+    image = '',
+    age = '',
+    address = '',
+    // cityid = '',
+    language = '',
+    // coordinates='',
+  } = userInfo;
 
   useEffect(() => {
     navigation.addListener('focus', () => {
@@ -195,23 +211,35 @@ const SubjectLevel = ({route}) => {
     };
   }, []);
 
-  const handleTabSelect = (sltopic, topicid) => {
+  const handleTabSelect = (sltopic, topicid, childid) => {
     setSelectedIndex(sltopic);
-    dispatch(getContentByTopicIdAPI(topicid));
+    const data = {
+      topicid: topicid,
+      childid: childid,
+    };
+    dispatch(getContentByTopicIdAPI(data));
   };
+  useEffect(() => {
+    dispatch(getAllSubByCourseAPI());
+    return () => {};
+  }, []);
+
+  const SubjectByCourse = useAppSelector(selectAllSubjectsInfo);
+  const SubLoading = useAppSelector(selectAllSubjectsStatus);
+  console.log(SubjectByCourse, '########################$$$$SubjectByCourse');
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <ImageBackground
+      <View
         style={{
           width: device_width,
           height: device_height,
           flex: 1,
           alignSelf: 'center',
           // borderWidth: 1,
-          backgroundColor: '#272727',
+          backgroundColor: '#1E1E1E',
         }}
-        resizeMode="cover"
+        //resizeMode="cover"
         // source={require('../../../assets/testBG2.jpg')}
       >
         {/* <Header
@@ -221,7 +249,36 @@ const SubjectLevel = ({route}) => {
           isbackIconShow={true}
           functionName={() => navigation.goBack()}
         /> */}
-        {TopicLoad == 'loading' ? (
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginVertical: 12,
+            marginHorizontal: 20,
+            paddingVertical: 6,
+            paddingHorizontal: 25,
+            marginBottom: 30,
+          }}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <MaterialIcons
+              name="arrow-back-ios"
+              size={28}
+              style={{color: '#FFFFFF', marginRight: 10}}
+            />
+          </TouchableOpacity>
+          <View style={{flex: 1, alignItems: 'center'}}>
+            <Text
+              style={{
+                color: '#FFFFFF',
+                fontWeight: '600',
+                fontSize: 18,
+                textAlign: 'center',
+              }}>
+              {trans(coursename + ' ' + subjectname)}
+            </Text>
+          </View>
+        </View>
+        {SubLoading == 'loading' ? (
           <View
             style={{
               flex: 1,
@@ -231,18 +288,137 @@ const SubjectLevel = ({route}) => {
               width: device_width,
               // backgroundColor: Colors.secondary,
             }}>
-            <LoadingScreen flag={TopicLoad == 'loading'} />
+            <LoadingScreen flag={SubLoading == 'loading'} />
           </View>
         ) : (
           <>
             <ScrollView showsVerticalScrollIndicator={false}>
-              <View
+              {SubjectByCourse.length > 0 ? (
+                <>
+                  {SubjectByCourse.map((item, index) => {
+                    const {
+                      _id = '',
+                      subjectImage = '',
+                      subjectid = '',
+                      subjectname = '',
+                    } = item;
+
+                    return (
+                      <View
+                        key={index}
+                        style={{
+                          flexDirection: 'row',
+                          alignContent: 'center',
+                          backgroundColor: '#01FE91',
+                          width: device_width * 0.95,
+                          height: device_height * 0.09,
+                          marginHorizontal: 10,
+                          borderRadius: 12,
+                          marginBottom: 15,
+                        }}>
+                        <View
+                          style={{
+                            paddingLeft: 10,
+                            paddingRight: 10,
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                          }}>
+                          <Image
+                            source={require('../../../assets/people.png')}
+                            style={{
+                              height: device_height * 0.21,
+                              width: device_width * 0.15,
+                              resizeMode: 'contain',
+                            }}
+                          />
+                        </View>
+                        <View
+                          style={{
+                            flex: 1,
+                            paddingTop: 20,
+                          }}>
+                          <Text
+                            style={{
+                              color: '#000',
+                              fontWeight: '500',
+                              fontSize: 20,
+                              alignItems: 'center',
+                            }}>
+                            {trans(subjectname)}
+                          </Text>
+                        </View>
+                        <View
+                          style={{
+                            paddingLeft: 10,
+                            paddingRight: 10,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}>
+                          <TouchableOpacity>
+                            <Image
+                              source={require('../../../assets/down-arrow.png')}
+                              style={{
+                                width: device_width * 0.1,
+                                height: device_height * 0.1,
+                                resizeMode: 'contain',
+                              }}
+                            />
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                    );
+                  })}
+                </>
+              ) : (
+                <>
+                  <View
+                    style={{
+                      backgroundColor: 'burlywood',
+                      paddingVertical: 15,
+                      paddingHorizontal: 15,
+                      marginVertical: 10,
+                      marginHorizontal: 15,
+                      // borderRadius: 7,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexDirection: 'row',
+                    }}>
+                    <AntDesign
+                      style={{
+                        marginHorizontal: 10,
+                        borderWidth: 0,
+                      }}
+                      name={'infocirlce'}
+                      size={30}
+                      color={'darkgreen'}
+                    />
+                    <Text
+                      style={{
+                        color: '#333',
+                        fontWeight: '700',
+                        fontSize: 15,
+                        textAlign: 'center',
+                        // borderWidth: 1,
+                        // borderLeftWidth:1,
+                        width: '85%',
+                      }}>
+                      {trans('Currently No Content Added')}
+                    </Text>
+                  </View>
+                </>
+              )}
+            </ScrollView>
+          </>
+        )}
+
+        {/* <ScrollView showsVerticalScrollIndicator={false}> */}
+        {/* <View
                 //disabled={true}
                 //   onPress={navigationfunc}
                 style={{
                   // backgroundColor: '#fee2a3',
                   //backgroundColor: '#febcac',
-                  backgroundColor: '#1dfc8c',
+                  backgroundColor: '#0DFF8F',
                   // paddingVertical: 35,
                   // height: device_height * 0.25,
                   // width: device_width * 0.94,
@@ -267,7 +443,7 @@ const SubjectLevel = ({route}) => {
                     name="arrow-back"
                     size={33}
                     // onPress={() => navigation.goBack()}
-                    style={{color: '#474747'}}
+                    style={{color: '#4C4C4C'}}
                   />
                 </TouchableOpacity>
                 <View
@@ -279,7 +455,7 @@ const SubjectLevel = ({route}) => {
                       width: '50%',
                       fontSize: 27,
                       fontWeight: '500',
-                      color: '#474747',
+                      color: '#4C4C4C',
                       marginLeft: 4,
                     }}>
                     {subjectname}
@@ -293,15 +469,15 @@ const SubjectLevel = ({route}) => {
                         // width: '120%',
                         fontSize: 16,
                         fontWeight: '400',
-                        color: '#474747',
+                        color: '#4C4C4C',
                         marginLeft: 4,
                       }}>
                       {`Duration: 15 Days, 11+ Courses`}
                     </Text>
                   </View>
-                </View>
+                </View> */}
 
-                {/* <FastImage
+        {/* <FastImage
                   style={{
                     marginTop: 5,
                     height: device_height * 0.15,
@@ -311,7 +487,7 @@ const SubjectLevel = ({route}) => {
                   // source={}
                   resizeMode="center"
                 /> */}
-                <View
+        {/* <View
                   style={{
                     // width: '100%',
                     // height: '100%',
@@ -323,16 +499,18 @@ const SubjectLevel = ({route}) => {
                   }}>
                   <Image
                     style={{
-                      width: 260,
-                      height: 260,
+                      // width: 260,
+                      // height: 260,
+                      width: device_width * 0.62,
+                      height: device_height * 0.3,
                       resizeMode: 'contain',
                       transform: [{rotate: '136deg'}],
                     }}
                     source={require('../../../assets/reasoning.png')}
                   />
                 </View>
-              </View>
-              {/* <NavigationContainer independent={true}>
+              </View> */}
+        {/* <NavigationContainer independent={true}>
                 <Tab.Navigator>
                   <Tab.Screen
                     name="Screen1"
@@ -436,7 +614,7 @@ const SubjectLevel = ({route}) => {
                   />
                 </Tab.Navigator>
               </NavigationContainer> */}
-              <View
+        {/* <View
                 style={{
                   flexDirection: 'row',
                   width: '100%',
@@ -483,10 +661,10 @@ const SubjectLevel = ({route}) => {
                             // borderWidth: 1.5,
                             // borderBottomWidth:0,
                             borderRadius: 10,
-                            borderColor: isselectedBtn ? '#ee7c75' : '#fff',
+                            borderColor: isselectedBtn ? '#ee7c75' : '#FFFFFF',
                             backgroundColor: isselectedBtn
-                              ? '#197305'
-                              : '#272727',
+                              ? '#047B45'
+                              : '#282828',
                             // paddingHorizontal:10,
                             // borderBottomLeftRadius: index == 0 ? 15 : 0,
                             // borderTopLeftRadius: index == 0 ? 15 : 0,
@@ -494,7 +672,7 @@ const SubjectLevel = ({route}) => {
                             // borderTopRightRadius: index == 2 ? 15 : 0,
                           }}
                           onPress={() => {
-                            handleTabSelect(sltopic, topicid);
+                            handleTabSelect(sltopic, topicid, childid);
                             //setSelectedIndex(sltopic);
                             // setContentList(contentList);
                           }}>
@@ -504,7 +682,7 @@ const SubjectLevel = ({route}) => {
                               fontWeight: '900',
                               // color: isselectedBtn ? '#000' : '#ee7c75',
                               //color: '#000',
-                              color: 'white',
+                              color: '#FFFFFF',
                               // textDecorationLine: isselectedBtn
                               //   ? 'underline'
                               //   : 'none',
@@ -517,8 +695,8 @@ const SubjectLevel = ({route}) => {
                     </View>
                   );
                 })}
-              </View>
-              {/* <View
+              </View> */}
+        {/* <View
                 style={{
                   // marginVertical: 10,
                   width: '100%',
@@ -533,7 +711,7 @@ const SubjectLevel = ({route}) => {
                   Course Content
                 </Text>
               </View> */}
-              <View
+        {/* <View
                 style={{
                   flex: 1,
                   justifyContent: 'center',
@@ -568,9 +746,9 @@ const SubjectLevel = ({route}) => {
                     </View>
                   ) : (
                     <>
-                      {ContentByTopicId.length > 0 ? (
+                      {reviewquestionsets.length > 0 ? (
                         <>
-                          {ContentByTopicId.map((item, index) => {
+                          {reviewquestionsets.map((item, index) => {
                             const {
                               _id = '',
                               contentid = '',
@@ -593,7 +771,7 @@ const SubjectLevel = ({route}) => {
                               videos = [],
                             } = item;
 
-                            // console.log(item, "item..................")
+                            console.log(item, 'item........$$$..........');
                             // const Revdata = {
                             //   stageid,
                             //   subjectid,
@@ -668,8 +846,8 @@ const SubjectLevel = ({route}) => {
                                   //   topicimage: topicimage ,
                                   //   topicname: topicname ,
                                   // });
-                                }}>
-                                <View
+                                }}> */}
+        {/* <View
                                   style={{
                                     flexDirection: 'row',
                                     justifyContent: 'space-between',
@@ -685,8 +863,8 @@ const SubjectLevel = ({route}) => {
                                       // justifyContent: 'space-around',
                                       // borderWidth:1,
                                       width: device_width * 0.8,
-                                    }}>
-                                    {/* <View
+                                    }}> */}
+        {/* <View
                                       style={{
                                         // width: 55,
                                         // height: 55,
@@ -696,7 +874,11 @@ const SubjectLevel = ({route}) => {
                                         // backgroundColor: '#fff',
                                         // borderRadius: 10,
                                       }}> */}
-                                      {/* {subjectimage != '' ? (
+<<<<<<< HEAD
+        {/* {subjectimage != '' ? (
+=======
+                                    {/* {subjectimage != '' ? (
+>>>>>>> 98cfdf225aa2bd6134d2b2452815c7de134503c6
                                     <Image
                                       style={{
                                         width: 75,
@@ -708,7 +890,11 @@ const SubjectLevel = ({route}) => {
                                       source={{ uri: subjectimage }}
                                     />
                                   ) : ( */}
-                                      {/* <Image
+<<<<<<< HEAD
+        {/* <Image
+=======
+                                    {/* <Image
+>>>>>>> 98cfdf225aa2bd6134d2b2452815c7de134503c6
                                         style={{
                                           width: 55,
                                           height: 55,
@@ -718,26 +904,32 @@ const SubjectLevel = ({route}) => {
                                         }}
                                         source={require('../../../assets/test.png')}
                                       /> */}
-                                      {/* )} */}
-                                      <View
+<<<<<<< HEAD
+        {/* )} */}
+        {/* <View
+=======
+                                    {/* )} */}
+                                    <View
+>>>>>>> 98cfdf225aa2bd6134d2b2452815c7de134503c6
                                       style={{
                                         paddingTop: 12,
                                         marginBottom: 20,
                                         marginLeft: 10,
                                       }}>
+<<<<<<< HEAD
                                         <Entypo
                                           name="dot-single"
                                           size={20}
                                           style={{
-                                            backgroundColor: '#289C0E',
-                                            color: 'white',
+                                            backgroundColor: '#00DC5E',
+                                            color: '#FFFFFF',
                                             borderRadius: 20,
                                             padding: 5,
                                           }}
-                                        />
-                                        {/* Vertical line conditionally rendered */}
+                                        /> */}
+        {/* Vertical line conditionally rendered */}
 
-                                        {index <
+        {/* {index <
                                           TopicBySubjectId.length - 1 && (
                                           <View
                                             style={{
@@ -749,19 +941,51 @@ const SubjectLevel = ({route}) => {
                                               backgroundColor: '#474747',
                                             }}
                                           />
-                                        )}
+                                        )} */}
+        {/* <View
+=======
+                                      <Entypo
+                                        name="dot-single"
+                                        size={20}
+                                        style={{
+                                          backgroundColor: '#00DC5E',
+                                          color: '#FFFFFF',
+                                          borderRadius: 20,
+                                          padding: 5,
+                                        }}
+                                      />
+                                      {/* Vertical line conditionally rendered */}
+
+                                      {index < TopicBySubjectId.length - 1 && (
                                         <View
+>>>>>>> 98cfdf225aa2bd6134d2b2452815c7de134503c6
                                           style={{
                                             position: 'absolute',
-                                            // top: 15,
-                                            bottom: 0,
-                                            // left: 10,
+                                            top: 50,
+                                            bottom: -45,
+                                            left: 14,
                                             width: 1,
                                             backgroundColor: '#474747',
                                           }}
+<<<<<<< HEAD
+                                        /> */}
+
+        {/* </View>
+=======
                                         />
-                                     
+                                      )}
+                                      <View
+                                        style={{
+                                          position: 'absolute',
+                                          // top: 15,
+                                          bottom: 0,
+                                          // left: 10,
+                                          width: 1,
+                                          backgroundColor: '#474747',
+                                        }}
+                                      />
                                     </View>
+>>>>>>> 98cfdf225aa2bd6134d2b2452815c7de134503c6
                                     <View
                                       style={{
                                         justifyContent: 'flex-start',
@@ -773,31 +997,31 @@ const SubjectLevel = ({route}) => {
                                       <Text
                                         style={{
                                           fontWeight: '600',
-                                          color: 'white',
+                                          color: '#FFFFFF',
                                           fontSize: 15,
                                         }}>
-                                        {`${contentset}`}
+                                        {contentset}
                                       </Text>
-                                    </View>
-                                  </View>
+                                    </View> */}
+        {/* </View>
                                   <MaterialIcons
                                     name="play-arrow"
                                     size={30}
                                     style={{
-                                      backgroundColor: '#289C0E',
-                                      color: 'white',
+                                      backgroundColor: '#00DC5E',
+                                      color: '#FFFFFF',
                                       borderRadius: 20,
                                       padding: 5,
                                     }}
                                   />
-                                </View>
-                              </TouchableOpacity>
+                                </View> */}
+        {/* </TouchableOpacity>
                             );
                           })}
                         </>
                       ) : (
-                        <>
-                          <View
+                        <> */}
+        {/* <View
                             style={{
                               backgroundColor: 'burlywood',
                               paddingVertical: 15,
@@ -830,17 +1054,15 @@ const SubjectLevel = ({route}) => {
                               }}>
                               {trans('Currently No Content Added')}
                             </Text>
-                          </View>
-                        </>
+                          </View> */}
+        {/* </>
                       )}
                     </>
                   )}
                 </View>
-              </View>
-            </ScrollView>
-          </>
-        )}
-      </ImageBackground>
+              </View> */}
+        {/* </ScrollView> */}
+      </View>
     </SafeAreaView>
   );
 };

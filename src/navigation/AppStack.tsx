@@ -40,7 +40,6 @@ import LandingScreen from '../screens/UserScreen/LandingScreen';
 import SubjectList from '../screens/UserScreen/SubjectList';
 import SubjectLevel from '../screens/UserScreen/SubjectLevel';
 import Reviews from '../screens/UserScreen/Reviews';
-import Pricing from '../screens/UserScreen/Pricing';
 import Details from '../screens/UserScreen/Details';
 
 export type RootStackParamList = {
@@ -68,7 +67,7 @@ const AppStack = props => {
 
   return (
     <>
-      <StatusBar backgroundColor={'salmon'} barStyle="dark-content" />
+      <StatusBar backgroundColor={'#272727'} barStyle="light-content" />
       <Stack.Navigator
         screenOptions={({navigation}) => (
           navigation.getState().routes[navigation.getState().index].name ==
@@ -103,8 +102,6 @@ const AppStack = props => {
                 'PrevMockTest' ||
               navigation.getState().routes[navigation.getState().index].name ==
                 'Reviews' ||
-              navigation.getState().routes[navigation.getState().index].name ==
-                'Pricing' ||
               navigation.getState().routes[navigation.getState().index].name ==
                 'Details' ||
               navigation.getState().routes[navigation.getState().index].name ==
@@ -274,23 +271,7 @@ const AppStack = props => {
               />
             ),
           })}
-        />
-        <Stack.Screen
-          name={ROUTES.PRICING}
-          component={Pricing}
-          options={({navigation}) => ({
-            title: trans(''),
-            headerLeft: () => (
-              <MaterialIcons.Button
-                name="keyboard-arrow-left"
-                size={30}
-                backgroundColor={Colors.secondary}
-                color={Colors.primary}
-                onPress={() => navigation.goBack()}
-              />
-            ),
-          })}
-        />
+        />      
         <Stack.Screen
           name={ROUTES.DETAILS}
           component={Details}
