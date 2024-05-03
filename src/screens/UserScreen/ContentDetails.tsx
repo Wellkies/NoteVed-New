@@ -7,19 +7,106 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import {device_height, device_width} from '../style';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import CommonMessage from '../../../constants/CommonMessage';
+import {useAppSelector} from '../../redux/store/reducerHook';
+import {
+  getContentByTopicIdAPI,
+  selectContentDetailsInfo,
+} from '../../redux/reducers/GetContentDetailsReducer';
+import {selectTopicDetailsInfo} from '../../redux/reducers/GetTopicDetailsReducer';
+import {selectTopicDetailsStatus} from '../../redux/reducers/GetTopicDetailsFormTopicIdReducer';
+import {selectUserInfo} from '../../redux/reducers/loginReducer';
 
 const ContentDetails = ({route}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch<any>();
   const {t: trans, i18n} = useTranslation();
   const {subjectname = '', topicname = ''} = route.params;
+
+  const {authToken, status, userInfo} = useAppSelector(selectUserInfo);
+  interface ChildInfo {
+    _id: string;
+    age: string;
+    childid: string;
+    image: string;
+    imagename: string;
+    fname: string;
+    lname: string;
+    phone: string;
+    name: string;
+    boardname: string;
+    fathername: string;
+    mothername: string;
+    scholarship: object[];
+    // board: string;
+    subscriptionStartDate: string;
+    subscriptionEndDate: string;
+    isPremium: boolean;
+    parentid: string;
+    stage: string;
+    gender: string;
+    address: string;
+    alterphone: string;
+    schoolname: string;
+    language: string;
+    email: string;
+    // stageid: string;
+    // boardid: string;
+    classname: string;
+  }
+  const {
+    _id: id = '',
+    // stageid = '',
+    // boardid = '',
+    childid = '',
+    stage = '',
+    scholarship = [],
+    name: userName = '',
+    fname = '',
+    gender = '',
+    lname = '',
+    email = '',
+    phone = '',
+    // cityname = '',
+    image = '',
+    age = '',
+    address = '',
+    // cityid = '',
+    language = '',
+    // coordinates='',
+  } = userInfo;
+
+  const TopicBySubjectId = useAppSelector(selectTopicDetailsInfo);
+  const TopicLoad = useAppSelector(selectTopicDetailsStatus);
+
+  const filterData = TopicBySubjectId.map(rec => rec.topicid);
+  // TopicBySubjectId.filter((rec) => rec.sltopic == 1)
+  const topicID = filterData[0];
+
+  useEffect(() => {
+    // dispatch(getTopicBySubIdAPI(subjectid));
+    // setTopicId(topicID)
+    const data = {
+      topicid: topicID,
+      childid: childid,
+    };
+    dispatch(getContentByTopicIdAPI(data));
+    // setTimeout(() => {
+    // }, 2000)
+    // const data = {
+    //   stageid,
+    //   boardid,
+    //   scholarshipid: scholarshipId,
+    // };
+    // dispatch(getSubjectByClassAPI(data));
+    return () => {};
+  }, [topicID]);
 
   const ContentAvailable = [
     {
@@ -35,6 +122,11 @@ const ContentDetails = ({route}) => {
       navigationfunc: () => CommonMessage('Coming Soon !'),
     },
   ];
+
+  const ContentByTopicId = useAppSelector(selectContentDetailsInfo);
+  const {reviewquestionsets = []} = ContentByTopicId[0]
+    ? ContentByTopicId[0]
+    : [];
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -100,102 +192,183 @@ const ContentDetails = ({route}) => {
               </Text>
             </View>
           </View>
-          {ContentAvailable.map((item, index) => {
-            return (
-              <View
-                key={index}
-                style={{
-                  flexDirection: 'row',
-                  alignContent: 'center',
-                  backgroundColor: '#000000',
-                  width: device_width * 0.95,
-                  height: device_height * 0.15,
-                  marginHorizontal: 10,
-                  borderRadius: 12,
-                  marginBottom: 5,
-                  marginTop: 24,
-                }}>
-                <View
-                  style={{
-                    paddingLeft: 10,
-                    paddingRight: 10,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                  }}>
-                  <Image
-                    source={require('../../../assets/book.png')}
-                    style={{
-                      padding: 10,
-                      width: 75,
-                      height: 78,
-                      resizeMode: 'contain',
-                      tintColor: '#FFFFFF',
-                      top: -17,
-                    }}
-                  />
+          {reviewquestionsets.length > 0 ? (
+            <>
+              {reviewquestionsets.map((item, index) => {
+                const {
+                  _id = '',
+                  contentid = '',
+                  slcontent = '',
+                  contentimage = '',
+                  contentset = '',
+                  concepts = [],
+                  isLock = false,
+                  isPremium = true,
+                  quiz = [],
+                  slsubject = '',
+                  sltopic = '',
+                  subjectid = '',
+                  subjectimage = '',
+                  subjectname = '',
+                  timeDuration = '',
+                  topicid = '',
+                  topicimage = '',
+                  topicname = '',
+                  videos = [],
+                } = item;
+                return (
                   <View
+                    key={index}
                     style={{
-                      paddingLeft: 10,
-                      flexDirection: 'column',
+                      flexDirection: 'row',
+                      alignContent: 'center',
+                      backgroundColor: '#000000',
+                      width: device_width * 0.95,
+                      height: device_height * 0.15,
+                      marginHorizontal: 10,
+                      borderRadius: 12,
+                      marginBottom: 5,
+                      marginTop: 24,
                     }}>
                     <View
                       style={{
-                        marginHorizontal: 2,
-                      }}>
-                      <Text
-                        style={{
-                          color: '#90FF96',
-                          fontWeight: '500',
-                          fontSize: 18,
-                          top: -10,
-                        }}>
-                        {trans(item.contents)}
-                      </Text>
-                    </View>
-                    <View
-                      style={{
+                        paddingLeft: 10,
+                        paddingRight: 10,
                         flexDirection: 'row',
-                        paddingTop: 2,
+                        alignItems: 'center',
                       }}>
-                      <View
+                      <Image
+                        source={require('../../../assets/book.png')}
                         style={{
-                          backgroundColor: '#0BB713',
-                          height: 2,
-                          width: '60%',
-                          borderRadius: 4,
-                          marginRight: 10,
+                          padding: 10,
+                          width: 75,
+                          height: 78,
+                          resizeMode: 'contain',
+                          tintColor: '#FFFFFF',
+                          top: -17,
                         }}
                       />
-                      <Text
-                        style={{
-                          color: '#0BB713',
-                          top: -10,
-                          marginHorizontal: 2,
-                        }}>
-                        70/100
-                      </Text>
-                    </View>
-                    <TouchableOpacity onPress={item.navigationfunc}>
                       <View
                         style={{
-                          paddingVertical: 4,
-                          paddingHorizontal: 10,
-                          borderRadius: 10,
-                          marginRight: 8,
-                          borderWidth: 1.2,
-                          borderColor: '#01FE91',
-                          width: device_width * 0.2,
-                          bottom: -10,
-                          left: -5,
+                          paddingLeft: 10,
+                          flexDirection: 'column',
                         }}>
-                        <Text style={{color: '#FFFFFF'}}>Continue</Text>
+                        <View
+                          style={{
+                            marginHorizontal: 2,
+                          }}>
+                          <Text
+                            style={{
+                              color: '#90FF96',
+                              fontWeight: '500',
+                              fontSize: 18,
+                              top: -10,
+                            }}>
+                            {trans(contentset)}
+                          </Text>
+                        </View>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            paddingTop: 2,
+                          }}>
+                          <View
+                            style={{
+                              backgroundColor: '#0BB713',
+                              height: 2,
+                              width: '60%',
+                              borderRadius: 4,
+                              marginRight: 10,
+                            }}
+                          />
+                          <Text
+                            style={{
+                              color: '#0BB713',
+                              top: -10,
+                              marginHorizontal: 2,
+                            }}>
+                            70/100
+                          </Text>
+                        </View>
+                        <TouchableOpacity
+                          onPress={async () => {
+                            navigation.navigate('MockTests', {
+                              screenName: 'ExamSets',
+                              subjectName: subjectname,
+                              chapterName: topicname,
+                              examSet: contentset,
+                              contentid: contentid,
+                              isReattempt: false,
+                              // studentdata: studentdata,
+                              ExamQuestionsets: quiz,
+                              // scholarshipid: scholarshipid,
+                              // boardid: boardid,
+                              // scholarshipName: scholarshipName,
+                              subjectId: subjectid,
+                              timeDuration: timeDuration,
+                              is2ndAvailable: index,
+                              topicid: topicid,
+                            });
+                          }}>
+                          <View
+                            style={{
+                              paddingVertical: 4,
+                              paddingHorizontal: 10,
+                              borderRadius: 10,
+                              marginRight: 8,
+                              borderWidth: 1.2,
+                              borderColor: '#01FE91',
+                              width: device_width * 0.2,
+                              bottom: -10,
+                              left: -5,
+                            }}>
+                            <Text style={{color: '#FFFFFF'}}>Continue</Text>
+                          </View>
+                        </TouchableOpacity>
                       </View>
-                    </TouchableOpacity>
+                    </View>
                   </View>
-                </View>
+                );
+              })}
+            </>
+          ) : (
+            <>
+              <View
+                style={{
+                  backgroundColor: 'burlywood',
+                  paddingVertical: 15,
+                  paddingHorizontal: 15,
+                  marginVertical: 10,
+                  marginHorizontal: 15,
+                  // borderRadius: 7,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexDirection: 'row',
+                }}>
+                <AntDesign
+                  style={{
+                    marginHorizontal: 10,
+                    borderWidth: 0,
+                  }}
+                  name={'infocirlce'}
+                  size={30}
+                  color={'darkgreen'}
+                />
+                <Text
+                  style={{
+                    color: '#333',
+                    fontWeight: '700',
+                    fontSize: 15,
+                    textAlign: 'center',
+                    // borderWidth: 1,
+                    // borderLeftWidth:1,
+                    width: '85%',
+                  }}>
+                  {trans('Currently No Content Added')}
+                </Text>
               </View>
-            );
-          })}
+            </>
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
