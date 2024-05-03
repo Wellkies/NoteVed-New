@@ -91,14 +91,14 @@ function BottomTabNavigator() {
 
   return (
     <>
-      <StatusBar backgroundColor={'#263d2d'} barStyle="light-content" />
+      <StatusBar backgroundColor={'#272727'} barStyle="light-content" />
       <Tab.Navigator
         backBehaviour="initialRoute"
         screenOptions={({route, navigation}) => ({
           headerShown: false,
           tabBarHideOnKeyboard: true,
           headerStyle: {
-            backgroundColor: '#263d2d',
+            backgroundColor:  "#272727",
           },
           headerTintColor: Colors.white,
           headerTitleStyle: {
@@ -108,7 +108,7 @@ function BottomTabNavigator() {
           },
           tabBarStyle: {
             height: 60,
-            backgroundColor: '#263d2d',
+            backgroundColor:  "#272727",
             display: showTab,
           },
           // tabBarStyle: {height: 50, backgroundColor: '#def',display: 'flex',},

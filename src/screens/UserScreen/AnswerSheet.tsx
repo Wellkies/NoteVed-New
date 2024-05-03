@@ -355,9 +355,11 @@ const AnswerSheet = ({route}) => {
           height: device_height,
           flex: 1,
           alignSelf: 'center',
+          backgroundColor: '#272727',
         }}
         resizeMode="cover"
-        source={require('../../../assets/0.png')}>
+        // source={require('../../../assets/0.png')}
+        >
         <Header
           label1={trans('Answer Sheet')}
           // label2={`{Std - ${stage}`}

@@ -1,43 +1,54 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../store/Store";
-import { getTopicBySubClassActionAPI } from "../actions/SubjectsAPI";
-import { getContentByTopicIdActionAPI } from "../actions/CoursesAPI";
+import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {RootState} from '../store/Store';
+import {getTopicBySubClassActionAPI} from '../actions/SubjectsAPI';
+import {getContentByTopicIdActionAPI} from '../actions/CoursesAPI';
 
 interface ContentDetailsState {
   ContentDetailsInfo: Object[]; // Define UserInfo interface as per your data structure
   authToken: String;
-  status: "idle" | "loading" | "failed";
+  status: 'idle' | 'loading' | 'failed';
 }
 
 const initialState: ContentDetailsState = {
   ContentDetailsInfo: [],
-  authToken: "",
-  status: "idle",
+  authToken: '',
+  status: 'idle',
 };
 
-export const getContentByTopicIdAPI = createAsyncThunk<object, { state: RootState }>(
-  "contentdetails/fetchContentDetailsInfo",
-  async (data: object, { getState }) => {
+// export const getContentByTopicIdAPI = createAsyncThunk<object, { state: RootState }>(
+//   "contentdetails/fetchContentDetailsInfo",
+//   async (data: object, { getState }) => {
+//     const response = await getContentByTopicIdActionAPI(data);
+//     return response.data;
+//   }
+// );
+
+export const getContentByTopicIdAPI = createAsyncThunk<
+  object,
+  {state: {ContentDetails: ContentDetailsState}}
+>(
+  'contentdetails/fetchContentDetailsInfo',
+  async (data: object, {getState}) => {
     const response = await getContentByTopicIdActionAPI(data);
     return response.data;
-  }
+  },
 );
 
 export const ContentDetailsData = createSlice({
-  name: "contentdetails",
+  name: 'contentdetails',
   initialState,
   reducers: {},
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
-      .addCase(getContentByTopicIdAPI.pending, (state) => {
-        state.status = "loading";
+      .addCase(getContentByTopicIdAPI.pending, state => {
+        state.status = 'loading';
       })
       .addCase(getContentByTopicIdAPI.fulfilled, (state, action) => {
-        state.status = "idle";
+        state.status = 'idle';
         state.ContentDetailsInfo = action.payload;
       })
       .addCase(getContentByTopicIdAPI.rejected, (state, action) => {
-        state.status = "failed";
+        state.status = 'failed';
         // You can handle failure here if needed
       });
   },

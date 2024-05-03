@@ -70,6 +70,7 @@ import {
 } from '../../redux/reducers/GetSubjectByCourseReducer';
 import {handleSetExamName} from '../../redux/reducers/ExamTestNameReducer';
 import {ProgressBar} from 'react-native-paper';
+import {selectUserInfo} from '../../redux/reducers/loginReducer';
 
 const Tab = createBottomTabNavigator();
 
@@ -108,7 +109,11 @@ const SubjectLevel = ({route}) => {
   useEffect(() => {
     dispatch(getTopicBySubIdAPI(subjectid));
     // setTopicId(topicID)
-    dispatch(getContentByTopicIdAPI(topicID));
+    const data = {
+      topicid: topicID,
+      childid: childid,
+    };
+    dispatch(getContentByTopicIdAPI(data));
     // setTimeout(() => {
     // }, 2000)
     // const data = {
@@ -121,10 +126,16 @@ const SubjectLevel = ({route}) => {
   }, [topicID]);
 
   const ContentByTopicId = useAppSelector(selectContentDetailsInfo);
+  const {reviewquestionsets = []} = ContentByTopicId[0]
+    ? ContentByTopicId[0]
+    : [];
   const ContentLoad = useAppSelector(selectContentDetailsStatus);
   console.log(ContentByTopicId, '==============ContentByTopicId');
+  console.log(reviewquestionsets, '==============reviewquestionsets');
 
   const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
+
+  const {authToken, status, userInfo} = useAppSelector(selectUserInfo);
   interface ChildInfo {
     _id: string;
     age: string;
@@ -155,27 +166,27 @@ const SubjectLevel = ({route}) => {
     // boardid: string;
     classname: string;
   }
-  // const {
-  //     _id: id = '',
-  //     // stageid = '',
-  //     // boardid = '',
-  //     childid = '',
-  //     stage = '',
-  //     scholarship = [],
-  //     name: userName = '',
-  //     fname = '',
-  //     gender = '',
-  //     lname = '',
-  //     email = '',
-  //     phone = '',
-  //     // cityname = '',
-  //     image = '',
-  //     age = '',
-  //     address = '',
-  //     // cityid = '',
-  //     language = '',
-  //     // coordinates='',
-  // } = childInfo;
+  const {
+    _id: id = '',
+    // stageid = '',
+    // boardid = '',
+    childid = '',
+    stage = '',
+    scholarship = [],
+    name: userName = '',
+    fname = '',
+    gender = '',
+    lname = '',
+    email = '',
+    phone = '',
+    // cityname = '',
+    image = '',
+    age = '',
+    address = '',
+    // cityid = '',
+    language = '',
+    // coordinates='',
+  } = userInfo;
 
   useEffect(() => {
     navigation.addListener('focus', () => {
@@ -200,9 +211,13 @@ const SubjectLevel = ({route}) => {
     };
   }, []);
 
-  const handleTabSelect = (sltopic, topicid) => {
+  const handleTabSelect = (sltopic, topicid, childid) => {
     setSelectedIndex(sltopic);
-    dispatch(getContentByTopicIdAPI(topicid));
+    const data = {
+      topicid: topicid,
+      childid: childid,
+    };
+    dispatch(getContentByTopicIdAPI(data));
   };
   useEffect(() => {
     dispatch(getAllSubByCourseAPI());
@@ -487,7 +502,7 @@ const SubjectLevel = ({route}) => {
                       // width: 260,
                       // height: 260,
                       width: device_width * 0.62,
-                      height: device_height * 0.30,
+                      height: device_height * 0.3,
                       resizeMode: 'contain',
                       transform: [{rotate: '136deg'}],
                     }}
@@ -657,7 +672,7 @@ const SubjectLevel = ({route}) => {
                             // borderTopRightRadius: index == 2 ? 15 : 0,
                           }}
                           onPress={() => {
-                            handleTabSelect(sltopic, topicid);
+                            handleTabSelect(sltopic, topicid, childid);
                             //setSelectedIndex(sltopic);
                             // setContentList(contentList);
                           }}>
@@ -731,9 +746,9 @@ const SubjectLevel = ({route}) => {
                     </View>
                   ) : (
                     <>
-                      {ContentByTopicId.length > 0 ? (
+                      {reviewquestionsets.length > 0 ? (
                         <>
-                          {ContentByTopicId.map((item, index) => {
+                          {reviewquestionsets.map((item, index) => {
                             const {
                               _id = '',
                               contentid = '',
@@ -756,7 +771,7 @@ const SubjectLevel = ({route}) => {
                               videos = [],
                             } = item;
 
-                            // console.log(item, "item..................")
+                            console.log(item, 'item........$$$..........');
                             // const Revdata = {
                             //   stageid,
                             //   subjectid,
@@ -859,7 +874,11 @@ const SubjectLevel = ({route}) => {
                                         // backgroundColor: '#fff',
                                         // borderRadius: 10,
                                       }}> */}
+<<<<<<< HEAD
         {/* {subjectimage != '' ? (
+=======
+                                    {/* {subjectimage != '' ? (
+>>>>>>> 98cfdf225aa2bd6134d2b2452815c7de134503c6
                                     <Image
                                       style={{
                                         width: 75,
@@ -871,7 +890,11 @@ const SubjectLevel = ({route}) => {
                                       source={{ uri: subjectimage }}
                                     />
                                   ) : ( */}
+<<<<<<< HEAD
         {/* <Image
+=======
+                                    {/* <Image
+>>>>>>> 98cfdf225aa2bd6134d2b2452815c7de134503c6
                                         style={{
                                           width: 55,
                                           height: 55,
@@ -881,13 +904,19 @@ const SubjectLevel = ({route}) => {
                                         }}
                                         source={require('../../../assets/test.png')}
                                       /> */}
+<<<<<<< HEAD
         {/* )} */}
         {/* <View
+=======
+                                    {/* )} */}
+                                    <View
+>>>>>>> 98cfdf225aa2bd6134d2b2452815c7de134503c6
                                       style={{
                                         paddingTop: 12,
                                         marginBottom: 20,
                                         marginLeft: 10,
                                       }}>
+<<<<<<< HEAD
                                         <Entypo
                                           name="dot-single"
                                           size={20}
@@ -914,17 +943,49 @@ const SubjectLevel = ({route}) => {
                                           />
                                         )} */}
         {/* <View
+=======
+                                      <Entypo
+                                        name="dot-single"
+                                        size={20}
+                                        style={{
+                                          backgroundColor: '#00DC5E',
+                                          color: '#FFFFFF',
+                                          borderRadius: 20,
+                                          padding: 5,
+                                        }}
+                                      />
+                                      {/* Vertical line conditionally rendered */}
+
+                                      {index < TopicBySubjectId.length - 1 && (
+                                        <View
+>>>>>>> 98cfdf225aa2bd6134d2b2452815c7de134503c6
                                           style={{
                                             position: 'absolute',
-                                            // top: 15,
-                                            bottom: 0,
-                                            // left: 10,
+                                            top: 50,
+                                            bottom: -45,
+                                            left: 14,
                                             width: 1,
                                             backgroundColor: '#474747',
                                           }}
+<<<<<<< HEAD
                                         /> */}
 
         {/* </View>
+=======
+                                        />
+                                      )}
+                                      <View
+                                        style={{
+                                          position: 'absolute',
+                                          // top: 15,
+                                          bottom: 0,
+                                          // left: 10,
+                                          width: 1,
+                                          backgroundColor: '#474747',
+                                        }}
+                                      />
+                                    </View>
+>>>>>>> 98cfdf225aa2bd6134d2b2452815c7de134503c6
                                     <View
                                       style={{
                                         justifyContent: 'flex-start',
@@ -939,7 +1000,7 @@ const SubjectLevel = ({route}) => {
                                           color: '#FFFFFF',
                                           fontSize: 15,
                                         }}>
-                                        {`${contentset}`}
+                                        {contentset}
                                       </Text>
                                     </View> */}
         {/* </View>
