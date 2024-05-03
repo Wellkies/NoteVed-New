@@ -62,6 +62,8 @@ const ROUTES = {
   YOUTUBELIST:'YoutibeList',
   REVIEWS: 'Reviews',
   DETAILS: 'Details',
+  TOPICDETAILS:'TopicDetails',
+  CONTENTDETAILS:'ContentDetails'
 };
 
 export default ROUTES;

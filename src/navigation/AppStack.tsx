@@ -41,6 +41,8 @@ import SubjectList from '../screens/UserScreen/SubjectList';
 import SubjectLevel from '../screens/UserScreen/SubjectLevel';
 import Reviews from '../screens/UserScreen/Reviews';
 import Details from '../screens/UserScreen/Details';
+import TopicDetails from '../screens/UserScreen/TopicDetails';
+import ContentDetails from '../screens/UserScreen/ContentDetails';
 
 export type RootStackParamList = {
   AppStack: NavigatorScreenParams<AppStackParamList>;
@@ -104,6 +106,10 @@ const AppStack = props => {
                 'Reviews' ||
               navigation.getState().routes[navigation.getState().index].name ==
                 'Details' ||
+                navigation.getState().routes[navigation.getState().index].name ==
+                'TopicDetails' ||
+                navigation.getState().routes[navigation.getState().index].name ==
+                'ContentDetails' ||
               navigation.getState().routes[navigation.getState().index].name ==
                 'ProbableMockTest' ||
               navigation.getState().routes[navigation.getState().index].name ==
@@ -275,6 +281,38 @@ const AppStack = props => {
         <Stack.Screen
           name={ROUTES.DETAILS}
           component={Details}
+          options={({navigation}) => ({
+            title: trans(''),
+            headerLeft: () => (
+              <MaterialIcons.Button
+                name="keyboard-arrow-left"
+                size={30}
+                backgroundColor={Colors.secondary}
+                color={Colors.primary}
+                onPress={() => navigation.goBack()}
+              />
+            ),
+          })}
+        />
+         <Stack.Screen
+          name={ROUTES.TOPICDETAILS}
+          component={TopicDetails}
+          options={({navigation}) => ({
+            title: trans(''),
+            headerLeft: () => (
+              <MaterialIcons.Button
+                name="keyboard-arrow-left"
+                size={30}
+                backgroundColor={Colors.secondary}
+                color={Colors.primary}
+                onPress={() => navigation.goBack()}
+              />
+            ),
+          })}
+        />
+        <Stack.Screen
+          name={ROUTES.CONTENTDETAILS}
+          component={ContentDetails}
           options={({navigation}) => ({
             title: trans(''),
             headerLeft: () => (
