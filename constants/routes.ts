@@ -61,7 +61,6 @@ const ROUTES = {
   VIDEOSOLUTIONSCREEN:'VideoSolutionScreen',
   YOUTUBELIST:'YoutibeList',
   REVIEWS: 'Reviews',
-  PRICING :'Pricing',
   DETAILS: 'Details',
 };
 

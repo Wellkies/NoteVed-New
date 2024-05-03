@@ -56,6 +56,10 @@ import {
   selectAllSubjectsStatus,
 } from '../../redux/reducers/GetSubjectByCourseReducer';
 import {getTopicBySubIdAPI} from '../../redux/reducers/GetTopicDetailsReducer';
+import {
+  getAllCoursesAPI,
+  selectAllCoursesInfo,
+} from '../../redux/reducers/GetAllCoursesReducer';
 
 const SubjectList = ({route}) => {
   const navigation = useNavigation();
@@ -77,8 +81,31 @@ const SubjectList = ({route}) => {
     return () => {};
   }, []);
 
-  const SubjectByCourse = useAppSelector(selectAllSubjectsInfo);
+  useEffect(() => {
+    navigation.addListener('focus', () => {
+      dispatch(getAllCoursesAPI());
+      BackHandler.addEventListener('hardwareBackPress', () => {
+        // navigation.goBack();
+        BackHandler.exitApp();
+        return true;
+      });
+    });
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', () => {
+        BackHandler.exitApp();
+        // navigation.goBack();
+        return true;
+      });
+    };
+  }, []);
+
+  useEffect(() => {
+    dispatch(getAllCoursesAPI());
+  }, []);
+
+  // const SubjectByCourse = useAppSelector(selectAllSubjectsInfo);
   const SubLoading = useAppSelector(selectAllSubjectsStatus);
+  const SubjectByCourse = useAppSelector(selectAllCoursesInfo);
 
   // console.log(SubjectByCourse, '==============SubjectByCourse');
 
@@ -304,7 +331,7 @@ const SubjectList = ({route}) => {
                   <View
                     style={{
                       marginTop: 20,
-                      width: device_width * 0.3
+                      width: device_width * 0.3,
                       //width: '44%',
                     }}>
                     <TouchableOpacity
@@ -401,34 +428,46 @@ const SubjectList = ({route}) => {
                       flexWrap: 'nowrap',
                       //   justifyContent: 'center',
                       //width: '100%',
-                      width: device_width * 2
+                      width: device_width * 2,
                     }}>
                     {SubjectByCourse.length > 0 ? (
                       <>
                         {SubjectByCourse.map((item, index) => {
                           const {
-                            _id = '',
-                            subjectImage = '',
-                            subjectid = '',
-                            subjectname = '',
+                            slcourse = '',
+                            courseid = '',
+                            coursename = '',
+                            description = '',
+                            image = '',
+                            createon = '',
+                            updatedon = '',
                           } = item;
+                          // const {
+                          //   _id = '',
+                          //   subjectImage = '',
+                          //   subjectid = '',
+                          //   subjectname = '',
+                          // } = item;
                           // console.log(item, 'item..................');
                           return (
                             <TouchableOpacity
                               key={index}
                               onPress={() => {
-                                dispatch(getTopicBySubIdAPI(subjectid));
+                                dispatch(getTopicBySubIdAPI(courseid));
                                 navigation.navigate('SubjectLevel', {
                                   // stageid: '5',
                                   // boardid: '1',
                                   // scholarshipId: 'NVOOKADA1690811843420',
+                                  // coursename: coursename,
+                                  // subjectname: subjectname,
+                                  // subjectid: subjectid,
                                   coursename: coursename,
-                                  subjectname: subjectname,
-                                  subjectid: subjectid,
+                                  subjectname: description,
+                                  subjectid: courseid,
                                 });
                               }}
-                            //<LinearGradient
-                            //colors={[ '#289C0E','#00FF7F']}
+                              //<LinearGradient
+                              //colors={[ '#289C0E','#00FF7F']}
                               style={{
                                 justifyContent: 'center',
                                 alignItems: 'center',
@@ -457,8 +496,18 @@ const SubjectList = ({route}) => {
                                   //color: '#333',
                                   // marginLeft: 30,
                                 }}>
-                                {subjectname}
+                                {coursename}
                               </Text>
+                              {/* <Text
+                                style={{
+                                  width: '100%',
+                                  fontSize: 13,
+                                  fontWeight: '700',
+                                  //textAlign: 'center',
+                                  color: '#333',
+                                }}>
+                                {description}
+                              </Text> */}
                               <View
                                 style={{
                                   borderColor: Colors.lightgrey,
@@ -469,7 +518,7 @@ const SubjectList = ({route}) => {
                                   marginLeft: 50,
                                   marginTop: 20,
                                 }}>
-                                {subjectImage != '' ? (
+                                {image != '' ? (
                                   <Image
                                     style={{
                                       width: 50,
@@ -479,7 +528,7 @@ const SubjectList = ({route}) => {
                                       // borderRadius: 50,
                                       alignSelf: 'center',
                                     }}
-                                    source={{uri: subjectImage}}
+                                    source={{uri: image}}
                                   />
                                 ) : (
                                   <Image
@@ -567,13 +616,13 @@ const SubjectList = ({route}) => {
                       paddingBottom: 10,
                     }}>
                     <TouchableOpacity
-                    onPress={() => {
-                      navigation.navigate('Details');
-                    }}
+                      onPress={() => {
+                        navigation.navigate('Details');
+                      }}
                       style={{
                         backgroundColor: '#195FF2',
                         borderRadius: 10,
-                        width: device_width * 0.2
+                        width: device_width * 0.2,
                       }}>
                       <Text
                         style={{
@@ -614,7 +663,7 @@ const SubjectList = ({route}) => {
                   style={{
                     flexDirection: 'column',
                     justifyContent: 'space-between',
-                    margin: 10
+                    margin: 10,
                   }}>
                   <Text
                     style={{
@@ -638,7 +687,7 @@ const SubjectList = ({route}) => {
                         color: '#FFFFFF',
                         fontSize: 16,
                         marginTop: 5,
-                        textDecorationLine: 'underline'
+                        textDecorationLine: 'underline',
                       }}>
                       {trans('Download Certificate')}
                     </Text>
@@ -649,13 +698,13 @@ const SubjectList = ({route}) => {
                     position: 'absolute',
                     right: 15,
                     //bottom: 0,
-                    top:20,
+                    top: 20,
                   }}>
                   <Image
                     style={{
                       width: 53,
                       height: 53,
-                      resizeMode: 'contain',                      
+                      resizeMode: 'contain',
                     }}
                     source={require('../../../assets/p2.png')}
                   />

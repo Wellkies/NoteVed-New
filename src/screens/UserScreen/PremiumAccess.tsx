@@ -18,7 +18,7 @@ import {
   RefreshControl,
   BackHandler,
   ImageBackground,
-  SafeAreaView
+  SafeAreaView,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
@@ -74,6 +74,12 @@ import {
   getCouponAPI,
   selectCouponData,
 } from '../../redux/reducers/GetAvailableCouponOfferReducer';
+import {
+  getAllMembershipDataAPI,
+  selectAllMembershipDetailsInfo,
+  selectAllMembershipDetailsStatus,
+} from '../../redux/reducers/GetAllMembershipReducer';
+
 import {useNavigation} from '@react-navigation/native';
 import LoadingScreen from '../CommonScreens/LoadingScreen';
 
@@ -161,29 +167,40 @@ const PremiumAccess = ({route}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch<any>();
   const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
-  const count = useAppSelector(selectStudentStatus);
-  const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
-  const PremiumPurchase = useAppSelector(selectPremiumPurchase);
-  console.log(PremiumPurchase, 'PremiumPurchase..........');
-  console.log(
-    PremiumPurchase.length > 0,
-    "PremiumPurchase.length > 0 && paymentid == 'free7days'",
-  );
-  const PremiumLoading = useAppSelector(selectPremiumPurchaseStatus);
-  console.log(PremiumLoading, 'PremiumLoading////////////////');
-  const ScholarshipList = useAppSelector(selectPremiumAccess);
-  console.log(ScholarshipList, 'ScholarshipList..........%%');
-  const PremiumAccessLoad = useAppSelector(selectPremiumAccessStatus);
-  console.log(PremiumAccessLoad, 'PremiumAccessLoad????????????????????');
-  const AvailableCoupon = useAppSelector(selectCouponData);
-  console.log(AvailableCoupon, 'AvailableCoupon........');
+  const AllMembershipData = useAppSelector(selectAllMembershipDetailsInfo);
+
+  console.log(AllMembershipData, '@@@@@@@@@@@@@@@@@@@@@***AllMembershipData');
+
+  const AllMembershipStatus = useAppSelector(selectAllMembershipDetailsStatus);
+
   useEffect(() => {
-    const Predata = {childid, stageid, boardid};
-    const PreAccesdata = {stageid, boardid};
-    dispatch(getScholarshipPremiumAPI(Predata));
-    dispatch(getPremiumAccessAPI(PreAccesdata));
-    dispatch(getCouponAPI());
+    dispatch(getAllMembershipDataAPI());
+    return () => {};
   }, []);
+
+  // const count = useAppSelector(selectStudentStatus);
+  // const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
+  // const PremiumPurchase = useAppSelector(selectPremiumPurchase);
+  // console.log(PremiumPurchase, 'PremiumPurchase..........');
+  // console.log(
+  //   PremiumPurchase.length > 0,
+  //   "PremiumPurchase.length > 0 && paymentid == 'free7days'",
+  // );
+  // const PremiumLoading = useAppSelector(selectPremiumPurchaseStatus);
+  // console.log(PremiumLoading, 'PremiumLoading////////////////');
+  // const ScholarshipList = useAppSelector(selectPremiumAccess);
+  // console.log(ScholarshipList, 'ScholarshipList..........%%');
+  // const PremiumAccessLoad = useAppSelector(selectPremiumAccessStatus);
+  // console.log(PremiumAccessLoad, 'PremiumAccessLoad????????????????????');
+  // const AvailableCoupon = useAppSelector(selectCouponData);
+  // console.log(AvailableCoupon, 'AvailableCoupon........');
+  // useEffect(() => {
+  //   const Predata = {childid, stageid, boardid};
+  //   const PreAccesdata = {stageid, boardid};
+  //   dispatch(getScholarshipPremiumAPI(Predata));
+  //   dispatch(getPremiumAccessAPI(PreAccesdata));
+  //   dispatch(getCouponAPI());
+  // }, []);
 
   //   const {Premium: ScholarshipList = []} = useSelector(
   //     state => state.GetPremiumAccessReducer,
@@ -194,82 +211,82 @@ const PremiumAccess = ({route}) => {
   //     state => state.GetAvailableCouponOfferReducer,
   //   );
   // console.log(AvailableCoupon,"AvailableCoupon...........")
-  const {couponcode = ''} =
-    AvailableCoupon.length > 0 ? AvailableCoupon[0] : AvailableCoupon;
+  // const {couponcode = ''} =
+  //   AvailableCoupon.length > 0 ? AvailableCoupon[0] : AvailableCoupon;
   // console.log(AvailableCoupon, 'AvailableCoupon...............');
 
-  const {signOut} = useContext(AuthContext);
-  const [help, setHelp] = useState(false);
+  // const {signOut} = useContext(AuthContext);
+  // const [help, setHelp] = useState(false);
 
-  const [scholarshipName, setScholarshipName] = useState('');
-  const [selectedBtn, setSelectedbtn] = useState([]);
-  const [childList, setChildList] = useState([]);
-  // const [Premium, setPremium] = useState([]);
-  const [isScholarshipData, setScholarshipData] = useState([]);
-  const [preminumData, setPreminumData] = useState([]);
-  const [ispreminumFlag, setIspreminumFlag] = useState([]);
-  const [isScholarBuy, setIsScholarBuy] = useState([]);
-  const [isselectedscholarship, setselectedscholarship] = useState([]);
-  const [selectedId, setSelectedId] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [selectedScholarshipData, setSelectedscholarshipData] = useState();
-  const [scholarID, setScholarID] = useState('');
+  // const [scholarshipName, setScholarshipName] = useState('');
+  // const [selectedBtn, setSelectedbtn] = useState([]);
+  // const [childList, setChildList] = useState([]);
+  // // const [Premium, setPremium] = useState([]);
+  // const [isScholarshipData, setScholarshipData] = useState([]);
+  // const [preminumData, setPreminumData] = useState([]);
+  // const [ispreminumFlag, setIspreminumFlag] = useState([]);
+  // const [isScholarBuy, setIsScholarBuy] = useState([]);
+  // const [isselectedscholarship, setselectedscholarship] = useState([]);
+  // const [selectedId, setSelectedId] = useState(null);
+  // const [loading, setLoading] = useState(false);
+  // const [selectedScholarshipData, setSelectedscholarshipData] = useState();
+  // const [scholarID, setScholarID] = useState('');
 
-  const [licenseLastDate, setLicenseLastDate] = useState('');
-  const schID = ScholarshipList[0]?._id;
-  useEffect(() => {
-    console.log(
-      PremiumPurchase.length == 0,
-      'bbbb',
+  // const [licenseLastDate, setLicenseLastDate] = useState('');
+  // const schID = ScholarshipList[0]?._id;
+  // useEffect(() => {
+  //   console.log(
+  //     PremiumPurchase.length == 0,
+  //     'bbbb',
 
-      PremiumPurchase.length > 0,
-      'cccccccc',
-      paymentid == 'free7days',
-      'dddddddd',
-    );
-    dataCall(ScholarshipList);
-  }, [ScholarshipList]);
+  //     PremiumPurchase.length > 0,
+  //     'cccccccc',
+  //     paymentid == 'free7days',
+  //     'dddddddd',
+  //   );
+  //   dataCall(ScholarshipList);
+  // }, [ScholarshipList]);
 
-  const dataCall = ScholarshipList => {
-    if (scholarLicenceID.length > 0 && videoLicenceID.length > 0) {
-      console.log('11');
-      setSelectedscholarshipData([]);
-      setScholarID();
-    } else if (scholarLicenceID.length > 0) {
-      console.log('22');
+  // const dataCall = ScholarshipList => {
+  //   if (scholarLicenceID.length > 0 && videoLicenceID.length > 0) {
+  //     console.log('11');
+  //     setSelectedscholarshipData([]);
+  //     setScholarID();
+  //   } else if (scholarLicenceID.length > 0) {
+  //     console.log('22');
 
-      setSelectedscholarshipData([ScholarshipList[0]]);
-      setScholarID(ScholarshipList[0]?._id);
-    } else if (videoLicenceID.length > 0 && paymentid == 'free7days') {
-      console.log('44');
-      setSelectedscholarshipData([ScholarshipList[0]]);
-      setScholarID(ScholarshipList[0]?._id);
-    } else if (videoLicenceID.length > 0) {
-      console.log('33');
-      setSelectedscholarshipData([]);
-      setScholarID();
-      // setSelectedscholarshipData([ScholarshipList[0]]);
-      // setScholarID(ScholarshipList[0]?._id);
-    }
-    // else if(PremiumPurchase.length>0 && paymentid=='free7days'){
-    //  console.log("44")
-    //  setSelectedscholarshipData([ScholarshipList[0]]);
-    //  setScholarID(ScholarshipList[0]?._id);
-    // }
-    else {
-      console.log('55');
-      setSelectedscholarshipData([ScholarshipList[0]]);
-      setScholarID(ScholarshipList[0]?._id);
-    }
-  };
-  console.log(
-    selectedScholarshipData,
-    'selectedScholarshipData.........................',
-  );
-  const stageID = childList.stageid;
-  const boardID = childList.boardid;
+  //     setSelectedscholarshipData([ScholarshipList[0]]);
+  //     setScholarID(ScholarshipList[0]?._id);
+  //   } else if (videoLicenceID.length > 0 && paymentid == 'free7days') {
+  //     console.log('44');
+  //     setSelectedscholarshipData([ScholarshipList[0]]);
+  //     setScholarID(ScholarshipList[0]?._id);
+  //   } else if (videoLicenceID.length > 0) {
+  //     console.log('33');
+  //     setSelectedscholarshipData([]);
+  //     setScholarID();
+  //     // setSelectedscholarshipData([ScholarshipList[0]]);
+  //     // setScholarID(ScholarshipList[0]?._id);
+  //   }
+  //   // else if(PremiumPurchase.length>0 && paymentid=='free7days'){
+  //   //  console.log("44")
+  //   //  setSelectedscholarshipData([ScholarshipList[0]]);
+  //   //  setScholarID(ScholarshipList[0]?._id);
+  //   // }
+  //   else {
+  //     console.log('55');
+  //     setSelectedscholarshipData([ScholarshipList[0]]);
+  //     setScholarID(ScholarshipList[0]?._id);
+  //   }
+  // };
+  // console.log(
+  //   selectedScholarshipData,
+  //   'selectedScholarshipData.........................',
+  // );
+  // const stageID = childList.stageid;
+  // const boardID = childList.boardid;
 
-  const childID = childList.childid;
+  // const childID = childList.childid;
 
   // const scholarImage = [
   //   {
@@ -286,121 +303,121 @@ const PremiumAccess = ({route}) => {
   //     require('../assets/Lab.jpg'), // Local image
   //   ];
   //   const {childInfo = {}} = useSelector(state => state.ChildDetailsReducer);
-  const {
-    // _id: childID = '',
-    age: p_age = '',
-    // child = [],
-    image = '',
-    imagename = '',
-    childid = '',
-    name = '',
-    stage: standard = '',
-    // boardofeducation = '',
-    fathername = '',
-    mothername = '',
-    subscriptionStartDate = '',
-    subscriptionEndDate = '',
-    // isPremium = false,
-    parentid: parentId = '',
-    boardid = '',
-    scholarship = [],
-    classname = '',
-    stageid = '',
-    language = '',
-  } = childInfo || {};
+  // const {
+  //   // _id: childID = '',
+  //   age: p_age = '',
+  //   // child = [],
+  //   image = '',
+  //   imagename = '',
+  //   childid = '',
+  //   name = '',
+  //   stage: standard = '',
+  //   // boardofeducation = '',
+  //   fathername = '',
+  //   mothername = '',
+  //   subscriptionStartDate = '',
+  //   subscriptionEndDate = '',
+  //   // isPremium = false,
+  //   parentid: parentId = '',
+  //   boardid = '',
+  //   scholarship = [],
+  //   classname = '',
+  //   stageid = '',
+  //   language = '',
+  // } = childInfo || {};
 
   //  console.log(childInfo,"childInfo................");
-  console.log(scholarship, 'scholarship................');
+  //console.log(scholarship, 'scholarship................');
 
-  const {paymentid = '', enddate = ''} = PremiumPurchase.length
-    ? PremiumPurchase[0]
-    : [];
+  // const {paymentid = '', enddate = ''} = PremiumPurchase.length
+  //   ? PremiumPurchase[0]
+  //   : [];
 
-  console.log(paymentid, 'paymentid,,,,,,,,,,,,,,');
-  const [scholarLicenceID, setScholarLicenseID] = useState('');
-  const [videoLicenceID, setVideoLicenseID] = useState('');
-  console.log(videoLicenceID, 'videoLicenceID.......');
-  useEffect(() => {
-    if (PremiumPurchase.length > 0) {
-      handleCall(PremiumPurchase);
-      //  console.log(SLicenseID, 'VIDEO', scholarLicenseID, 'SCHOLAR');
-    }
-  }, [PremiumPurchase]);
+  // console.log(paymentid, 'paymentid,,,,,,,,,,,,,,');
+  // const [scholarLicenceID, setScholarLicenseID] = useState('');
+  // const [videoLicenceID, setVideoLicenseID] = useState('');
+  // console.log(videoLicenceID, 'videoLicenceID.......');
+  // useEffect(() => {
+  //   if (PremiumPurchase.length > 0) {
+  //     handleCall(PremiumPurchase);
+  //     //  console.log(SLicenseID, 'VIDEO', scholarLicenseID, 'SCHOLAR');
+  //   }
+  // }, [PremiumPurchase]);
 
-  const handleCall = PremiumPurchase => {
-    const VLicenseID = PremiumPurchase.filter(
-      rec =>
-        rec.licenseid == '1704875373950' || rec.licenseid == '1705039500455',
-    );
-    // console.log(VLicenseID,"VLicenseID{{{{{{{{{{{{{")
+  // const handleCall = PremiumPurchase => {
+  //   const VLicenseID = PremiumPurchase.filter(
+  //     rec =>
+  //       rec.licenseid == '1704875373950' || rec.licenseid == '1705039500455',
+  //   );
+  //   // console.log(VLicenseID,"VLicenseID{{{{{{{{{{{{{")
 
-    {
-      if (VLicenseID.length > 0) {
-        const VideoLicenseID = VLicenseID[0].licenseid;
-        setVideoLicenseID(VideoLicenseID);
-        // console.log(VideoLicenseID,"VideoLicenseID+++++++++++++++")
-      }
-    }
+  //   {
+  //     if (VLicenseID.length > 0) {
+  //       const VideoLicenseID = VLicenseID[0].licenseid;
+  //       setVideoLicenseID(VideoLicenseID);
+  //       // console.log(VideoLicenseID,"VideoLicenseID+++++++++++++++")
+  //     }
+  //   }
 
-    const SLicenseID = PremiumPurchase.filter(
-      rec =>
-        rec.licenseid == '1695358760234' ||
-        rec.licenseid == 'ADA51690528084298',
-    );
-    // console.log(SLicenseID,"sllllllllID{{{{{{{{{{")
-    if (SLicenseID.length > 0) {
-      const scholarLicenseID = SLicenseID[0].licenseid;
-      setScholarLicenseID(scholarLicenseID);
-      // console.log(scholarLicenseID, 'scholarLicenseID++++++++++.');
-    }
-  };
+  //   const SLicenseID = PremiumPurchase.filter(
+  //     rec =>
+  //       rec.licenseid == '1695358760234' ||
+  //       rec.licenseid == 'ADA51690528084298',
+  //   );
+  //   // console.log(SLicenseID,"sllllllllID{{{{{{{{{{")
+  //   if (SLicenseID.length > 0) {
+  //     const scholarLicenseID = SLicenseID[0].licenseid;
+  //     setScholarLicenseID(scholarLicenseID);
+  //     // console.log(scholarLicenseID, 'scholarLicenseID++++++++++.');
+  //   }
+  // };
 
-  const LicenseID = PremiumPurchase.map(
-    rec =>
-      rec.licenseid == '1695358760234' ||
-      rec.licenseid == 'ADA51690528084298' ||
-      rec.licenseid == '1704875373950' ||
-      rec.licenseid == '1705039500455',
-  );
-  console.log(LicenseID[0], 'LicenseID[0]^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
-  // if (LicenseID[0] == true) {}
+  // const LicenseID = PremiumPurchase.map(
+  //   rec =>
+  //     rec.licenseid == '1695358760234' ||
+  //     rec.licenseid == 'ADA51690528084298' ||
+  //     rec.licenseid == '1704875373950' ||
+  //     rec.licenseid == '1705039500455',
+  // );
+  // console.log(LicenseID[0], 'LicenseID[0]^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
+  // // if (LicenseID[0] == true) {}
   const BackBtnFunction = () => {
-    if (screenName === 'ExamSets') {
-      navigation.navigate('ExamSets', {
-        index: index,
-        subjectName: subjectName,
-        topicName: topicName,
-        ExamQuestionsets: ExamQuestionsets,
-        Class: standard,
-        subjectId: subjectId,
-        boardid: boardid,
-        scholarshipid: scholarshipid,
-        childId: childid,
-        isScoreBoardFlag: isScoreBoardFlag,
-        scholarshipName: scholarship_name,
-        is2ndAvailable: is2ndAvailable,
-        topicid: topicid,
-      });
-    } else if (screenName === 'PrevYearQues') {
-      navigation.navigate('PrevYearQues', {
-        scholarshipId: scholarshipid,
-        scholarshipName: scholarship_name,
-        quizList: quizList,
-        showFeedback: showFeedback,
-      });
-    } else if (screenName === 'ProbQuestion') {
-      navigation.navigate('ProbQuestion', {
-        scholarshipName: scholarship_name,
-        quizList: quizList,
-        showFeedback: showFeedback,
-      });
-    } else navigation.goBack();
+    // if (screenName === 'ExamSets') {
+    //   navigation.navigate('ExamSets', {
+    //     index: index,
+    //     subjectName: subjectName,
+    //     topicName: topicName,
+    //     ExamQuestionsets: ExamQuestionsets,
+    //     Class: standard,
+    //     subjectId: subjectId,
+    //     boardid: boardid,
+    //     scholarshipid: scholarshipid,
+    //     childId: childid,
+    //     isScoreBoardFlag: isScoreBoardFlag,
+    //     scholarshipName: scholarship_name,
+    //     is2ndAvailable: is2ndAvailable,
+    //     topicid: topicid,
+    //   });
+    // } else if (screenName === 'PrevYearQues') {
+    //   navigation.navigate('PrevYearQues', {
+    //     scholarshipId: scholarshipid,
+    //     scholarshipName: scholarship_name,
+    //     quizList: quizList,
+    //     showFeedback: showFeedback,
+    //   });
+    // } else if (screenName === 'ProbQuestion') {
+    //   navigation.navigate('ProbQuestion', {
+    //     scholarshipName: scholarship_name,
+    //     quizList: quizList,
+    //     showFeedback: showFeedback,
+    //   });
+    // } else navigation.goBack();
     // navigation.navigate('UserHome');
   };
 
-  const licenseId = isScholarshipData.map(rec => rec._id);
-  const licenseRec = isScholarshipData;
-  const licenseName = isScholarshipData.map(rec => rec.licensename);
+  // const licenseId = isScholarshipData.map(rec => rec._id);
+  // const licenseRec = isScholarshipData;
+  // const licenseName = isScholarshipData.map(rec => rec.licensename);
   // console.log(
   //   licenseId,
   //   licenseRec[0],
@@ -410,49 +427,49 @@ const PremiumAccess = ({route}) => {
   // const licenseId1=licenseId[0]
   // const licenseRec1=licenseRec[0]
   // const licenseName1=licenseName[0]
-  useEffect(() => {
-    navigation.addListener('focus', () => {
-      const Predata = {childid, stageid, boardid};
-      const PreAccesdata = {stageid, boardid};
-      dispatch(getScholarshipPremiumAPI(Predata));
-      dispatch(getPremiumAccessAPI(PreAccesdata));
-      dispatch(getCouponAPI());
-      //   handleBuy(licenseId, licenseRec, licenseName);
-      BackHandler.addEventListener('hardwareBackPress', () => {
-        BackBtnFunction();
-        return true;
-      });
-      //   dispatch(getDiwaliCouponAPI());
-      if (childid) {
-        // dispatch(getPremiumAccessAPI(stageid, boardid, setLoading));
-        // dispatch(
-        //   getScholarshipPremiumAPI(undefined, childid, stageid, boardid),
-        // );
-      } else {
-        // dispatch({
-        //   type: GET_PREMIUM_ACCESS,
-        //   payload: [],
-        // });
-      }
-    });
-    return () => {
-      //   dispatch(getDiwaliCouponAPI());
-      handleBuy(licenseId, licenseRec, licenseName);
-      BackHandler.removeEventListener('hardwareBackPress', () => {
-        // navigation.goBack();
-        BackBtnFunction();
-        return true;
-      });
-    };
-  }, [childid, stageid, boardid, ScholarshipList]);
+  // useEffect(() => {
+  //   navigation.addListener('focus', () => {
+  //     const Predata = {childid, stageid, boardid};
+  //     const PreAccesdata = {stageid, boardid};
+  //     dispatch(getScholarshipPremiumAPI(Predata));
+  //     dispatch(getPremiumAccessAPI(PreAccesdata));
+  //     dispatch(getCouponAPI());
+  //     //   handleBuy(licenseId, licenseRec, licenseName);
+  //     BackHandler.addEventListener('hardwareBackPress', () => {
+  //       BackBtnFunction();
+  //       return true;
+  //     });
+  //     //   dispatch(getDiwaliCouponAPI());
+  //     if (childid) {
+  //       // dispatch(getPremiumAccessAPI(stageid, boardid, setLoading));
+  //       // dispatch(
+  //       //   getScholarshipPremiumAPI(undefined, childid, stageid, boardid),
+  //       // );
+  //     } else {
+  //       // dispatch({
+  //       //   type: GET_PREMIUM_ACCESS,
+  //       //   payload: [],
+  //       // });
+  //     }
+  //   });
+  //   return () => {
+  //     //   dispatch(getDiwaliCouponAPI());
+  //     handleBuy(licenseId, licenseRec, licenseName);
+  //     BackHandler.removeEventListener('hardwareBackPress', () => {
+  //       // navigation.goBack();
+  //       BackBtnFunction();
+  //       return true;
+  //     });
+  //   };
+  // }, [childid, stageid, boardid, ScholarshipList]);
 
-  useEffect(() => {
-    if (ScholarshipList.length > 0) {
-      setScholarshipData(ScholarshipList);
-    } else {
-      setScholarshipData([]);
-    }
-  }, [ScholarshipList]);
+  // useEffect(() => {
+  //   if (ScholarshipList.length > 0) {
+  //     setScholarshipData(ScholarshipList);
+  //   } else {
+  //     setScholarshipData([]);
+  //   }
+  // }, [ScholarshipList]);
 
   //   const AvlCouponEnglishMsg = AvailableCoupon.map(rec => rec.engmessage);
   //   const AvlCouponOdiaMsg = AvailableCoupon.map(rec => rec.odmessage);
@@ -477,324 +494,352 @@ const PremiumAccess = ({route}) => {
   //     // console.log(datalistData, 'datalistData..................');
   //   }
   // };
-  const handleBuy = (_id, item, licensename) => {
-    console.log(
-      _id,
-      '_id...............',
-      isScholarshipData,
-      'isScholarshipData...........',
-    );
-    const isExist = isScholarshipData.filter(rec => rec._id == _id);
-    console.log(isExist, 'isExist////////////////');
-    setSelectedscholarshipData(isExist);
-    setScholarID(_id);
-    // licenseRec==isExist
-    //setScholarshipName(licensename);
-    console.log(licenseRec, 'licenseRec@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-  };
-  console.log(PremiumPurchase, 'PremiumPurchase............');
+  // const handleBuy = (_id, item, licensename) => {
+  //   console.log(
+  //     _id,
+  //     '_id...............',
+  //     isScholarshipData,
+  //     'isScholarshipData...........',
+  //   );
+  //   const isExist = isScholarshipData.filter(rec => rec._id == _id);
+  //   console.log(isExist, 'isExist////////////////');
+  //   setSelectedscholarshipData(isExist);
+  //   setScholarID(_id);
+  //   // licenseRec==isExist
+  //   //setScholarshipName(licensename);
+  //   console.log(licenseRec, 'licenseRec@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+  // };
+  // console.log(PremiumPurchase, 'PremiumPurchase............');
 
   return (
     <SafeAreaView style={{flex: 1}}>
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <View
-        style={{
-          width: device_width,
-          height: device_height,
-          flex: 1,
-          backgroundColor: '#282828',
-        }}
-      >
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View
           style={{
-            marginVertical: 12,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            paddingHorizontal: 12,
-            paddingVertical: 6,
+            width: device_width,
+            height: device_height,
+            flex: 1,
+            backgroundColor: '#282828',
           }}>
-          <TouchableOpacity
-            onPress={() => BackBtnFunction()}>
-            <MaterialIcons
-              name="arrow-back"
-              size={28}
-              style={{color: '#FFFFFF'}}
-            />
-          </TouchableOpacity>
           <View
             style={{
-              // paddingHorizontal: 12,
-              // paddingVertical: 6,
-              //alignItems: 'center',
+              marginVertical: 12,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              paddingHorizontal: 12,
+              paddingVertical: 6,
             }}>
-            <Text
-              style={{
-                color: '#FFFFFF',
-                fontWeight: '600',
-                fontSize: 18,
-              }}>
-              {trans('Pricing')}
-            </Text>
-          </View>
-          <View style={{
-            // paddingHorizontal: 12,
-            // paddingVertical: 6,
-          }}>
-          <TouchableOpacity>
-            <Entypo
-              name="dots-three-vertical"
-              size={28}
-              style={{
-                color: '#FFFFFF',
-                fontSize: 18,
-              }}
-            />
-          </TouchableOpacity>
-          </View>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-          }}>
-          <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <MaterialIcons
+                name="arrow-back"
+                size={28}
+                style={{color: '#FFFFFF'}}
+              />
+            </TouchableOpacity>
             <View
-              style={{
-                borderRadius: 8,
-                backgroundColor: '#FFFFFF',
-                padding: 10,
-                margin: 10,
-                width: device_width * 0.45,
-                height: device_height * 0.21,
-              }}>
-              <View
+              style={
+                {
+                  // paddingHorizontal: 12,
+                  // paddingVertical: 6,
+                  //alignItems: 'center',
+                }
+              }>
+              <Text
                 style={{
-                  alignContent: 'center',
-                  justifyContent: 'space-between',
+                  color: '#FFFFFF',
+                  fontWeight: '600',
+                  fontSize: 18,
                 }}>
-                <MaterialIcons
-                  name="person-outline"
-                  size={50}
+                {trans('Pricing')}
+              </Text>
+            </View>
+            <View
+              style={
+                {
+                  // paddingHorizontal: 12,
+                  // paddingVertical: 6,
+                }
+              }>
+              <TouchableOpacity>
+                <Entypo
+                  name="dots-three-vertical"
+                  size={28}
                   style={{
-                    alignSelf: 'center',
-                    marginTop: 10,
-                    marginBottom: 10,
-                    backgroundColor: '#f8f8f8',
-                    padding: 2,
+                    color: '#FFFFFF',
+                    fontSize: 18,
                   }}
                 />
-              </View>
-              <View
-                style={{
-                  alignItems: 'center',
-                  marginTop: 8,
-                }}>
-                <Text
-                  style={{
-                    fontWeight: '600',
-                    fontSize: 14,
-                    color: '#000000',
-                  }}>
-                  {trans('TRIAL PLAN')}
-                </Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  marginTop: 8,
-                  justifyContent: 'center',
-                  paddingTop: 5,
-                }}>
-                <Text
-                  style={{
-                    fontWeight: '600',
-                    fontSize: 28,
-                    color: '#2CBE99',
-                    textAlign: 'center',
-                  }}>
-                  {trans('Free')}
-                </Text>
-                <Text
-                  style={{
-                    textAlign: 'center',
-                    marginTop: 10,
-                    color: '#a0a0a0',
-                    fontWeight: '300',
-                  }}>
-                  {trans('/7 days')}
-                </Text>
-              </View>
+              </TouchableOpacity>
             </View>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <View
-              style={{
-                borderRadius: 8,
-                backgroundColor: '#2CBE99',
-                padding: 10,
-                margin: 10,
-                width: device_width * 0.45,
-                height: device_height * 0.21,
-              }}>
-              <View
-                style={{
-                  alignContent: 'center',
-                  justifyContent: 'space-between',
-                }}>
-                <MaterialCommunityIcons
-                  name="crown-outline"
-                  size={50}
-                  style={{
-                    alignSelf: 'center',
-                    marginTop: 10,
-                    marginBottom: 10,
-                    backgroundColor: '#FFFFFF',
-                    borderRadius: 10,
-                    padding: 2,
-                  }}
-                />
-              </View>
-              <View
-                style={{
-                  alignItems: 'center',
-                  marginTop: 8,
-                }}>
-                <Text
-                  style={{
-                    fontWeight: '600',
-                    fontSize: 14,
-                    color: '#f8f8f8',
-                  }}>
-                  {trans('PREMIUM PLAN')}
-                </Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  marginTop: 8,
-                  justifyContent: 'center',
-                  paddingTop: 5,
-                }}>
-                <Text
-                  style={{
-                    fontWeight: '600',
-                    fontSize: 28,
-                    color: '#FFFFFF',
-                    textAlign: 'center',
-                  }}>
-                  {trans('Rs.1499')}
-                </Text>
-                <Text
-                  style={{
-                    textAlign: 'center',
-                    marginTop: 10,
-                    color: '#FFFFFF',
-                    fontWeight: '300',
-                  }}>
-                  {trans('/year')}
-                </Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View style={{}}>
-          <Text
-            style={{
-              color: '#a0a0a0',
-              //color: '#2E3231',
-              fontWeight: '500',
-              fontSize: 18,
-              marginTop: 20,
-              marginBottom: 15,
-              marginHorizontal: 15,
-            }}>
-            {trans('Choose your Subscription')}
-          </Text>
-        </View>
-        <View
-          style={{
-            alignContent: 'center',
-            backgroundColor: '#FFFFFF',
-            paddingVertical: 25,
-            width: device_width * 0.95,
-            height: device_height * 0.4,
-            paddingHorizontal: 25,
-            margin: 10,
-            borderRadius: 10,
-            overflow:'hidden',
-            //flex: 1,
-          }}>
+          </View>
           <View
             style={{
               flexDirection: 'row',
-              alignItems: 'center',
               justifyContent: 'space-between',
-              paddingBottom: 20,
             }}>
-            <Text
-              style={{
-                fontWeight: '600',
-                fontSize: 14,
-                color: 'black',
-              }}>
-              {trans('Features')}
-            </Text>
-            <Text
-              style={{
-                fontSize: 14,
-                color: 'black',
-                textAlign: 'right',
-                marginRight: 10,
-                flex: 1,
-              }}>
-              {trans('TRIAL')}
-            </Text>
-            <Text
-              style={{
-                fontSize: 14,
-                color: 'black',
-              }}>
-              {trans('PREMIUM')}
-            </Text>
-          </View>
-          {PricingAvailable.map((item, index) => {
-            return (
-              <View key={index}>
+            <TouchableOpacity>
+              <View
+                style={{
+                  borderRadius: 8,
+                  backgroundColor: '#FFFFFF',
+                  padding: 10,
+                  margin: 10,
+                  width: device_width * 0.45,
+                  height: device_height * 0.21,
+                }}>
                 <View
                   style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
+                    alignContent: 'center',
                     justifyContent: 'space-between',
-                    marginVertical:10,                     
+                  }}>
+                  <MaterialIcons
+                    name="person-outline"
+                    size={50}
+                    style={{
+                      alignSelf: 'center',
+                      marginTop: 10,
+                      marginBottom: 10,
+                      backgroundColor: '#f8f8f8',
+                      padding: 2,
+                    }}
+                  />
+                </View>
+                <View
+                  style={{
+                    alignItems: 'center',
+                    marginTop: 8,
                   }}>
                   <Text
                     style={{
                       fontWeight: '600',
-                      fontSize: 15,
-                      flex: 1,
+                      fontSize: 14,
+                      color: '#000000',
                     }}>
-                    {item.featureName}
+                    {trans('TRIAL PLAN')}
                   </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginTop: 8,
+                    justifyContent: 'center',
+                    paddingTop: 5,
+                  }}>
+                  <Text
+                    style={{
+                      fontWeight: '600',
+                      fontSize: 28,
+                      color: '#2CBE99',
+                      textAlign: 'center',
+                    }}>
+                    {trans('Free')}
+                  </Text>
+                  <Text
+                    style={{
+                      textAlign: 'center',
+                      marginTop: 10,
+                      color: '#a0a0a0',
+                      fontWeight: '300',
+                    }}>
+                    {trans('/7 days')}
+                  </Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <View
+                style={{
+                  borderRadius: 8,
+                  backgroundColor: '#2CBE99',
+                  padding: 10,
+                  margin: 10,
+                  width: device_width * 0.45,
+                  height: device_height * 0.21,
+                }}>
+                <View
+                  style={{
+                    alignContent: 'center',
+                    justifyContent: 'space-between',
+                  }}>
+                  <MaterialCommunityIcons
+                    name="crown-outline"
+                    size={50}
+                    style={{
+                      alignSelf: 'center',
+                      marginTop: 10,
+                      marginBottom: 10,
+                      backgroundColor: '#FFFFFF',
+                      borderRadius: 10,
+                      padding: 2,
+                    }}
+                  />
+                </View>
+                <View
+                  style={{
+                    alignItems: 'center',
+                    marginTop: 8,
+                  }}>
+                  <Text
+                    style={{
+                      fontWeight: '600',
+                      fontSize: 14,
+                      color: '#f8f8f8',
+                    }}>
+                    {trans('PREMIUM PLAN')}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginTop: 8,
+                    justifyContent: 'center',
+                    paddingTop: 5,
+                  }}>
+                  <Text
+                    style={{
+                      fontWeight: '600',
+                      fontSize: 28,
+                      color: '#FFFFFF',
+                      textAlign: 'center',
+                    }}>
+                    {trans('Rs.1499')}
+                  </Text>
+                  <Text
+                    style={{
+                      textAlign: 'center',
+                      marginTop: 10,
+                      color: '#FFFFFF',
+                      fontWeight: '300',
+                    }}>
+                    {trans('/year')}
+                  </Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View style={{}}>
+            <Text
+              style={{
+                color: '#a0a0a0',
+                //color: '#2E3231',
+                fontWeight: '500',
+                fontSize: 18,
+                marginTop: 20,
+                marginBottom: 15,
+                marginHorizontal: 15,
+              }}>
+              {trans('Choose your Subscription')}
+            </Text>
+          </View>
+          <View
+            style={{
+              alignContent: 'center',
+              backgroundColor: '#FFFFFF',
+              paddingVertical: 25,
+              width: device_width * 0.95,
+              height: device_height * 0.4,
+              paddingHorizontal: 25,
+              margin: 10,
+              borderRadius: 10,
+              overflow: 'hidden',
+              //flex: 1,
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                paddingBottom: 20,
+              }}>
+              <Text
+                style={{
+                  fontWeight: '600',
+                  fontSize: 14,
+                  color: 'black',
+                }}>
+                {trans('Features')}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: 'black',
+                  textAlign: 'right',
+                  marginRight: 10,
+                  flex: 1,
+                }}>
+                {trans('TRIAL')}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: 'black',
+                }}>
+                {trans('PREMIUM')}
+              </Text>
+            </View>
+            {AllMembershipData.map((item, index) => {
+              const {
+                _id = '',
+                membershipid = '',
+                membershipstatus = '',
+                membershipname = '',
+                couponcode = '',
+              } = item;
+              return (
+                <View key={index}>
                   <View
                     style={{
                       flexDirection: 'row',
                       alignItems: 'center',
-                      gap: 20,
+                      justifyContent: 'space-between',
+                      marginVertical: 10,
                     }}>
-                    {item.trial && (
-                      <Image
+                    <Text
+                      style={{
+                        fontWeight: '600',
+                        fontSize: 15,
+                        flex: 1,
+                      }}>
+                      {membershipname}
+                    </Text>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        gap: 20,
+                      }}>
+                      <Text
                         style={{
-                          width: 20,
-                          height: 20,
-                          resizeMode: 'contain',
+                          fontWeight: '600',
+                          fontSize: 15,
+                          //flex: 1,
                           marginRight: 20,
-                        }}
-                        source={item.trial}
-                      />
-                    )}
-                    {item.premium && (
+                        }}>
+                        {membershipstatus}
+                      </Text>
+                      <Text
+                        style={{
+                          fontWeight: '600',
+                          fontSize: 15,
+                          //flex: 1,
+                          marginRight: 20,
+                        }}>
+                        {couponcode}
+                      </Text>
+                      {/* {item.trial && (
+                      // <Image
+                      //   style={{
+                      //     width: 20,
+                      //     height: 20,
+                      //     resizeMode: 'contain',
+                      //     marginRight: 20,
+                      //   }}
+                      //   source={item.trial}
+                      // />
+                    )} */}
+                      {/* {item.premium && (
                       <Image
                         style={{
                           width: 20,
@@ -804,75 +849,76 @@ const PremiumAccess = ({route}) => {
                         }}
                         source={item.premium}
                       />
-                    )}
+                    )} */}
+                    </View>
                   </View>
+                  {index !== AllMembershipData.length - 1 && (
+                    <View
+                      style={{
+                        borderBottomColor: '#E0E0E0',
+                        borderBottomWidth: 1,
+                        marginTop: 2,
+                        marginBottom: 2,
+                      }}
+                    />
+                  )}
                 </View>
-                {index !== PricingAvailable.length - 1 && (
-                  <View
-                    style={{
-                      borderBottomColor: '#E0E0E0',
-                      borderBottomWidth: 1,
-                      marginTop: 2,
-                      marginBottom: 2,
-                    }}
-                  />
-                )}
-              </View>
-            );
-          })}
-        </View>
-        <TouchableOpacity
-          onPress={async () => {
-            navigation.navigate('Details');
-          }}
-          style={{
-            marginLeft: 20,
-          }}>
+              );
+            })}
+          </View>
+          <TouchableOpacity
+            // onPress={async () => {
+            //   navigation.navigate('Details');
+            // }}
+            style={{
+              marginLeft: 20,
+            }}>
+            <View
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginTop: 15,
+                marginBottom: 8,
+                backgroundColor: '#2CBE99',
+                padding: 10,
+                borderRadius: 10,
+                paddingHorizontal: 10,
+                width: device_width * 0.9,
+                marginRight: 10,
+                paddingRight: 10,
+              }}>
+              <Text
+                style={{
+                  color: '#FFFFFF',
+                  fontWeight: '600',
+                  fontSize: 18,
+                  textAlign: 'center',
+                }}>
+                {trans('Choose Plan')}
+              </Text>
+            </View>
+          </TouchableOpacity>
           <View
             style={{
-              alignItems: 'center',
               justifyContent: 'center',
-              marginTop: 15,
-              marginBottom: 8,
-              backgroundColor: '#2CBE99',
-              padding: 10,
-              borderRadius: 10,
-              paddingHorizontal: 10,
-              width: device_width * 0.9,
-              marginRight: 10,
-              paddingRight: 10,
+              alignItems: 'center',
+              marginTop: 5,
+              marginBottom: 5,
             }}>
             <Text
               style={{
-                color: '#FFFFFF',
-                fontWeight: '600',
-                fontSize: 18,
-                textAlign: 'center',
+                color: '#a0a0a0',
+                fontSize: 13,
+                fontWeight: '500',
+                paddingHorizontal: 10,
               }}>
-              {trans('Choose Plan')}
+              {trans('By joining to our privacy policy and terms of service')}
             </Text>
           </View>
-        </TouchableOpacity>
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: 5,
-            marginBottom: 5,
-          }}>
-          <Text
-            style={{
-              color: '#a0a0a0',
-              fontSize: 13,
-              fontWeight: '500',
-              paddingHorizontal: 10,
-            }}>
-            {trans('By joining to our privacy policy and terms of service')}
-          </Text>
         </View>
-      </View>
-    </ScrollView>
-  </SafeAreaView>
+      </ScrollView>
+    </SafeAreaView>
+
     // <View style={styles.container}>
     //   {/* <StatusBar backgroundColor={'#def'} barStyle="dark-content" /> */}
 
@@ -1268,7 +1314,7 @@ const PremiumAccess = ({route}) => {
     //                                         : language == 'odia'
     //                                         ? AvlCouponOdiaMsg
     //                                         : AvlCouponHindiMsg}
-                                          
+
     //                                     </Text>
     //                                     <FastImage
     //                                       style={{
@@ -1680,7 +1726,7 @@ const PremiumAccess = ({route}) => {
     //                               // borderWidth: 1,
     //                               // borderColor: '#fff',
     //                             }}
-    //                             source={require('../../../assets/Jawahar_Navodaya_Vidyalaya_logo.png')} 
+    //                             source={require('../../../assets/Jawahar_Navodaya_Vidyalaya_logo.png')}
     //                           />
     //                         </View> */}
     //                       </View>
@@ -2110,7 +2156,7 @@ const PremiumAccess = ({route}) => {
     //                               </Text>
     //                             </View>
     //                           </TouchableOpacity>
-                             
+
     //                         </View>
     //                       </View>
     //                     </View>
