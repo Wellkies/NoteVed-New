@@ -63,6 +63,11 @@ import {
   selectContentDetailsInfo,
   selectContentDetailsStatus,
 } from '../../redux/reducers/GetContentDetailsReducer';
+import {
+  getAllSubByCourseAPI,
+  selectAllSubjectsInfo,
+  selectAllSubjectsStatus,
+} from '../../redux/reducers/GetSubjectByCourseReducer';
 import {handleSetExamName} from '../../redux/reducers/ExamTestNameReducer';
 import {ProgressBar} from 'react-native-paper';
 
@@ -199,19 +204,27 @@ const SubjectLevel = ({route}) => {
     setSelectedIndex(sltopic);
     dispatch(getContentByTopicIdAPI(topicid));
   };
+  useEffect(() => {
+    dispatch(getAllSubByCourseAPI());
+    return () => {};
+  }, []);
+
+  const SubjectByCourse = useAppSelector(selectAllSubjectsInfo);
+  const SubLoading = useAppSelector(selectAllSubjectsStatus);
+  console.log(SubjectByCourse, '########################$$$$SubjectByCourse');
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <ImageBackground
+      <View
         style={{
           width: device_width,
           height: device_height,
           flex: 1,
           alignSelf: 'center',
           // borderWidth: 1,
-          backgroundColor: '#282828',
+          backgroundColor: '#1E1E1E',
         }}
-        resizeMode="cover"
+        //resizeMode="cover"
         // source={require('../../../assets/testBG2.jpg')}
       >
         {/* <Header
@@ -221,7 +234,36 @@ const SubjectLevel = ({route}) => {
           isbackIconShow={true}
           functionName={() => navigation.goBack()}
         /> */}
-        {TopicLoad == 'loading' ? (
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginVertical: 12,
+            marginHorizontal: 20,
+            paddingVertical: 6,
+            paddingHorizontal: 25,
+            marginBottom: 30,
+          }}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <MaterialIcons
+              name="arrow-back-ios"
+              size={28}
+              style={{color: '#FFFFFF', marginRight: 10}}
+            />
+          </TouchableOpacity>
+          <View style={{flex: 1, alignItems: 'center'}}>
+            <Text
+              style={{
+                color: '#FFFFFF',
+                fontWeight: '600',
+                fontSize: 18,
+                textAlign: 'center',
+              }}>
+              {trans(coursename + ' ' + subjectname)}
+            </Text>
+          </View>
+        </View>
+        {SubLoading == 'loading' ? (
           <View
             style={{
               flex: 1,
@@ -231,12 +273,131 @@ const SubjectLevel = ({route}) => {
               width: device_width,
               // backgroundColor: Colors.secondary,
             }}>
-            <LoadingScreen flag={TopicLoad == 'loading'} />
+            <LoadingScreen flag={SubLoading == 'loading'} />
           </View>
         ) : (
           <>
             <ScrollView showsVerticalScrollIndicator={false}>
-              <View
+              {SubjectByCourse.length > 0 ? (
+                <>
+                  {SubjectByCourse.map((item, index) => {
+                    const {
+                      _id = '',
+                      subjectImage = '',
+                      subjectid = '',
+                      subjectname = '',
+                    } = item;
+
+                    return (
+                      <View
+                        key={index}
+                        style={{
+                          flexDirection: 'row',
+                          alignContent: 'center',
+                          backgroundColor: '#01FE91',
+                          width: device_width * 0.95,
+                          height: device_height * 0.09,
+                          marginHorizontal: 10,
+                          borderRadius: 12,
+                          marginBottom: 15,
+                        }}>
+                        <View
+                          style={{
+                            paddingLeft: 10,
+                            paddingRight: 10,
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                          }}>
+                          <Image
+                            source={require('../../../assets/people.png')}
+                            style={{
+                              height: device_height * 0.21,
+                              width: device_width * 0.15,
+                              resizeMode: 'contain',
+                            }}
+                          />
+                        </View>
+                        <View
+                          style={{
+                            flex: 1,
+                            paddingTop: 20,
+                          }}>
+                          <Text
+                            style={{
+                              color: '#000',
+                              fontWeight: '500',
+                              fontSize: 20,
+                              alignItems: 'center',
+                            }}>
+                            {trans(subjectname)}
+                          </Text>
+                        </View>
+                        <View
+                          style={{
+                            paddingLeft: 10,
+                            paddingRight: 10,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}>
+                          <TouchableOpacity>
+                            <Image
+                              source={require('../../../assets/down-arrow.png')}
+                              style={{
+                                width: device_width * 0.1,
+                                height: device_height * 0.1,
+                                resizeMode: 'contain',
+                              }}
+                            />
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                    );
+                  })}
+                </>
+              ) : (
+                <>
+                  <View
+                    style={{
+                      backgroundColor: 'burlywood',
+                      paddingVertical: 15,
+                      paddingHorizontal: 15,
+                      marginVertical: 10,
+                      marginHorizontal: 15,
+                      // borderRadius: 7,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexDirection: 'row',
+                    }}>
+                    <AntDesign
+                      style={{
+                        marginHorizontal: 10,
+                        borderWidth: 0,
+                      }}
+                      name={'infocirlce'}
+                      size={30}
+                      color={'darkgreen'}
+                    />
+                    <Text
+                      style={{
+                        color: '#333',
+                        fontWeight: '700',
+                        fontSize: 15,
+                        textAlign: 'center',
+                        // borderWidth: 1,
+                        // borderLeftWidth:1,
+                        width: '85%',
+                      }}>
+                      {trans('Currently No Content Added')}
+                    </Text>
+                  </View>
+                </>
+              )}
+            </ScrollView>
+          </>
+        )}
+
+        {/* <ScrollView showsVerticalScrollIndicator={false}> */}
+        {/* <View
                 //disabled={true}
                 //   onPress={navigationfunc}
                 style={{
@@ -299,9 +460,9 @@ const SubjectLevel = ({route}) => {
                       {`Duration: 15 Days, 11+ Courses`}
                     </Text>
                   </View>
-                </View>
+                </View> */}
 
-                {/* <FastImage
+        {/* <FastImage
                   style={{
                     marginTop: 5,
                     height: device_height * 0.15,
@@ -311,7 +472,7 @@ const SubjectLevel = ({route}) => {
                   // source={}
                   resizeMode="center"
                 /> */}
-                <View
+        {/* <View
                   style={{
                     // width: '100%',
                     // height: '100%',
@@ -333,8 +494,8 @@ const SubjectLevel = ({route}) => {
                     source={require('../../../assets/reasoning.png')}
                   />
                 </View>
-              </View>
-              {/* <NavigationContainer independent={true}>
+              </View> */}
+        {/* <NavigationContainer independent={true}>
                 <Tab.Navigator>
                   <Tab.Screen
                     name="Screen1"
@@ -438,7 +599,7 @@ const SubjectLevel = ({route}) => {
                   />
                 </Tab.Navigator>
               </NavigationContainer> */}
-              <View
+        {/* <View
                 style={{
                   flexDirection: 'row',
                   width: '100%',
@@ -519,8 +680,8 @@ const SubjectLevel = ({route}) => {
                     </View>
                   );
                 })}
-              </View>
-              {/* <View
+              </View> */}
+        {/* <View
                 style={{
                   // marginVertical: 10,
                   width: '100%',
@@ -535,7 +696,7 @@ const SubjectLevel = ({route}) => {
                   Course Content
                 </Text>
               </View> */}
-              <View
+        {/* <View
                 style={{
                   flex: 1,
                   justifyContent: 'center',
@@ -670,8 +831,8 @@ const SubjectLevel = ({route}) => {
                                   //   topicimage: topicimage ,
                                   //   topicname: topicname ,
                                   // });
-                                }}>
-                                <View
+                                }}> */}
+        {/* <View
                                   style={{
                                     flexDirection: 'row',
                                     justifyContent: 'space-between',
@@ -687,8 +848,8 @@ const SubjectLevel = ({route}) => {
                                       // justifyContent: 'space-around',
                                       // borderWidth:1,
                                       width: device_width * 0.8,
-                                    }}>
-                                    {/* <View
+                                    }}> */}
+        {/* <View
                                       style={{
                                         // width: 55,
                                         // height: 55,
@@ -698,7 +859,7 @@ const SubjectLevel = ({route}) => {
                                         // backgroundColor: '#fff',
                                         // borderRadius: 10,
                                       }}> */}
-                                      {/* {subjectimage != '' ? (
+        {/* {subjectimage != '' ? (
                                     <Image
                                       style={{
                                         width: 75,
@@ -710,7 +871,7 @@ const SubjectLevel = ({route}) => {
                                       source={{ uri: subjectimage }}
                                     />
                                   ) : ( */}
-                                      {/* <Image
+        {/* <Image
                                         style={{
                                           width: 55,
                                           height: 55,
@@ -720,8 +881,8 @@ const SubjectLevel = ({route}) => {
                                         }}
                                         source={require('../../../assets/test.png')}
                                       /> */}
-                                      {/* )} */}
-                                      <View
+        {/* )} */}
+        {/* <View
                                       style={{
                                         paddingTop: 12,
                                         marginBottom: 20,
@@ -736,10 +897,10 @@ const SubjectLevel = ({route}) => {
                                             borderRadius: 20,
                                             padding: 5,
                                           }}
-                                        />
-                                        {/* Vertical line conditionally rendered */}
+                                        /> */}
+        {/* Vertical line conditionally rendered */}
 
-                                        {index <
+        {/* {index <
                                           TopicBySubjectId.length - 1 && (
                                           <View
                                             style={{
@@ -751,8 +912,8 @@ const SubjectLevel = ({route}) => {
                                               backgroundColor: '#474747',
                                             }}
                                           />
-                                        )}
-                                        <View
+                                        )} */}
+        {/* <View
                                           style={{
                                             position: 'absolute',
                                             // top: 15,
@@ -761,9 +922,9 @@ const SubjectLevel = ({route}) => {
                                             width: 1,
                                             backgroundColor: '#474747',
                                           }}
-                                        />
-                                     
-                                    </View>
+                                        /> */}
+
+        {/* </View>
                                     <View
                                       style={{
                                         justifyContent: 'flex-start',
@@ -780,8 +941,8 @@ const SubjectLevel = ({route}) => {
                                         }}>
                                         {`${contentset}`}
                                       </Text>
-                                    </View>
-                                  </View>
+                                    </View> */}
+        {/* </View>
                                   <MaterialIcons
                                     name="play-arrow"
                                     size={30}
@@ -792,14 +953,14 @@ const SubjectLevel = ({route}) => {
                                       padding: 5,
                                     }}
                                   />
-                                </View>
-                              </TouchableOpacity>
+                                </View> */}
+        {/* </TouchableOpacity>
                             );
                           })}
                         </>
                       ) : (
-                        <>
-                          <View
+                        <> */}
+        {/* <View
                             style={{
                               backgroundColor: 'burlywood',
                               paddingVertical: 15,
@@ -832,17 +993,15 @@ const SubjectLevel = ({route}) => {
                               }}>
                               {trans('Currently No Content Added')}
                             </Text>
-                          </View>
-                        </>
+                          </View> */}
+        {/* </>
                       )}
                     </>
                   )}
                 </View>
-              </View>
-            </ScrollView>
-          </>
-        )}
-      </ImageBackground>
+              </View> */}
+        {/* </ScrollView> */}
+      </View>
     </SafeAreaView>
   );
 };
