@@ -874,11 +874,7 @@ const SubjectLevel = ({route}) => {
                                         // backgroundColor: '#fff',
                                         // borderRadius: 10,
                                       }}> */}
-<<<<<<< HEAD
         {/* {subjectimage != '' ? (
-=======
-                                    {/* {subjectimage != '' ? (
->>>>>>> 98cfdf225aa2bd6134d2b2452815c7de134503c6
                                     <Image
                                       style={{
                                         width: 75,
@@ -890,11 +886,7 @@ const SubjectLevel = ({route}) => {
                                       source={{ uri: subjectimage }}
                                     />
                                   ) : ( */}
-<<<<<<< HEAD
         {/* <Image
-=======
-                                    {/* <Image
->>>>>>> 98cfdf225aa2bd6134d2b2452815c7de134503c6
                                         style={{
                                           width: 55,
                                           height: 55,
@@ -904,19 +896,13 @@ const SubjectLevel = ({route}) => {
                                         }}
                                         source={require('../../../assets/test.png')}
                                       /> */}
-<<<<<<< HEAD
         {/* )} */}
         {/* <View
-=======
-                                    {/* )} */}
-                                    <View
->>>>>>> 98cfdf225aa2bd6134d2b2452815c7de134503c6
                                       style={{
                                         paddingTop: 12,
                                         marginBottom: 20,
                                         marginLeft: 10,
                                       }}>
-<<<<<<< HEAD
                                         <Entypo
                                           name="dot-single"
                                           size={20}
@@ -943,22 +929,6 @@ const SubjectLevel = ({route}) => {
                                           />
                                         )} */}
         {/* <View
-=======
-                                      <Entypo
-                                        name="dot-single"
-                                        size={20}
-                                        style={{
-                                          backgroundColor: '#00DC5E',
-                                          color: '#FFFFFF',
-                                          borderRadius: 20,
-                                          padding: 5,
-                                        }}
-                                      />
-                                      {/* Vertical line conditionally rendered */}
-
-                                      {index < TopicBySubjectId.length - 1 && (
-                                        <View
->>>>>>> 98cfdf225aa2bd6134d2b2452815c7de134503c6
                                           style={{
                                             position: 'absolute',
                                             top: 50,
@@ -967,25 +937,9 @@ const SubjectLevel = ({route}) => {
                                             width: 1,
                                             backgroundColor: '#474747',
                                           }}
-<<<<<<< HEAD
                                         /> */}
 
         {/* </View>
-=======
-                                        />
-                                      )}
-                                      <View
-                                        style={{
-                                          position: 'absolute',
-                                          // top: 15,
-                                          bottom: 0,
-                                          // left: 10,
-                                          width: 1,
-                                          backgroundColor: '#474747',
-                                        }}
-                                      />
-                                    </View>
->>>>>>> 98cfdf225aa2bd6134d2b2452815c7de134503c6
                                     <View
                                       style={{
                                         justifyContent: 'flex-start',
