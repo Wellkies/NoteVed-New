@@ -326,7 +326,7 @@ const SignUpScreen4 = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor={'#263d2d'} barStyle="light-content" />
+      <StatusBar backgroundColor={'#272727'} barStyle="light-content" />
       <ImageBackground
         style={{
           // borderRadius: 50,

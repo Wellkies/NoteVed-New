@@ -1243,7 +1243,16 @@ const ScoreBoard = ({route}) => {
                 marginVertical: 20,
               }}>
               <TouchableOpacity
-                onPress={() => handleBackButtonClick()}
+                onPress={() =>
+                  navigation.navigate('SubjectLevel', {
+                    // stageid: '5',
+                    // boardid: '1',
+                    // scholarshipId: 'NVOOKADA1690811843420',
+                    // coursename: subjectName,
+                    subjectname: subjectName,
+                    subjectid: subjectId,
+                  })
+                }
                 style={{
                   paddingVertical: 16,
                   borderRadius: 50,
