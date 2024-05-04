@@ -500,11 +500,11 @@ const SubjectList = ({route}) => {
                               </Text>
                               {/* <Text
                                 style={{
-                                  width: '100%',
-                                  fontSize: 13,
+                                  fontSize: 14,
                                   fontWeight: '700',
-                                  //textAlign: 'center',
+                                  textAlign: 'center',
                                   color: '#333',
+                                  flex:1
                                 }}>
                                 {description}
                               </Text> */}

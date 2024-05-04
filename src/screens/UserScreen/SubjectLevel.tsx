@@ -106,32 +106,32 @@ const SubjectLevel = ({route}) => {
     filterData,
   );
   // console.log(TopicBySubjectId, '==============TopicBySubjectId');
-  useEffect(() => {
-    dispatch(getTopicBySubIdAPI(subjectid));
-    // setTopicId(topicID)
-    const data = {
-      topicid: topicID,
-      childid: childid,
-    };
-    dispatch(getContentByTopicIdAPI(data));
-    // setTimeout(() => {
-    // }, 2000)
-    // const data = {
-    //   stageid,
-    //   boardid,
-    //   scholarshipid: scholarshipId,
-    // };
-    // dispatch(getSubjectByClassAPI(data));
-    return () => {};
-  }, [topicID]);
+  // useEffect(() => {
+  //   dispatch(getTopicBySubIdAPI(subjectid));
+  //   // setTopicId(topicID)
+  //   const data = {
+  //     topicid: topicID,
+  //     childid: childid,
+  //   };
+  //   dispatch(getContentByTopicIdAPI(data));
+  //   // setTimeout(() => {
+  //   // }, 2000)
+  //   // const data = {
+  //   //   stageid,
+  //   //   boardid,
+  //   //   scholarshipid: scholarshipId,
+  //   // };
+  //   // dispatch(getSubjectByClassAPI(data));
+  //   return () => {};
+  // }, [topicID]);
 
-  const ContentByTopicId = useAppSelector(selectContentDetailsInfo);
-  const {reviewquestionsets = []} = ContentByTopicId[0]
-    ? ContentByTopicId[0]
-    : [];
-  const ContentLoad = useAppSelector(selectContentDetailsStatus);
-  console.log(ContentByTopicId, '==============ContentByTopicId');
-  console.log(reviewquestionsets, '==============reviewquestionsets');
+  // const ContentByTopicId = useAppSelector(selectContentDetailsInfo);
+  // const {reviewquestionsets = []} = ContentByTopicId[0]
+  //   ? ContentByTopicId[0]
+  //   : [];
+  // const ContentLoad = useAppSelector(selectContentDetailsStatus);
+  // console.log(ContentByTopicId, '==============ContentByTopicId');
+  // console.log(reviewquestionsets, '==============reviewquestionsets');
 
   const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
 
@@ -334,7 +334,7 @@ const SubjectLevel = ({route}) => {
                         </View>
                         <View
                           style={{
-                            flex: 1,
+                            //flex: 1,
                             paddingTop: 20,
                           }}>
                           <Text
@@ -354,13 +354,22 @@ const SubjectLevel = ({route}) => {
                             alignItems: 'center',
                             justifyContent: 'center',
                           }}>
-                          <TouchableOpacity>
+                          <TouchableOpacity
+                            onPress={() => {
+                              dispatch(getTopicBySubIdAPI(subjectid));
+                              navigation.navigate('TopicDetails', {
+                                coursename: subjectname,
+                                subjectname: subjectname,
+                                subjectid: subjectid,
+                              });
+                            }}>
                             <Image
                               source={require('../../../assets/down-arrow.png')}
                               style={{
-                                width: device_width * 0.1,
-                                height: device_height * 0.1,
+                                width: device_width * 0.09,
+                                height: device_height * 0.06,
                                 resizeMode: 'contain',
+                                
                               }}
                             />
                           </TouchableOpacity>
@@ -874,11 +883,7 @@ const SubjectLevel = ({route}) => {
                                         // backgroundColor: '#fff',
                                         // borderRadius: 10,
                                       }}> */}
-<<<<<<< HEAD
         {/* {subjectimage != '' ? (
-=======
-                                    {/* {subjectimage != '' ? (
->>>>>>> 98cfdf225aa2bd6134d2b2452815c7de134503c6
                                     <Image
                                       style={{
                                         width: 75,
@@ -890,11 +895,7 @@ const SubjectLevel = ({route}) => {
                                       source={{ uri: subjectimage }}
                                     />
                                   ) : ( */}
-<<<<<<< HEAD
         {/* <Image
-=======
-                                    {/* <Image
->>>>>>> 98cfdf225aa2bd6134d2b2452815c7de134503c6
                                         style={{
                                           width: 55,
                                           height: 55,
@@ -904,46 +905,13 @@ const SubjectLevel = ({route}) => {
                                         }}
                                         source={require('../../../assets/test.png')}
                                       /> */}
-<<<<<<< HEAD
         {/* )} */}
         {/* <View
-=======
-                                    {/* )} */}
-                                    <View
->>>>>>> 98cfdf225aa2bd6134d2b2452815c7de134503c6
                                       style={{
                                         paddingTop: 12,
                                         marginBottom: 20,
                                         marginLeft: 10,
                                       }}>
-<<<<<<< HEAD
-                                        <Entypo
-                                          name="dot-single"
-                                          size={20}
-                                          style={{
-                                            backgroundColor: '#00DC5E',
-                                            color: '#FFFFFF',
-                                            borderRadius: 20,
-                                            padding: 5,
-                                          }}
-                                        /> */}
-        {/* Vertical line conditionally rendered */}
-
-        {/* {index <
-                                          TopicBySubjectId.length - 1 && (
-                                          <View
-                                            style={{
-                                              position: 'absolute',
-                                              top: 50,
-                                              bottom: -45,
-                                              left: 14,
-                                              width: 1,
-                                              backgroundColor: '#474747',
-                                            }}
-                                          />
-                                        )} */}
-        {/* <View
-=======
                                       <Entypo
                                         name="dot-single"
                                         size={20}
@@ -956,9 +924,8 @@ const SubjectLevel = ({route}) => {
                                       />
                                       {/* Vertical line conditionally rendered */}
 
-                                      {index < TopicBySubjectId.length - 1 && (
+        {/* {index < TopicBySubjectId.length - 1 && (
                                         <View
->>>>>>> 98cfdf225aa2bd6134d2b2452815c7de134503c6
                                           style={{
                                             position: 'absolute',
                                             top: 50,
@@ -967,14 +934,9 @@ const SubjectLevel = ({route}) => {
                                             width: 1,
                                             backgroundColor: '#474747',
                                           }}
-<<<<<<< HEAD
-                                        /> */}
-
-        {/* </View>
-=======
                                         />
-                                      )}
-                                      <View
+                                      )} */}
+        {/* <View
                                         style={{
                                           position: 'absolute',
                                           // top: 15,
@@ -982,11 +944,10 @@ const SubjectLevel = ({route}) => {
                                           // left: 10,
                                           width: 1,
                                           backgroundColor: '#474747',
-                                        }}
-                                      />
-                                    </View>
->>>>>>> 98cfdf225aa2bd6134d2b2452815c7de134503c6
-                                    <View
+                                        }} */}
+        {/* /> */}
+        {/* </View> */}
+        {/* <View
                                       style={{
                                         justifyContent: 'flex-start',
                                         // backgroundColor: Colors.white,
@@ -1001,8 +962,8 @@ const SubjectLevel = ({route}) => {
                                           fontSize: 15,
                                         }}>
                                         {contentset}
-                                      </Text>
-                                    </View> */}
+                                      </Text> */}
+        {/* </View> */}
         {/* </View>
                                   <MaterialIcons
                                     name="play-arrow"

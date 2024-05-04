@@ -873,7 +873,7 @@ const SignInScreen = ({ route }) => {
         // resizeMode="cover"
         // source={require('../../../assets/0.png')}
         >
-        <StatusBar backgroundColor={'#263d2d'} barStyle="light-content" />
+        <StatusBar backgroundColor={'#282828'} barStyle="light-content" />
         <View
           style={{
             flexDirection: 'row',
@@ -2334,7 +2334,7 @@ const SignInScreen = ({ route }) => {
                   // paddingTop: 20,
                   // borderRadius: 25,
                   // flex: 1,
-                  backgroundColor: '#00FF7F',
+                  backgroundColor: '#282828',
                   paddingVertical: 20,
                   width: device_width * 1.28,
                   height: device_height * 0.5,
@@ -2353,7 +2353,7 @@ const SignInScreen = ({ route }) => {
                 >
                 <Text
                   style={{
-                    color: '#000',
+                    color: '#fff',
                     fontWeight: '800',
                     // marginBottom: 10,
                     // fontSize: language === 'english' ? 28 : 22,
@@ -2517,7 +2517,7 @@ const SignInScreen = ({ route }) => {
                   }}>
                   <Text
                     style={{
-                      color: '#000',
+                      color: '#fff',
                       fontSize: 14,
                       fontWeight: '700',
                       // marginLeft: 15,
