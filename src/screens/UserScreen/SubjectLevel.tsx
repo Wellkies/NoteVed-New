@@ -271,7 +271,7 @@ const SubjectLevel = ({route}) => {
               style={{
                 color: '#FFFFFF',
                 fontWeight: '600',
-                fontSize: 18,
+                fontSize: 20,
                 textAlign: 'center',
               }}>
               {trans(coursename + ' ' + subjectname)}
@@ -308,20 +308,19 @@ const SubjectLevel = ({route}) => {
                         key={index}
                         style={{
                           flexDirection: 'row',
-                          alignContent: 'center',
-                          backgroundColor: '#01FE91',
+                          backgroundColor: '#2C7DB5',
                           width: device_width * 0.95,
                           height: device_height * 0.09,
                           marginHorizontal: 10,
+                          paddingHorizontal:10,
                           borderRadius: 12,
                           marginBottom: 15,
                         }}>
                         <View
                           style={{
-                            paddingLeft: 10,
-                            paddingRight: 10,
                             flexDirection: 'row',
                             alignItems: 'center',
+                            gap:12
                           }}>
                           <Image
                             source={require('../../../assets/people.png')}
@@ -329,29 +328,22 @@ const SubjectLevel = ({route}) => {
                               height: device_height * 0.21,
                               width: device_width * 0.15,
                               resizeMode: 'contain',
+                              tintColor:'#FFFFFF'
                             }}
                           />
-                        </View>
-                        <View
-                          style={{
-                            //flex: 1,
-                            paddingTop: 20,
-                          }}>
                           <Text
                             style={{
-                              color: '#000',
+                              color: '#FFFFFF',
                               fontWeight: '500',
                               fontSize: 20,
-                              alignItems: 'center',
                             }}>
                             {trans(subjectname)}
                           </Text>
-                        </View>
+                          </View>
                         <View
                           style={{
-                            paddingLeft: 10,
-                            paddingRight: 10,
-                            alignItems: 'center',
+                            flex: 1,
+                            alignItems: 'flex-end',
                             justifyContent: 'center',
                           }}>
                           <TouchableOpacity
@@ -369,7 +361,8 @@ const SubjectLevel = ({route}) => {
                                 width: device_width * 0.09,
                                 height: device_height * 0.06,
                                 resizeMode: 'contain',
-                                
+                                left:-10,
+                                tintColor:'#FFFFFF'
                               }}
                             />
                           </TouchableOpacity>

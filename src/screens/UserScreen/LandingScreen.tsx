@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -26,30 +26,33 @@ import Feather from 'react-native-vector-icons/Feather';
 // import {format} from 'date-fns';
 import Icon from 'react-native-vector-icons/Ionicons';
 // import {FABGroup} from 'react-native-paper';
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { emailRegex, name_reg, phoneRegex } from '../../../constants/Constants';
+import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
+import {emailRegex, name_reg, phoneRegex} from '../../../constants/Constants';
 import Colors from '../../../assets/Colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useTheme } from 'react-native-paper';
+import {useTheme} from 'react-native-paper';
 // import {createContactApi, updateChildProfile} from '../../redux/actions/Action';
-import { device_height, device_width } from '../style';
-import { useTranslation } from 'react-i18next';
+import {device_height, device_width} from '../style';
+import {useTranslation} from 'react-i18next';
 // import Header from './CommonScreens/Header';
 import FastImage from 'react-native-fast-image';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {
   getChildDetailsAPI,
   selectStudentInfo,
   selectStudentStatus,
 } from '../../redux/reducers/StudentInfoReducer';
-import { RootState } from '../../redux/store/Store';
+import {RootState} from '../../redux/store/Store';
 import Header from '../CommonScreens/Header';
-import { updateChildProfile } from '../../redux/actions/UpdateStudentProfile';
-import { selectUserInfo } from '../../redux/reducers/loginReducer';
+import {updateChildProfile} from '../../redux/actions/UpdateStudentProfile';
+import {selectUserInfo} from '../../redux/reducers/loginReducer';
 import CommonMessage from '../../../constants/CommonMessage';
-import { getAllCoursesAPI, selectAllCoursesInfo } from '../../redux/reducers/GetAllCoursesReducer';
+import {
+  getAllCoursesAPI,
+  selectAllCoursesInfo,
+} from '../../redux/reducers/GetAllCoursesReducer';
 
-const LandingScreen = ({ }) => {
+const LandingScreen = ({}) => {
   interface ChildInfo {
     _id: string;
     age: string;
@@ -85,11 +88,11 @@ const LandingScreen = ({ }) => {
   const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
   const count = useAppSelector(selectStudentStatus);
   const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
-  const { authToken, status, userInfo = {} } = useAppSelector(selectUserInfo);
+  const {authToken, status, userInfo = {}} = useAppSelector(selectUserInfo);
 
   // console.log(childInfo, 'in STUDENT PROFILE.............');
 
-  const { t: trans, i18n } = useTranslation();
+  const {t: trans, i18n} = useTranslation();
 
   const {
     _id: childID = '',
@@ -151,9 +154,7 @@ const LandingScreen = ({ }) => {
 
     dispatch(getChildDetailsAPI(userid));
     dispatch(getAllCoursesAPI());
-
-  }, [])
-
+  }, []);
 
   // const ListColor = ['#fee2a3', '#f6c4b9', '#c3ccf5', '#76f0c7'];
 
@@ -197,11 +198,11 @@ const LandingScreen = ({ }) => {
           height: device_height,
           flex: 1,
           alignSelf: 'center',
-          backgroundColor:"#404040"
+          backgroundColor: '#404040',
         }}
         resizeMode="contain"
         // source={require('../../../assets/testBG3.jpg')}
-        >
+      >
         {/* <Header
           label1={trans('Welcome to NoteVed')}
           label2={''}
@@ -215,7 +216,7 @@ const LandingScreen = ({ }) => {
             textAlign: 'center',
             color: 'white',
             marginTop: 10,
-            textTransform: 'uppercase'
+            textTransform: 'uppercase',
           }}>
           {trans('Welcome to NoteVed')}
         </Text>
@@ -232,7 +233,7 @@ const LandingScreen = ({ }) => {
               fontWeight: 'bold',
               textAlign: 'left',
               marginLeft: 15,
-              color: 'white'
+              color: 'white',
             }}>
             {`Choose one exam to continue`}
           </Text>
@@ -252,36 +253,41 @@ const LandingScreen = ({ }) => {
                 description = '',
                 image = '',
                 createon = '',
-                updatedon = ''
-              } = item
+                updatedon = '',
+              } = item;
 
               // console.log(item, "================item");
               return (
                 <TouchableOpacity
                   key={index}
                   onPress={() => {
-                    navigation.navigate('SubjectList',
-                      { stageid: '5', boardid: '1', coursename: coursename }
-                    )
+                    navigation.navigate(
+                      'SubjectLevel',
+                      // { stageid: '5', boardid: '1', coursename: coursename }
+                      {
+                        coursename: coursename,
+                        subjectname: description,
+                        subjectid: courseid,
+                      },
+                    );
                   }}
                   style={{
                     justifyContent: 'center',
                     alignItems: 'center',
                     // backgroundColor: '#fee2a3',
-                    backgroundColor: ListColor[index % ListColor.length],
-                    //backgroundColor: '#1dfc8c',
+                    //backgroundColor: ListColor[index % ListColor.length],
+                     backgroundColor: '#2C7DB5',
                     paddingVertical: 25,
                     width: device_width * 0.42,
                     minHeight: device_height * 0.25,
                     paddingHorizontal: 15,
                     margin: 10,
                     borderWidth: 1,
-                    borderColor:'#999',
-                    elevation:15,
+                    borderColor: '#999',
+                    elevation: 15,
                     borderRadius: 10,
                   }}>
-                  {image != '' && image != null ?
-
+                  {image != '' && image != null ? (
                     <FastImage
                       style={{
                         marginTop: 5,
@@ -289,10 +295,10 @@ const LandingScreen = ({ }) => {
                         width: device_width * 0.4,
                         // borderWidth:1,
                       }}
-                      source={{ uri: image }}
-                      resizeMode='contain'
+                      source={{uri: image}}
+                      resizeMode="contain"
                     />
-                    :
+                  ) : (
                     <FastImage
                       style={{
                         marginTop: 5,
@@ -301,9 +307,9 @@ const LandingScreen = ({ }) => {
                         // borderWidth:1,
                       }}
                       source={require('../../../assets/teacher.jpg')}
-                      resizeMode='contain'
+                      resizeMode="contain"
                     />
-                  }
+                  )}
                   <Text
                     style={{
                       borderTopWidth: 1,
@@ -326,7 +332,7 @@ const LandingScreen = ({ }) => {
                     {description}
                   </Text>
                 </TouchableOpacity>
-              )
+              );
             })}
           </View>
         </Animatable.View>
