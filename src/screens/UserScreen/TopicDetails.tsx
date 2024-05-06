@@ -48,17 +48,13 @@ const TopicDetails = ({route}) => {
         }}>
         <View
           style={{
+            flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center',
             marginVertical: 12,
             marginHorizontal: 20,
-            paddingVertical: 6,
-            paddingHorizontal: 25,
+            gap: 4
           }}>
-          <View
-            style={{
-              flexDirection: 'row',
-            }}>
             <Image
               source={require('../../../assets/people.png')}
               style={{
@@ -72,13 +68,10 @@ const TopicDetails = ({route}) => {
               style={{
                 fontWeight: '400',
                 fontSize: 20,
-                marginLeft: 10,
-                marginVertical: 10,
                 color: '#FFFFFF',
               }}>
               {trans(subjectname)}
             </Text>
-          </View>
         </View>
         {TopicLoad == 'loading' ? (
           <LoadingScreen flag={TopicLoad == 'loading'} />
@@ -90,7 +83,8 @@ const TopicDetails = ({route}) => {
                 flexWrap: 'wrap',
                 alignContent: 'center',
                 marginHorizontal: 25,
-                paddingVertical: 25,
+                marginBottom:16,
+                marginTop: 50,
                 justifyContent: 'center',
               }}>
               {TopicBySubjectId.map((item, index) => {
@@ -107,7 +101,7 @@ const TopicDetails = ({route}) => {
                       style={{
                         height: device_height * 0.09,
                         width: device_width * 0.35,
-                        backgroundColor: '#01FE91',
+                        backgroundColor:"#2C7DB5",
                         borderRadius: 20,
                         marginHorizontal: 10,
                         marginVertical: 10,
@@ -116,7 +110,9 @@ const TopicDetails = ({route}) => {
                       }}>
                       <Text
                         style={{
-                          fontSize: 18,
+                          fontSize: 19,
+                          color: '#FFFFFF',
+                          fontWeight: '500',
                         }}>
                         {trans(topicname)}
                       </Text>
@@ -132,23 +128,23 @@ const TopicDetails = ({route}) => {
             source={require('../../../assets/assort.png')}
             style={{
               tintColor: '#FFFFFF',
-              width: device_width * 1.18,
-              height: device_height * 0.68,
+              width: device_width * 1.16,
+              height: device_height * 0.66,
               resizeMode: 'contain',
               alignSelf: 'center',
-              top: -75,
+              top: -50,
               zIndex: 1,
             }}
           />
           <Image
             source={require('../../../assets/brain.png')}
             style={{
-              width: device_width * 0.96,
-              height: device_height * 0.6,
+              width: device_width * 0.94,
+              height: device_height * 0.5,
               resizeMode: 'contain',
               alignSelf: 'center',
               position: 'absolute',
-              top: -12,
+              top: 45,
               left: 9,
               zIndex: 2,
             }}

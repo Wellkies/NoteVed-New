@@ -175,7 +175,7 @@ const ContentDetails = ({route}) => {
             </View>
             <View
               style={{
-                backgroundColor: '#90FF96',
+                backgroundColor: '#2C7DB5',
                 paddingVertical: 6,
                 paddingHorizontal: 20,
                 borderRadius: 7,
@@ -184,8 +184,8 @@ const ContentDetails = ({route}) => {
               <Text
                 style={{
                   fontSize: 19,
-                  color: '#000',
-                  fontWeight: '700',
+                  color: '#FFFFFF',
+                  fontWeight: '500',
                   letterSpacing: 0.5,
                 }}>
                 {trans(topicname)}
@@ -224,16 +224,29 @@ const ContentDetails = ({route}) => {
                       alignContent: 'center',
                       backgroundColor: '#000000',
                       width: device_width * 0.95,
-                      height: device_height * 0.15,
+                      height: device_height * 0.17,
                       marginHorizontal: 10,
                       borderRadius: 12,
                       marginBottom: 5,
                       marginTop: 24,
+                      position: 'relative',
+                      overflow: 'hidden',
                     }}>
+                    <View style={{position: 'absolute', top: -10, right: -10}}>
+                      <View
+                        style={{
+                          backgroundColor: '#2C7DB5',
+                          width: 55,
+                          height: 55,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          borderRadius: 30,
+                        }}
+                      />
+                    </View>
                     <View
                       style={{
-                        paddingLeft: 10,
-                        paddingRight: 10,
+                        marginHorizontal: 16,
                         flexDirection: 'row',
                         alignItems: 'center',
                       }}>
@@ -245,47 +258,40 @@ const ContentDetails = ({route}) => {
                           height: 78,
                           resizeMode: 'contain',
                           tintColor: '#FFFFFF',
-                          top: -17,
+                          top: -10,
                         }}
                       />
                       <View
                         style={{
-                          paddingLeft: 10,
+                          marginHorizontal: 20,
                           flexDirection: 'column',
                         }}>
-                        <View
+                        <Text
                           style={{
-                            marginHorizontal: 2,
+                            color: '#2C7DB5',
+                            fontWeight: '500',
+                            fontSize: 18,
+                            top: -10,
                           }}>
-                          <Text
-                            style={{
-                              color: '#90FF96',
-                              fontWeight: '500',
-                              fontSize: 18,
-                              top: -10,
-                            }}>
-                            {trans(contentset)}
-                          </Text>
-                        </View>
+                          {trans(contentset)}
+                        </Text>
                         <View
                           style={{
                             flexDirection: 'row',
-                            paddingTop: 2,
+                            alignItems: 'center',
                           }}>
                           <View
                             style={{
-                              backgroundColor: '#0BB713',
-                              height: 2,
+                              backgroundColor: '#2C7DB5',
+                              height: 4,
                               width: '60%',
                               borderRadius: 4,
-                              marginRight: 10,
                             }}
                           />
                           <Text
                             style={{
-                              color: '#0BB713',
-                              top: -10,
-                              marginHorizontal: 2,
+                              color: '#2C7DB5',
+                              marginLeft: 10,
                             }}>
                             70/100
                           </Text>
@@ -317,12 +323,14 @@ const ContentDetails = ({route}) => {
                               borderRadius: 10,
                               marginRight: 8,
                               borderWidth: 1.2,
-                              borderColor: '#01FE91',
+                              borderColor: '#2C7DB5',
                               width: device_width * 0.2,
                               bottom: -10,
-                              left: -5,
+                              left: -2,
                             }}>
-                            <Text style={{color: '#FFFFFF'}}>Continue</Text>
+                            <Text style={{color: '#FFFFFF'}}>
+                              {trans('Continue')}
+                            </Text>
                           </View>
                         </TouchableOpacity>
                       </View>
