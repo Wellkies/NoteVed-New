@@ -16,12 +16,17 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import CommonMessage from '../../../constants/CommonMessage';
 import {useAppSelector} from '../../redux/store/reducerHook';
 import {
+  dataclearstate,
   getContentByTopicIdAPI,
   selectContentDetailsInfo,
 } from '../../redux/reducers/GetContentDetailsReducer';
 import {selectTopicDetailsInfo} from '../../redux/reducers/GetTopicDetailsReducer';
 import {selectTopicDetailsStatus} from '../../redux/reducers/GetTopicDetailsFormTopicIdReducer';
 import {selectUserInfo} from '../../redux/reducers/loginReducer';
+import {
+  selectAllSubjectsInfo,
+  selectAllSubjectsStatus,
+} from '../../redux/reducers/GetSubjectByCourseReducer';
 
 const ContentDetails = ({route}) => {
   const navigation = useNavigation();
@@ -92,6 +97,7 @@ const ContentDetails = ({route}) => {
   useEffect(() => {
     // dispatch(getTopicBySubIdAPI(subjectid));
     // setTopicId(topicID)
+    dispatch(dataclearstate());
     const data = {
       topicid: topicID,
       childid: childid,
@@ -107,6 +113,10 @@ const ContentDetails = ({route}) => {
     // dispatch(getSubjectByClassAPI(data));
     return () => {};
   }, [topicID]);
+
+  const SubjectByCourse = useAppSelector(selectAllSubjectsInfo);
+  const SubLoading = useAppSelector(selectAllSubjectsStatus);
+  console.log(SubjectByCourse, '########################$$$$SubjectByCourse');
 
   const ContentAvailable = [
     {
@@ -127,6 +137,8 @@ const ContentDetails = ({route}) => {
   const {reviewquestionsets = []} = ContentByTopicId[0]
     ? ContentByTopicId[0]
     : [];
+
+  console.log(reviewquestionsets.studentdata, '@@@@@@@@@@@@@@@@@@@@@@@review');
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -215,7 +227,10 @@ const ContentDetails = ({route}) => {
                   topicimage = '',
                   topicname = '',
                   videos = [],
+                  studentdata = [],
                 } = item;
+                const {percentage = ''} = studentdata[0];
+                console.log(studentdata[0], '@@@@@@@@@@@studentdata');
                 return (
                   <View
                     key={index}
@@ -292,8 +307,9 @@ const ContentDetails = ({route}) => {
                             style={{
                               color: '#2C7DB5',
                               marginLeft: 10,
+                              width: '20%',
                             }}>
-                            70/100
+                            {`${percentage}%`}
                           </Text>
                         </View>
                         <TouchableOpacity
