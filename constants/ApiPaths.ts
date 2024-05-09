@@ -33,7 +33,8 @@ export const GET_CONTENT_BY_TOPICID_URL = API_URL + 'edzgetContentbytopicid/';
 export const GET_ALL_CHILD_CONTENT_URL = API_URL + 'edzgetAllchildContent/';
 export const EDZ_ANSWER_SUBMIT_URL = API_URL + 'edzcreatechildcontent';
 export const EDZ_UPDATE_CHILD_API = API_URL + 'edzupdateChild';
-export const EDZ_GET_ALLMEMBERSHIP = API_URL + 'edzgetAllmembership';
+export const EDZ_GET_ALL_MEMBERSHIP = API_URL + 'edzgetAllmembership';
+export const GET_ALL_SUBJECT_LEVELS = API_URL + 'getAllsubjectlevels';
 //=========================================================================//
 
 export const GET_CHILD_PROGRESS_URL = API_URL + 'getChildonProgressDetils/';

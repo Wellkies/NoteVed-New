@@ -63,7 +63,8 @@ const ROUTES = {
   REVIEWS: 'Reviews',
   DETAILS: 'Details',
   TOPICDETAILS:'TopicDetails',
-  CONTENTDETAILS:'ContentDetails'
+  CONTENTDETAILS:'ContentDetails',
+  LEVELCOMPLETED: 'LevelCompleted',
 };
 
 export default ROUTES;

@@ -43,6 +43,7 @@ import Reviews from '../screens/UserScreen/Reviews';
 import Details from '../screens/UserScreen/Details';
 import TopicDetails from '../screens/UserScreen/TopicDetails';
 import ContentDetails from '../screens/UserScreen/ContentDetails';
+import LevelCompleted from '../screens/UserScreen/LevelCompleted';
 
 export type RootStackParamList = {
   AppStack: NavigatorScreenParams<AppStackParamList>;
@@ -110,6 +111,8 @@ const AppStack = props => {
                 'TopicDetails' ||
                 navigation.getState().routes[navigation.getState().index].name ==
                 'ContentDetails' ||
+                navigation.getState().routes[navigation.getState().index].name ==
+                'LevelCompleted' ||
               navigation.getState().routes[navigation.getState().index].name ==
                 'ProbableMockTest' ||
               navigation.getState().routes[navigation.getState().index].name ==
@@ -313,6 +316,22 @@ const AppStack = props => {
         <Stack.Screen
           name={ROUTES.CONTENTDETAILS}
           component={ContentDetails}
+          options={({navigation}) => ({
+            title: trans(''),
+            headerLeft: () => (
+              <MaterialIcons.Button
+                name="keyboard-arrow-left"
+                size={30}
+                backgroundColor={Colors.secondary}
+                color={Colors.primary}
+                onPress={() => navigation.goBack()}
+              />
+            ),
+          })}
+        />
+        <Stack.Screen
+          name={ROUTES.LEVELCOMPLETED}
+          component={LevelCompleted}
           options={({navigation}) => ({
             title: trans(''),
             headerLeft: () => (

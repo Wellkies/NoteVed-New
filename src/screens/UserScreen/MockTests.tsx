@@ -70,6 +70,7 @@ const MockTests = ({route}) => {
   const {
     screenName = '',
     subjectName = '',
+    coursename ='',
     chapterName = '',
     examSet = '',
     // quiz = [],
@@ -243,6 +244,7 @@ const MockTests = ({route}) => {
       topicName: chapterName,
       ExamQuestionsets: quiz,
       subjectName: subjectName,
+      coursename:coursename,
       chapterName: chapterName,
       examSet: examSet,
       quiz: Questionlist,

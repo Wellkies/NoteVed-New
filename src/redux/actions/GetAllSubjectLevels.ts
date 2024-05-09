@@ -1,12 +1,12 @@
 import {
-    EDZ_GET_ALL_MEMBERSHIP,
+    GET_ALL_SUBJECT_LEVELS,
   } from "../../../constants/ApiPaths";
   import AsyncStorage from "../../utils/AsyncStorage";
 
-  export const getAllMembershipAPI = async () => {
-    const url = EDZ_GET_ALL_MEMBERSHIP;
-    console.log(url, "$$$$$$$$$$$$$$$$$$$$$$EDZ_GET_ALL_MEMBERSHIP=======================");
-    const token = await AsyncStorage.getObject("@auth_Token");
+  export const getAllSubjectLevelAPI = async () => {
+    const url = GET_ALL_SUBJECT_LEVELS;
+    console.log(url, "$$$$$$$$$$$$$$$$$$$$$$GET_ALL_SUBJECT_LEVELS=======================");
+    const token = await AsyncStorage.getObject('@auth_Token');
     const requestOptions = {
       method: "GET",
       headers: {
@@ -20,10 +20,10 @@ import {
         throw new Error("Network response was not ok");
       }
       const Data = await response.json();
-      console.log(Data, "EDZ_GET_ALL_MEMBERSHIP_response................");
+      console.log(Data, "GET_ALL_SUBJECT_LEVELS_response................");
       return { data: Data.data };
     } catch (error) {
-      console.log(error, "EDZ_GET_ALL_MEMBERSHIP_error.......");
+      console.log(error, "GET_ALL_SUBJECT_LEVELS_error.......");
       throw error;
     }
   };
