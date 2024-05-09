@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {useTranslation} from 'react-i18next';
@@ -23,6 +23,7 @@ import {
 import {selectTopicDetailsInfo} from '../../redux/reducers/GetTopicDetailsReducer';
 import {selectTopicDetailsStatus} from '../../redux/reducers/GetTopicDetailsFormTopicIdReducer';
 import {selectUserInfo} from '../../redux/reducers/loginReducer';
+import LevelCompleted from '../UserScreen/LevelCompleted';
 import {
   selectAllSubjectsInfo,
   selectAllSubjectsStatus,
@@ -32,8 +33,20 @@ const ContentDetails = ({route}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch<any>();
   const {t: trans, i18n} = useTranslation();
-  const {subjectname = '', topicname = ''} = route.params;
-
+  const {
+    coursename = '',
+    subjectname = '',
+    topicname = '',
+    //percentage = '',
+  } = route.params;
+  console.log(
+    coursename,
+    subjectname,
+    topicname,
+    //percentage,
+    '=======coursename, subjectname, topicname, percentage',
+  );
+  //const Percentage = Math.trunc(percentage);
   const {authToken, status, userInfo} = useAppSelector(selectUserInfo);
   interface ChildInfo {
     _id: string;
@@ -118,27 +131,16 @@ const ContentDetails = ({route}) => {
   const SubLoading = useAppSelector(selectAllSubjectsStatus);
   console.log(SubjectByCourse, '########################$$$$SubjectByCourse');
 
-  const ContentAvailable = [
-    {
-      contents: 'Current Affairs and Global Issues',
-      navigationfunc: () => CommonMessage('Coming Soon !'),
-    },
-    {
-      contents: 'Mythology and Folklore',
-      navigationfunc: () => CommonMessage('Coming Soon !'),
-    },
-    {
-      contents: 'History and Civilization',
-      navigationfunc: () => CommonMessage('Coming Soon !'),
-    },
-  ];
-
   const ContentByTopicId = useAppSelector(selectContentDetailsInfo);
   const {reviewquestionsets = []} = ContentByTopicId[0]
     ? ContentByTopicId[0]
     : [];
 
   console.log(reviewquestionsets.studentdata, '@@@@@@@@@@@@@@@@@@@@@@@review');
+
+  const lastIndex = reviewquestionsets[reviewquestionsets.length - 1] || {};
+  const { studentdata = [] } = lastIndex;
+  const lastCompletionPercentage = studentdata.length > 0 ? studentdata[0].percentage : 0;
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -182,7 +184,10 @@ const ContentDetails = ({route}) => {
                   marginVertical: 10,
                   color: '#FFFFFF',
                 }}>
-                {trans(subjectname)}
+                {coursename !== 'Mind Melters' &&
+                coursename !== 'Vidyalaya Vista'
+                  ? trans(coursename + ' ' + subjectname)
+                  : trans(subjectname)}
               </Text>
             </View>
             <View
@@ -221,16 +226,17 @@ const ContentDetails = ({route}) => {
                   sltopic = '',
                   subjectid = '',
                   subjectimage = '',
-                  subjectname = '',
+                  // subjectname = '',
                   timeDuration = '',
                   topicid = '',
                   topicimage = '',
-                  topicname = '',
+                  //topicname = '',
                   videos = [],
                   studentdata = [],
                 } = item;
-                const {percentage = ''} = studentdata[0];
+                const {percentage = ''} = studentdata[0] || {};
                 console.log(studentdata[0], '@@@@@@@@@@@studentdata');
+
                 return (
                   <View
                     key={index}
@@ -299,7 +305,7 @@ const ContentDetails = ({route}) => {
                             style={{
                               backgroundColor: '#2C7DB5',
                               height: 4,
-                              width: '60%',
+                              width: '50%',
                               borderRadius: 4,
                             }}
                           />
@@ -317,6 +323,7 @@ const ContentDetails = ({route}) => {
                             navigation.navigate('MockTests', {
                               screenName: 'ExamSets',
                               subjectName: subjectname,
+                              coursename: coursename,
                               chapterName: topicname,
                               examSet: contentset,
                               contentid: contentid,
@@ -394,6 +401,7 @@ const ContentDetails = ({route}) => {
             </>
           )}
         </View>
+       {lastCompletionPercentage === 100 && <LevelCompleted />}
       </ScrollView>
     </SafeAreaView>
   );

@@ -87,7 +87,6 @@ const SubjectLevel = ({route}) => {
     // scholarshipName = '',
     coursename = '',
     subjectname = '',
-    subjectid = '',
   } = route.params;
   console.log(route.params, '===============route.params');
   // const [loading, setLoading] = useState(false);
@@ -298,14 +297,22 @@ const SubjectLevel = ({route}) => {
                   {SubjectByCourse.map((item, index) => {
                     const {
                       _id = '',
-                      subjectImage = '',
                       subjectid = '',
+                      subjectImage = '',
                       subjectname = '',
                     } = item;
 
                     return (
+                      <TouchableOpacity key={index}
+                      onPress={() => {
+                        dispatch(getTopicBySubIdAPI(subjectid));
+                        navigation.navigate('TopicDetails', {
+                          coursename: coursename,
+                          subjectname: subjectname,
+                          subjectid: subjectid,
+                        });
+                      }}>
                       <View
-                        key={index}
                         style={{
                           flexDirection: 'row',
                           backgroundColor: '#2C7DB5',
@@ -340,17 +347,17 @@ const SubjectLevel = ({route}) => {
                             {trans(subjectname)}
                           </Text>
                           </View>
-                        <View
+                        {/* <View
                           style={{
                             flex: 1,
                             alignItems: 'flex-end',
                             justifyContent: 'center',
-                          }}>
-                          <TouchableOpacity
+                          }}> */}
+                          {/* <TouchableOpacity
                             onPress={() => {
                               dispatch(getTopicBySubIdAPI(subjectid));
                               navigation.navigate('TopicDetails', {
-                                coursename: subjectname,
+                                coursename: coursename,
                                 subjectname: subjectname,
                                 subjectid: subjectid,
                               });
@@ -365,9 +372,10 @@ const SubjectLevel = ({route}) => {
                                 tintColor:'#FFFFFF'
                               }}
                             />
-                          </TouchableOpacity>
-                        </View>
+                          </TouchableOpacity> */}
+                        {/* </View> */}
                       </View>
+                      </TouchableOpacity>
                     );
                   })}
                 </>
