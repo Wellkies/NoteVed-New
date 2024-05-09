@@ -115,6 +115,7 @@ const ScoreBoard = ({route}) => {
     studentdata = [],
     ExamQuestionsets = [],
     subjectName = '',
+    coursename ='',
     chapterName = '',
     examSet = '',
     quiz = [],
@@ -130,6 +131,7 @@ const ScoreBoard = ({route}) => {
     is2ndAvailable = '',
     topicid = '',
   } = route.params;
+  console.log(subjectName,coursename,chapterName,'======???subjectName,coursename,chapterName')
   // console.log(subjectId,"subjectId",subjectName,"subjectName",topicName,"topicName",chapterName,"chapterName", ' route.params.................SCOREBOARD');
   //childid: childid,
 
@@ -1244,11 +1246,12 @@ const ScoreBoard = ({route}) => {
               }}>
               <TouchableOpacity
                 onPress={() =>
-                  navigation.navigate('SubjectLevel', {
+                  navigation.navigate('TopicDetails', {
                     // stageid: '5',
                     // boardid: '1',
                     // scholarshipId: 'NVOOKADA1690811843420',
                     // coursename: subjectName,
+                    coursename: coursename,
                     subjectname: subjectName,
                     subjectid: subjectId,
                   })
@@ -1350,6 +1353,8 @@ const ScoreBoard = ({route}) => {
                         topicid: topicid,
                         boardid: boardid,
                         contentid: contentid,
+                        percentage: percentage,
+                        coursename: coursename,
                       });
                     }
                   }, 1000);

@@ -87,7 +87,6 @@ const SubjectLevel = ({route}) => {
     // scholarshipName = '',
     coursename = '',
     subjectname = '',
-    subjectid = '',
   } = route.params;
   console.log(route.params, '===============route.params');
   // const [loading, setLoading] = useState(false);
@@ -298,8 +297,8 @@ const SubjectLevel = ({route}) => {
                   {SubjectByCourse.map((item, index) => {
                     const {
                       _id = '',
-                      subjectImage = '',
                       subjectid = '',
+                      subjectImage = '',
                       subjectname = '',
                     } = item;
 
@@ -350,7 +349,7 @@ const SubjectLevel = ({route}) => {
                             onPress={() => {
                               dispatch(getTopicBySubIdAPI(subjectid));
                               navigation.navigate('TopicDetails', {
-                                coursename: subjectname,
+                                coursename: coursename,
                                 subjectname: subjectname,
                                 subjectid: subjectid,
                               });

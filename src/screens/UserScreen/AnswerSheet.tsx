@@ -92,6 +92,8 @@ const AnswerSheet = ({route}) => {
     ProbSubjectName = '',
     studentdata = '',
     screenName = '',
+    percentage = '',
+    coursename = '',
   } = route.params;
   console.log(
     route.params,
@@ -99,6 +101,7 @@ const AnswerSheet = ({route}) => {
     'topicid',
     topicid,
   );
+  console.log(chapterName,'==========chapterName')
   const navigation = useNavigation();
 
   const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
@@ -359,7 +362,7 @@ const AnswerSheet = ({route}) => {
         }}
         resizeMode="cover"
         // source={require('../../../assets/0.png')}
-        >
+      >
         <Header
           label1={trans('Answer Sheet')}
           // label2={`{Std - ${stage}`}
@@ -936,6 +939,32 @@ const AnswerSheet = ({route}) => {
                 );
               }
             })}
+          </View>
+          <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('ContentDetails', {
+                  coursename: coursename,
+                  subjectname: subjectname,
+                  topicname: chapterName,
+                  percentage: percentage,
+                });
+              }}
+              style={{
+                backgroundColor: '#FFB901',
+                width: device_width * 0.2,
+                justifyContent: 'center',
+                borderRadius: 10,
+                padding: 10,
+                alignItems: 'center',
+                marginHorizontal: 10,
+                marginVertical: 10,
+                elevation: 15,
+              }}>
+              <Text style={{color: '#FFFFFF', fontSize: 20, fontWeight: '500'}}>
+                OK
+              </Text>
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </ImageBackground>

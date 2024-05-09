@@ -51,6 +51,12 @@ import {
   getAllCoursesAPI,
   selectAllCoursesInfo,
 } from '../../redux/reducers/GetAllCoursesReducer';
+import {
+  getAllSubjectLevelDataAPI,
+  selectAllSubjectLevelInfo,
+  selectAllSubjectLevelStatus,
+} from '../../redux/reducers/GetAllSubjectLevelReducer';
+import Modal from 'react-native-modal';
 
 const LandingScreen = ({}) => {
   interface ChildInfo {
@@ -154,7 +160,12 @@ const LandingScreen = ({}) => {
 
     dispatch(getChildDetailsAPI(userid));
     dispatch(getAllCoursesAPI());
+    dispatch(getAllSubjectLevelDataAPI());
   }, []);
+
+   const AllSubjectLevelData = useAppSelector(selectAllSubjectLevelInfo);
+
+   console.log(AllSubjectLevelData, '@@@@@@@@@@@@@@@@@@@@@***AllSubjectLevelData');
 
   // const ListColor = ['#fee2a3', '#f6c4b9', '#c3ccf5', '#76f0c7'];
 
@@ -190,8 +201,74 @@ const LandingScreen = ({}) => {
   //   },
   // ]
 
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const navigateCourseDetails = (course: any) => {
+    if (course?.coursename === 'Mind Melters') {
+      navigation.navigate('SubjectLevel', {
+        coursename: course?.coursename,
+        subjectname: course?.description,
+        subjectid: course?.courseid,
+      });
+    } else if (course?.coursename === 'Vidyalaya Vista') {
+      setModalVisible(true);
+    } else {
+      navigation.navigate('TopicDetails', {
+        coursename: course?.coursename,
+        subjectname: course?.description,
+        subjectid: course?.courseid,
+      });
+    }
+  };
   return (
     <SafeAreaView style={styles.container}>
+      <ScrollView>
+      {isModalVisible && (
+        <Modal
+          isVisible={isModalVisible}
+          animationIn={'fadeIn'}
+          animationOut={'fadeOut'}
+          animationInTiming={50}
+          animationOutTiming={50}
+          hideModalContentWhileAnimating={true}
+          backdropTransitionInTiming={50}
+          backdropTransitionOutTiming={50}
+          onBackdropPress={() => setModalVisible(false)}
+          onBackButtonPress={() => setModalVisible(false)}>
+          <View
+            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <View
+              style={{backgroundColor: 'white', padding: 30, borderRadius: 10}}>
+              <Text style={{marginBottom: 20, fontSize: 18, fontWeight: '600'}}>
+                Preparing for JNV and OAV entrance exam!
+              </Text>
+              <Text style={{marginBottom: 20, fontSize: 18, fontWeight: '600'}}>
+                Please download our app
+              </Text>
+              <View
+                style={{
+                  justifyContent: 'space-between',
+                  flexDirection: 'row',
+                  marginTop: 40,
+                }}>
+                <TouchableOpacity
+                  onPress={() =>
+                    Linking.openURL(
+                      'https://play.google.com/store/apps/details?id=com.notevook',
+                    )
+                  }>
+                  <Text style={{color: 'blue', marginBottom: 10}}>
+                    Download
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => setModalVisible(false)}>
+                  <Text style={{color: 'red'}}>Exit</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
+      )}
       <ImageBackground
         style={{
           width: device_width,
@@ -256,27 +333,19 @@ const LandingScreen = ({}) => {
                 updatedon = '',
               } = item;
 
-              // console.log(item, "================item");
+              //console.log(item, "================item");
               return (
                 <TouchableOpacity
                   key={index}
                   onPress={() => {
-                    navigation.navigate(
-                      'SubjectLevel',
-                      // { stageid: '5', boardid: '1', coursename: coursename }
-                      {
-                        coursename: coursename,
-                        subjectname: description,
-                        subjectid: courseid,
-                      },
-                    );
+                    navigateCourseDetails(item);
                   }}
                   style={{
                     justifyContent: 'center',
                     alignItems: 'center',
                     // backgroundColor: '#fee2a3',
                     //backgroundColor: ListColor[index % ListColor.length],
-                     backgroundColor: '#2C7DB5',
+                    backgroundColor: '#2C7DB5',
                     paddingVertical: 25,
                     width: device_width * 0.42,
                     minHeight: device_height * 0.25,
@@ -334,9 +403,91 @@ const LandingScreen = ({}) => {
                 </TouchableOpacity>
               );
             })}
+            {AllSubjectLevelData.map((item, index) => {
+              const {
+                slcourse = '',
+                subjectid = '',
+                subjectname = '',
+                description = '',
+                image = '',
+                createon = '',
+                updatedon = '',
+              } = item;
+
+              //console.log(item, "================item");
+              return (
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => {
+                    navigateCourseDetails(item);
+                  }}
+                  style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    // backgroundColor: '#fee2a3',
+                    //backgroundColor: ListColor[index % ListColor.length],
+                    backgroundColor: '#2C7DB5',
+                    paddingVertical: 25,
+                    width: device_width * 0.42,
+                    minHeight: device_height * 0.25,
+                    paddingHorizontal: 15,
+                    margin: 10,
+                    borderWidth: 1,
+                    borderColor: '#999',
+                    elevation: 15,
+                    borderRadius: 10,
+                  }}>
+                  {image != '' && image != null ? (
+                    <FastImage
+                      style={{
+                        marginTop: 5,
+                        height: device_height * 0.15,
+                        width: device_width * 0.4,
+                        // borderWidth:1,
+                      }}
+                      source={{uri: image}}
+                      resizeMode="contain"
+                    />
+                  ) : (
+                    <FastImage
+                      style={{
+                        marginTop: 5,
+                        height: device_height * 0.15,
+                        width: device_width * 0.4,
+                        // borderWidth:1,
+                      }}
+                      source={require('../../../assets/teacher.jpg')}
+                      resizeMode="contain"
+                    />
+                  )}
+                  <Text
+                    style={{
+                      borderTopWidth: 1,
+                      borderColor: '#666',
+                      width: '120%',
+                      fontSize: 20,
+                      fontWeight: 'bold',
+                      textAlign: 'center',
+                      color: '#000',
+                    }}>
+                    {subjectname}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 14,
+                      fontWeight: '700',
+                      textAlign: 'center',
+                      color: '#333',
+                    }}>
+                    {description}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
           </View>
         </Animatable.View>
       </ImageBackground>
+      </ScrollView>
     </SafeAreaView>
   );
 };

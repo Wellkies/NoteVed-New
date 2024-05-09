@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {useTranslation} from 'react-i18next';
@@ -22,13 +22,26 @@ import {
 import {selectTopicDetailsInfo} from '../../redux/reducers/GetTopicDetailsReducer';
 import {selectTopicDetailsStatus} from '../../redux/reducers/GetTopicDetailsFormTopicIdReducer';
 import {selectUserInfo} from '../../redux/reducers/loginReducer';
+import LevelCompleted from '../UserScreen/LevelCompleted';
 
 const ContentDetails = ({route}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch<any>();
   const {t: trans, i18n} = useTranslation();
-  const {subjectname = '', topicname = ''} = route.params;
-
+  const {
+    coursename = '',
+    subjectname = '',
+    topicname = '',
+    percentage = '',
+  } = route.params;
+  console.log(
+    coursename,
+    subjectname,
+    topicname,
+    percentage,
+    '=======coursename, subjectname, topicname, percentage',
+  );
+  const Percentage = Math.trunc(percentage);
   const {authToken, status, userInfo} = useAppSelector(selectUserInfo);
   interface ChildInfo {
     _id: string;
@@ -122,6 +135,10 @@ const ContentDetails = ({route}) => {
       navigationfunc: () => CommonMessage('Coming Soon !'),
     },
   ];
+  const [openCompleteModal, setOpenCompleteModal] = useState(false);
+  const openLevelCompleteModal = () => {
+    setOpenCompleteModal(true);
+  };
 
   const ContentByTopicId = useAppSelector(selectContentDetailsInfo);
   const {reviewquestionsets = []} = ContentByTopicId[0]
@@ -170,7 +187,10 @@ const ContentDetails = ({route}) => {
                   marginVertical: 10,
                   color: '#FFFFFF',
                 }}>
-                {trans(subjectname)}
+                {coursename !== 'Mind Melters' &&
+                coursename !== 'Vidyalaya Vista'
+                  ? trans(coursename + ' ' + subjectname)
+                  : trans(subjectname)}
               </Text>
             </View>
             <View
@@ -209,11 +229,11 @@ const ContentDetails = ({route}) => {
                   sltopic = '',
                   subjectid = '',
                   subjectimage = '',
-                  subjectname = '',
+                  // subjectname = '',
                   timeDuration = '',
                   topicid = '',
                   topicimage = '',
-                  topicname = '',
+                  //topicname = '',
                   videos = [],
                 } = item;
                 return (
@@ -282,9 +302,9 @@ const ContentDetails = ({route}) => {
                           }}>
                           <View
                             style={{
-                              backgroundColor: '#2C7DB5',
+                              backgroundColor:'#2C7DB5',
                               height: 4,
-                              width: '60%',
+                              width: '50%',
                               borderRadius: 4,
                             }}
                           />
@@ -293,7 +313,7 @@ const ContentDetails = ({route}) => {
                               color: '#2C7DB5',
                               marginLeft: 10,
                             }}>
-                            70/100
+                            {Percentage + '/100'}
                           </Text>
                         </View>
                         <TouchableOpacity
@@ -301,6 +321,7 @@ const ContentDetails = ({route}) => {
                             navigation.navigate('MockTests', {
                               screenName: 'ExamSets',
                               subjectName: subjectname,
+                              coursename: coursename,
                               chapterName: topicname,
                               examSet: contentset,
                               contentid: contentid,
@@ -377,7 +398,16 @@ const ContentDetails = ({route}) => {
               </View>
             </>
           )}
+          <TouchableOpacity onPress={openLevelCompleteModal} style={{}}>
+            <Text
+              style={{
+                color: '#FFFFFF',
+              }}>
+              Completed
+            </Text>
+          </TouchableOpacity>
         </View>
+        {openCompleteModal && <LevelCompleted play={openCompleteModal} />}
       </ScrollView>
     </SafeAreaView>
   );
