@@ -64,7 +64,7 @@ export const getAllSubjectActionAPI = async () => {
 };
 
 export const getTopicsBySubIdActionAPI = async (data = {}) => {
-  const url = GET_TOPICS_BY_SUBJECTID_URL + data;
+  const url = GET_TOPICS_BY_SUBJECTID_URL + data.subjectid + '/' + data.childid;
   console.log(url, 'GET_TOPICS_BY_SUBJECTID_URL=======================');
   const token = await AsyncStorage.getObject('@auth_Token');
   const requestOptions = {

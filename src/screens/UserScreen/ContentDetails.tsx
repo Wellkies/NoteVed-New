@@ -229,8 +229,10 @@ const ContentDetails = ({route}) => {
                   videos = [],
                   studentdata = [],
                 } = item;
-                const {percentage = ''} = studentdata[0];
+                const {percentage = ''} = studentdata[0] || {};
+                const isReattempt = studentdata.length > 0;
                 console.log(studentdata[0], '@@@@@@@@@@@studentdata');
+                const lastexercise = reviewquestionsets.length === index + 1;
                 return (
                   <View
                     key={index}
@@ -309,7 +311,7 @@ const ContentDetails = ({route}) => {
                               marginLeft: 10,
                               width: '20%',
                             }}>
-                            {`${percentage}%`}
+                            {`${percentage || 0}%`}
                           </Text>
                         </View>
                         <TouchableOpacity
@@ -320,8 +322,8 @@ const ContentDetails = ({route}) => {
                               chapterName: topicname,
                               examSet: contentset,
                               contentid: contentid,
-                              isReattempt: false,
-                              // studentdata: studentdata,
+                              isReattempt: isReattempt,
+                              studentdata: studentdata,
                               ExamQuestionsets: quiz,
                               // scholarshipid: scholarshipid,
                               // boardid: boardid,
@@ -330,6 +332,7 @@ const ContentDetails = ({route}) => {
                               timeDuration: timeDuration,
                               is2ndAvailable: index,
                               topicid: topicid,
+                              lastexercise: false,
                             });
                           }}>
                           <View
@@ -340,12 +343,15 @@ const ContentDetails = ({route}) => {
                               marginRight: 8,
                               borderWidth: 1.2,
                               borderColor: '#2C7DB5',
-                              width: device_width * 0.2,
+                              width: device_width * 0.3,
                               bottom: -10,
                               left: -2,
                             }}>
-                            <Text style={{color: '#FFFFFF'}}>
-                              {trans('Continue')}
+                            <Text
+                              style={{color: '#FFFFFF', textAlign: 'center'}}>
+                              {isReattempt
+                                ? trans('Reattempt')
+                                : trans('Continue')}
                             </Text>
                           </View>
                         </TouchableOpacity>

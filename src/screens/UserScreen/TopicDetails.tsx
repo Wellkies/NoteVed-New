@@ -11,8 +11,14 @@ import {
   selectTopicDetailsInfo,
 } from '../../redux/reducers/GetTopicDetailsReducer';
 import {selectTopicDetailsStatus} from '../../redux/reducers/GetTopicDetailsFormTopicIdReducer';
-import {getContentByTopicIdAPI} from '../../redux/reducers/GetContentDetailsReducer';
+import {
+  dataclearstate,
+  getContentByTopicIdAPI,
+} from '../../redux/reducers/GetContentDetailsReducer';
 import LoadingScreen from '../CommonScreens/LoadingScreen';
+import {selectUserInfo} from '../../redux/reducers/loginReducer';
+import CommonMessage from '../../../constants/CommonMessage';
+import Fontisto from 'react-native-vector-icons/Fontisto';
 
 const TopicDetails = ({route}) => {
   const navigation = useNavigation();
@@ -27,8 +33,65 @@ const TopicDetails = ({route}) => {
   const filterData = TopicBySubjectId.map(rec => rec.topicid);
   const topicID = filterData[0];
 
+  const {authToken, status, userInfo} = useAppSelector(selectUserInfo);
+  interface ChildInfo {
+    _id: string;
+    age: string;
+    childid: string;
+    image: string;
+    imagename: string;
+    fname: string;
+    lname: string;
+    phone: string;
+    name: string;
+    boardname: string;
+    fathername: string;
+    mothername: string;
+    scholarship: object[];
+    // board: string;
+    subscriptionStartDate: string;
+    subscriptionEndDate: string;
+    isPremium: boolean;
+    parentid: string;
+    stage: string;
+    gender: string;
+    address: string;
+    alterphone: string;
+    schoolname: string;
+    language: string;
+    email: string;
+    // stageid: string;
+    // boardid: string;
+    classname: string;
+  }
+  const {
+    _id: id = '',
+    // stageid = '',
+    // boardid = '',
+    childid = '',
+    stage = '',
+    scholarship = [],
+    name: userName = '',
+    fname = '',
+    gender = '',
+    lname = '',
+    email = '',
+    phone = '',
+    // cityname = '',
+    image = '',
+    age = '',
+    address = '',
+    // cityid = '',
+    language = '',
+    // coordinates='',
+  } = userInfo;
+
   useEffect(() => {
-    dispatch(getTopicBySubIdAPI(subjectid));
+    const bodydata = {
+      subjectid: subjectid,
+      childid: childid,
+    };
+    dispatch(getTopicBySubIdAPI(bodydata));
     const data = {
       topicid: topicID,
     };
@@ -53,25 +116,25 @@ const TopicDetails = ({route}) => {
             justifyContent: 'center',
             marginVertical: 12,
             marginHorizontal: 20,
-            gap: 4
+            gap: 4,
           }}>
-            <Image
-              source={require('../../../assets/people.png')}
-              style={{
-                height: device_height * 0.065,
-                width: device_width * 0.16,
-                resizeMode: 'contain',
-                tintColor: '#FFFFFF',
-              }}
-            />
-            <Text
-              style={{
-                fontWeight: '400',
-                fontSize: 20,
-                color: '#FFFFFF',
-              }}>
-              {trans(subjectname)}
-            </Text>
+          <Image
+            source={require('../../../assets/people.png')}
+            style={{
+              height: device_height * 0.065,
+              width: device_width * 0.16,
+              resizeMode: 'contain',
+              tintColor: '#FFFFFF',
+            }}
+          />
+          <Text
+            style={{
+              fontWeight: '400',
+              fontSize: 20,
+              color: '#FFFFFF',
+            }}>
+            {trans(subjectname)}
+          </Text>
         </View>
         {TopicLoad == 'loading' ? (
           <LoadingScreen flag={TopicLoad == 'loading'} />
@@ -83,30 +146,42 @@ const TopicDetails = ({route}) => {
                 flexWrap: 'wrap',
                 alignContent: 'center',
                 marginHorizontal: 25,
-                marginBottom:16,
+                marginBottom: 16,
                 marginTop: 50,
                 justifyContent: 'center',
               }}>
               {TopicBySubjectId.map((item, index) => {
-                const {subjectname = '', topicname = ''} = item;
+                const {
+                  subjectname = '',
+                  topicname = '',
+                  studenttopic = [],
+                } = item;
+                const isDisabled = index !== 0 && studenttopic.length === 0;
                 return (
                   <View key={index}>
                     <TouchableOpacity
-                      onPress={() =>
-                        navigation.navigate('ContentDetails', {
-                          subjectname: subjectname,
-                          topicname: topicname,
-                        })
-                      }
+                      onPress={() => {
+                        if (isDisabled) {
+                          CommonMessage(
+                            'You have to complete previous level to unlock',
+                          );
+                        } else {
+                          navigation.navigate('ContentDetails', {
+                            subjectname: subjectname,
+                            topicname: topicname,
+                          });
+                        }
+                      }}
                       style={{
                         height: device_height * 0.09,
                         width: device_width * 0.35,
-                        backgroundColor:"#2C7DB5",
+                        backgroundColor: isDisabled ? '#CCCCCC' : '#2C7DB5',
                         borderRadius: 20,
                         marginHorizontal: 10,
                         marginVertical: 10,
                         justifyContent: 'center',
                         alignItems: 'center',
+                        opacity: isDisabled ? 0.5 : 1,
                       }}>
                       <Text
                         style={{
@@ -116,6 +191,15 @@ const TopicDetails = ({route}) => {
                         }}>
                         {trans(topicname)}
                       </Text>
+                      {isDisabled ? (
+                        <Fontisto
+                          style={{color: '#fff'}}
+                          name="locked"
+                          size={15}
+                        />
+                      ) : (
+                        <></>
+                      )}
                     </TouchableOpacity>
                   </View>
                 );
