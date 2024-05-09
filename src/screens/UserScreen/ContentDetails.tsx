@@ -16,6 +16,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import CommonMessage from '../../../constants/CommonMessage';
 import {useAppSelector} from '../../redux/store/reducerHook';
 import {
+  dataclearstate,
   getContentByTopicIdAPI,
   selectContentDetailsInfo,
 } from '../../redux/reducers/GetContentDetailsReducer';
@@ -23,6 +24,10 @@ import {selectTopicDetailsInfo} from '../../redux/reducers/GetTopicDetailsReduce
 import {selectTopicDetailsStatus} from '../../redux/reducers/GetTopicDetailsFormTopicIdReducer';
 import {selectUserInfo} from '../../redux/reducers/loginReducer';
 import LevelCompleted from '../UserScreen/LevelCompleted';
+import {
+  selectAllSubjectsInfo,
+  selectAllSubjectsStatus,
+} from '../../redux/reducers/GetSubjectByCourseReducer';
 
 const ContentDetails = ({route}) => {
   const navigation = useNavigation();
@@ -32,16 +37,16 @@ const ContentDetails = ({route}) => {
     coursename = '',
     subjectname = '',
     topicname = '',
-    percentage = '',
+    //percentage = '',
   } = route.params;
   console.log(
     coursename,
     subjectname,
     topicname,
-    percentage,
+    //percentage,
     '=======coursename, subjectname, topicname, percentage',
   );
-  const Percentage = Math.trunc(percentage);
+  //const Percentage = Math.trunc(percentage);
   const {authToken, status, userInfo} = useAppSelector(selectUserInfo);
   interface ChildInfo {
     _id: string;
@@ -105,6 +110,7 @@ const ContentDetails = ({route}) => {
   useEffect(() => {
     // dispatch(getTopicBySubIdAPI(subjectid));
     // setTopicId(topicID)
+    dispatch(dataclearstate());
     const data = {
       topicid: topicID,
       childid: childid,
@@ -121,29 +127,20 @@ const ContentDetails = ({route}) => {
     return () => {};
   }, [topicID]);
 
-  const ContentAvailable = [
-    {
-      contents: 'Current Affairs and Global Issues',
-      navigationfunc: () => CommonMessage('Coming Soon !'),
-    },
-    {
-      contents: 'Mythology and Folklore',
-      navigationfunc: () => CommonMessage('Coming Soon !'),
-    },
-    {
-      contents: 'History and Civilization',
-      navigationfunc: () => CommonMessage('Coming Soon !'),
-    },
-  ];
-  const [openCompleteModal, setOpenCompleteModal] = useState(false);
-  const openLevelCompleteModal = () => {
-    setOpenCompleteModal(true);
-  };
+  const SubjectByCourse = useAppSelector(selectAllSubjectsInfo);
+  const SubLoading = useAppSelector(selectAllSubjectsStatus);
+  console.log(SubjectByCourse, '########################$$$$SubjectByCourse');
 
   const ContentByTopicId = useAppSelector(selectContentDetailsInfo);
   const {reviewquestionsets = []} = ContentByTopicId[0]
     ? ContentByTopicId[0]
     : [];
+
+  console.log(reviewquestionsets.studentdata, '@@@@@@@@@@@@@@@@@@@@@@@review');
+
+  const lastIndex = reviewquestionsets[reviewquestionsets.length - 1] || {};
+  const { studentdata = [] } = lastIndex;
+  const lastCompletionPercentage = studentdata.length > 0 ? studentdata[0].percentage : 0;
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -235,7 +232,11 @@ const ContentDetails = ({route}) => {
                   topicimage = '',
                   //topicname = '',
                   videos = [],
+                  studentdata = [],
                 } = item;
+                const {percentage = ''} = studentdata[0] || {};
+                console.log(studentdata[0], '@@@@@@@@@@@studentdata');
+
                 return (
                   <View
                     key={index}
@@ -302,7 +303,7 @@ const ContentDetails = ({route}) => {
                           }}>
                           <View
                             style={{
-                              backgroundColor:'#2C7DB5',
+                              backgroundColor: '#2C7DB5',
                               height: 4,
                               width: '50%',
                               borderRadius: 4,
@@ -312,8 +313,9 @@ const ContentDetails = ({route}) => {
                             style={{
                               color: '#2C7DB5',
                               marginLeft: 10,
+                              width: '20%',
                             }}>
-                            {Percentage + '/100'}
+                            {`${percentage}%`}
                           </Text>
                         </View>
                         <TouchableOpacity
@@ -398,16 +400,8 @@ const ContentDetails = ({route}) => {
               </View>
             </>
           )}
-          <TouchableOpacity onPress={openLevelCompleteModal} style={{}}>
-            <Text
-              style={{
-                color: '#FFFFFF',
-              }}>
-              Completed
-            </Text>
-          </TouchableOpacity>
         </View>
-        {openCompleteModal && <LevelCompleted play={openCompleteModal} />}
+       {lastCompletionPercentage === 100 && <LevelCompleted />}
       </ScrollView>
     </SafeAreaView>
   );

@@ -37,7 +37,11 @@ export const getContentByTopicIdAPI = createAsyncThunk<
 export const ContentDetailsData = createSlice({
   name: 'contentdetails',
   initialState,
-  reducers: {},
+  reducers: {
+    dataclearstate: state => {
+      state.ContentDetailsInfo = [];
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(getContentByTopicIdAPI.pending, state => {
@@ -59,5 +63,6 @@ export const selectContentDetailsInfo = (state: RootState) =>
   state.ContentDetails.ContentDetailsInfo;
 export const selectContentDetailsStatus = (state: RootState) =>
   state.ContentDetails.status;
+export const {dataclearstate} = ContentDetailsData.actions;
 
 export default ContentDetailsData.reducer;

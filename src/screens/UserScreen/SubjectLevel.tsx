@@ -303,8 +303,16 @@ const SubjectLevel = ({route}) => {
                     } = item;
 
                     return (
+                      <TouchableOpacity key={index}
+                      onPress={() => {
+                        dispatch(getTopicBySubIdAPI(subjectid));
+                        navigation.navigate('TopicDetails', {
+                          coursename: coursename,
+                          subjectname: subjectname,
+                          subjectid: subjectid,
+                        });
+                      }}>
                       <View
-                        key={index}
                         style={{
                           flexDirection: 'row',
                           backgroundColor: '#2C7DB5',
@@ -339,13 +347,13 @@ const SubjectLevel = ({route}) => {
                             {trans(subjectname)}
                           </Text>
                           </View>
-                        <View
+                        {/* <View
                           style={{
                             flex: 1,
                             alignItems: 'flex-end',
                             justifyContent: 'center',
-                          }}>
-                          <TouchableOpacity
+                          }}> */}
+                          {/* <TouchableOpacity
                             onPress={() => {
                               dispatch(getTopicBySubIdAPI(subjectid));
                               navigation.navigate('TopicDetails', {
@@ -364,9 +372,10 @@ const SubjectLevel = ({route}) => {
                                 tintColor:'#FFFFFF'
                               }}
                             />
-                          </TouchableOpacity>
-                        </View>
+                          </TouchableOpacity> */}
+                        {/* </View> */}
                       </View>
+                      </TouchableOpacity>
                     );
                   })}
                 </>

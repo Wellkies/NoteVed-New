@@ -1,4 +1,4 @@
-import {SafeAreaView, StyleSheet, Text, View, Image} from 'react-native';
+import {SafeAreaView, StyleSheet, Text, View, Image,ScrollView} from 'react-native';
 import React, {useEffect} from 'react';
 import {device_width, device_height} from '../style';
 import {useNavigation} from '@react-navigation/native';
@@ -6,6 +6,7 @@ import {useDispatch} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useAppSelector} from '../../redux/store/reducerHook';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import {
   getTopicBySubIdAPI,
   selectTopicDetailsInfo,
@@ -44,6 +45,7 @@ const TopicDetails = ({route}) => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
+      
       <View
         style={{
           width: device_width,
@@ -85,6 +87,8 @@ const TopicDetails = ({route}) => {
           <LoadingScreen flag={TopicLoad == 'loading'} />
         ) : (
           <>
+          {TopicBySubjectId.length > 0 ? (
+                <>
             <View
               style={{
                 flexDirection: 'row',
@@ -96,13 +100,13 @@ const TopicDetails = ({route}) => {
                 justifyContent: 'center',
               }}>
               {TopicBySubjectId.map((item, index) => {
-                const isEnabled = index === 0;
+                //const isEnabled = index === 0;
                 const {topicname = ''} = item;
                 return (
                   <View key={index}>
                     <TouchableOpacity
                       onPress={() =>
-                        isEnabled &&
+                        // isEnabled &&
                         navigation.navigate('ContentDetails', {
                           coursename: coursename,
                           subjectname: subjectname,
@@ -132,6 +136,46 @@ const TopicDetails = ({route}) => {
                 );
               })}
             </View>
+            </>
+            ):
+            (
+              <>
+                <View
+                  style={{
+                    backgroundColor: 'burlywood',
+                    paddingVertical: 15,
+                    paddingHorizontal: 15,
+                    marginVertical: 10,
+                    marginHorizontal: 15,
+                    // borderRadius: 7,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexDirection: 'row',
+                  }}>
+                  <AntDesign
+                    style={{
+                      marginHorizontal: 10,
+                      borderWidth: 0,
+                    }}
+                    name={'infocirlce'}
+                    size={30}
+                    color={'darkgreen'}
+                  />
+                  <Text
+                    style={{
+                      color: '#333',
+                      fontWeight: '700',
+                      fontSize: 15,
+                      textAlign: 'center',
+                      // borderWidth: 1,
+                      // borderLeftWidth:1,
+                      width: '85%',
+                    }}>
+                    {trans('Currently No Content Added')}
+                  </Text>
+                </View>
+              </>
+            )}
           </>
         )}
         <View style={{position: 'relative'}}>
