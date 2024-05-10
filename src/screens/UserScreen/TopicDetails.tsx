@@ -43,7 +43,7 @@ const TopicDetails = ({route}) => {
   const TopicLoad = useAppSelector(selectTopicDetailsStatus);
 
   const filterData = TopicBySubjectId.map(rec => rec.topicid);
-  const topicID = filterData[0];
+  // const topicID = filterData[0];
   //const AllSubjectLevelData = useAppSelector(selectAllSubjectLevelInfo);
   // const filterSubjectData = AllSubjectLevelData.map(rec => rec.subjectid);
   // const subjectID = filterSubjectData[0];
@@ -108,9 +108,9 @@ const TopicDetails = ({route}) => {
       childid: childid,
     };
     dispatch(getTopicBySubIdAPI(bodydata));
-    const data = {
-      topicid: topicID,
-    };
+    // const data = {
+    //   topicid: topicID,
+    // };
     //dispatch(getContentByTopicIdAPI(data));
     return () => {};
   }, []);
@@ -125,6 +125,20 @@ const TopicDetails = ({route}) => {
           alignSelf: 'center',
           backgroundColor: '#1E1E1E',
         }}>
+           <TouchableOpacity onPress={() => navigation.goBack()}
+           style={{
+            position: 'absolute',
+            top: 30,
+            left: 20,
+           }}>
+              <MaterialIcons
+                name="arrow-back"
+                size={35}
+                style={{
+                  color: '#FFFFFF',
+                }}
+              />
+            </TouchableOpacity>
         <View
           style={{
             flexDirection: 'row',
@@ -134,22 +148,6 @@ const TopicDetails = ({route}) => {
             marginHorizontal: 20,
             gap: 4,
           }}>
-          <View
-            style={{
-              alignContent: 'center',
-              left: -40,
-            }}>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-              <MaterialIcons
-                name="arrow-back"
-                size={35}
-                style={{
-                  color: '#FFFFFF',
-                  marginRight: 10,
-                }}
-              />
-            </TouchableOpacity>
-          </View>
           <Image
             source={require('../../../assets/people.png')}
             style={{
@@ -157,7 +155,6 @@ const TopicDetails = ({route}) => {
               width: device_width * 0.17,
               resizeMode: 'contain',
               tintColor: '#FFFFFF',
-              left: -5
             }}
           />
           <Text
@@ -191,35 +188,48 @@ const TopicDetails = ({route}) => {
                     const {
                       //subjectname = '',
                       topicname = '',
+                      topicid = '',
                       studenttopic = [],
                     } = item;
-                    const isDisabled = index !== 0 && studenttopic.length === 0;
+                    console.log(
+                      studenttopic,
+                      'studenttopic%%%%%%%%%%%%%%%%%%%%%%%%%%%%',
+                    );
+                    const isLock =
+                      index !== 0 &&
+                      TopicBySubjectId[index - 1].studenttopic.length === 0;
                     return (
                       <View key={index}>
                         <TouchableOpacity
                           onPress={() => {
-                            if (isDisabled) {
+                            if (isLock) {
                               CommonMessage(
                                 'You have to complete previous level to unlock',
                               );
                             } else {
+                              const data = {
+                                topicid: topicid,
+                                childid: childid,
+                              };
+                              dispatch(getContentByTopicIdAPI(data));
                               navigation.navigate('ContentDetails', {
                                 coursename: coursename,
                                 subjectname: subjectname,
                                 topicname: topicname,
+                                topicid: topicid,
                               });
                             }
                           }}
                           style={{
                             height: device_height * 0.09,
                             width: device_width * 0.35,
-                            backgroundColor: isDisabled ? '#CCCCCC' : '#2C7DB5',
+                            backgroundColor: isLock ? '#CCCCCC' : '#2C7DB5',
                             borderRadius: 20,
                             marginHorizontal: 10,
                             marginVertical: 10,
                             justifyContent: 'center',
                             alignItems: 'center',
-                            opacity: isDisabled ? 0.5 : 1,
+                            opacity: isLock ? 0.5 : 1,
                           }}>
                           <Text
                             style={{
@@ -229,7 +239,7 @@ const TopicDetails = ({route}) => {
                             }}>
                             {trans(topicname)}
                           </Text>
-                          {isDisabled ? (
+                          {isLock ? (
                             <Fontisto
                               style={{color: '#fff'}}
                               name="locked"

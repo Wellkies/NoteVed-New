@@ -258,11 +258,16 @@ const SubjectLevel = ({route}) => {
             paddingHorizontal: 25,
             marginBottom: 30,
           }}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
+          <TouchableOpacity onPress={() => navigation.goBack()}
+          style={{
+            position: 'absolute',
+            top: 3,
+            left: 0,
+           }}>
             <MaterialIcons
-              name="arrow-back-ios"
-              size={28}
-              style={{color: '#FFFFFF', marginRight: 10}}
+              name="arrow-back"
+              size={35}
+              style={{color: '#FFFFFF'}}
             />
           </TouchableOpacity>
           <View style={{flex: 1, alignItems: 'center'}}>
@@ -303,16 +308,21 @@ const SubjectLevel = ({route}) => {
                     } = item;
 
                     return (
-                      <TouchableOpacity
-                        key={index}
-                        onPress={() => {
-                          dispatch(getTopicBySubIdAPI(subjectid));
-                          navigation.navigate('TopicDetails', {
-                            coursename: coursename,
-                            subjectname: subjectname,
-                            subjectid: subjectid,
-                          });
-                        }}
+                      <TouchableOpacity key={index}
+                      onPress={() => {
+                        const bodydata = {
+                          subjectid: subjectid,
+                          childid: childid,
+                        };
+                        dispatch(getTopicBySubIdAPI(bodydata));
+                        // dispatch(getTopicBySubIdAPI(subjectid));
+                        navigation.navigate('TopicDetails', {
+                          coursename: coursename,
+                          subjectname: subjectname,
+                          subjectid: subjectid,
+                        });
+                      }}>
+                      <View
                         style={{
                           flexDirection: 'row',
                           backgroundColor: '#2C7DB5',
@@ -385,7 +395,7 @@ const SubjectLevel = ({route}) => {
                             />
                           </TouchableOpacity> */}
                           {/* </View> */}
-                        {/* </View> */}
+                        </View>
                       </TouchableOpacity>
                     );
                   })}

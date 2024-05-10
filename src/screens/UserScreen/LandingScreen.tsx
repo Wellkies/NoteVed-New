@@ -241,18 +241,19 @@ const LandingScreen = ({}) => {
             onBackButtonPress={() => setModalVisible(false)}>
             <View
               style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <View
+              <LinearGradient
+                  colors={['#012650','#012650']}
                 style={{
-                  backgroundColor: '#222222',
+                  //backgroundColor: '#222222',
                   padding: 30,
                   borderRadius: 10,
                 }}>
                 <Text
-                  style={{marginBottom: 20, fontSize: 18, fontWeight: '600',color:'#D0D0D0'}}>
+                  style={{marginBottom: 20, fontSize: 18, fontWeight: '600',color:'#FFFFFF'}}>
                   {trans('Preparing for JNV and OAV entrance exam!')}
                 </Text>
                 <Text
-                  style={{marginBottom: 20, fontSize: 18, fontWeight: '500',color:'#D0D0D0'}}>
+                  style={{marginBottom: 20, fontSize: 18, fontWeight: '500',color:'#FFFFFF'}}>
                   {trans('Please download our app.')}
                 </Text>
                 <View
@@ -263,9 +264,10 @@ const LandingScreen = ({}) => {
                   }}>
                   <TouchableOpacity
                     style={{
-                      backgroundColor: '#51A1BE',
+                      backgroundColor: '#EEF8FB',
                       borderRadius: 10,
                       padding: 10,
+                      width: device_width * 0.25,
                     }}
                     onPress={() =>
                       Linking.openURL(
@@ -274,7 +276,7 @@ const LandingScreen = ({}) => {
                     }>
                     <Text
                       style={{
-                        color: '#FFFFFF',
+                        color: '#000000',
                         fontSize: 18,
                         fontWeight: '600',
                       }}>
@@ -300,7 +302,7 @@ const LandingScreen = ({}) => {
                     </Text>
                   </TouchableOpacity>
                 </View>
-              </View>
+              </LinearGradient>
             </View>
           </Modal>
         )}

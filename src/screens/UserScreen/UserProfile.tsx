@@ -93,7 +93,7 @@ const UserProfile = ({}) => {
   const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
   const count = useAppSelector(selectStudentStatus);
   const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
-  const {authToken,status,userInfo} = useAppSelector(selectUserInfo);
+  const {authToken, status, userInfo} = useAppSelector(selectUserInfo);
 
   console.log(userInfo, 'in STUDENT PROFILE.............');
   const {t: trans, i18n} = useTranslation();
@@ -110,14 +110,14 @@ const UserProfile = ({}) => {
   const Logout = async () => {
     const authValue = await Storage.removeValue('@auth_Token');
     const User = await Storage.removeValue('@user');
+    const navigation = useNavigation();
     dispatch(setLanguage(language));
-    console.log(language,"language######################################")
-    if(language=='')
-    {
+    console.log(language, 'language######################################');
+    if (language == '') {
       dispatch(setLanguage('english'));
     }
     // Storage.storeObject("@user_lang",language)
-    AsyncStorage.setItem("@user_lang", language);
+    AsyncStorage.setItem('@user_lang', language);
     // AsyncStorage.setItem('fcmToken', fcmToken);
     dispatch(logout());
   };
@@ -277,11 +277,11 @@ const UserProfile = ({}) => {
           height: device_height,
           flex: 1,
           alignSelf: 'center',
-          backgroundColor:'#272727'
+          backgroundColor: '#272727',
         }}
         // resizeMode="cover"
         // source={require('../../../assets/0.png')}
-        >
+      >
         <Header
           isbackIconShow={true}
           label1={trans('Profile')}

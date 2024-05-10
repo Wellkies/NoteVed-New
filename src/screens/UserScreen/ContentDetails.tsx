@@ -34,8 +34,21 @@ const ContentDetails = ({route}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch<any>();
   const {t: trans, i18n} = useTranslation();
-  const {coursename = '', subjectname = '', topicname = ''} = route.params;
-
+  const {
+    coursename = '',
+    // subjectname = '',
+    topicname = '',
+    topicid: topicID = '',
+    //percentage = '',
+  } = route.params;
+  console.log(
+    coursename,
+    // subjectname,
+    topicname,
+    //percentage,
+    '=======coursename, subjectname, topicname, percentage',
+  );
+  //const Percentage = Math.trunc(percentage);
   const {authToken, status, userInfo} = useAppSelector(selectUserInfo);
   interface ChildInfo {
     _id: string;
@@ -92,9 +105,9 @@ const ContentDetails = ({route}) => {
   const TopicBySubjectId = useAppSelector(selectTopicDetailsInfo);
   const TopicLoad = useAppSelector(selectTopicDetailsStatus);
 
-  const filterData = TopicBySubjectId.map(rec => rec.topicid);
+  // const filterData = TopicBySubjectId.map(rec => rec.topicid);
   // TopicBySubjectId.filter((rec) => rec.sltopic == 1)
-  const topicID = filterData[0];
+  // const topicID = filterData[0];
 
   useEffect(() => {
     // dispatch(getTopicBySubIdAPI(subjectid));
@@ -118,14 +131,18 @@ const ContentDetails = ({route}) => {
 
   const SubjectByCourse = useAppSelector(selectAllSubjectsInfo);
   const SubLoading = useAppSelector(selectAllSubjectsStatus);
-  console.log(SubjectByCourse, '########################$$$$SubjectByCourse');
+  //console.log(SubjectByCourse, '########################$$$$SubjectByCourse');
 
   const ContentByTopicId = useAppSelector(selectContentDetailsInfo);
-  const {reviewquestionsets = []} = ContentByTopicId[0]
-    ? ContentByTopicId[0]
-    : [];
+  const {
+    reviewquestionsets = [],
+    subjectid = '',
+    subjectname = '',
+    topic = '',
+    topicid = '',
+  } = ContentByTopicId[0] ? ContentByTopicId[0] : [];
 
-  console.log(reviewquestionsets.studentdata, '@@@@@@@@@@@@@@@@@@@@@@@review');
+  //console.log(reviewquestionsets.studentdata, '@@@@@@@@@@@@@@@@@@@@@@@review');
 
   // const lastIndex = reviewquestionsets[reviewquestionsets.length - 1] || {};
   // const {studentdata = []} = lastIndex;
@@ -137,6 +154,9 @@ const ContentDetails = ({route}) => {
 
   const percentageComplete = async () => {
     let allPercentagesAre90OrMore = true;
+    if (reviewquestionsets[0].studentdata.length === 0) {
+      return (allPercentagesAre90OrMore = false);
+    }
     for (const questionSet of reviewquestionsets) {
       for (const student of questionSet.studentdata) {
         if (student.percentage < 90) {
@@ -156,7 +176,6 @@ const ContentDetails = ({route}) => {
       const result = await percentageComplete();
       setAllIndexesContain90Percent(result);
     };
-
     if (reviewquestionsets.length > 0) {
       checkPercentages();
     }
@@ -177,33 +196,38 @@ const ContentDetails = ({route}) => {
             style={{
               alignItems: 'center',
               justifyContent: 'center',
-              marginVertical: 12,
+              marginVertical: 10,
               marginHorizontal: 20,
-              paddingVertical: 6,
-              paddingHorizontal: 25,
-              marginBottom: 28,
             }}>
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={{
+                position: 'absolute',
+                top: 30,
+                left: 0,
+              }}>
+              <MaterialIcons
+                name="arrow-back"
+                size={35}
+                style={{
+                  color: '#FFFFFF',
+                }}
+              />
+            </TouchableOpacity>
             <View
               style={{
                 flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginVertical: 12,
+                marginHorizontal: 20,
+                gap: 4,
               }}>
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-                <MaterialIcons
-                  name="arrow-back"
-                  size={35}
-                  style={{
-                    color: '#FFFFFF',
-                    marginRight: 10,
-                    left: -40,
-                    bottom: -10,
-                  }}
-                />
-              </TouchableOpacity>
               <Image
                 source={require('../../../assets/people.png')}
                 style={{
-                  height: device_height * 0.065,
-                  width: device_width * 0.16,
+                  height: device_height * 0.069,
+                  width: device_width * 0.17,
                   resizeMode: 'contain',
                   tintColor: '#FFFFFF',
                 }}
@@ -212,8 +236,6 @@ const ContentDetails = ({route}) => {
                 style={{
                   fontWeight: '400',
                   fontSize: 20,
-                  marginLeft: 10,
-                  marginVertical: 10,
                   color: '#FFFFFF',
                 }}>
                 {coursename !== 'Mind Melters' &&
@@ -222,7 +244,7 @@ const ContentDetails = ({route}) => {
                   : trans(subjectname)}
               </Text>
             </View>
-            <View
+            {/* <View
               style={{
                 backgroundColor: '#2C7DB5',
                 paddingVertical: 6,
@@ -240,7 +262,7 @@ const ContentDetails = ({route}) => {
                 }}>
                 {trans(topicname)}
               </Text>
-            </View>
+            </View> */}
           </View>
           {reviewquestionsets.length > 0 ? (
             <>
@@ -257,11 +279,9 @@ const ContentDetails = ({route}) => {
                   quiz = [],
                   slsubject = '',
                   sltopic = '',
-                  subjectid = '',
                   subjectimage = '',
                   // subjectname = '',
                   timeDuration = '',
-                  topicid = '',
                   topicimage = '',
                   //topicname = '',
                   videos = [],
@@ -269,22 +289,23 @@ const ContentDetails = ({route}) => {
                 } = item;
                 const {percentage = ''} = studentdata[0] || {};
                 const isReattempt = studentdata.length > 0;
-                console.log(studentdata[0], '@@@@@@@@@@@studentdata');
+                //console.log(studentdata[0], '@@@@@@@@@@@studentdata');
                 const islastexercise = reviewquestionsets.length === index + 1;
                 return (
                   <View
                     key={index}
                     style={{
                       flexDirection: 'row',
+                      //flex: 1,
                       alignContent: 'center',
                       backgroundColor: '#000000',
                       width: device_width * 0.95,
-                      height: device_height * 0.17,
+                      height: device_height * 0.18,
                       marginHorizontal: 10,
                       borderRadius: 12,
                       marginBottom: 5,
                       marginTop: 24,
-                      position: 'relative',
+                      //position: 'relative',
                       overflow: 'hidden',
                     }}>
                     <View style={{position: 'absolute', top: -10, right: -10}}>
@@ -328,7 +349,6 @@ const ContentDetails = ({route}) => {
                             fontWeight: '500',
                             fontSize: 18,
                             top: -10,
-                            
                           }}>
                           {trans(contentset)}
                         </Text>
@@ -373,6 +393,7 @@ const ContentDetails = ({route}) => {
                               timeDuration: timeDuration,
                               is2ndAvailable: index,
                               topicid: topicid,
+                              topic: topic,
                               islastexercise: islastexercise,
                             });
                           }}>
@@ -394,7 +415,7 @@ const ContentDetails = ({route}) => {
                                 color: '#FFFFFF',
                                 textAlign: 'center',
                                 fontSize: 16,
-                                fontWeight: '500'
+                                fontWeight: '500',
                               }}>
                               {isReattempt
                                 ? trans('Reattempt')

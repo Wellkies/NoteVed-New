@@ -83,6 +83,7 @@ const MockTests = ({route}) => {
     scholarshipName = '',
     is2ndAvailable = '',
     topicid = '',
+    topic = '',
     ExamQuestionsets: ContentQuiz = [],
     islastexercise = false,
     isReattempt = false,
@@ -184,8 +185,8 @@ const MockTests = ({route}) => {
           completestatus: 'false',
           topicDetails: [
             {
-              topicid: TopicId,
-              topic: chapterName,
+              topicid: topicid,
+              topic: topic,
               completestatus: 'true',
             },
           ],
@@ -324,30 +325,7 @@ const MockTests = ({route}) => {
         // percentage >= 90
         islastexercise
       ) {
-        // handleUnlockChapter();
-        const revisionbody = {
-          childid: childid,
-          subjectDetails: [
-            {
-              subjectid: subjectId,
-              subject: subjectName,
-              completestatus: 'false',
-              topicDetails: [
-                {
-                  topicid: TopicId,
-                  topic: chapterName,
-                  completestatus: 'true',
-                },
-              ],
-            },
-          ],
-        };
-        console.log(
-          revisionbody,
-          '********************revisionbody***********************',
-        );
-
-        AddChildRevisionAPI(revisionbody);
+        handleUnlockChapter();
       }
       // dispatch(
       answerReattemptSubmitApi(bodyReattemptAnswerData, handleCallback);

@@ -95,6 +95,7 @@ import {
 } from '../../redux/reducers/GetTopicIdReducer.ts';
 import {getChildProgressAPI} from '../../redux/reducers/GetChildProgressReducer.ts';
 import {selectUserInfo} from '../../redux/reducers/loginReducer.ts';
+import { getTopicBySubIdAPI } from '../../redux/reducers/GetTopicDetailsReducer.ts';
 // import PaymentReminderModal from './CommonScreens/PaymentReminderModal.js';
 
 const ScoreBoard = ({route}) => {
@@ -1250,7 +1251,12 @@ const ScoreBoard = ({route}) => {
                 marginVertical: 20,
               }}>
               <TouchableOpacity
-                onPress={() =>
+                onPress={() =>{
+                  const bodydata = {
+                    subjectid: subjectId,
+                    childid: childid,
+                  };
+                  dispatch(getTopicBySubIdAPI(bodydata));
                   navigation.navigate('TopicDetails', {
                     // stageid: '5',
                     // boardid: '1',
@@ -1260,7 +1266,7 @@ const ScoreBoard = ({route}) => {
                     subjectname: subjectName,
                     subjectid: subjectId,
                   })
-                }
+                }}
                 style={{
                   paddingVertical: 16,
                   borderRadius: 50,
