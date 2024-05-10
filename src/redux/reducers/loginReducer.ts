@@ -44,7 +44,7 @@ export const userSlice = createSlice({
       state.authToken = action.payload.authtoken;
     },
     logout: state => {
-      state.userInfo = {};
+      state.userInfo = null;
       state.authToken = null;
       AsyncStorage.clearStorage();
       AsyncStorage.removeValue('@user');
