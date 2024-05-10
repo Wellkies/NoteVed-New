@@ -108,9 +108,11 @@ const UserProfile = ({}) => {
   console.log(selectReason, 'selectReason...............');
 
   const Logout = async () => {
+    console.log("called");
+    dispatch(logout());
     const authValue = await Storage.removeValue('@auth_Token');
     const User = await Storage.removeValue('@user');
-    const navigation = useNavigation();
+    // const navigation = useNavigation();
     dispatch(setLanguage(language));
     console.log(language, 'language######################################');
     if (language == '') {
@@ -119,7 +121,6 @@ const UserProfile = ({}) => {
     // Storage.storeObject("@user_lang",language)
     AsyncStorage.setItem('@user_lang', language);
     // AsyncStorage.setItem('fcmToken', fcmToken);
-    dispatch(logout());
   };
 
   // };

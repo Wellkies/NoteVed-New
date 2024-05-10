@@ -392,7 +392,7 @@ const UserHome = () => {
   useEffect(() => {
     handleSelect();
 
-    const inappupdated = InAppUpdate.checkUpdate();
+    // const inappupdated = InAppUpdate.checkUpdate();
     // 
 
     // dispatch(getDailyFactByDateAPI());
