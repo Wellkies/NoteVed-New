@@ -516,7 +516,8 @@ const MockTests = ({route}) => {
             height: device_height,
             flex: 1,
             alignSelf: 'center',
-            backgroundColor: '#272727',
+            //backgroundColor: '#272727',
+            backgroundColor: '#1E1E1E',
           }}
           resizeMode="cover"
           // source={require('../../../assets/0.png')}
@@ -571,6 +572,7 @@ const MockTests = ({route}) => {
                     color: '#fff',
                     marginLeft: 5,
                     fontWeight: '700',
+                    fontSize:15
                   }}>
                   {trans('Quit Test')}
                 </Text>
@@ -599,7 +601,7 @@ const MockTests = ({route}) => {
                 // borderWidth:1,
               }}>
               <Progress.Bar
-                color={'#EBCB00'}
+                color={'#2C7DB5'}
                 progress={progressdata}
                 width={300}
                 height={7}
@@ -755,7 +757,7 @@ const MockTests = ({route}) => {
                         Questionlist[currentIndex]?.questiontype == 'image'
                           ? '49%'
                           : '100%',
-                      backgroundColor: selectedItem ? '#f1a722' : '#F0F0F0',
+                      backgroundColor: selectedItem ? '#2C7DB5' : '#F0F0F0',
                       // borderWidth:1,
                       marginVertical: 7,
                       borderColor: '#ccc',
@@ -773,7 +775,7 @@ const MockTests = ({route}) => {
                         borderColor: '#fff',
                         borderRadius: 15,
                         marginVertical: 5,
-                        backgroundColor: selectedItem ? '#f1a722' : '#F0F0F0',
+                        backgroundColor: selectedItem ? '#2C7DB5' : '#F0F0F0',
                       }}>
                       <View
                         style={{
@@ -788,7 +790,7 @@ const MockTests = ({route}) => {
                             fontSize: 15,
                             fontWeight: '700',
                             marginLeft: 15,
-                            color: selectedItem ? 'darkgreen' : '#333',
+                            color: selectedItem ? '#FFFFFF' : '#333',
                           }}>
                           {`(${label}) ${value}`}
                         </Text>
@@ -823,15 +825,15 @@ const MockTests = ({route}) => {
               }}>
               <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
                 <FontAwesome
-                  style={{color: currentIndex == 0 ? '#bbb' : '#f1a722'}}
+                  style={{color: currentIndex == 0 ? '#bbb' : '#FFFFFF'}}
                   name="chevron-left"
-                  size={16}
+                  size={18}
                 />
                 <Text
                   style={{
-                    fontSize: 16,
+                    fontSize: 18,
                     fontWeight: '600',
-                    color: currentIndex == 0 ? '#bbb' : '#f1a722',
+                    color: currentIndex == 0 ? '#bbb' : '#FFFFFF',
                     marginLeft: 10,
                   }}>
                   {trans('Previous')}
@@ -844,7 +846,7 @@ const MockTests = ({route}) => {
                   flexDirection: 'row',
                   alignItems: 'baseline',
                   // borderWidth: 1,
-                  backgroundColor: '#f1a722',
+                  backgroundColor: '#2C7DB5',
                   borderRadius: 8,
                 }}>
                 <TouchableOpacity
@@ -872,9 +874,9 @@ const MockTests = ({route}) => {
                   }}>
                   <Text
                     style={{
-                      fontSize: 16,
-                      fontWeight: '600',
-                      color: '#333',
+                      fontSize: 18,
+                      fontWeight: '700',
+                      color: '#FFFFFF',
                       // currentIndex == Questionlist.length - 1 ? '#bbb' : '#333',
                       // marginRight: 10,
                     }}>
@@ -893,7 +895,7 @@ const MockTests = ({route}) => {
                 style={{
                   flexDirection: 'row',
                   alignItems: 'baseline',
-                  backgroundColor: '#f1a722',
+                  backgroundColor: '#2C7DB5',
                   borderRadius: 10,
                   alignItems: 'center',
                   // marginLeft:10
@@ -911,9 +913,9 @@ const MockTests = ({route}) => {
                   }}>
                   <Text
                     style={{
-                      fontSize: 16,
+                      fontSize: 18,
                       fontWeight: '900',
-                      color: 'green',
+                      color: '#FFFFFF',
                     }}>
                     {trans('Submit')}
                   </Text>
@@ -946,12 +948,12 @@ const MockTests = ({route}) => {
                   }}>
                   <Text
                     style={{
-                      fontSize: 16,
+                      fontSize: 18,
                       fontWeight: '600',
                       color:
                         currentIndex == Questionlist.length - 1
                           ? '#bbb'
-                          : '#f1a722',
+                          : '#FFFFFF',
                       marginRight: 10,
                     }}>
                     {trans('Next')}
@@ -961,7 +963,7 @@ const MockTests = ({route}) => {
                       color:
                         currentIndex == Questionlist.length - 1
                           ? '#bbb'
-                          : '#f1a722',
+                          : '#FFFFFF',
                     }}
                     name="chevron-right"
                     size={16}

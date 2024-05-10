@@ -27,7 +27,8 @@ const Header = ({isbackIconShow = false, label1, label2, functionName}) => {
                 // backgroundColor={'#263d2d'}
                 // color={'#fff'}
                 // color={'darkgreen'}
-                color={'darkorange'}
+                //color={'darkorange'}
+                color ={'#FFFFFF'}
                 onPress={() => functionName()}
               />
             </TouchableOpacity>
@@ -38,11 +39,12 @@ const Header = ({isbackIconShow = false, label1, label2, functionName}) => {
             style={{
               fontSize: 20,
               // color: '#fff',
-              color:'darkorange',
+              //color:'darkorange',
+              color:'#FFFFFF',
               marginLeft: 10,
               marginTop:10,
               textTransform: 'capitalize',
-              fontWeight: '600',
+              fontWeight: '700',
             }}>
             {label1}
           </Text>

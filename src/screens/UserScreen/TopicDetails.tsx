@@ -24,6 +24,7 @@ import LoadingScreen from '../CommonScreens/LoadingScreen';
 import {selectUserInfo} from '../../redux/reducers/loginReducer';
 import CommonMessage from '../../../constants/CommonMessage';
 import Fontisto from 'react-native-vector-icons/Fontisto';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {getContentByTopicIdAPI} from '../../redux/reducers/GetContentDetailsReducer';
 import {
   getAllSubjectLevelDataAPI,
@@ -48,7 +49,6 @@ const TopicDetails = ({route}) => {
   // const subjectID = filterSubjectData[0];
   //console.log(subjectID,'==========!!subjectID')
 
-  
   const {authToken, status, userInfo} = useAppSelector(selectUserInfo);
   interface ChildInfo {
     _id: string;
@@ -134,13 +134,30 @@ const TopicDetails = ({route}) => {
             marginHorizontal: 20,
             gap: 4,
           }}>
+          <View
+            style={{
+              alignContent: 'center',
+              left: -40,
+            }}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <MaterialIcons
+                name="arrow-back"
+                size={35}
+                style={{
+                  color: '#FFFFFF',
+                  marginRight: 10,
+                }}
+              />
+            </TouchableOpacity>
+          </View>
           <Image
             source={require('../../../assets/people.png')}
             style={{
-              height: device_height * 0.065,
-              width: device_width * 0.16,
+              height: device_height * 0.069,
+              width: device_width * 0.17,
               resizeMode: 'contain',
               tintColor: '#FFFFFF',
+              left: -5
             }}
           />
           <Text
@@ -172,7 +189,7 @@ const TopicDetails = ({route}) => {
                   }}>
                   {TopicBySubjectId.map((item, index) => {
                     const {
-                      subjectname = '',
+                      //subjectname = '',
                       topicname = '',
                       studenttopic = [],
                     } = item;

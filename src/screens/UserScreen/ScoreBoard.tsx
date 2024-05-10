@@ -840,7 +840,8 @@ const ScoreBoard = ({route}) => {
           height: device_height,
           flex: 1,
           alignSelf: 'center',
-          backgroundColor: '#272727',
+          backgroundColor: '#1E1E1E'
+          //backgroundColor: '#272727',
         }}
         resizeMode="cover"
         // source={require('../../../assets/0.png')}
@@ -872,7 +873,7 @@ const ScoreBoard = ({route}) => {
                   justifyContent: 'center',
                   alignItems: 'center',
                   // backgroundColor: 'rgba(0,255,0, 0.1)',
-                  backgroundColor: '#272727',
+                  backgroundColor: '#2C7DB5',
                   borderWidth: 2,
                   height: '43%',
                   // borderColor: '#FFB901',
@@ -911,7 +912,8 @@ const ScoreBoard = ({route}) => {
                     <Text
                       style={{
                         fontSize: 20,
-                        color: '#FFB901',
+                        //color: '#FFB901',
+                        color: '#FFFFFF',
                         fontWeight: 'bold',
                         textTransform: 'uppercase',
                       }}>
@@ -921,7 +923,7 @@ const ScoreBoard = ({route}) => {
                     <Text
                       style={{
                         fontSize: 20,
-                        color: '#FFB901',
+                        color: '#FFFFFF',
                         fontWeight: 'bold',
                         textTransform: 'uppercase',
                       }}>
@@ -943,7 +945,7 @@ const ScoreBoard = ({route}) => {
                   <Text
                     style={{
                       fontSize: 15,
-                      color: '#FFB901',
+                      color: '#FFFFFF',
                       fontWeight: 'bold',
                       textTransform: 'capitalize',
                       textAlign: 'center',
@@ -1012,8 +1014,9 @@ const ScoreBoard = ({route}) => {
                     // borderRightWidth: 0.5,
                     paddingVertical: 10,
                     borderWidth: 1,
-                    borderColor: '#0f6f25',
-                    backgroundColor: '#0f6f25',
+                    borderColor: '#FFFFFF',
+                    //backgroundColor: '#0f6f25',
+                    backgroundColor: '#2C7DB5',
                     borderRadius: 15,
                     // borderBottomLeftRadius: 15,
                     // borderTopLeftRadius: 15,
@@ -1024,7 +1027,7 @@ const ScoreBoard = ({route}) => {
                       fontSize: 17,
                       fontWeight: 700,
                       // color: '#FFB901',
-                      color: '#fff',
+                      color: '#FFFFFF',
                     }}>
                     {trans('DETAILS')}
                   </Text>
@@ -1092,10 +1095,12 @@ const ScoreBoard = ({route}) => {
                   height: '39%',
                   // borderWidth:1,
                 }}>
-                <View
+                <LinearGradient
+                colors={['#012650','#012650']}
                   style={{
                     width: '100%',
-                    backgroundColor: 'rgba(0,255,0, 0.1)',
+                    //backgroundColor: 'rgba(0,255,0, 0.1)',
+                    backgroundColor:'#C4E6E8',
                     // borderRadius: 10,
                     paddingVertical: 30,
                     paddingHorizontal: 20,
@@ -1230,7 +1235,7 @@ const ScoreBoard = ({route}) => {
                       {`${percentage}%`}
                     </Text>
                   </View>
-                </View>
+                </LinearGradient>
               </View>
             </ViewShot>
 
@@ -1263,15 +1268,16 @@ const ScoreBoard = ({route}) => {
                   marginVertical: 15,
                   marginRight: 10,
                   padding: 15,
-                  borderWidth: 1,
-                  borderColor: '#FFB901',
+                  borderWidth: 0.5,
+                  borderColor: '#FFFFFF',
                   // backgroundColor: '#FFB901',
-                  backgroundColor: '#fff',
+                  backgroundColor: '#2C7DB5',
                 }}>
                 <Text
                   style={{
-                    color: '#0f6f25',
-                    fontSize: 16,
+                    //color: '#0f6f25',
+                    color:'#FFFFFF',
+                    fontSize: 18,
                     fontWeight: '700',
                     textAlign: 'center',
                   }}>
@@ -1369,9 +1375,9 @@ const ScoreBoard = ({route}) => {
                   flexDirection: 'row',
                   justifyContent: 'center',
                   borderWidth: 1,
-                  borderColor: '#FFB901',
+                  borderColor: '#FFFFFF',
                   // backgroundColor: '#FFB901',
-                  backgroundColor: '#fff',
+                  backgroundColor: '#2C7DB5',
                 }}>
                 {ansloading == true ? (
                   <ActivityIndicator
@@ -1388,8 +1394,8 @@ const ScoreBoard = ({route}) => {
                 )}
                 <Text
                   style={{
-                    color: '#0f6f25',
-                    fontSize: 16,
+                    color: '#FFFFFF',
+                    fontSize: 18,
                     fontWeight: '700',
                     textAlign: 'center',
                   }}>

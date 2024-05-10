@@ -13,6 +13,7 @@ import {useDispatch} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import {device_height, device_width} from '../style';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CommonMessage from '../../../constants/CommonMessage';
 import {useAppSelector} from '../../redux/store/reducerHook';
 import {
@@ -33,20 +34,8 @@ const ContentDetails = ({route}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch<any>();
   const {t: trans, i18n} = useTranslation();
-  const {
-    coursename = '',
-    subjectname = '',
-    topicname = '',
-    //percentage = '',
-  } = route.params;
-  console.log(
-    coursename,
-    subjectname,
-    topicname,
-    //percentage,
-    '=======coursename, subjectname, topicname, percentage',
-  );
-  //const Percentage = Math.trunc(percentage);
+  const {coursename = '', subjectname = '', topicname = ''} = route.params;
+
   const {authToken, status, userInfo} = useAppSelector(selectUserInfo);
   interface ChildInfo {
     _id: string;
@@ -138,10 +127,40 @@ const ContentDetails = ({route}) => {
 
   console.log(reviewquestionsets.studentdata, '@@@@@@@@@@@@@@@@@@@@@@@review');
 
-  const lastIndex = reviewquestionsets[reviewquestionsets.length - 1] || {};
-  const {studentdata = []} = lastIndex;
-  const lastCompletionPercentage =
-    studentdata.length > 0 ? studentdata[0].percentage : 0;
+  // const lastIndex = reviewquestionsets[reviewquestionsets.length - 1] || {};
+  // const {studentdata = []} = lastIndex;
+  // const lastCompletionPercentage =
+  //   studentdata.length > 0 ? studentdata[0].percentage : 0;
+
+  const [allIndexesContain90Percent, setAllIndexesContain90Percent] =
+    useState(false);
+
+  const percentageComplete = async () => {
+    let allPercentagesAre90OrMore = true;
+    for (const questionSet of reviewquestionsets) {
+      for (const student of questionSet.studentdata) {
+        if (student.percentage < 90) {
+          allPercentagesAre90OrMore = false;
+          break;
+        }
+        await new Promise(resolve => setTimeout(resolve, 0));
+      }
+      if (!allPercentagesAre90OrMore) {
+        break;
+      }
+    }
+    return allPercentagesAre90OrMore;
+  };
+  useEffect(() => {
+    const checkPercentages = async () => {
+      const result = await percentageComplete();
+      setAllIndexesContain90Percent(result);
+    };
+
+    if (reviewquestionsets.length > 0) {
+      checkPercentages();
+    }
+  }, [reviewquestionsets]);
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -168,6 +187,18 @@ const ContentDetails = ({route}) => {
               style={{
                 flexDirection: 'row',
               }}>
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <MaterialIcons
+                  name="arrow-back"
+                  size={35}
+                  style={{
+                    color: '#FFFFFF',
+                    marginRight: 10,
+                    left: -40,
+                    bottom: -10,
+                  }}
+                />
+              </TouchableOpacity>
               <Image
                 source={require('../../../assets/people.png')}
                 style={{
@@ -198,6 +229,7 @@ const ContentDetails = ({route}) => {
                 paddingHorizontal: 20,
                 borderRadius: 7,
                 marginHorizontal: 20,
+                right: -15,
               }}>
               <Text
                 style={{
@@ -288,6 +320,7 @@ const ContentDetails = ({route}) => {
                         style={{
                           marginHorizontal: 20,
                           flexDirection: 'column',
+                          width: device_width * 0.58,
                         }}>
                         <Text
                           style={{
@@ -295,6 +328,7 @@ const ContentDetails = ({route}) => {
                             fontWeight: '500',
                             fontSize: 18,
                             top: -10,
+                            
                           }}>
                           {trans(contentset)}
                         </Text>
@@ -344,18 +378,24 @@ const ContentDetails = ({route}) => {
                           }}>
                           <View
                             style={{
-                              paddingVertical: 4,
+                              paddingVertical: 8,
                               paddingHorizontal: 10,
                               borderRadius: 10,
                               marginRight: 8,
                               borderWidth: 1.2,
                               borderColor: '#2C7DB5',
+                              backgroundColor: '#2C7DB5',
                               width: device_width * 0.3,
                               bottom: -10,
                               left: -2,
                             }}>
                             <Text
-                              style={{color: '#FFFFFF', textAlign: 'center'}}>
+                              style={{
+                                color: '#FFFFFF',
+                                textAlign: 'center',
+                                fontSize: 16,
+                                fontWeight: '500'
+                              }}>
                               {isReattempt
                                 ? trans('Reattempt')
                                 : trans('Continue')}
@@ -407,7 +447,7 @@ const ContentDetails = ({route}) => {
             </>
           )}
         </View>
-        {lastCompletionPercentage === 100 && <LevelCompleted />}
+        {allIndexesContain90Percent && <LevelCompleted />}
       </ScrollView>
     </SafeAreaView>
   );

@@ -358,9 +358,10 @@ const AnswerSheet = ({route}) => {
           height: device_height,
           flex: 1,
           alignSelf: 'center',
-          backgroundColor: '#272727',
+         // backgroundColor: '#272727',
+         backgroundColor:'#1E1E1E',
         }}
-        resizeMode="cover"
+        //resizeMode="cover"
         // source={require('../../../assets/0.png')}
       >
         <Header
@@ -373,7 +374,7 @@ const AnswerSheet = ({route}) => {
         <View style={{flexDirection: 'row', justifyContent: 'center'}}>
           <Text
             style={{
-              color: '#fff',
+              color: '#FFFFFF',
               fontSize: 20,
               fontWeight: 500,
               textTransform: 'capitalize',
@@ -727,14 +728,15 @@ const AnswerSheet = ({route}) => {
                 );
               } else {
                 return (
-                  <TouchableOpacity
+                  <LinearGradient
+                  colors={['#012650','#012650']}
                     key={index}
-                    disabled={true}
+                    //disabled={true}
                     style={{
                       // elevation: 15,
                       width: '96%',
                       alignSelf: 'center',
-                      backgroundColor: 'rgba(0,255,0, 0.1)',
+                      backgroundColor: '#2E2E2E',
                       marginTop: 10,
                       padding: 10,
                       // justifyContent: 'center',
@@ -935,7 +937,7 @@ const AnswerSheet = ({route}) => {
                         </TouchableOpacity>
                       )}
                     </View>
-                  </TouchableOpacity>
+                  </LinearGradient>
                 );
               }
             })}
@@ -951,7 +953,7 @@ const AnswerSheet = ({route}) => {
                 });
               }}
               style={{
-                backgroundColor: '#FFB901',
+                backgroundColor: '#2C7DB5',
                 width: device_width * 0.2,
                 justifyContent: 'center',
                 borderRadius: 10,

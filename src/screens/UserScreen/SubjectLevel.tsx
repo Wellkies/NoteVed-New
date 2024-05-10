@@ -303,51 +303,62 @@ const SubjectLevel = ({route}) => {
                     } = item;
 
                     return (
-                      <TouchableOpacity key={index}
-                      onPress={() => {
-                        dispatch(getTopicBySubIdAPI(subjectid));
-                        navigation.navigate('TopicDetails', {
-                          coursename: coursename,
-                          subjectname: subjectname,
-                          subjectid: subjectid,
-                        });
-                      }}>
-                      <View
+                      <TouchableOpacity
+                        key={index}
+                        onPress={() => {
+                          dispatch(getTopicBySubIdAPI(subjectid));
+                          navigation.navigate('TopicDetails', {
+                            coursename: coursename,
+                            subjectname: subjectname,
+                            subjectid: subjectid,
+                          });
+                        }}
                         style={{
                           flexDirection: 'row',
                           backgroundColor: '#2C7DB5',
                           width: device_width * 0.95,
                           height: device_height * 0.09,
                           marginHorizontal: 10,
-                          paddingHorizontal:10,
+                          paddingHorizontal: 10,
                           borderRadius: 12,
                           marginBottom: 15,
                         }}>
-                        <View
+                        {/* <View
                           style={{
                             flexDirection: 'row',
-                            alignItems: 'center',
-                            gap:12
-                          }}>
-                          <Image
-                            source={require('../../../assets/people.png')}
+                            backgroundColor: '#2C7DB5',
+                            width: device_width * 0.95,
+                            height: device_height * 0.09,
+                            marginHorizontal: 10,
+                            paddingHorizontal: 10,
+                            borderRadius: 12,
+                            marginBottom: 15,
+                          }}> */}
+                          <View
                             style={{
-                              height: device_height * 0.21,
-                              width: device_width * 0.15,
-                              resizeMode: 'contain',
-                              tintColor:'#FFFFFF'
-                            }}
-                          />
-                          <Text
-                            style={{
-                              color: '#FFFFFF',
-                              fontWeight: '500',
-                              fontSize: 20,
+                              flexDirection: 'row',
+                              alignItems: 'center',
+                              gap: 12,
                             }}>
-                            {trans(subjectname)}
-                          </Text>
+                            <Image
+                              source={require('../../../assets/people.png')}
+                              style={{
+                                height: device_height * 0.21,
+                                width: device_width * 0.15,
+                                resizeMode: 'contain',
+                                tintColor: '#FFFFFF',
+                              }}
+                            />
+                            <Text
+                              style={{
+                                color: '#FFFFFF',
+                                fontWeight: '500',
+                                fontSize: 20,
+                              }}>
+                              {trans(subjectname)}
+                            </Text>
                           </View>
-                        {/* <View
+                          {/* <View
                           style={{
                             flex: 1,
                             alignItems: 'flex-end',
@@ -373,8 +384,8 @@ const SubjectLevel = ({route}) => {
                               }}
                             />
                           </TouchableOpacity> */}
+                          {/* </View> */}
                         {/* </View> */}
-                      </View>
                       </TouchableOpacity>
                     );
                   })}
