@@ -70,7 +70,7 @@ const MockTests = ({route}) => {
   const {
     screenName = '',
     subjectName = '',
-    coursename ='',
+    coursename = '',
     chapterName = '',
     examSet = '',
     // quiz = [],
@@ -84,7 +84,7 @@ const MockTests = ({route}) => {
     is2ndAvailable = '',
     topicid = '',
     ExamQuestionsets: ContentQuiz = [],
-    lastexercise = false,
+    islastexercise = false,
     isReattempt = false,
   } = route.params;
   console.log(route.params, 'route.params........?///////////////');
@@ -197,7 +197,7 @@ const MockTests = ({route}) => {
       '********************revisionbody***********************',
     );
 
-    // AddChildRevisionAPI(revisionbody);
+    AddChildRevisionAPI(revisionbody);
   };
 
   const handleselectAnswer = (answerid: string, index: number) => {
@@ -244,7 +244,7 @@ const MockTests = ({route}) => {
       topicName: chapterName,
       ExamQuestionsets: quiz,
       subjectName: subjectName,
-      coursename:coursename,
+      coursename: coursename,
       chapterName: chapterName,
       examSet: examSet,
       quiz: Questionlist,
@@ -318,13 +318,37 @@ const MockTests = ({route}) => {
       //   // console.log( ContentIndex != -1 ,
       //   //   ContentIndex == selectedTopic.reviewquestionsets.length - 1 ,
       //   //   percentage >= 90,"*****************************")
-      //   if (
-      //     ContentIndex != -1 &&
-      //     ContentIndex == selectedTopic.reviewquestionsets.length - 1 &&
-      //     percentage >= 90
-      //   ) {
-      //     handleUnlockChapter();
-      //   }
+      if (
+        // ContentIndex != -1 &&
+        // ContentIndex == selectedTopic.reviewquestionsets.length - 1 &&
+        // percentage >= 90
+        islastexercise
+      ) {
+        // handleUnlockChapter();
+        const revisionbody = {
+          childid: childid,
+          subjectDetails: [
+            {
+              subjectid: subjectId,
+              subject: subjectName,
+              completestatus: 'false',
+              topicDetails: [
+                {
+                  topicid: TopicId,
+                  topic: chapterName,
+                  completestatus: 'true',
+                },
+              ],
+            },
+          ],
+        };
+        console.log(
+          revisionbody,
+          '********************revisionbody***********************',
+        );
+
+        AddChildRevisionAPI(revisionbody);
+      }
       // dispatch(
       answerReattemptSubmitApi(bodyReattemptAnswerData, handleCallback);
       // );
@@ -394,9 +418,10 @@ const MockTests = ({route}) => {
       //   handleUnlockChapter();
       // }
       if (
-        ContentIndex != -1 &&
-        ContentIndex == selectedTopic.reviewquestionsets.length - 1 &&
-        percentage >= 90
+        // ContentIndex != -1 &&
+        // ContentIndex == selectedTopic.reviewquestionsets.length - 1 &&
+        // percentage >= 90
+        islastexercise
       ) {
         handleUnlockChapter();
       }

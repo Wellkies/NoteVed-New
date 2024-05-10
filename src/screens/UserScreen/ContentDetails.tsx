@@ -139,8 +139,9 @@ const ContentDetails = ({route}) => {
   console.log(reviewquestionsets.studentdata, '@@@@@@@@@@@@@@@@@@@@@@@review');
 
   const lastIndex = reviewquestionsets[reviewquestionsets.length - 1] || {};
-  const { studentdata = [] } = lastIndex;
-  const lastCompletionPercentage = studentdata.length > 0 ? studentdata[0].percentage : 0;
+  const {studentdata = []} = lastIndex;
+  const lastCompletionPercentage =
+    studentdata.length > 0 ? studentdata[0].percentage : 0;
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -237,7 +238,7 @@ const ContentDetails = ({route}) => {
                 const {percentage = ''} = studentdata[0] || {};
                 const isReattempt = studentdata.length > 0;
                 console.log(studentdata[0], '@@@@@@@@@@@studentdata');
-                const lastexercise = reviewquestionsets.length === index + 1;
+                const islastexercise = reviewquestionsets.length === index + 1;
                 return (
                   <View
                     key={index}
@@ -338,7 +339,7 @@ const ContentDetails = ({route}) => {
                               timeDuration: timeDuration,
                               is2ndAvailable: index,
                               topicid: topicid,
-                              lastexercise: false,
+                              islastexercise: islastexercise,
                             });
                           }}>
                           <View
@@ -406,7 +407,7 @@ const ContentDetails = ({route}) => {
             </>
           )}
         </View>
-       {lastCompletionPercentage === 100 && <LevelCompleted />}
+        {lastCompletionPercentage === 100 && <LevelCompleted />}
       </ScrollView>
     </SafeAreaView>
   );

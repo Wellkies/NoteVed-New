@@ -196,7 +196,7 @@ export const GET_ORDER_DETAILS_URL = API_URL + 'getedchildOrdersbyorderid/';
 export const DELETE_USER_URL = API_URL + 'createeddeleteAccount';
 export const GET_CHILD_REVISION_DETAILS_URL =
   API_URL + 'gettopicompletewithchild';
-export const ADD_CHILD_REVISION_URL = API_URL + 'addedchildrevisiondetails';
+export const ADD_CHILD_REVISION_URL = API_URL + 'edzaddchildrevisiondetails';
 
 export const CREATE_CHILD_ABOVE_90_PERCENTAGE_BSE_URL =
   API_URL + 'edWatipercentchildodia';

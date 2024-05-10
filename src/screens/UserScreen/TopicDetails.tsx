@@ -47,6 +47,61 @@ const TopicDetails = ({route}) => {
   // const filterSubjectData = AllSubjectLevelData.map(rec => rec.subjectid);
   // const subjectID = filterSubjectData[0];
   //console.log(subjectID,'==========!!subjectID')
+
+  
+  const {authToken, status, userInfo} = useAppSelector(selectUserInfo);
+  interface ChildInfo {
+    _id: string;
+    age: string;
+    childid: string;
+    image: string;
+    imagename: string;
+    fname: string;
+    lname: string;
+    phone: string;
+    name: string;
+    boardname: string;
+    fathername: string;
+    mothername: string;
+    scholarship: object[];
+    // board: string;
+    subscriptionStartDate: string;
+    subscriptionEndDate: string;
+    isPremium: boolean;
+    parentid: string;
+    stage: string;
+    gender: string;
+    address: string;
+    alterphone: string;
+    schoolname: string;
+    language: string;
+    email: string;
+    // stageid: string;
+    // boardid: string;
+    classname: string;
+  }
+  const {
+    _id: id = '',
+    // stageid = '',
+    // boardid = '',
+    childid = '',
+    stage = '',
+    scholarship = [],
+    name: userName = '',
+    fname = '',
+    gender = '',
+    lname = '',
+    email = '',
+    phone = '',
+    // cityname = '',
+    image = '',
+    age = '',
+    address = '',
+    // cityid = '',
+    language = '',
+    // coordinates='',
+  } = userInfo;
+
   useEffect(() => {
     const bodydata = {
       subjectid: subjectid,
