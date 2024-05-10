@@ -305,7 +305,12 @@ const SubjectLevel = ({route}) => {
                     return (
                       <TouchableOpacity key={index}
                       onPress={() => {
-                        dispatch(getTopicBySubIdAPI(subjectid));
+                        const bodydata = {
+                          subjectid: subjectid,
+                          childid: childid,
+                        };
+                        dispatch(getTopicBySubIdAPI(bodydata));
+                        // dispatch(getTopicBySubIdAPI(subjectid));
                         navigation.navigate('TopicDetails', {
                           coursename: coursename,
                           subjectname: subjectname,

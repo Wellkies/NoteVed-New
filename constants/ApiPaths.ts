@@ -18,15 +18,17 @@ export const REGISTER_CHILD_URL = API_URL + 'registerChild';
 export const UPDATE_CHILD_API = API_URL + 'updatechild';
 export const DELETE_CHILD_URL = API_URL + 'deletechild';
 
-
 //===============================NEW PROJECT================================//
 export const EDZ_REGISTER_NEW_CHILD_URL = API_URL + 'edzcreateChild';
 export const EDZ_PHONE_NUM_VERIFY_URL = API_URL + 'edzphoneNumbercheck/';
-export const EDZ_LOGIN_WITH_PASSWORD_URL = API_URL + 'edzchildlogiusingpassword';
+export const EDZ_LOGIN_WITH_PASSWORD_URL =
+  API_URL + 'edzchildlogiusingpassword';
 export const GET_CHILD_DETAILS_URL = API_URL + 'edzgetChildbyid/';
 export const GET_ALL_COURSES_URL = API_URL + 'getCourse';
 export const GET_ALL_SUBJECTS_BY_COURSE_URL = API_URL + 'getAllsubject';
-export const GET_TOPICS_BY_SUBJECTID_URL = API_URL + 'getTopicbysubjectid/';
+// export const GET_TOPICS_BY_SUBJECTID_URL = API_URL + 'getTopicbysubjectid/';
+export const GET_TOPICS_BY_SUBJECTID_URL =
+  API_URL + 'getTopicbysubjectidandchildid/';
 export const GET_CONTENT_BY_TOPICID_URL = API_URL + 'edzgetContentbytopicid/';
 export const GET_ALL_CHILD_CONTENT_URL = API_URL + 'edzgetAllchildContent/';
 export const EDZ_ANSWER_SUBMIT_URL = API_URL + 'edzcreatechildcontent';
@@ -35,13 +37,12 @@ export const EDZ_GET_ALL_MEMBERSHIP = API_URL + 'edzgetAllmembership';
 export const GET_ALL_SUBJECT_LEVELS = API_URL + 'getAllsubjectlevels';
 //=========================================================================//
 
-
 export const GET_CHILD_PROGRESS_URL = API_URL + 'getChildonProgressDetils/';
 
 export const GET_ANSWER_BY_SUBMIT_URL = API_URL + 'postchildcontent';
 
 export const GET_REATTEMPT_ANSWER_BY_SUBMIT_URL =
-  API_URL + 'updatechild-content';
+  API_URL + 'edzupdatechildcontent';
 
 export const ALL_SUBJECT_EXAM_URL = API_URL + 'getalledContent';
 
@@ -85,7 +86,8 @@ export const GET_CHILD_PROBABLE_QUES_DETAILS_URL =
   API_URL + 'getchildmostprobablequestiondetails/';
 
 export const CREATE_FCM_TOKEN_URL = API_URL + 'createedfcmToken';
-export const CREATE_FCM_TOKEN_WITH_DEVICE_URL = API_URL + 'createedfcmTokenwithdeviceid';
+export const CREATE_FCM_TOKEN_WITH_DEVICE_URL =
+  API_URL + 'createedfcmTokenwithdeviceid';
 
 export const UPLOAD_PHOTO_URL = API_URL + 'uploadFile';
 export const DELETE_PHOTO_URL = API_URL + 'deletefile/';
@@ -98,15 +100,14 @@ export const GET_EMERGENCY_MSG_URL = API_URL + 'getedemergencymessage/';
 export const CREATE_ADDRESS_URL = API_URL + 'createedUserDeliveryadress';
 export const DELETE_USER_ADDRESS_URL = API_URL + 'deleteedUserAdress/';
 export const UPDATE_USER_ADDRESS_URL = API_URL + 'updateedUserAdress';
-export const GET_USER_ADDRESS_BY_CHILD_URL = API_URL + 'geteduseradressbyuserid/'; 
+export const GET_USER_ADDRESS_BY_CHILD_URL =
+  API_URL + 'geteduseradressbyuserid/';
 export const GET_ADDRESS_BY_ID_URL = API_URL + 'getedadressById/';
-export const CREATE_CHILD_ORDER_URL =
-  API_URL + 'addedchildOrders';
-  // export const GET_DAILY_FACT_BY_DATE_URL=API_URL+'geteddailyfactbydate/';
-  export const GET_DAILY_FACT_BY_DATE_URL=API_URL+'geteddailyfactbydatenew/';
+export const CREATE_CHILD_ORDER_URL = API_URL + 'addedchildOrders';
+// export const GET_DAILY_FACT_BY_DATE_URL=API_URL+'geteddailyfactbydate/';
+export const GET_DAILY_FACT_BY_DATE_URL = API_URL + 'geteddailyfactbydatenew/';
 
-export const CREATE_MANY_CHILD_ORDER_URL =
-  API_URL + 'addedchildOrdersmany';  
+export const CREATE_MANY_CHILD_ORDER_URL = API_URL + 'addedchildOrdersmany';
 
 export const GET_LICENSE_SCHOLARSHIP =
   API_URL + 'getlicensebystageidscholarshipid';
@@ -139,9 +140,9 @@ export const GET_PROBABLE_REATTEMPT_ANSWER_BY_SUBMIT_URL =
 export const REATTEMPT_ANSWER_SUBMIT_SUBJECTWISE_PROBABLE_URL =
   API_URL + 'updateedChildSubjectwisemostprobablequestionsets';
 
-  export const GET_MOST_PROBABLE_QUESTION_SET_URL =
+export const GET_MOST_PROBABLE_QUESTION_SET_URL =
   API_URL + 'getedmostprobaquestionSetsbyclsidandbrdidandchilid';
-  
+
 export const GET_SCHOLARSHIP_PREMIUM_URL =
   API_URL + 'getedchildmembershipbychildidandparentid';
 
@@ -161,43 +162,51 @@ export const REGISTER_LIVECLASS_URL = API_URL + 'updateedzoomdetails';
 
 export const GET_PREV_YEAR_TOP_STUDENT_URL =
   API_URL + 'highestsecuremarkchildpreviousyearquestion/';
-  export const GET_MOST_PROB_TOP_STUDENT_URL =
+export const GET_MOST_PROB_TOP_STUDENT_URL =
   API_URL + 'highestsecuremarkchildmostprobaquestion/';
-  
 
 export const CREATE_USER_DEVICE_DETAILS_URL =
   API_URL + 'createedUserDeviceDetails';
 export const COUPONCODE_DISCOUNT_URL = API_URL + 'couponocdediscount';
 export const GET_AVAILABLE_COUPONCODE_URL = API_URL + 'getedcouponcode';
 export const GET_CONTENT_QUIZ_URL = API_URL + 'getedContentQuiz/';
-export const GET_REVISION_ANSWER_URL = API_URL + 'getedContentQuizwithchilddata';
-export const GET_APP_NOTIFICATION_FCM_MESSAGE_URL = API_URL + 'getAlledchildfcmmessage';
+export const GET_REVISION_ANSWER_URL =
+  API_URL + 'getedContentQuizwithchilddata';
+export const GET_APP_NOTIFICATION_FCM_MESSAGE_URL =
+  API_URL + 'getAlledchildfcmmessage';
 export const GET_APP_NOTIFICATION_URL = API_URL + 'getedfcmmessageApp';
 export const UPDATE_FCM_MESSAGE_URL = API_URL + 'updateedchildfcmmessage';
-export const GET_ALL_RECORDCLASS_URL = API_URL + 'getedrecordedclassbyidfilterbysubjects';
+export const GET_ALL_RECORDCLASS_URL =
+  API_URL + 'getedrecordedclassbyidfilterbysubjects';
 export const GET_ALL_PRODUCT_CATEGORY_URL = API_URL + 'getAllproductCategory';
 export const GET_ALL_PRODUCT_URL = API_URL + 'getAlledProducts';
 export const GET_PRODUCT_BY_NAME_URL = API_URL + 'getedProductbyName';
-export const GET_PRODUCT_BY_CATEGORY_ID_URL = API_URL + 'getedProductsbycategoryid';
+export const GET_PRODUCT_BY_CATEGORY_ID_URL =
+  API_URL + 'getedProductsbycategoryid';
 export const GET_PRODUCT_BY_ID_URL = API_URL + 'getedproductById/';
 export const CREATE_ADD_TO_CART_URL = API_URL + 'createedProductAddtocart';
 export const REMOVE_FROM_CART_URL = API_URL + 'deleteedproductAddtoCart';
 export const DELETE_ALL_FROM_CART_URL = API_URL + 'deleteedallproductAddtoCart';
 export const GET_CART_ITEM_URL = API_URL + 'getedproductAddtoCartByuserid';
 export const UPDATE_CART_ITEM_URL = API_URL + 'updateedproductAddtoCart';
-export const GET_CHILD_ORDERS_BY_CHILDID_URL = API_URL + 'getedchildOrdersbychildidandpaymentid/';
+export const GET_CHILD_ORDERS_BY_CHILDID_URL =
+  API_URL + 'getedchildOrdersbychildidandpaymentid/';
 export const GET_ORDER_DETAILS_URL = API_URL + 'getedchildOrdersbyorderid/';
 // export const DELETE_USER_URL=API_URL+'deletechild';
-export const DELETE_USER_URL=API_URL+'createeddeleteAccount';
-export const GET_CHILD_REVISION_DETAILS_URL=API_URL+'gettopicompletewithchild';
-export const ADD_CHILD_REVISION_URL=API_URL+'addedchildrevisiondetails';
+export const DELETE_USER_URL = API_URL + 'createeddeleteAccount';
+export const GET_CHILD_REVISION_DETAILS_URL =
+  API_URL + 'gettopicompletewithchild';
+export const ADD_CHILD_REVISION_URL = API_URL + 'edzaddchildrevisiondetails';
 
-export const CREATE_CHILD_ABOVE_90_PERCENTAGE_BSE_URL = API_URL + 'edWatipercentchildodia';
-export const CREATE_CHILD_ABOVE_90_PERCENTAGE_OTHER_URL = API_URL + 'edWatichildscorecard';
-export const CREATE_CHILD_BELOW_90_PERCENTAGE_BSE_URL = API_URL + 'edWatilesspercentchildodia';
-export const CREATE_CHILD_BELOW_90_PERCENTAGE_OTHER_URL = API_URL + 'edWatilessmark';
+export const CREATE_CHILD_ABOVE_90_PERCENTAGE_BSE_URL =
+  API_URL + 'edWatipercentchildodia';
+export const CREATE_CHILD_ABOVE_90_PERCENTAGE_OTHER_URL =
+  API_URL + 'edWatichildscorecard';
+export const CREATE_CHILD_BELOW_90_PERCENTAGE_BSE_URL =
+  API_URL + 'edWatilesspercentchildodia';
+export const CREATE_CHILD_BELOW_90_PERCENTAGE_OTHER_URL =
+  API_URL + 'edWatilessmark';
 export const GET_CHILD_UNLOCK_URL = API_URL + 'getedchildunlock';
-export const GET_DAILY_MESSAGE_BY_DATE_URL = API_URL + 'geteddailymessagebydate';
+export const GET_DAILY_MESSAGE_BY_DATE_URL =
+  API_URL + 'geteddailymessagebydate';
 export const GET_CHECK_TOKEN_URL = API_URL + 'checkToken';
-
-

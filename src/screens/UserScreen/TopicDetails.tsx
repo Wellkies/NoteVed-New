@@ -1,4 +1,11 @@
-import {SafeAreaView, StyleSheet, Text, View, Image,ScrollView} from 'react-native';
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ScrollView,
+} from 'react-native';
 import React, {useEffect} from 'react';
 import {device_width, device_height} from '../style';
 import {useNavigation} from '@react-navigation/native';
@@ -12,10 +19,16 @@ import {
   selectTopicDetailsInfo,
 } from '../../redux/reducers/GetTopicDetailsReducer';
 import {selectTopicDetailsStatus} from '../../redux/reducers/GetTopicDetailsFormTopicIdReducer';
-
-import {getContentByTopicIdAPI} from '../../redux/reducers/GetContentDetailsReducer';
+import {dataclearstate} from '../../redux/reducers/GetContentDetailsReducer';
 import LoadingScreen from '../CommonScreens/LoadingScreen';
-import { getAllSubjectLevelDataAPI, selectAllSubjectLevelInfo } from '../../redux/reducers/GetAllSubjectLevelReducer';
+import {selectUserInfo} from '../../redux/reducers/loginReducer';
+import CommonMessage from '../../../constants/CommonMessage';
+import Fontisto from 'react-native-vector-icons/Fontisto';
+import {getContentByTopicIdAPI} from '../../redux/reducers/GetContentDetailsReducer';
+import {
+  getAllSubjectLevelDataAPI,
+  selectAllSubjectLevelInfo,
+} from '../../redux/reducers/GetAllSubjectLevelReducer';
 import SubjectLevel from './SubjectLevel';
 
 const TopicDetails = ({route}) => {
@@ -29,23 +42,80 @@ const TopicDetails = ({route}) => {
   const TopicLoad = useAppSelector(selectTopicDetailsStatus);
 
   const filterData = TopicBySubjectId.map(rec => rec.topicid);
-  const topicID = filterData[0];
+  // const topicID = filterData[0];
   //const AllSubjectLevelData = useAppSelector(selectAllSubjectLevelInfo);
   // const filterSubjectData = AllSubjectLevelData.map(rec => rec.subjectid);
   // const subjectID = filterSubjectData[0];
   //console.log(subjectID,'==========!!subjectID')
+
+  const {authToken, status, userInfo} = useAppSelector(selectUserInfo);
+  interface ChildInfo {
+    _id: string;
+    age: string;
+    childid: string;
+    image: string;
+    imagename: string;
+    fname: string;
+    lname: string;
+    phone: string;
+    name: string;
+    boardname: string;
+    fathername: string;
+    mothername: string;
+    scholarship: object[];
+    // board: string;
+    subscriptionStartDate: string;
+    subscriptionEndDate: string;
+    isPremium: boolean;
+    parentid: string;
+    stage: string;
+    gender: string;
+    address: string;
+    alterphone: string;
+    schoolname: string;
+    language: string;
+    email: string;
+    // stageid: string;
+    // boardid: string;
+    classname: string;
+  }
+  const {
+    _id: id = '',
+    // stageid = '',
+    // boardid = '',
+    childid = '',
+    stage = '',
+    scholarship = [],
+    name: userName = '',
+    fname = '',
+    gender = '',
+    lname = '',
+    email = '',
+    phone = '',
+    // cityname = '',
+    image = '',
+    age = '',
+    address = '',
+    // cityid = '',
+    language = '',
+    // coordinates='',
+  } = userInfo;
+
   useEffect(() => {
-    dispatch(getTopicBySubIdAPI(subjectid));
-    const data = {
-      topicid: topicID,
+    const bodydata = {
+      subjectid: subjectid,
+      childid: childid,
     };
+    dispatch(getTopicBySubIdAPI(bodydata));
+    // const data = {
+    //   topicid: topicID,
+    // };
     //dispatch(getContentByTopicIdAPI(data));
     return () => {};
   }, []);
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      
       <View
         style={{
           width: device_width,
@@ -87,58 +157,89 @@ const TopicDetails = ({route}) => {
           <LoadingScreen flag={TopicLoad == 'loading'} />
         ) : (
           <>
-          {TopicBySubjectId.length > 0 ? (
-                <>
-            <View
-              style={{
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-                alignContent: 'center',
-                marginHorizontal: 25,
-                marginBottom: 16,
-                marginTop: 50,
-                justifyContent: 'center',
-              }}>
-              {TopicBySubjectId.map((item, index) => {
-                //const isEnabled = index === 0;
-                const {topicname = ''} = item;
-                return (
-                  <View key={index}>
-                    <TouchableOpacity
-                      onPress={() =>
-                        // isEnabled &&
-                        navigation.navigate('ContentDetails', {
-                          coursename: coursename,
-                          subjectname: subjectname,
-                          topicname: topicname,
-                        })
-                      }
-                      style={{
-                        height: device_height * 0.09,
-                        width: device_width * 0.35,
-                        backgroundColor: '#2C7DB5',
-                        borderRadius: 20,
-                        marginHorizontal: 10,
-                        marginVertical: 10,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}>
-                      <Text
-                        style={{
-                          fontSize: 19,
-                          color: '#FFFFFF',
-                          fontWeight: '500',
-                        }}>
-                        {trans(topicname)}
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                );
-              })}
-            </View>
-            </>
-            ):
-            (
+            {TopicBySubjectId.length > 0 ? (
+              <>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                    alignContent: 'center',
+                    marginHorizontal: 25,
+                    marginBottom: 16,
+                    marginTop: 50,
+                    justifyContent: 'center',
+                  }}>
+                  {TopicBySubjectId.map((item, index) => {
+                    const {
+                      subjectname = '',
+                      topicname = '',
+                      topicid = '',
+                      studenttopic = [],
+                    } = item;
+                    console.log(
+                      studenttopic,
+                      'studenttopic%%%%%%%%%%%%%%%%%%%%%%%%%%%%',
+                    );
+                    const isLock =
+                      index !== 0 &&
+                      TopicBySubjectId[index - 1].studenttopic.length === 0;
+                    return (
+                      <View key={index}>
+                        <TouchableOpacity
+                          onPress={() => {
+                            if (isLock) {
+                              CommonMessage(
+                                'You have to complete previous level to unlock',
+                              );
+                            } else {
+                              const data = {
+                                topicid: topicid,
+                                childid: childid,
+                              };
+                              dispatch(getContentByTopicIdAPI(data));
+                              navigation.navigate('ContentDetails', {
+                                coursename: coursename,
+                                subjectname: subjectname,
+                                topicname: topicname,
+                                topicid: topicid,
+                              });
+                            }
+                          }}
+                          style={{
+                            height: device_height * 0.09,
+                            width: device_width * 0.35,
+                            backgroundColor: isLock ? '#CCCCCC' : '#2C7DB5',
+                            borderRadius: 20,
+                            marginHorizontal: 10,
+                            marginVertical: 10,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            opacity: isLock ? 0.5 : 1,
+                          }}>
+                          <Text
+                            style={{
+                              fontSize: 19,
+                              color: '#FFFFFF',
+                              fontWeight: '500',
+                            }}>
+                            {trans(topicname)}
+                          </Text>
+                          {isLock ? (
+                            <Fontisto
+                              style={{color: '#fff'}}
+                              name="locked"
+                              size={15}
+                            />
+                          ) : (
+                            <></>
+                          )}
+                        </TouchableOpacity>
+                      </View>
+                    );
+                  })}
+                </View>
+              </>
+            ) : (
               <>
                 <View
                   style={{

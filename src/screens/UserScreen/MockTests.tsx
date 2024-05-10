@@ -70,12 +70,11 @@ const MockTests = ({route}) => {
   const {
     screenName = '',
     subjectName = '',
-    coursename ='',
+    coursename = '',
     chapterName = '',
     examSet = '',
     // quiz = [],
     contentid = '',
-    isReattempt = '',
     studentdata = [],
     scholarshipid = '',
     subjectId = '',
@@ -84,7 +83,10 @@ const MockTests = ({route}) => {
     scholarshipName = '',
     is2ndAvailable = '',
     topicid = '',
+    topic = '',
     ExamQuestionsets: ContentQuiz = [],
+    islastexercise = false,
+    isReattempt = false,
   } = route.params;
   console.log(route.params, 'route.params........?///////////////');
 
@@ -94,11 +96,11 @@ const MockTests = ({route}) => {
   // {
   // const quizz = ContentQuiz.map(rec => rec.quiz);
   let quiz = ContentQuiz[0] ? ContentQuiz[0] : [];
- 
+
   const sortedQuestionList = ContentQuiz.slice().sort(
     (a, b) => a.questionno - b.questionno,
   );
-  
+
   const timeDurationValue = timeDuration.length
     ? parseInt(timeDuration) * 60
     : '';
@@ -173,31 +175,31 @@ const MockTests = ({route}) => {
     );
   }
 
-  // const handleUnlockChapter = () => {
-  //   const revisionbody = {
-  //     childid: childid,
-  //     subjectDetails: [
-  //       {
-  //         subjectid: subjectId,
-  //         subject: subjectName,
-  //         completestatus: 'false',
-  //         topicDetails: [
-  //           {
-  //             topicid: TopicId,
-  //             topic: chapterName,
-  //             completestatus: 'true',
-  //           },
-  //         ],
-  //       },
-  //     ],
-  //   };
-  //   console.log(
-  //     revisionbody,
-  //     '********************revisionbody***********************',
-  //   );
+  const handleUnlockChapter = () => {
+    const revisionbody = {
+      childid: childid,
+      subjectDetails: [
+        {
+          subjectid: subjectId,
+          subject: subjectName,
+          completestatus: 'false',
+          topicDetails: [
+            {
+              topicid: topicid,
+              topic: topic,
+              completestatus: 'true',
+            },
+          ],
+        },
+      ],
+    };
+    console.log(
+      revisionbody,
+      '********************revisionbody***********************',
+    );
 
-  //   AddChildRevisionAPI(revisionbody);
-  // };
+    AddChildRevisionAPI(revisionbody);
+  };
 
   const handleselectAnswer = (answerid: string, index: number) => {
     let questions = [...Questionlist];
@@ -243,7 +245,7 @@ const MockTests = ({route}) => {
       topicName: chapterName,
       ExamQuestionsets: quiz,
       subjectName: subjectName,
-      coursename:coursename,
+      coursename: coursename,
       chapterName: chapterName,
       examSet: examSet,
       quiz: Questionlist,
@@ -283,116 +285,126 @@ const MockTests = ({route}) => {
     } = markCalculation(Questionlist);
     // } = markCalculation(submitData);
     console.log(percentage, 'percentage...................');
-    // if (isReattempt) {
-    //   let bodyReattemptAnswerData = {
-    //     id: studentdata[0]._id,
-    //     securmark: correctanswer,
-    //     quiz: Questionlist,
-    //     percentage: percentage,
-    //    };
-    //   const below90Body = {
-    //     phone: phone,
-    //     userName: name,
-    //   };
-    //   const above90Body = {
-    //     phone: phone,
-    //     userName: name,
-    //     totalmark: totalmark,
-    //     correctanswer: correctanswer,
-    //     wrongresponse: Wronganswer,
-    //     skippedquestion: Skipped,
-    //     percentagescored: percentage,
-    //   };
-    //   console.log(above90Body, 'above90Body/////////////');
-    //   if (boardid == 1 && percentage >= 90) {
-    //     createabove90PercentageBSEApi(above90Body, undefined);
-    //   } else if (boardid !== 1 && percentage >= 90) {
-    //     createabove90PercentageOtherApi(above90Body, undefined);
-    //   } else if (boardid == 1 && percentage < 90) {
-    //     createBelow90PercentageBSEApi(below90Body, undefined);
-    //   } else if (boardid !== 1 && percentage < 90) {
-    //     createBelow90PercentageOtherApi(below90Body, undefined);
-    //   } else {
-    //   }
-    //   // console.log( ContentIndex != -1 ,
-    //   //   ContentIndex == selectedTopic.reviewquestionsets.length - 1 ,
-    //   //   percentage >= 90,"*****************************")
-    //   if (
-    //     ContentIndex != -1 &&
-    //     ContentIndex == selectedTopic.reviewquestionsets.length - 1 &&
-    //     percentage >= 90
-    //   ) {
-    //     handleUnlockChapter();
-    //   }
-    //   // dispatch(
-    //   //   // answerReattemptSubmitApi(bodyReattemptAnswerData, handleCallback,handleError),
-    //   answerReattemptSubmitApi(
-    //     bodyReattemptAnswerData,
-    //     handleCallback,
-    //     //   setLoading,
-    //     // ),
-    //   );
-    // } else {
-    const bodyAnswerData = {
-      childid: childid,
-      name: childName,
-      age: C_age,
-      // parentid: '',
-      // stage: stage,
-      // stageid: stageid,
-      contentid: contentid,
-      subjectid: subjectId,
-      subject: subjectName,
-      topicid: topicid,
-      topic: chapterName,
-      contentset: examSet,
-      totalmark: Questionlist.length,
-      securmark: correctanswer,
-      percentage: percentage,
-      wrongmark: Wronganswer,
-      skipmark: Skipped,
-      quiz: Questionlist,
-      // quiz: submitData,
-      subjectimage: '',
-      topicimage: '',
-      contentimage: '',
-      isPremium: false,
-    };
-    const below90Body = {
-      phone: phone,
-      userName: name,
-    };
-    const above90Body = {
-      phone: phone,
-      userName: name,
-      totalmark: totalmark,
-      correctanswer: correctanswer,
-      wrongresponse: Wronganswer,
-      skippedquestion: Skipped,
-      percentagescored: percentage,
-    };
-    // if (boardid == 1 && percentage >= 90) {
-    //   createabove90PercentageBSEApi(above90Body, undefined);
-    // } else if (boardid != 1 && percentage >= 90) {
-    //   createabove90PercentageOtherApi(above90Body, undefined);
-    // } else if (boardid == 1 && percentage < 90) {
-    //   createBelow90PercentageBSEApi(below90Body, undefined);
-    // } else if (boardid != 1 && percentage < 90) {
-    //   createBelow90PercentageOtherApi(below90Body, undefined);
-    // } else {
-    // }
-    // // console.log( ContentIndex != -1 ,
-    // //   ContentIndex == selectedTopic.reviewquestionsets.length - 1 ,
-    // //   percentage >= 90,"*****************************")
-    // if (
-    //   ContentIndex != -1 &&
-    //   ContentIndex == selectedTopic.reviewquestionsets.length - 1 &&
-    //   percentage >= 90
-    // ) {
-    //   handleUnlockChapter();
-    // }
-    answerSubmitApi(bodyAnswerData, handleCallback);
-    // }
+    if (isReattempt) {
+      let bodyReattemptAnswerData = {
+        id: studentdata[0]._id,
+        securmark: correctanswer,
+        quiz: Questionlist,
+        percentage: percentage,
+      };
+      //   const below90Body = {
+      //     phone: phone,
+      //     userName: name,
+      //   };
+      //   const above90Body = {
+      //     phone: phone,
+      //     userName: name,
+      //     totalmark: totalmark,
+      //     correctanswer: correctanswer,
+      //     wrongresponse: Wronganswer,
+      //     skippedquestion: Skipped,
+      //     percentagescored: percentage,
+      //   };
+      //   console.log(above90Body, 'above90Body/////////////');
+      //   if (boardid == 1 && percentage >= 90) {
+      //     createabove90PercentageBSEApi(above90Body, undefined);
+      //   } else if (boardid !== 1 && percentage >= 90) {
+      //     createabove90PercentageOtherApi(above90Body, undefined);
+      //   } else if (boardid == 1 && percentage < 90) {
+      //     createBelow90PercentageBSEApi(below90Body, undefined);
+      //   } else if (boardid !== 1 && percentage < 90) {
+      //     createBelow90PercentageOtherApi(below90Body, undefined);
+      //   } else {
+      //   }
+      //   // console.log( ContentIndex != -1 ,
+      //   //   ContentIndex == selectedTopic.reviewquestionsets.length - 1 ,
+      //   //   percentage >= 90,"*****************************")
+      if (
+        // ContentIndex != -1 &&
+        // ContentIndex == selectedTopic.reviewquestionsets.length - 1 &&
+        // percentage >= 90
+        islastexercise
+      ) {
+        handleUnlockChapter();
+      }
+      // dispatch(
+      answerReattemptSubmitApi(bodyReattemptAnswerData, handleCallback);
+      // );
+      //   answerReattemptSubmitApi(
+      //     bodyReattemptAnswerData,
+      //     handleCallback,
+      //     //   setLoading,
+      //     // ),
+      //   );
+    } else {
+      const bodyAnswerData = {
+        childid: childid,
+        name: childName,
+        age: C_age,
+        // parentid: '',
+        // stage: stage,
+        // stageid: stageid,
+        contentid: contentid,
+        subjectid: subjectId,
+        subject: subjectName,
+        topicid: topicid,
+        topic: chapterName,
+        contentset: examSet,
+        totalmark: Questionlist.length,
+        securmark: correctanswer,
+        percentage: percentage,
+        wrongmark: Wronganswer,
+        skipmark: Skipped,
+        quiz: Questionlist,
+        // quiz: submitData,
+        subjectimage: '',
+        topicimage: '',
+        contentimage: '',
+        isPremium: false,
+      };
+      const below90Body = {
+        phone: phone,
+        userName: name,
+      };
+      const above90Body = {
+        phone: phone,
+        userName: name,
+        totalmark: totalmark,
+        correctanswer: correctanswer,
+        wrongresponse: Wronganswer,
+        skippedquestion: Skipped,
+        percentagescored: percentage,
+      };
+      // if (boardid == 1 && percentage >= 90) {
+      //   createabove90PercentageBSEApi(above90Body, undefined);
+      // } else if (boardid != 1 && percentage >= 90) {
+      //   createabove90PercentageOtherApi(above90Body, undefined);
+      // } else if (boardid == 1 && percentage < 90) {
+      //   createBelow90PercentageBSEApi(below90Body, undefined);
+      // } else if (boardid != 1 && percentage < 90) {
+      //   createBelow90PercentageOtherApi(below90Body, undefined);
+      // } else {
+      // }
+      // // console.log( ContentIndex != -1 ,
+      // //   ContentIndex == selectedTopic.reviewquestionsets.length - 1 ,
+      // //   percentage >= 90,"*****************************")
+      // if (
+      //   ContentIndex != -1 &&
+      //   ContentIndex == selectedTopic.reviewquestionsets.length - 1 &&
+      //   percentage >= 90
+      // ) {
+      //   handleUnlockChapter();
+      // }
+      if (
+        // ContentIndex != -1 &&
+        // ContentIndex == selectedTopic.reviewquestionsets.length - 1 &&
+        // percentage >= 90
+        islastexercise
+      ) {
+        handleUnlockChapter();
+      }
+      answerSubmitApi(bodyAnswerData, handleCallback);
+    }
   };
 
   const {

@@ -60,6 +60,7 @@ import {
   getAllCoursesAPI,
   selectAllCoursesInfo,
 } from '../../redux/reducers/GetAllCoursesReducer';
+import {selectUserInfo} from '../../redux/reducers/loginReducer';
 
 const SubjectList = ({route}) => {
   const navigation = useNavigation();
@@ -109,7 +110,7 @@ const SubjectList = ({route}) => {
 
   // console.log(SubjectByCourse, '==============SubjectByCourse');
 
-  const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
+  const {authToken, status, userInfo} = useAppSelector(selectUserInfo);
   interface ChildInfo {
     _id: string;
     age: string;
@@ -140,27 +141,27 @@ const SubjectList = ({route}) => {
     // boardid: string;
     classname: string;
   }
-  // const {
-  //     _id: id = '',
-  //     // stageid = '',
-  //     // boardid = '',
-  //     childid = '',
-  //     stage = '',
-  //     scholarship = [],
-  //     name: userName = '',
-  //     fname = '',
-  //     gender = '',
-  //     lname = '',
-  //     email = '',
-  //     phone = '',
-  //     // cityname = '',
-  //     image = '',
-  //     age = '',
-  //     address = '',
-  //     // cityid = '',
-  //     language = '',
-  //     // coordinates='',
-  // } = childInfo;
+  const {
+    _id: id = '',
+    // stageid = '',
+    // boardid = '',
+    childid = '',
+    stage = '',
+    scholarship = [],
+    name: userName = '',
+    fname = '',
+    gender = '',
+    lname = '',
+    email = '',
+    phone = '',
+    // cityname = '',
+    image = '',
+    age = '',
+    address = '',
+    // cityid = '',
+    language = '',
+    // coordinates='',
+  } = userInfo;
 
   useEffect(() => {
     navigation.addListener('focus', () => {
@@ -441,6 +442,7 @@ const SubjectList = ({route}) => {
                             image = '',
                             createon = '',
                             updatedon = '',
+                            subjectid = '',
                           } = item;
                           // const {
                           //   _id = '',
@@ -453,7 +455,12 @@ const SubjectList = ({route}) => {
                             <TouchableOpacity
                               key={index}
                               onPress={() => {
-                                dispatch(getTopicBySubIdAPI(courseid));
+                                // dispatch(getTopicBySubIdAPI(courseid));
+                                const bodydata = {
+                                  subjectid: subjectid,
+                                  childid: childid,
+                                };
+                                dispatch(getTopicBySubIdAPI(bodydata));
                                 navigation.navigate('SubjectLevel', {
                                   // stageid: '5',
                                   // boardid: '1',
@@ -491,7 +498,7 @@ const SubjectList = ({route}) => {
                                   width: '100%',
                                   fontSize: 18,
                                   fontWeight: 'bold',
-                                  color: '#FFFFFF',
+                                  color: 'green',
                                   // borderWidth: 1,
                                   //color: '#333',
                                   // marginLeft: 30,

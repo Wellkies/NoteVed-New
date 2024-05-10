@@ -37,6 +37,7 @@ export const getContentByTopicIdAPI = createAsyncThunk<
 export const ContentDetailsData = createSlice({
   name: 'contentdetails',
   initialState,
+  // reducers: {},
   reducers: {
     dataclearstate: state => {
       state.ContentDetailsInfo = [];

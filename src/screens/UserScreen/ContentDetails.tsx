@@ -35,13 +35,14 @@ const ContentDetails = ({route}) => {
   const {t: trans, i18n} = useTranslation();
   const {
     coursename = '',
-    subjectname = '',
+    // subjectname = '',
     topicname = '',
+    topicid: topicID = '',
     //percentage = '',
   } = route.params;
   console.log(
     coursename,
-    subjectname,
+    // subjectname,
     topicname,
     //percentage,
     '=======coursename, subjectname, topicname, percentage',
@@ -103,9 +104,9 @@ const ContentDetails = ({route}) => {
   const TopicBySubjectId = useAppSelector(selectTopicDetailsInfo);
   const TopicLoad = useAppSelector(selectTopicDetailsStatus);
 
-  const filterData = TopicBySubjectId.map(rec => rec.topicid);
+  // const filterData = TopicBySubjectId.map(rec => rec.topicid);
   // TopicBySubjectId.filter((rec) => rec.sltopic == 1)
-  const topicID = filterData[0];
+  // const topicID = filterData[0];
 
   useEffect(() => {
     // dispatch(getTopicBySubIdAPI(subjectid));
@@ -132,15 +133,20 @@ const ContentDetails = ({route}) => {
   console.log(SubjectByCourse, '########################$$$$SubjectByCourse');
 
   const ContentByTopicId = useAppSelector(selectContentDetailsInfo);
-  const {reviewquestionsets = []} = ContentByTopicId[0]
-    ? ContentByTopicId[0]
-    : [];
+  const {
+    reviewquestionsets = [],
+    subjectid = '',
+    subjectname = '',
+    topic = '',
+    topicid = '',
+  } = ContentByTopicId[0] ? ContentByTopicId[0] : [];
 
   console.log(reviewquestionsets.studentdata, '@@@@@@@@@@@@@@@@@@@@@@@review');
 
   const lastIndex = reviewquestionsets[reviewquestionsets.length - 1] || {};
-  const { studentdata = [] } = lastIndex;
-  const lastCompletionPercentage = studentdata.length > 0 ? studentdata[0].percentage : 0;
+  const {studentdata = []} = lastIndex;
+  const lastCompletionPercentage =
+    studentdata.length > 0 ? studentdata[0].percentage : 0;
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -224,19 +230,18 @@ const ContentDetails = ({route}) => {
                   quiz = [],
                   slsubject = '',
                   sltopic = '',
-                  subjectid = '',
                   subjectimage = '',
                   // subjectname = '',
                   timeDuration = '',
-                  topicid = '',
                   topicimage = '',
                   //topicname = '',
                   videos = [],
                   studentdata = [],
                 } = item;
                 const {percentage = ''} = studentdata[0] || {};
+                const isReattempt = studentdata.length > 0;
                 console.log(studentdata[0], '@@@@@@@@@@@studentdata');
-
+                const islastexercise = reviewquestionsets.length === index + 1;
                 return (
                   <View
                     key={index}
@@ -315,7 +320,7 @@ const ContentDetails = ({route}) => {
                               marginLeft: 10,
                               width: '20%',
                             }}>
-                            {`${percentage}%`}
+                            {`${percentage || 0}%`}
                           </Text>
                         </View>
                         <TouchableOpacity
@@ -327,8 +332,8 @@ const ContentDetails = ({route}) => {
                               chapterName: topicname,
                               examSet: contentset,
                               contentid: contentid,
-                              isReattempt: false,
-                              // studentdata: studentdata,
+                              isReattempt: isReattempt,
+                              studentdata: studentdata,
                               ExamQuestionsets: quiz,
                               // scholarshipid: scholarshipid,
                               // boardid: boardid,
@@ -337,6 +342,8 @@ const ContentDetails = ({route}) => {
                               timeDuration: timeDuration,
                               is2ndAvailable: index,
                               topicid: topicid,
+                              topic: topic,
+                              islastexercise: islastexercise,
                             });
                           }}>
                           <View
@@ -347,12 +354,15 @@ const ContentDetails = ({route}) => {
                               marginRight: 8,
                               borderWidth: 1.2,
                               borderColor: '#2C7DB5',
-                              width: device_width * 0.2,
+                              width: device_width * 0.3,
                               bottom: -10,
                               left: -2,
                             }}>
-                            <Text style={{color: '#FFFFFF'}}>
-                              {trans('Continue')}
+                            <Text
+                              style={{color: '#FFFFFF', textAlign: 'center'}}>
+                              {isReattempt
+                                ? trans('Reattempt')
+                                : trans('Continue')}
                             </Text>
                           </View>
                         </TouchableOpacity>
@@ -401,7 +411,7 @@ const ContentDetails = ({route}) => {
             </>
           )}
         </View>
-       {lastCompletionPercentage === 100 && <LevelCompleted />}
+        {lastCompletionPercentage === 100 && <LevelCompleted />}
       </ScrollView>
     </SafeAreaView>
   );
