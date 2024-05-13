@@ -57,7 +57,7 @@ const LoadingScreen = ({flag}) => {
         {loading ? (
           <ActivityIndicator
             size={'large'}
-            color={'crimson'}
+            color={'#2C7DB5'}
             //visibility of Overlay Loading Spinner
             visible={loading}
             //Text with the Spinner

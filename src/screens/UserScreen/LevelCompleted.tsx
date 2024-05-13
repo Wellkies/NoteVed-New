@@ -53,34 +53,48 @@ const LevelCompleted = () => {
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
           <View
             style={{
-              backgroundColor: 'white',
+              backgroundColor: '#012650',
               padding: 30,
               borderRadius: 10,
             }}>
-            <Text style={{marginBottom: 20, fontSize: 18, fontWeight: '600'}}>
+            <Text
+              style={{
+                marginBottom: 20,
+                fontSize: 18,
+                fontWeight: '600',
+                color: '#FFFFFF',
+                textAlign: 'center',
+              }}>
               Congratulations!
             </Text>
-            <Text style={{marginBottom: 20, fontSize: 18, fontWeight: '600'}}>
+            <Text
+              style={{
+                marginBottom: 20,
+                fontSize: 18,
+                fontWeight: '600',
+                color: '#FFFFFF',
+              }}>
               You've completed this Level. You can proceed to next Level.
             </Text>
-            <TouchableOpacity onPress={() => setShowModal(false)}
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-            }}>
+            <TouchableOpacity
+              onPress={() => setShowModal(false)}
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+              }}>
               <View
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'center',
                   alignItems: 'center',
-                  backgroundColor: '#2C7DB5',
+                  backgroundColor: '#FFFFFF',
                   marginVertical: 10,
                   borderRadius: 20,
-                  width: device_width * 0.30,
+                  width: device_width * 0.3,
                   height: device_height * 0.05,
                 }}>
                 <Text
-                  style={{color: '#FFFFFF', fontSize: 18, fontWeight: '600'}}>
+                  style={{color: '#012650', fontSize: 20, fontWeight: '700'}}>
                   OK
                 </Text>
               </View>
