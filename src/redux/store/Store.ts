@@ -45,6 +45,8 @@ import TopicDetailsBySubData from "../reducers/GetTopicDetailsReducer";
 import ContentDetailsData from "../reducers/GetContentDetailsReducer";
 import AllMembershipDetailsData from "../reducers/GetAllMembershipReducer";
 import AllSubjectLevelData  from "../reducers/GetAllSubjectLevelReducer";
+import AllSubjectByCourseID from "../reducers/GetAllSubByCourseIdReducer";
+
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
@@ -93,7 +95,8 @@ export const store = configureStore({
     TopicBySubDetails: TopicDetailsBySubData,
     ContentDetails: ContentDetailsData,
     AllMembershipDetails: AllMembershipDetailsData,
-    AllSubjectLevelDetails: AllSubjectLevelData
+    AllSubjectLevelDetails: AllSubjectLevelData,
+    AllSubByCourseIdDetails: AllSubjectByCourseID
   },
 });
 

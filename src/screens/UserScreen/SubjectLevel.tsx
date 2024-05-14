@@ -68,6 +68,12 @@ import {
   selectAllSubjectsInfo,
   selectAllSubjectsStatus,
 } from '../../redux/reducers/GetSubjectByCourseReducer';
+import {
+  getAllSubByCourseIdAPI,
+  selectAllSubByCourseIdInfo,
+  selectAllSubByCourseIdStatus,
+} from '../../redux/reducers/GetAllSubByCourseIdReducer';
+
 import {handleSetExamName} from '../../redux/reducers/ExamTestNameReducer';
 import {ProgressBar} from 'react-native-paper';
 import {selectUserInfo} from '../../redux/reducers/loginReducer';
@@ -87,8 +93,10 @@ const SubjectLevel = ({route}) => {
     // scholarshipName = '',
     coursename = '',
     subjectname = '',
+    courseid = '',
   } = route.params;
-  console.log(route.params, '===============route.params');
+  console.log(courseid,'==========courseid')
+  //console.log(route.params, '===============route.params');
   // const [loading, setLoading] = useState(false);
   // const SchlrshipId = 'NVOOKADA1690811843420'
   const TopicBySubjectId = useAppSelector(selectTopicDetailsInfo);
@@ -220,12 +228,18 @@ const SubjectLevel = ({route}) => {
   };
   useEffect(() => {
     dispatch(getAllSubByCourseAPI());
+    const data ={
+      courseid: courseid,
+    };
+    //dispatch(getAllSubByCourseIdAPI(data));
     return () => {};
   }, []);
 
-  const SubjectByCourse = useAppSelector(selectAllSubjectsInfo);
-  const SubLoading = useAppSelector(selectAllSubjectsStatus);
-  console.log(SubjectByCourse, '########################$$$$SubjectByCourse');
+  //const SubjectByCourse = useAppSelector(selectAllSubjectsInfo);
+  //const SubLoading = useAppSelector(selectAllSubjectsStatus);
+  const SubByCourseID = useAppSelector(selectAllSubByCourseIdInfo);
+  const SubLoading = useAppSelector(selectAllSubByCourseIdStatus);
+  console.log(SubByCourseID,'========SubByCourseID')
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -258,12 +272,13 @@ const SubjectLevel = ({route}) => {
             paddingHorizontal: 25,
             marginBottom: 30,
           }}>
-          <TouchableOpacity onPress={() => navigation.goBack()}
-          style={{
-            position: 'absolute',
-            top: 3,
-            left: 0,
-           }}>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={{
+              position: 'absolute',
+              top: 3,
+              left: 0,
+            }}>
             <MaterialIcons
               name="arrow-back"
               size={35}
@@ -297,9 +312,9 @@ const SubjectLevel = ({route}) => {
         ) : (
           <>
             <ScrollView showsVerticalScrollIndicator={false}>
-              {SubjectByCourse.length > 0 ? (
+              {SubByCourseID.length > 0 ? (
                 <>
-                  {SubjectByCourse.map((item, index) => {
+                  {SubByCourseID.map((item, index) => {
                     const {
                       _id = '',
                       subjectid = '',
@@ -308,32 +323,33 @@ const SubjectLevel = ({route}) => {
                     } = item;
 
                     return (
-                      <TouchableOpacity key={index}
-                      onPress={() => {
-                        const bodydata = {
-                          subjectid: subjectid,
-                          childid: childid,
-                        };
-                        dispatch(getTopicBySubIdAPI(bodydata));
-                        // dispatch(getTopicBySubIdAPI(subjectid));
-                        navigation.navigate('TopicDetails', {
-                          coursename: coursename,
-                          subjectname: subjectname,
-                          subjectid: subjectid,
-                        });
-                      }}>
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          backgroundColor: '#2C7DB5',
-                          width: device_width * 0.95,
-                          height: device_height * 0.09,
-                          marginHorizontal: 10,
-                          paddingHorizontal: 10,
-                          borderRadius: 12,
-                          marginBottom: 15,
+                      <TouchableOpacity
+                        key={index}
+                        onPress={() => {
+                          const bodydata = {
+                            subjectid: subjectid,
+                            childid: childid,
+                          };
+                          dispatch(getTopicBySubIdAPI(bodydata));
+                          // dispatch(getTopicBySubIdAPI(subjectid));
+                          navigation.navigate('TopicDetails', {
+                            coursename: coursename,
+                            subjectname: subjectname,
+                            subjectid: subjectid,
+                          });
                         }}>
-                        {/* <View
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            backgroundColor: '#2C7DB5',
+                            width: device_width * 0.95,
+                            height: device_height * 0.09,
+                            marginHorizontal: 10,
+                            paddingHorizontal: 10,
+                            borderRadius: 12,
+                            marginBottom: 15,
+                          }}>
+                          {/* <View
                           style={{
                             flexDirection: 'row',
                             backgroundColor: '#2C7DB5',

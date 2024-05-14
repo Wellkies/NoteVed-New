@@ -211,18 +211,11 @@ const LandingScreen = ({}) => {
       navigation.navigate('SubjectLevel', {
         coursename: course?.coursename,
         subjectname: course?.description,
-        subjectid: course?.courseid,
+        courseid: course?.courseid,
       });
     } else if (course?.coursename === 'Vidyalaya Vista') {
       setModalVisible(true);
     }
-    // else {
-    //   navigation.navigate('TopicDetails', {
-    //     coursename: course?.coursename,
-    //     subjectname: course?.description,
-    //     subjectid: course?.courseid,
-    //   });
-    // }
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -385,8 +378,10 @@ const LandingScreen = ({}) => {
                       //backgroundColor: ListColor[index % ListColor.length],
                       backgroundColor: '#2C7DB5',
                       paddingVertical: 25,
-                      width: device_width * 0.42,
-                      height: device_height * 0.25,
+                      height: '55%',
+                      width: '45%',
+                      // width: device_width * 0.42,
+                      // height: device_height * 0.27,
                       paddingHorizontal: 15,
                       margin: 10,
                       borderWidth: 1,
@@ -395,18 +390,20 @@ const LandingScreen = ({}) => {
                       borderRadius: 10,
                     }}>
                     {image != '' && image != null ? (
-                      <FastImage
+                      <Image
                         style={{
-                          marginTop: 5,
-                          height: device_height * 0.15,
-                          width: device_width * 0.4,
+                          //marginTop: 5,
+                          height: '85%',
+                          width: '100%'
+                          // height: device_height * 0.14,
+                          // width: device_width * 0.4,
                           // borderWidth:1,
                         }}
                         source={{uri: image}}
                         resizeMode="contain"
                       />
                     ) : (
-                      <FastImage
+                      <Image
                         style={{
                           marginTop: 5,
                           height: device_height * 0.15,

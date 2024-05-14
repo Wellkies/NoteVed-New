@@ -40,7 +40,7 @@ const ContentDetails = ({route}) => {
   const {t: trans, i18n} = useTranslation();
   const {
     coursename = '',
-    // subjectname = '',
+    subjectname = '',
     topicname = '',
     topicid: topicID = '',
     //percentage = '',
@@ -142,26 +142,23 @@ const ContentDetails = ({route}) => {
   const {
     reviewquestionsets = [],
     subjectid = '',
-    subjectname = '',
+    //subjectname = '',
     topic = '',
     topicid = '',
   } = ContentByTopicId[0] ? ContentByTopicId[0] : [];
 
   //console.log(reviewquestionsets.studentdata, '@@@@@@@@@@@@@@@@@@@@@@@review');
 
-  // const lastIndex = reviewquestionsets[reviewquestionsets.length - 1] || {};
-  // const {studentdata = []} = lastIndex;
-  // const lastCompletionPercentage =
-  //   studentdata.length > 0 ? studentdata[0].percentage : 0;
-
   const [allIndexesContain90Percent, setAllIndexesContain90Percent] =
     useState(false);
 
+  console.log(reviewquestionsets[0], '===============reviewquestionsets');
   const percentageComplete = async () => {
     if (reviewquestionsets[0].studentdata.length === 0) {
       return false;
     }
     for (const questionSet of reviewquestionsets) {
+      console.log(questionSet, '==========questionSet');
       if (questionSet.studentdata.length === 0) {
         return false;
       }
@@ -173,7 +170,6 @@ const ContentDetails = ({route}) => {
     }
     return true;
   };
-
   useEffect(() => {
     const checkPercentages = async () => {
       const result = await percentageComplete();
@@ -182,11 +178,14 @@ const ContentDetails = ({route}) => {
     };
     if (reviewquestionsets.length > 0) {
       checkPercentages();
+    } else {
+      setAllIndexesContain90Percent(false);
     }
   }, [reviewquestionsets]);
- 
+  console.log(reviewquestionsets, '=====reviewquestionsets');
+
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#1E1E1E'}}>
       {contentLoad == 'loading' ? (
         <View
           style={{
@@ -203,8 +202,8 @@ const ContentDetails = ({route}) => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View
             style={{
-              width: device_width,
-              height: device_height,
+              // width: device_width,
+              // height: device_height,
               flex: 1,
               alignSelf: 'center',
               backgroundColor: '#1E1E1E',
@@ -307,8 +306,9 @@ const ContentDetails = ({route}) => {
                   const {percentage = ''} = studentdata[0] || {};
                   const isReattempt = studentdata.length > 0;
                   //console.log(studentdata[0], '@@@@@@@@@@@studentdata');
-                  const islastexercise =
-                    reviewquestionsets.length === index + 1;
+                  // const islastexercise =
+                  //   reviewquestionsets.length === index + 1;
+
                   return (
                     <View
                       key={index}
