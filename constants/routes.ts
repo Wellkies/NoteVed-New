@@ -65,6 +65,7 @@ const ROUTES = {
   TOPICDETAILS:'TopicDetails',
   CONTENTDETAILS:'ContentDetails',
   LEVELCOMPLETED: 'LevelCompleted',
+  CIRCULARPROGRESSBAR: 'CircularProgressBar'
 };
 
 export default ROUTES;

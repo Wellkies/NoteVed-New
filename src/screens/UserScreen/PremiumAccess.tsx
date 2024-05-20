@@ -512,14 +512,14 @@ const PremiumAccess = ({route}) => {
   // console.log(PremiumPurchase, 'PremiumPurchase............');
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1,backgroundColor:'#1E1E1E',}}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View
           style={{
             width: device_width,
             height: device_height,
             flex: 1,
-            backgroundColor: '#282828',
+            //backgroundColor: '#282828',
           }}>
           <View
             style={{
@@ -577,8 +577,16 @@ const PremiumAccess = ({route}) => {
               flexDirection: 'row',
               justifyContent: 'space-between',
             }}>
-            <TouchableOpacity>
-              <View
+            <TouchableOpacity  style={{
+                  borderRadius: 8,
+                  backgroundColor: '#FFFFFF',
+                  padding: 10,
+                  margin: 10,
+                  width: '50%',
+                  height: '100%',
+                  flex: 1,
+                }}>
+              {/* <View
                 style={{
                   borderRadius: 8,
                   backgroundColor: '#FFFFFF',
@@ -586,7 +594,7 @@ const PremiumAccess = ({route}) => {
                   margin: 10,
                   width: device_width * 0.45,
                   height: device_height * 0.21,
-                }}>
+                }}> */}
                 <View
                   style={{
                     alignContent: 'center',
@@ -601,6 +609,7 @@ const PremiumAccess = ({route}) => {
                       marginBottom: 10,
                       backgroundColor: '#f8f8f8',
                       padding: 2,
+                      color: '#000000',
                     }}
                   />
                 </View>
@@ -630,7 +639,7 @@ const PremiumAccess = ({route}) => {
                     style={{
                       fontWeight: '600',
                       fontSize: 28,
-                      color: '#2CBE99',
+                      color: '#2C7DB5',
                       textAlign: 'center',
                     }}>
                     {trans('Free')}
@@ -639,16 +648,27 @@ const PremiumAccess = ({route}) => {
                     style={{
                       textAlign: 'center',
                       marginTop: 10,
-                      color: '#a0a0a0',
-                      fontWeight: '300',
+                      color: '#808080',
+                      fontWeight: '500',
                     }}>
                     {trans('/7 days')}
                   </Text>
                 </View>
-              </View>
+              {/* </View> */}
             </TouchableOpacity>
-            <TouchableOpacity>
-              <View
+            <TouchableOpacity style={{
+                  borderRadius: 8,
+                  //backgroundColor: '#2CBE99',
+                  backgroundColor:'#2C7DB5',
+                  padding: 10,
+                  margin: 10,
+                  width: '50%',
+                  height: '100%',
+                  flex: 1,
+                  // width: device_width * 0.45,
+                  // height: device_height * 0.21,
+                }}>
+              {/* <View
                 style={{
                   borderRadius: 8,
                   backgroundColor: '#2CBE99',
@@ -656,7 +676,7 @@ const PremiumAccess = ({route}) => {
                   margin: 10,
                   width: device_width * 0.45,
                   height: device_height * 0.21,
-                }}>
+                }}> */}
                 <View
                   style={{
                     alignContent: 'center',
@@ -672,6 +692,7 @@ const PremiumAccess = ({route}) => {
                       backgroundColor: '#FFFFFF',
                       borderRadius: 10,
                       padding: 2,
+                      color: '#000000',
                     }}
                   />
                 </View>
@@ -711,28 +732,26 @@ const PremiumAccess = ({route}) => {
                       textAlign: 'center',
                       marginTop: 10,
                       color: '#FFFFFF',
-                      fontWeight: '300',
+                      fontWeight: '400',
                     }}>
                     {trans('/year')}
                   </Text>
                 </View>
-              </View>
+              {/* </View> */}
             </TouchableOpacity>
           </View>
-          <View style={{}}>
             <Text
               style={{
                 color: '#a0a0a0',
                 //color: '#2E3231',
                 fontWeight: '500',
                 fontSize: 18,
-                marginTop: 20,
-                marginBottom: 15,
+                marginTop: 25,
+                marginBottom: 10,
                 marginHorizontal: 15,
               }}>
               {trans('Choose your Subscription')}
             </Text>
-          </View>
           <View
             style={{
               alignContent: 'center',
@@ -755,16 +774,17 @@ const PremiumAccess = ({route}) => {
               }}>
               <Text
                 style={{
-                  fontWeight: '600',
-                  fontSize: 14,
-                  color: 'black',
+                  fontSize: 15,
+                  color: '#000000',
+                  fontWeight:'500'
                 }}>
                 {trans('Features')}
               </Text>
               <Text
                 style={{
-                  fontSize: 14,
-                  color: 'black',
+                  fontSize: 15,
+                  color: '#000000',
+                  fontWeight:'500',
                   textAlign: 'right',
                   marginRight: 10,
                   flex: 1,
@@ -773,8 +793,9 @@ const PremiumAccess = ({route}) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 14,
-                  color: 'black',
+                  fontSize: 15,
+                  color: '#000000',
+                  fontWeight:'500'
                 }}>
                 {trans('PREMIUM')}
               </Text>
@@ -823,33 +844,10 @@ const PremiumAccess = ({route}) => {
                         style={{
                           fontWeight: '600',
                           fontSize: 15,
-                          //flex: 1,
                           marginRight: 20,
                         }}>
                         {couponcode}
                       </Text>
-                      {/* {item.trial && (
-                      // <Image
-                      //   style={{
-                      //     width: 20,
-                      //     height: 20,
-                      //     resizeMode: 'contain',
-                      //     marginRight: 20,
-                      //   }}
-                      //   source={item.trial}
-                      // />
-                    )} */}
-                      {/* {item.premium && (
-                      <Image
-                        style={{
-                          width: 20,
-                          height: 20,
-                          resizeMode: 'contain',
-                          marginRight: 20,
-                        }}
-                        source={item.premium}
-                      />
-                    )} */}
                     </View>
                   </View>
                   {index !== AllMembershipData.length - 1 && (
@@ -879,7 +877,7 @@ const PremiumAccess = ({route}) => {
                 justifyContent: 'center',
                 marginTop: 15,
                 marginBottom: 8,
-                backgroundColor: '#2CBE99',
+                backgroundColor: '#2C7DB5',
                 padding: 10,
                 borderRadius: 10,
                 paddingHorizontal: 10,
@@ -908,9 +906,9 @@ const PremiumAccess = ({route}) => {
             <Text
               style={{
                 color: '#a0a0a0',
-                fontSize: 13,
+                fontSize: 14,
                 fontWeight: '500',
-                paddingHorizontal: 10,
+                marginHorizontal: 10,
               }}>
               {trans('By joining to our privacy policy and terms of service')}
             </Text>

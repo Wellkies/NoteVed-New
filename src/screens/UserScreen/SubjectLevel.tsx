@@ -231,14 +231,14 @@ const SubjectLevel = ({route}) => {
     const data ={
       courseid: courseid,
     };
-    dispatch(getAllSubByCourseIdAPI(data));
+    //dispatch(getAllSubByCourseIdAPI(data));
     return () => {};
   }, []);
 
-  //const SubjectByCourse = useAppSelector(selectAllSubjectsInfo);
-  //const SubLoading = useAppSelector(selectAllSubjectsStatus);
+  const SubjectByCourse = useAppSelector(selectAllSubjectsInfo);
+  const SubLoading = useAppSelector(selectAllSubjectsStatus);
   const SubByCourseID = useAppSelector(selectAllSubByCourseIdInfo);
-  const SubLoading = useAppSelector(selectAllSubByCourseIdStatus);
+  //const SubLoading = useAppSelector(selectAllSubByCourseIdStatus);
   console.log(SubByCourseID,'========SubByCourseID')
 
   return (
@@ -312,9 +312,9 @@ const SubjectLevel = ({route}) => {
         ) : (
           <>
             <ScrollView showsVerticalScrollIndicator={false}>
-              {SubByCourseID.length > 0 ? (
+              {SubjectByCourse.length > 0 ? (
                 <>
-                  {SubByCourseID.map((item, index) => {
+                  {SubjectByCourse.map((item, index) => {
                     const {
                       _id = '',
                       subjectid = '',

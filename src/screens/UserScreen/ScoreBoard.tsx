@@ -27,7 +27,10 @@ import {
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import Octicons from 'react-native-vector-icons/Octicons';
 import FastImage from 'react-native-fast-image';
 import ViewShot from 'react-native-view-shot';
 import Share from 'react-native-share';
@@ -95,7 +98,8 @@ import {
 } from '../../redux/reducers/GetTopicIdReducer.ts';
 import {getChildProgressAPI} from '../../redux/reducers/GetChildProgressReducer.ts';
 import {selectUserInfo} from '../../redux/reducers/loginReducer.ts';
-import { getTopicBySubIdAPI } from '../../redux/reducers/GetTopicDetailsReducer.ts';
+import {getTopicBySubIdAPI} from '../../redux/reducers/GetTopicDetailsReducer.ts';
+import CircularProgressBar from './CircularProgressBar.tsx';
 // import PaymentReminderModal from './CommonScreens/PaymentReminderModal.js';
 
 const ScoreBoard = ({route}) => {
@@ -116,7 +120,7 @@ const ScoreBoard = ({route}) => {
     studentdata = [],
     ExamQuestionsets = [],
     subjectName = '',
-    coursename ='',
+    coursename = '',
     chapterName = '',
     examSet = '',
     quiz = [],
@@ -132,7 +136,12 @@ const ScoreBoard = ({route}) => {
     is2ndAvailable = '',
     topicid = '',
   } = route.params;
-  console.log(subjectName,coursename,chapterName,'======???subjectName,coursename,chapterName')
+  console.log(
+    subjectName,
+    coursename,
+    chapterName,
+    '======???subjectName,coursename,chapterName',
+  );
   // console.log(subjectId,"subjectId",subjectName,"subjectName",topicName,"topicName",chapterName,"chapterName", ' route.params.................SCOREBOARD');
   //childid: childid,
 
@@ -288,24 +297,18 @@ const ScoreBoard = ({route}) => {
   // const {ProbableQuestions = []} = useSelector(
   //   state => state.GetMostProbQuesReducer,
   // );
+
   const ProbableQuestions = useAppSelector(selectMostProbableQsSetData);
-  // console.log(ProbableQuestions, 'ProbableQuestions................SCOREBOARD');
-  // console.log(ProbableQuestions)
   const handleCloseFunction = () => {
     setReminderModal(false);
     if (previousyearquestionid != '' && subjectWise == false) {
       setModalStatus(true);
     }
   };
-  // console.log(ExamName, 'ExamName....................');
-  // const selectedTopic = TopicList.find(row => row.topicid == TopicId);
   const matchingYearid = PrevYearQuestion.find(child => child.yearid === year);
   const matchingSetid = ProbableQuestions.find(child => child.setid == setid);
-  const handleBackButtonClick = () => {
-    // const selectedTopic = TopicList.find(rec => rec.topicid == TopicId)
-    //
-    // console.log('#########################called..............');
 
+  const handleBackButtonClick = () => {
     const {
       _id: id = '',
       name = '',
@@ -833,7 +836,7 @@ const ScoreBoard = ({route}) => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#1E1E1E'}}>
       <StatusBar backgroundColor={'#263d2d'} barStyle="light-content" />
       <ImageBackground
         style={{
@@ -841,30 +844,154 @@ const ScoreBoard = ({route}) => {
           height: device_height,
           flex: 1,
           alignSelf: 'center',
-          backgroundColor: '#1E1E1E'
-          //backgroundColor: '#272727',
+          backgroundColor: '#364D3D',
         }}
         resizeMode="cover"
-        // source={require('../../../assets/0.png')}
+        //</SafeAreaView>source={require('../../../assets/0.png')}
       >
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={{paddingHorizontal: 10}}>
+          <View
+            style={{
+              marginTop: 10,
+              flexDirection: 'row',
+              marginHorizontal: 10,
+              marginVertical: 10,
+              justifyContent: 'space-between',
+            }}>
+            <TouchableOpacity
+              disabled={ansloading == true}
+              onPress={() => {
+                setAnsLoading(true);
+                setTimeout(() => {
+                  setAnsLoading(false);
+
+                  if (ExamName == 'PreviousYear') {
+                    navigation.navigate('AnswerSheet', {
+                      subjectname: subjectName,
+                      chapterName: chapterName,
+                      examSet: examSet,
+                      quiz: quiz,
+                      securemark: correctanswer,
+                      totalmark: totalmark,
+                      Wronganswer: Wronganswer,
+                      Skipped: Skipped,
+                      isNotificationFlag: false,
+                      subjectName: scholarship,
+                      chapterName: '',
+                      allPrevQuiz: quiz,
+                      prevYearStudentdata: prevStudentData,
+                      ExamQuestionsets: '',
+                      previousyearquestionid: previousyearquestionid,
+                      scholarship: scholarship,
+                      year: matchingYearid.year,
+                      scholarshipid: scholarshipid,
+                      timeDuration: timeDuration,
+                      SubjectList: matchingYearid.subjects,
+                      yearid: year,
+                    });
+                  } else if (ExamName == 'ProbableQuestion') {
+                    navigation.navigate('AnswerSheet', {
+                      subjectname: subjectName,
+                      chapterName: chapterName,
+                      securemark: correctanswer,
+                      totalmark: totalmark,
+                      Wronganswer: Wronganswer,
+                      Skipped: Skipped,
+                      isNotificationFlag: false,
+                      subjectName: scholarship,
+                      // screenName: screenName,
+                      examSet: examSet,
+                      setid: matchingSetid.setid,
+                      mostprobablequestionid: mostprobablequestionid,
+                      ProbSubjectId: ProbSubjectId,
+                      ProbSubjectName: ProbSubjectName,
+                      quiz: quiz,
+                      studentdata: studentdata,
+                      // studentdata: prevStudentData,
+                      ExamQuestionsets: '',
+                      scholarshipid: scholarshipid,
+                      scholarship: scholarship,
+                      timeDuration: timeDuration,
+                      SubjectList: matchingSetid.subjects,
+                      screenName: screenName,
+                    });
+                  } else {
+                    navigation.navigate('AnswerSheet', {
+                      subjectname: subjectName,
+                      chapterName: chapterName,
+                      examSet: examSet,
+                      quiz: quiz,
+                      securemark: correctanswer,
+                      totalmark: totalmark,
+                      Wronganswer: Wronganswer,
+                      Skipped: Skipped,
+                      isNotificationFlag: false,
+                      is2ndAvailable: is2ndAvailable,
+                      scholarshipName: scholarshipName,
+                      subjectId: subjectId,
+                      scholarshipid: scholarshipid,
+                      topicid: topicid,
+                      boardid: boardid,
+                      contentid: contentid,
+                      percentage: percentage,
+                      coursename: coursename,
+                    });
+                  }
+                }, 1000);
+              }}
+              style={{
+                borderRadius: 10,
+                borderWidth: 1,
+                borderColor: '#FFFFFF',
+                width: '35%',
+                padding: 5,
+                alignItems: 'center',
+                flexDirection: 'row',
+                gap: 4,
+              }}>
+              <EvilIcons
+                name="trophy"
+                size={30}
+                style={{
+                  color: '#FFFFFF',
+                }}
+              />
+              <Text
+                style={{
+                  color: '#FFFFFF',
+                  fontSize: 14,
+                  fontWeight: '400',
+                }}>
+                Quiz Result
+              </Text>
+            </TouchableOpacity>
+            <AntDesign
+              name="bells"
+              size={30}
+              style={{
+                color: '#FFFFFF',
+                marginLeft: 20,
+              }}
+            />
+          </View>
           <View>
             <ViewShot
               ref={ref}
               options={{fileName: 'Test_Result', format: 'png', quality: 0.9}}
               style={{
-                // flex:1,
+                //flex:1,
                 // backgroundColor: 'rgba(0,255,0, 0.1)',
-                backgroundColor: '#272727',
+                //backgroundColor: '#272727',
                 height: device_height * 0.7,
-                width: device_width,
+                // width: device_width,
                 // alignItems:'center',
                 // justifyContent:'center',
                 alignSelf: 'center',
-                paddingVertical: 15,
-                paddingHorizontal: 10,
+                // paddingVertical: 15,
+                // paddingHorizontal: 10,
+                // marginHorizontal: 10,
               }}>
               <View
                 style={{
@@ -874,12 +1001,12 @@ const ScoreBoard = ({route}) => {
                   justifyContent: 'center',
                   alignItems: 'center',
                   // backgroundColor: 'rgba(0,255,0, 0.1)',
-                  backgroundColor: '#2C7DB5',
-                  borderWidth: 2,
+                  //backgroundColor: '#2C7DB5',
+                  //borderWidth: 2,
                   height: '43%',
                   // borderColor: '#FFB901',
-                  borderColor: '#aaa',
-                  borderRadius: 20,
+                  //borderColor: '#aaa',
+                  //borderRadius: 20,
                   // marginTop:10
                 }}>
                 <View
@@ -996,7 +1123,7 @@ const ScoreBoard = ({route}) => {
                   </Text>
                 </View>
               </View>
-              <View
+              {/* <View
                 style={{
                   // padding: 20,
                   height: '18%',
@@ -1032,8 +1159,8 @@ const ScoreBoard = ({route}) => {
                     }}>
                     {trans('DETAILS')}
                   </Text>
-                </TouchableOpacity>
-                {/* <TouchableOpacity
+                </TouchableOpacity> */}
+              {/* <TouchableOpacity
               style={{
                 width: '30%',
                 justifyContent: 'center',
@@ -1053,7 +1180,7 @@ const ScoreBoard = ({route}) => {
                 {trans('RANK')}
               </Text>
             </TouchableOpacity> */}
-                {/* <TouchableOpacity
+              {/* <TouchableOpacity
               style={{
                 width: '30%',
                 borderWidth: 1,
@@ -1076,7 +1203,7 @@ const ScoreBoard = ({route}) => {
                 {trans('RESULT')}
               </Text>
             </TouchableOpacity> */}
-              </View>
+              {/* </View> */}
               {/* <View style={{justifyContent: 'center', alignItems: 'center'}}>
                 <PieChart
                   // doughnut={true}
@@ -1088,20 +1215,276 @@ const ScoreBoard = ({route}) => {
                 />
               </View> */}
 
+              {/* <View
+                style={{
+                  // alignItems: 'center',
+                  //justifyContent: 'space-evenly',
+                  marginTop: 12,
+                  // height: '39%',
+                  // borderWidth:1,
+                }}> */}
+              {/* <View style={{marginBottom: 10}}> */}
+              <Text
+                style={{
+                  color: '#FFFFFF',
+                  fontWeight: '500',
+                  fontSize: 15,
+                  marginTop: 20,
+                  marginBottom: 8,
+                  marginLeft: 4,
+                }}>
+                RESULT
+              </Text>
+              {/* </View> */}
               <View
                 style={{
-                  alignItems: 'center',
-                  justifyContent: 'space-evenly',
-                  marginTop: 12,
-                  height: '39%',
-                  // borderWidth:1,
+                  flexDirection: 'row',
+                  backgroundColor: '#116505',
+                  paddingVertical: 18,
+                  paddingHorizontal: 16,
+                  borderRadius: 10,
+                  borderColor: '#FFFFFF',
+                  borderWidth: 0.6,
+                  justifyContent: 'space-between',
                 }}>
-                <LinearGradient
-                colors={['#012650','#012650']}
+                <View
+                  style={{
+                    alignItems: 'center',
+                  }}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      gap: 8,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}>
+                    <Ionicons
+                      name="speedometer-outline"
+                      size={30}
+                      style={{color: '#FFFFFF'}}
+                    />
+                    <Text style={{color: '#FFFFFF', fontSize: 11}}>
+                      Point Scored
+                    </Text>
+                  </View>
+                  <Text
+                    style={{
+                      color: '#FFFFFF',
+                      fontSize: 13,
+                    }}>
+                    {correctanswer + '/ ' + totalmark}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    height: '100%',
+                    width: 1,
+                    backgroundColor: '#FFFFFF',
+                    marginHorizontal: 10,
+                  }}
+                />
+                <View
+                  style={{
+                    alignItems: 'center',
+                  }}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      gap: 8,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}>
+                    <Octicons
+                      name="stopwatch"
+                      size={30}
+                      style={{color: '#FFFFFF'}}
+                    />
+                    <Text style={{color: '#FFFFFF', fontSize: 11}}>
+                      Time Spent
+                    </Text>
+                  </View>
+                  <Text
+                    style={{
+                      color: '#FFFFFF',
+                      fontSize: 13,
+                    }}>
+                    { 'Time'}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    height: '100%',
+                    width: 1,
+                    backgroundColor: '#FFFFFF',
+                    marginHorizontal: 10,
+                  }}
+                />
+                <View
+                  style={{
+                    alignItems: 'center',
+                  }}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      gap: 8,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}>
+                    <MaterialCommunityIcons
+                      name="medal"
+                      size={30}
+                      style={{color: '#FFFFFF'}}
+                    />
+                    <Text style={{color: '#FFFFFF', fontSize: 11}}>
+                      Rank Secured
+                    </Text>
+                  </View>
+                  <Text
+                    style={{
+                      color: '#FFFFFF',
+                      fontSize: 13,
+                    }}>
+                    {'44/83'}
+                  </Text>
+                </View>
+              </View>
+
+              <Text
+                style={{
+                  color: '#FFFFFF',
+                  fontWeight: '500',
+                  fontSize: 15,
+                  marginTop: 20,
+                  marginBottom: 8,
+                  marginLeft: 4,
+                }}>
+                Quiz Statistics
+              </Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  backgroundColor: '#1A780A',
+                  paddingVertical: 18,
+                  paddingHorizontal: 16,
+                  borderRadius: 10,
+                  borderColor: '#FFFFFF',
+                  borderWidth: 0.6,
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    gap: 8,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text
+                    style={{
+                      color: '#FFFFFF',
+                      backgroundColor: '#18D70F',
+                      paddingVertical: 10,
+                      paddingHorizontal: 15,
+                      borderRadius: 4,
+                    }}>
+                    {correctanswer}
+                  </Text>
+                  <Text style={{color: '#FFFFFF'}}>Correct</Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    gap: 8,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text
+                    style={{
+                      color: '#FFFFFF',
+                      backgroundColor: '#E00106',
+                      paddingVertical: 10,
+                      paddingHorizontal: 15,
+                      borderRadius: 4,
+                    }}>
+                    {Wronganswer}
+                  </Text>
+                  <Text style={{color: '#FFFFFF'}}>Wrong</Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    gap: 8,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text
+                    style={{
+                      color: '#166308',
+                      backgroundColor: '#FFFFFF',
+                      paddingVertical: 10,
+                      paddingHorizontal: 15,
+                      borderRadius: 4,
+                    }}>
+                    {Skipped}
+                  </Text>
+                  <Text style={{color: '#FFFFFF'}}>Unattempted</Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  justifyContent: 'space-between',
+                  flexDirection: 'row',
+                  marginTop: 20,
+                }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    const bodydata = {
+                      subjectid: subjectId,
+                      childid: childid,
+                    };
+                    dispatch(getTopicBySubIdAPI(bodydata));
+                    navigation.navigate('TopicDetails', {
+                      // stageid: '5',
+                      // boardid: '1',
+                      // scholarshipId: 'NVOOKADA1690811843420',
+                      // coursename: subjectName,
+                      coursename: coursename,
+                      subjectname: subjectName,
+                      subjectid: subjectId,
+                    });
+                  }}
+                  style={{
+                    borderRadius: 10,
+                    borderWidth: 2,
+                    borderColor: '#FEFEFE',
+                    width: '45%',
+                    padding: 5,
+                    alignItems: 'center',
+                  }}>
+                  <Text style={{color: '#FEFEFE'}}>Re-attempt</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    myCustomShare();
+                  }}
+                  style={{
+                    borderRadius: 10,
+                    borderWidth: 2,
+                    borderColor: '#FEFEFE',
+                    width: '45%',
+                    padding: 5,
+                    alignItems: 'center',
+                  }}>
+                  <Text style={{color: '#FEFEFE'}}>Share Report</Text>
+                </TouchableOpacity>
+              </View>
+
+              {/* <LinearGradient
+                  colors={['#012650', '#012650']}
                   style={{
                     width: '100%',
                     //backgroundColor: 'rgba(0,255,0, 0.1)',
-                    backgroundColor:'#C4E6E8',
+                    backgroundColor: '#C4E6E8',
                     // borderRadius: 10,
                     paddingVertical: 30,
                     paddingHorizontal: 20,
@@ -1236,11 +1619,46 @@ const ScoreBoard = ({route}) => {
                       {`${percentage}%`}
                     </Text>
                   </View>
-                </LinearGradient>
-              </View>
+                </LinearGradient> */}
+              {/* </View> */}
             </ViewShot>
-
             <View
+              style={{
+                backgroundColor: '#093B00',
+                borderRadius: 10,
+                paddingVertical: 20,
+                paddingHorizontal: 16,
+                flexDirection: 'row',
+                flex: 1,
+                marginTop: -20,
+                justifyContent: 'space-between',
+              }}>
+              <View style={{flexDirection: 'column', justifyContent: 'center'}}>
+                <Text
+                  style={{
+                    color: '#FFFFFF',
+                    fontWeight: '500',
+                    fontSize: 18,
+                  }}>
+                  Percentile: {`${percentage}%`}
+                </Text>
+                <Text
+                  style={{
+                    color: '#FFFFFF',
+                    fontWeight: '500',
+                    fontSize: 18,
+                  }}>
+                  Response:
+                </Text>
+              </View>
+              <CircularProgressBar
+                correct={correctanswer}
+                wrong={Wronganswer}
+                skipped={Skipped}
+                total={totalmark}
+              />
+            </View>
+            {/* <View
               style={{
                 flexDirection: 'row',
                 justifyContent: 'center',
@@ -1249,9 +1667,9 @@ const ScoreBoard = ({route}) => {
                 // borderWidth:1,
                 alignSelf: 'center',
                 marginVertical: 20,
-              }}>
-              <TouchableOpacity
-                onPress={() =>{
+              }}> */}
+            {/* <TouchableOpacity
+                onPress={() => {
                   const bodydata = {
                     subjectid: subjectId,
                     childid: childid,
@@ -1265,7 +1683,7 @@ const ScoreBoard = ({route}) => {
                     coursename: coursename,
                     subjectname: subjectName,
                     subjectid: subjectId,
-                  })
+                  });
                 }}
                 style={{
                   paddingVertical: 16,
@@ -1282,15 +1700,15 @@ const ScoreBoard = ({route}) => {
                 <Text
                   style={{
                     //color: '#0f6f25',
-                    color:'#FFFFFF',
+                    color: '#FFFFFF',
                     fontSize: 18,
                     fontWeight: '700',
                     textAlign: 'center',
                   }}>
                   {trans('Take Next Test')}
                 </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
+              </TouchableOpacity> */}
+            {/* <TouchableOpacity
                 disabled={ansloading == true}
                 onPress={() => {
                   setAnsLoading(true);
@@ -1406,12 +1824,12 @@ const ScoreBoard = ({route}) => {
                     textAlign: 'center',
                   }}>
                   {/* {trans("View Result")} */}
-                  {trans('View Result')}
+            {/* {trans('View Result')}
                 </Text>
-              </TouchableOpacity>
-            </View>
+              </TouchableOpacity>  */}
+            {/* </View> */}
 
-            {percentage >= 90 && (
+            {/* {percentage >= 90 && (
               <TouchableOpacity
                 style={{borderWidth: 1, borderColor: 'gold', borderRadius: 10}}
                 onPress={() => {
@@ -1453,16 +1871,16 @@ const ScoreBoard = ({route}) => {
                       color={'#f1a722'}
                       size={32}
                       style={{height: 30, width: 30}}
-                    />
-                    {/* <Iconz
+                    /> */}
+            {/* <Iconz
                       name="chevron-small-right"
                       size={20}
                       color={'#f1a722'}
                     /> */}
-                  </View>
+            {/* </View>
                 </View>
-              </TouchableOpacity>
-            )}
+              </TouchableOpacity> */}
+            {/* )} */}
           </View>
         </ScrollView>
 

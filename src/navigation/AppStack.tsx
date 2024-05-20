@@ -44,6 +44,7 @@ import Details from '../screens/UserScreen/Details';
 import TopicDetails from '../screens/UserScreen/TopicDetails';
 import ContentDetails from '../screens/UserScreen/ContentDetails';
 import LevelCompleted from '../screens/UserScreen/LevelCompleted';
+import CircularProgressBar from '../screens/UserScreen/CircularProgressBar';
 
 export type RootStackParamList = {
   AppStack: NavigatorScreenParams<AppStackParamList>;
@@ -113,6 +114,8 @@ const AppStack = props => {
                 'ContentDetails' ||
                 navigation.getState().routes[navigation.getState().index].name ==
                 'LevelCompleted' ||
+                navigation.getState().routes[navigation.getState().index].name ==
+                'CircularProgressBar' ||
               navigation.getState().routes[navigation.getState().index].name ==
                 'ProbableMockTest' ||
               navigation.getState().routes[navigation.getState().index].name ==
@@ -332,6 +335,22 @@ const AppStack = props => {
         <Stack.Screen
           name={ROUTES.LEVELCOMPLETED}
           component={LevelCompleted}
+          options={({navigation}) => ({
+            title: trans(''),
+            headerLeft: () => (
+              <MaterialIcons.Button
+                name="keyboard-arrow-left"
+                size={30}
+                backgroundColor={Colors.secondary}
+                color={Colors.primary}
+                onPress={() => navigation.goBack()}
+              />
+            ),
+          })}
+        />
+         <Stack.Screen
+          name={ROUTES.CIRCULARPROGRESSBAR}
+          component={CircularProgressBar}
           options={({navigation}) => ({
             title: trans(''),
             headerLeft: () => (
