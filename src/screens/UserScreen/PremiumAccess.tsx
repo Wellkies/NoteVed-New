@@ -774,17 +774,17 @@ const PremiumAccess = ({route}) => {
               }}>
               <Text
                 style={{
-                  fontSize: 15,
-                  color: '#000000',
-                  fontWeight:'500'
+                  fontSize: 16,
+                  color: '#2C7DB5',
+                  fontWeight:'600'
                 }}>
                 {trans('Features')}
               </Text>
               <Text
                 style={{
-                  fontSize: 15,
-                  color: '#000000',
-                  fontWeight:'500',
+                  fontSize: 16,
+                  color: '#2C7DB5',
+                  fontWeight:'600',
                   textAlign: 'right',
                   marginRight: 10,
                   flex: 1,
@@ -793,9 +793,9 @@ const PremiumAccess = ({route}) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 15,
-                  color: '#000000',
-                  fontWeight:'500'
+                  fontSize: 16,
+                  color: '#2C7DB5',
+                  fontWeight:'600'
                 }}>
                 {trans('PREMIUM')}
               </Text>
@@ -822,6 +822,7 @@ const PremiumAccess = ({route}) => {
                         fontWeight: '600',
                         fontSize: 15,
                         flex: 1,
+                        color:'#000000'
                       }}>
                       {membershipname}
                     </Text>
@@ -835,7 +836,7 @@ const PremiumAccess = ({route}) => {
                         style={{
                           fontWeight: '600',
                           fontSize: 15,
-                          //flex: 1,
+                          color:'#000000',
                           marginRight: 20,
                         }}>
                         {membershipstatus}
@@ -845,6 +846,7 @@ const PremiumAccess = ({route}) => {
                           fontWeight: '600',
                           fontSize: 15,
                           marginRight: 20,
+                          color:'#000000'
                         }}>
                         {couponcode}
                       </Text>

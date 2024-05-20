@@ -231,7 +231,7 @@ const SubjectLevel = ({route}) => {
     const data ={
       courseid: courseid,
     };
-    //dispatch(getAllSubByCourseIdAPI(data));
+    dispatch(getAllSubByCourseIdAPI(data));
     return () => {};
   }, []);
 

@@ -99,6 +99,7 @@ import {
 import {getChildProgressAPI} from '../../redux/reducers/GetChildProgressReducer.ts';
 import {selectUserInfo} from '../../redux/reducers/loginReducer.ts';
 import {getTopicBySubIdAPI} from '../../redux/reducers/GetTopicDetailsReducer.ts';
+import {getContentByTopicIdAPI} from '../../redux/reducers/GetContentDetailsReducer';
 import CircularProgressBar from './CircularProgressBar.tsx';
 // import PaymentReminderModal from './CommonScreens/PaymentReminderModal.js';
 
@@ -1308,7 +1309,7 @@ const ScoreBoard = ({route}) => {
                       color: '#FFFFFF',
                       fontSize: 13,
                     }}>
-                    { 'Time'}
+                    {'Time'}
                   </Text>
                 </View>
                 <View
@@ -1438,20 +1439,35 @@ const ScoreBoard = ({route}) => {
                 }}>
                 <TouchableOpacity
                   onPress={() => {
-                    const bodydata = {
-                      subjectid: subjectId,
-                      childid: childid,
-                    };
-                    dispatch(getTopicBySubIdAPI(bodydata));
-                    navigation.navigate('TopicDetails', {
-                      // stageid: '5',
-                      // boardid: '1',
-                      // scholarshipId: 'NVOOKADA1690811843420',
-                      // coursename: subjectName,
-                      coursename: coursename,
-                      subjectname: subjectName,
-                      subjectid: subjectId,
-                    });
+                    if (percentage >= 90) {
+                      const bodydata = {
+                        subjectid: subjectId,
+                        childid: childid,
+                      };
+                      dispatch(getTopicBySubIdAPI(bodydata));
+                      navigation.navigate('TopicDetails', {
+                        // stageid: '5',
+                        // boardid: '1',
+                        // scholarshipId: 'NVOOKADA1690811843420',
+                        // coursename: subjectName,
+                        coursename: coursename,
+                        subjectname: subjectName,
+                        subjectid: subjectId,
+                      });
+                    } else {
+                      const data = {
+                        topicid: topicid,
+                        childid: childid,
+                      };
+                      dispatch(getContentByTopicIdAPI(data));
+                      navigation.navigate('ContentDetails', {
+                        coursename: coursename,
+                        subjectname: subjectName,
+                        topicname: chapterName,
+                        percentage: percentage,
+                        topicid: topicid,
+                      });
+                    }
                   }}
                   style={{
                     borderRadius: 10,
@@ -1461,7 +1477,9 @@ const ScoreBoard = ({route}) => {
                     padding: 5,
                     alignItems: 'center',
                   }}>
-                  <Text style={{color: '#FEFEFE'}}>Re-attempt</Text>
+                  <Text style={{color: '#FEFEFE'}}>
+                    {percentage >= 90 ? 'Next' : 'Re-attempt'}
+                  </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {

@@ -43,6 +43,7 @@ import {RootState} from '../../redux/store/Store';
 import {selectExamName} from '../../redux/reducers/ExamTestNameReducer';
 import {useNavigation} from '@react-navigation/native';
 import Header from '../CommonScreens/Header';
+import {getContentByTopicIdAPI} from '../../redux/reducers/GetContentDetailsReducer';
 
 const AnswerSheet = ({route}) => {
   const {t: trans, i18n} = useTranslation();
@@ -105,6 +106,7 @@ const AnswerSheet = ({route}) => {
   const navigation = useNavigation();
 
   const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+  const dispatch = useDispatch<any>();
 
   const ExamName = useAppSelector(selectExamName);
 
@@ -945,11 +947,17 @@ const AnswerSheet = ({route}) => {
           <View style={{flexDirection: 'row', justifyContent: 'center'}}>
             <TouchableOpacity
               onPress={() => {
+                const data = {
+                  topicid: topicid,
+                  childid: childId,
+                };
+                dispatch(getContentByTopicIdAPI(data));
                 navigation.navigate('ContentDetails', {
                   coursename: coursename,
                   subjectname: subjectname,
                   topicname: chapterName,
                   percentage: percentage,
+                  topicid: topicid,
                 });
               }}
               style={{
