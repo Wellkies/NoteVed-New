@@ -1095,7 +1095,6 @@ const ScoreBoard = ({route}) => {
                       <></>
                     )}
                     {subjectName == '' ? <></> : `${subjectName.trim()}, `}
-                    {/* {`${subjectName},`}{' '} */}
                     {ExamName == 'PreviousYear' ? (
                       year != '' && year != null ? (
                         <Text style={{textTransform: 'uppercase'}}>
