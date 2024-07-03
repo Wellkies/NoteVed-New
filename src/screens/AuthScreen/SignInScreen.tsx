@@ -873,7 +873,7 @@ const SignInScreen = ({ route }) => {
         // resizeMode="cover"
         // source={require('../../../assets/0.png')}
         >
-        <StatusBar backgroundColor={'#282828'} barStyle="light-content" />
+        <StatusBar backgroundColor={'#1E1E1E'} barStyle="light-content" />
         <View
           style={{
             flexDirection: 'row',
@@ -2535,9 +2535,9 @@ const SignInScreen = ({ route }) => {
                         navigation.navigate('TermAndConditions');
                       }}
                       style={{
-                        fontSize: 14,
+                        fontSize: 15,
                         // color: '#f1a722',
-                        color: 'blue',
+                        color: '#2C7DB5',
                         textDecorationLine: 'underline',
                         fontWeight: '600',
                       }}>
