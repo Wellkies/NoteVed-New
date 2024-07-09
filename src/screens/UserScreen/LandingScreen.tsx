@@ -305,17 +305,12 @@ const LandingScreen = ({}) => {
             height: device_height,
             flex: 1,
             alignSelf: 'center',
-            backgroundColor: '#404040',
+            backgroundColor: '#1E1E1E',
+            //backgroundColor: '#404040',
           }}
           resizeMode="contain"
           // source={require('../../../assets/testBG3.jpg')}
         >
-          {/* <Header
-          label1={trans('Welcome to NoteVed')}
-          label2={''}
-          isbackIconShow={false}
-          functionName={() => navigation.goBack()}
-        /> */}
           <Text
             style={{
               fontSize: 25,
@@ -374,14 +369,10 @@ const LandingScreen = ({}) => {
                     style={{
                       justifyContent: 'center',
                       alignItems: 'center',
-                      // backgroundColor: '#fee2a3',
-                      //backgroundColor: ListColor[index % ListColor.length],
                       backgroundColor: '#2C7DB5',
                       paddingVertical: 25,
                       height: '55%',
                       width: '45%',
-                      // width: device_width * 0.42,
-                      // height: device_height * 0.27,
                       paddingHorizontal: 15,
                       margin: 10,
                       borderWidth: 1,
@@ -392,13 +383,9 @@ const LandingScreen = ({}) => {
                     {image != '' && image != null ? (
                       <Image
                         style={{
-                          //marginTop: 5,
                           height: '85%',
                           width: '100%'
-                          // height: device_height * 0.14,
-                          // width: device_width * 0.4,
-                          // borderWidth:1,
-                        }}
+                         }}
                         source={{uri: image}}
                         resizeMode="contain"
                       />
@@ -408,7 +395,6 @@ const LandingScreen = ({}) => {
                           marginTop: 5,
                           height: device_height * 0.15,
                           width: device_width * 0.4,
-                          // borderWidth:1,
                         }}
                         source={require('../../../assets/teacher.jpg')}
                         resizeMode="contain"
@@ -448,7 +434,6 @@ const LandingScreen = ({}) => {
                   createdAt = '',
                   updatedAt = '',
                 } = item;
-                //console.log(item, "================item");
                 return (
                   <TouchableOpacity
                     key={index}
@@ -462,8 +447,6 @@ const LandingScreen = ({}) => {
                     style={{
                       justifyContent: 'center',
                       alignItems: 'center',
-                      // backgroundColor: '#fee2a3',
-                      //backgroundColor: ListColor[index % ListColor.length],
                       backgroundColor: '#2C7DB5',
                       paddingVertical: 25,
                       width: device_width * 0.42,
