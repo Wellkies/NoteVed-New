@@ -28,8 +28,7 @@ const CommonModalUser = ({
     <Modal transparent={true} visible={ModalStatus}>
       <View
         style={{
-          //backgroundColor: '#0f6f25',
-          backgroundColor:'#2C7DB5',
+          backgroundColor: '#0f6f25',
           flex: 1,
           alignItems: 'center',
           justifyContent: 'center',
@@ -48,10 +47,10 @@ const CommonModalUser = ({
                 ? device_height * 0.1
                 : device_height * 0.35,
               minWidth: device_width * 0.9,
-              backgroundColor: '#002650',
+              backgroundColor: '#0f6f25',
               flexDirection: 'column',
               justifyContent: 'space-between',
-              borderColor: '#FFFFFF',
+              borderColor: '#FFB901',
               //   alignItems:'center'
               //   paddingHorizontal: 20,
             }}>
@@ -67,11 +66,11 @@ const CommonModalUser = ({
                     style={{
                       textAlign: 'center',
                       width: device_width * 0.8,
-                      fontSize: 18,
-                      color: '#FFFFFF',
+                      fontSize: 17,
+                      color: '#fff',
                       marginTop: 10,
                       marginLeft: 10,
-                      fontWeight: '700',
+                      fontWeight: '900',
                     }}>
                     {label1}
                   </Text>
@@ -124,11 +123,11 @@ const CommonModalUser = ({
                     marginVertical: 5,
                     borderWidth: 1,
                     marginRight: 25,
-                    //borderColor: 'white',
+                    borderColor: 'white',
                   }}
                   onPress={() => yesbtnFunction()}>
                   <LinearGradient
-                    colors={['#EEF8FB', '#EEF8FB']}
+                    colors={['#FFB901', '#FFB901']}
                     style={{
                       borderRadius: 15,
 
@@ -172,7 +171,7 @@ const CommonModalUser = ({
                   }}
                   onPress={() => nobtnFunction()}>
                   <LinearGradient
-                    colors={['#EA2E0E', '#800000']}
+                    colors={['#800000', '#800000']}
                     style={{
                       borderRadius: 15,
                       width: '100%',

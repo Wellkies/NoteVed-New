@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  ImageBackground,
 } from 'react-native';
 import React, {useEffect, useState, useRef} from 'react';
 import {useNavigation} from '@react-navigation/native';
@@ -35,6 +36,7 @@ import Modal from 'react-native-modal';
 import LottieView from 'lottie-react-native';
 import moment from 'moment';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Colors from '../../../assets/Colors';
 
 const ContentDetails = ({route}) => {
   const navigation = useNavigation();
@@ -187,7 +189,7 @@ const ContentDetails = ({route}) => {
   console.log(reviewquestionsets, '=====reviewquestionsets');
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#1E1E1E'}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: Colors.secondary}}>
       {contentLoad == 'loading' ? (
         <View
           style={{
@@ -202,168 +204,175 @@ const ContentDetails = ({route}) => {
         </View>
       ) : (
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View
+          <ImageBackground
             style={{
-              // width: device_width,
-              // height: device_height,
+              width: device_width,
+              height: device_height,
               flex: 1,
               alignSelf: 'center',
-              backgroundColor: '#1E1E1E',
-            }}>
+            }}
+            resizeMode="cover"
+            source={require('../../../assets/0.png')}>
             <View
               style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginVertical: 10,
-                marginHorizontal: 20,
+                // width: device_width,
+                // height: device_height,
+                flex: 1,
+                alignSelf: 'center',
+                //backgroundColor: '#1E1E1E',
               }}>
-              <TouchableOpacity
-                onPress={() => navigation.goBack()}
-                style={{
-                  position: 'absolute',
-                  top: 30,
-                  left: 0,
-                }}>
-                <MaterialIcons
-                  name="arrow-back"
-                  size={35}
-                  style={{
-                    color: '#FFFFFF',
-                  }}
-                />
-              </TouchableOpacity>
               <View
                 style={{
-                  flexDirection: 'row',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  marginVertical: 12,
+                  marginVertical: 10,
                   marginHorizontal: 20,
-                  gap: 4,
                 }}>
-                <Image
-                  source={require('../../../assets/people.png')}
+                <TouchableOpacity
+                  onPress={() => navigation.goBack()}
                   style={{
-                    height: device_height * 0.069,
-                    width: device_width * 0.17,
-                    resizeMode: 'contain',
-                    tintColor: '#FFFFFF',
-                  }}
-                />
-                <Text
-                  style={{
-                    fontWeight: '400',
-                    fontSize: 20,
-                    color: '#FFFFFF',
+                    position: 'absolute',
+                    top: 30,
+                    left: 0,
                   }}>
-                  {coursename !== 'Mind Melters' &&
-                  coursename !== 'Vidyalaya Vista'
-                    ? trans(coursename + ' ' + subjectname)
-                    : trans(subjectname)}
-                </Text>
-              </View>
-              <View
-                style={{
-                  backgroundColor: '#2C7DB5',
-                  paddingVertical: 6,
-                  paddingHorizontal: 20,
-                  borderRadius: 7,
-                  marginHorizontal: 20,
-                  right: -15,
-                }}>
-                <Text
+                  <MaterialIcons
+                    name="arrow-back"
+                    size={35}
+                    style={{
+                      color: '#FFFFFF',
+                    }}
+                  />
+                </TouchableOpacity>
+                <View
                   style={{
-                    fontSize: 19,
-                    color: '#FFFFFF',
-                    fontWeight: '500',
-                    letterSpacing: 0.5,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginVertical: 12,
+                    marginHorizontal: 20,
+                    gap: 4,
                   }}>
-                  {trans(topicname)}
-                </Text>
+                  <Image
+                    source={require('../../../assets/people.png')}
+                    style={{
+                      height: device_height * 0.069,
+                      width: device_width * 0.17,
+                      resizeMode: 'contain',
+                      tintColor: '#FFFFFF',
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontWeight: '400',
+                      fontSize: 20,
+                      color: '#FFFFFF',
+                    }}>
+                    {coursename !== 'Mind Melters' &&
+                    coursename !== 'Vidyalaya Vista'
+                      ? trans(coursename + ' ' + subjectname)
+                      : trans(subjectname)}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    backgroundColor: '#f1a722',
+                    paddingVertical: 6,
+                    paddingHorizontal: 20,
+                    borderRadius: 7,
+                    marginHorizontal: 20,
+                    right: -15,
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: 19,
+                      color: 'black',
+                      fontWeight: '500',
+                      letterSpacing: 0.5,
+                    }}>
+                    {trans(topicname)}
+                  </Text>
+                </View>
               </View>
-            </View>
-            {reviewquestionsets.length > 0 ? (
-              <>
-                {reviewquestionsets.map((item, index) => {
-                  const {
-                    _id = '',
-                    contentid = '',
-                    slcontent = '',
-                    contentimage = '',
-                    contentset = '',
-                    concepts = [],
-                    isLock = false,
-                    isPremium = true,
-                    quiz = [],
-                    slsubject = '',
-                    sltopic = '',
-                    subjectimage = '',
-                    // subjectname = '',
-                    timeDuration = '',
-                    topicimage = '',
-                    //topicname = '',
-                    videos = [],
-                    studentdata = [],
-                  } = item;
-                  const {
-                    percentage = '',
-                    numberofattempt = '',
-                    lastattemptDate = '',
-                    totalmark = '',
-                    securmark = '',
-                  } = studentdata[0] || {};
-                  const isReattempt = studentdata.length > 0;
-                  let percentageSecure = percentage;
-                  //console.log(studentdata[0], '@@@@@@@@@@@studentdata');
-                  // const islastexercise =
-                  //   reviewquestionsets.length === index + 1;
+              {reviewquestionsets.length > 0 ? (
+                <>
+                  {reviewquestionsets.map((item, index) => {
+                    const {
+                      _id = '',
+                      contentid = '',
+                      slcontent = '',
+                      contentimage = '',
+                      contentset = '',
+                      concepts = [],
+                      isLock = false,
+                      isPremium = true,
+                      quiz = [],
+                      slsubject = '',
+                      sltopic = '',
+                      subjectimage = '',
+                      // subjectname = '',
+                      timeDuration = '',
+                      topicimage = '',
+                      //topicname = '',
+                      videos = [],
+                      studentdata = [],
+                    } = item;
+                    const {
+                      percentage = '',
+                      numberofattempt = '',
+                      lastattemptDate = '',
+                      totalmark = '',
+                      securmark = '',
+                    } = studentdata[0] || {};
+                    const isReattempt = studentdata.length > 0;
+                    let percentageSecure = percentage;
 
-                  return (
-                    <View
-                      key={index}
-                      style={{
-                        marginTop: 10,
-                        padding: 10,
-                        borderRadius: 10,
-                        borderWidth: 0.5,
-                        flexDirection: 'row',
-                        //alignContent: 'center',
-                        alignSelf: 'center',
-                        backgroundColor: '#000000',
-                        width: '94%',
-                        //width: device_width * 0.95,
-                        //height: device_height * 0.18,
-                        //marginHorizontal: 10,
-                        //borderRadius: 12,
-                        marginBottom: 5,
-                        //marginTop: 24,
-                        //position: 'relative',
-                        overflow: 'hidden',
-                      }}>
+                    return (
                       <View
+                        key={index}
                         style={{
-                          position: 'absolute',
-                          top: -10,
-                          right: -10,
+                          marginTop: 10,
+                          padding: 10,
+                          borderRadius: 10,
+                          borderWidth: 0.5,
+                          flexDirection: 'row',
+                          //alignContent: 'center',
+                          alignSelf: 'center',
+                          backgroundColor: 'rgba(0,255,0,0.1)',
+                          borderColor: '#f1a722',
+                          width: '94%',
+                          //width: device_width * 0.95,
+                          //height: device_height * 0.18,
+                          //marginHorizontal: 10,
+                          //borderRadius: 12,
+                          marginBottom: 5,
+                          //marginTop: 24,
+                          //position: 'relative',
+                          overflow: 'hidden',
                         }}>
                         <View
                           style={{
-                            backgroundColor: '#2C7DB5',
-                            width: 40,
-                            height: 40,
-                            justifyContent: 'center',
+                            position: 'absolute',
+                            top: -10,
+                            right: -10,
+                          }}>
+                          <View
+                            style={{
+                              backgroundColor: '#f1a722',
+                              width: 40,
+                              height: 40,
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              borderRadius: 30,
+                            }}
+                          />
+                        </View>
+                        <View
+                          style={{
+                            marginHorizontal: 16,
+                            flexDirection: 'row',
                             alignItems: 'center',
-                            borderRadius: 30,
-                          }}
-                        />
-                      </View>
-                      <View
-                        style={{
-                          marginHorizontal: 16,
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                        }}>
-                        {/* <Image
+                          }}>
+                          {/* <Image
                           source={require('../../../assets/book.png')}
                           style={{
                             //padding: 10,
@@ -374,221 +383,195 @@ const ContentDetails = ({route}) => {
                             //top: -10,
                           }}
                         /> */}
-                        {isReattempt ? (
-                          <>
-                            <View
-                              style={{
-                                marginHorizontal: 10,
-                                flexDirection: 'column',
-                                //width: device_width * 0.58,
-                                width: '70%',
-                                justifyContent: 'space-between',
-                              }}>
+                          {isReattempt ? (
+                            <>
                               <View
                                 style={{
-                                  flexDirection: 'row',
+                                  marginHorizontal: 10,
+                                  flexDirection: 'column',
+                                  //width: device_width * 0.58,
+                                  width: '70%',
+                                  justifyContent: 'space-between',
+                                }}>
+                                <View
+                                  style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    marginBottom: 15,
+                                  }}>
+                                  <MaterialCommunityIcons
+                                    name="hand-pointing-right"
+                                    color={'#f1a722'}
+                                    size={30}
+                                    style={{marginRight: 10}}
+                                  />
+                                  <Text
+                                    style={{
+                                      color: '#f1a722',
+                                      fontWeight: '500',
+                                      fontSize: 17,
+                                      //top: -10,
+                                    }}>
+                                    {trans(contentset)}
+                                  </Text>
+                                </View>
+                                <View
+                                  style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                  }}>
+                                  <Text
+                                    style={{
+                                      color: '#fff',
+                                      fontSize: 14,
+                                      //width: '60%',
+                                      fontWeight: '500',
+                                      marginLeft: 20,
+                                    }}>
+                                    {trans('Total No. of Attempts')}
+                                  </Text>
+                                  <Text
+                                    style={{
+                                      textTransform: 'capitalize',
+                                      color: '#f1a722',
+                                      fontSize: 14,
+                                      fontWeight: 'bold',
+                                    }}>
+                                    {`: ${numberofattempt}`}
+                                  </Text>
+                                </View>
+                                <View
+                                  style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                  }}>
+                                  <Text
+                                    style={{
+                                      color: '#fff',
+                                      fontSize: 14,
+                                      width: '60%',
+                                      fontWeight: '500',
+                                      marginLeft: 20,
+                                      marginBottom: 2,
+                                    }}>
+                                    {trans('Last Attempt on')}
+                                  </Text>
+                                  <Text
+                                    style={{
+                                      textTransform: 'capitalize',
+                                      color: '#f1a722',
+                                      fontSize: 14,
+                                      fontWeight: '500',
+                                    }}>
+                                    {`: ${moment(lastattemptDate).format(
+                                      'DD/MM/YY',
+                                    )}`}
+                                  </Text>
+                                </View>
+                                <View
+                                  style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                  }}>
+                                  <Text
+                                    style={{
+                                      color: '#fff',
+                                      width: '60%',
+                                      fontSize: 14,
+                                      fontWeight: '500',
+                                      marginLeft: 20,
+                                    }}>
+                                    {trans('Total questions')}
+                                  </Text>
+                                  <Text
+                                    style={{
+                                      textTransform: 'capitalize',
+                                      color: '#f1a722',
+                                      fontSize: 14,
+                                      fontWeight: 'bold',
+                                    }}>
+                                    {`: ${totalmark}`}
+                                  </Text>
+                                </View>
+                                <View
+                                  style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                  }}>
+                                  <Text
+                                    style={{
+                                      width: '60%',
+                                      color: '#fff',
+                                      fontSize: 14,
+                                      fontWeight: '500',
+                                      marginLeft: 20,
+                                    }}>
+                                    {trans('Correct Answer')}
+                                  </Text>
+                                  <Text
+                                    style={{
+                                      textTransform: 'capitalize',
+                                      color: 'lawngreen',
+                                      fontSize: 14,
+                                      fontWeight: 'bold',
+                                    }}>
+                                    {`: ${securmark}`}
+                                  </Text>
+                                </View>
+                                <View
+                                  style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                  }}>
+                                  <Text
+                                    style={{
+                                      width: '60%',
+                                      color: '#fff',
+                                      fontSize: 14,
+                                      fontWeight: '500',
+                                      marginLeft: 20,
+                                    }}>
+                                    {trans('Percentage')}%
+                                  </Text>
+                                  <Text
+                                    style={{
+                                      textTransform: 'capitalize',
+                                      color:
+                                        percentageSecure >= 90
+                                          ? 'lawngreen'
+                                          : 'darkorange',
+                                      fontSize: 14,
+                                      fontWeight: 'bold',
+                                    }}>
+                                    : {percentageSecure}%
+                                  </Text>
+                                </View>
+                              </View>
+                            </>
+                          ) : (
+                            <View style={{width: '70%'}}>
+                              <View
+                                style={{
                                   alignItems: 'center',
+                                  flexDirection: 'row',
                                   marginBottom: 15,
                                 }}>
                                 <MaterialCommunityIcons
                                   name="hand-pointing-right"
-                                  color={'#2C7DB5'}
+                                  color={'#f1a722'}
                                   size={30}
                                   style={{marginRight: 10}}
                                 />
                                 <Text
                                   style={{
-                                    color: '#2C7DB5',
-                                    fontWeight: '500',
                                     fontSize: 17,
-                                    //top: -10,
-                                  }}>
-                                  {trans(contentset)}
-                                </Text>
-                              </View>
-                              <View
-                                style={{
-                                  flexDirection: 'row',
-                                  alignItems: 'center',
-                                }}>
-                                <Text
-                                  style={{
-                                    color: '#fff',
-                                    fontSize: 14,
-                                    //width: '60%',
                                     fontWeight: '500',
-                                    marginLeft: 20,
-                                  }}>
-                                  {trans('Total No. of Attempts')}
-                                </Text>
-                                <Text
-                                  style={{
-                                    textTransform: 'capitalize',
                                     color: '#f1a722',
-                                    fontSize: 14,
-                                    fontWeight: 'bold',
+                                    //width: '70%',
                                   }}>
-                                  {`: ${numberofattempt}`}
+                                  {contentset}
                                 </Text>
                               </View>
-                              <View
-                                style={{
-                                  flexDirection: 'row',
-                                  alignItems: 'center',
-                                }}>
-                                <Text
-                                  style={{
-                                    color: '#fff',
-                                    fontSize: 14,
-                                    width: '60%',
-                                    fontWeight: '500',
-                                    marginLeft: 20,
-                                    marginBottom: 2,
-                                  }}>
-                                  {trans('Last Attempt on')}
-                                </Text>
-                                <Text
-                                  style={{
-                                    textTransform: 'capitalize',
-                                    color: '#f1a722',
-                                    fontSize: 14,
-                                    fontWeight: '500',
-                                  }}>
-                                  {`: ${moment(lastattemptDate).format(
-                                    'DD/MM/YY',
-                                  )}`}
-                                </Text>
-                              </View>
-                              <View
-                                style={{
-                                  flexDirection: 'row',
-                                  alignItems: 'center',
-                                }}>
-                                <Text
-                                  style={{
-                                    color: '#fff',
-                                    width: '60%',
-                                    fontSize: 14,
-                                    fontWeight: '500',
-                                    marginLeft: 20,
-                                  }}>
-                                  {trans('Total questions')}
-                                </Text>
-                                <Text
-                                  style={{
-                                    textTransform: 'capitalize',
-                                    color: '#f1a722',
-                                    fontSize: 14,
-                                    fontWeight: 'bold',
-                                  }}>
-                                  {`: ${totalmark}`}
-                                </Text>
-                              </View>
-                              <View
-                                style={{
-                                  flexDirection: 'row',
-                                  alignItems: 'center',
-                                }}>
-                                <Text
-                                  style={{
-                                    width: '60%',
-                                    color: '#fff',
-                                    fontSize: 14,
-                                    fontWeight: '500',
-                                    marginLeft: 20,
-                                  }}>
-                                  {trans('Correct Answer')}
-                                </Text>
-                                <Text
-                                  style={{
-                                    textTransform: 'capitalize',
-                                    color: 'lawngreen',
-                                    fontSize: 14,
-                                    fontWeight: 'bold',
-                                  }}>
-                                  {`: ${securmark}`}
-                                </Text>
-                              </View>
-                              <View
-                                style={{
-                                  flexDirection: 'row',
-                                  alignItems: 'center',
-                                }}>
-                                <Text
-                                  style={{
-                                    width: '60%',
-                                    color: '#fff',
-                                    fontSize: 14,
-                                    fontWeight: '500',
-                                    marginLeft: 20,
-                                  }}>
-                                  {trans('Percentage')}%
-                                </Text>
-                                <Text
-                                  style={{
-                                    textTransform: 'capitalize',
-                                    color:
-                                      percentageSecure >= 90
-                                        ? 'lawngreen'
-                                        : 'darkorange',
-                                    fontSize: 14,
-                                    fontWeight: 'bold',
-                                  }}>
-                                  : {percentageSecure}%
-                                </Text>
-                              </View>
-                            </View>
-                          </>
-                        ) : (
-                          <View style={{width: '70%'}}>
-                            <View
-                              style={{
-                                alignItems: 'center',
-                                flexDirection: 'row',
-                                marginBottom: 15
-                              }}>
-                              <MaterialCommunityIcons
-                                name="hand-pointing-right"
-                                color={'#2C7DB5'}
-                                size={30}
-                                style={{marginRight: 10}}
-                              />
-                              <Text
-                                style={{
-                                  fontSize: 17,
-                                  fontWeight: '500',
-                                  color: '#2C7DB5',
-                                  //width: '70%',
-                                }}>
-                                {contentset}
-                              </Text>
-                            </View>
-                            <View
-                              style={{
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                justifyContent: 'space-between',
-                              }}>
-                              <Text
-                                style={{
-                                  color: '#fff',
-                                  fontSize: 14,
-                                  fontWeight: '700',
-                                }}>
-                                {trans('Total Question')}
-                              </Text>
-                              <Text
-                                style={{
-                                  textTransform: 'capitalize',
-                                  color: '#fff',
-                                  width: '50%',
-                                  fontSize: 14,
-                                  fontWeight: 'bold',
-                                }}>
-                                : {item.quizlength}
-                              </Text>
-                            </View>
-                            {timeDuration != '' && (
                               <View
                                 style={{
                                   flexDirection: 'row',
@@ -601,7 +584,7 @@ const ContentDetails = ({route}) => {
                                     fontSize: 14,
                                     fontWeight: '700',
                                   }}>
-                                  {trans('Time Duration')}
+                                  {trans('Total Question')}
                                 </Text>
                                 <Text
                                   style={{
@@ -611,131 +594,158 @@ const ContentDetails = ({route}) => {
                                     fontSize: 14,
                                     fontWeight: 'bold',
                                   }}>
-                                  : {timeDuration} mins
+                                  : {item.quizlength}
                                 </Text>
                               </View>
-                            )}
-                          </View>
-                        )}
-                        <TouchableOpacity
-                          onPress={async () => {
-                            navigation.navigate('MockTests', {
-                              screenName: 'ExamSets',
-                              subjectName: subjectname,
-                              coursename: coursename,
-                              chapterName: topicname,
-                              examSet: contentset,
-                              contentid: contentid,
-                              isReattempt: isReattempt,
-                              studentdata: studentdata,
-                              ExamQuestionsets: quiz,
-                              // scholarshipid: scholarshipid,
-                              // boardid: boardid,
-                              // scholarshipName: scholarshipName,
-                              subjectId: subjectid,
-                              timeDuration: timeDuration,
-                              is2ndAvailable: index,
-                              topicid: topicid,
-                              topic: topic,
-                              islastexercise: allIndexesContain90Percent,
-                            });
-                          }}>
-                          <View
-                            style={{
-                              //paddingVertical: 8,
-                              paddingHorizontal: 10,
-                              ///borderRadius: 10,
-                              marginRight: 8,
-                              //borderWidth: 1.2,
-                              //borderColor: '#2C7DB5',
-                              //backgroundColor: '#2C7DB5',
-                              //width: device_width * 0.3,
-                              bottom: -10,
-                              right: -15,
-                              //left: -2,
+                              {timeDuration != '' && (
+                                <View
+                                  style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between',
+                                  }}>
+                                  <Text
+                                    style={{
+                                      color: '#fff',
+                                      fontSize: 14,
+                                      fontWeight: '700',
+                                    }}>
+                                    {trans('Time Duration')}
+                                  </Text>
+                                  <Text
+                                    style={{
+                                      textTransform: 'capitalize',
+                                      color: '#fff',
+                                      width: '50%',
+                                      fontSize: 14,
+                                      fontWeight: 'bold',
+                                    }}>
+                                    : {timeDuration} mins
+                                  </Text>
+                                </View>
+                              )}
+                            </View>
+                          )}
+                          <TouchableOpacity
+                            onPress={async () => {
+                              navigation.navigate('MockTests', {
+                                screenName: 'ExamSets',
+                                subjectName: subjectname,
+                                coursename: coursename,
+                                chapterName: topicname,
+                                examSet: contentset,
+                                contentid: contentid,
+                                isReattempt: isReattempt,
+                                studentdata: studentdata,
+                                ExamQuestionsets: quiz,
+                                // scholarshipid: scholarshipid,
+                                // boardid: boardid,
+                                // scholarshipName: scholarshipName,
+                                subjectId: subjectid,
+                                timeDuration: timeDuration,
+                                is2ndAvailable: index,
+                                topicid: topicid,
+                                topic: topic,
+                                islastexercise: allIndexesContain90Percent,
+                              });
                             }}>
-                            {isReattempt && (
-                              <>
-                                <MaterialCommunityIcons
-                                  name="refresh"
-                                  color={'#2C7DB5'}
-                                  size={40}
-                                />
+                            <View
+                              style={{
+                                //paddingVertical: 8,
+                                paddingHorizontal: 10,
+                                ///borderRadius: 10,
+                                marginRight: 8,
+                                //borderWidth: 1.2,
+                                //borderColor: '#2C7DB5',
+                                //backgroundColor: '#2C7DB5',
+                                //width: device_width * 0.3,
+                                bottom: -10,
+                                right: -15,
+                                //left: -2,
+                              }}>
+                              {isReattempt && (
+                                <>
+                                  <MaterialCommunityIcons
+                                    name="refresh"
+                                    color={'#f1a722'}
+                                    size={40}
+                                  />
+                                  <Text
+                                    style={{
+                                      color: '#f1a722',
+                                      fontWeight: '600',
+                                      fontSize: 14,
+                                      letterSpacing: 0.5,
+                                    }}>
+                                    {trans('Reattempt')}
+                                  </Text>
+                                </>
+                              )}
+                              {!isReattempt && (
                                 <Text
                                   style={{
-                                    color: '#2C7DB5',
-                                    fontWeight: '600',
-                                    fontSize: 14,
+                                    color: 'green',
+                                    textAlign: 'center',
+                                    fontSize: 16,
+                                    fontWeight: '500',
+                                    //borderColor: '#f1a722',
+                                    backgroundColor: '#FFFFFF',
+                                    paddingVertical: 8,
+                                    paddingHorizontal: 10,
+                                    borderRadius: 10,
                                     letterSpacing: 0.5,
                                   }}>
-                                  {trans('Reattempt')}
+                                  {trans('Continue')}
                                 </Text>
-                              </>
-                            )}
-                            {!isReattempt && (
-                              <Text
-                                style={{
-                                  color: '#FFFFFF',
-                                  textAlign: 'center',
-                                  fontSize: 16,
-                                  fontWeight: '500',
-                                  borderColor: '#2C7DB5',
-                                  backgroundColor: '#2C7DB5',
-                                  paddingVertical: 8,
-                                  paddingHorizontal: 10,
-                                  borderRadius: 10,
-                                  letterSpacing: 0.5,
-                                }}>
-                                {trans('Continue')}
-                              </Text>
-                            )}
-                          </View>
-                        </TouchableOpacity>
+                              )}
+                            </View>
+                          </TouchableOpacity>
+                        </View>
                       </View>
-                    </View>
-                  );
-                })}
-              </>
-            ) : (
-              <>
-                <View
-                  style={{
-                    backgroundColor: 'burlywood',
-                    paddingVertical: 15,
-                    paddingHorizontal: 15,
-                    marginVertical: 10,
-                    marginHorizontal: 15,
-                    // borderRadius: 7,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexDirection: 'row',
-                  }}>
-                  <AntDesign
+                    );
+                  })}
+                </>
+              ) : (
+                <>
+                  <View
                     style={{
-                      marginHorizontal: 10,
-                      borderWidth: 0,
-                    }}
-                    name={'infocirlce'}
-                    size={30}
-                    color={'darkgreen'}
-                  />
-                  <Text
-                    style={{
-                      color: '#333',
-                      fontWeight: '700',
-                      fontSize: 15,
-                      textAlign: 'center',
-                      // borderWidth: 1,
-                      // borderLeftWidth:1,
-                      width: '85%',
+                      backgroundColor: 'burlywood',
+                      paddingVertical: 15,
+                      paddingHorizontal: 15,
+                      marginVertical: 10,
+                      marginHorizontal: 15,
+                      // borderRadius: 7,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexDirection: 'row',
                     }}>
-                    {trans('Currently No Content Added')}
-                  </Text>
-                </View>
-              </>
-            )}
-          </View>
-          {allIndexesContain90Percent && <LevelCompleted />}
+                    <AntDesign
+                      style={{
+                        marginHorizontal: 10,
+                        borderWidth: 0,
+                      }}
+                      name={'infocirlce'}
+                      size={30}
+                      color={'darkgreen'}
+                    />
+                    <Text
+                      style={{
+                        color: '#333',
+                        fontWeight: '700',
+                        fontSize: 15,
+                        textAlign: 'center',
+                        // borderWidth: 1,
+                        // borderLeftWidth:1,
+                        width: '85%',
+                      }}>
+                      {trans('Currently No Content Added')}
+                    </Text>
+                  </View>
+                </>
+              )}
+            </View>
+            {allIndexesContain90Percent && <LevelCompleted />}
+          </ImageBackground>
         </ScrollView>
       )}
     </SafeAreaView>
