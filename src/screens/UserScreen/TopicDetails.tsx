@@ -117,7 +117,7 @@ const TopicDetails = ({route}) => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <View
+      <ScrollView
         style={{
           width: device_width,
           height: device_height,
@@ -125,20 +125,21 @@ const TopicDetails = ({route}) => {
           alignSelf: 'center',
           backgroundColor: '#1E1E1E',
         }}>
-           <TouchableOpacity onPress={() => navigation.goBack()}
-           style={{
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={{
             position: 'absolute',
             top: 30,
             left: 20,
-           }}>
-              <MaterialIcons
-                name="arrow-back"
-                size={35}
-                style={{
-                  color: '#FFFFFF',
-                }}
-              />
-            </TouchableOpacity>
+          }}>
+          <MaterialIcons
+            name="arrow-back"
+            size={35}
+            style={{
+              color: '#FFFFFF',
+            }}
+          />
+        </TouchableOpacity>
         <View
           style={{
             flexDirection: 'row',
@@ -176,28 +177,33 @@ const TopicDetails = ({route}) => {
               <>
                 <View
                   style={{
-                    flexDirection: 'row',
-                    flexWrap: 'wrap',
-                    alignContent: 'center',
-                    marginHorizontal: 25,
+                    flexDirection: 'column',
+                    marginHorizontal: -10,
+                    paddingHorizontal: 10,
+                    marginRight: 10,
                     marginBottom: 16,
                     marginTop: 50,
                     justifyContent: 'center',
                   }}>
                   {TopicBySubjectId.map((item, index) => {
                     const {
-                      //subjectname = '',
                       topicname = '',
                       topicid = '',
                       studenttopic = [],
                     } = item;
                     console.log(
-                      studenttopic,
-                      'studenttopic%%%%%%%%%%%%%%%%%%%%%%%%%%%%',
+                      studenttopic[0],
+                      'studenttopic%%%%',
                     );
                     const isLock =
                       index !== 0 &&
                       TopicBySubjectId[index - 1].studenttopic.length === 0;
+                    // const completionPercentage =
+                    //   studenttopic.length > 0
+                    //     ? (studenttopic.filter(st => st.completed).length /
+                    //         studenttopic.length) *
+                    //       100
+                    //     : 0;
                     return (
                       <View key={index}>
                         <TouchableOpacity
@@ -222,32 +228,52 @@ const TopicDetails = ({route}) => {
                           }}
                           style={{
                             height: device_height * 0.09,
-                            width: device_width * 0.35,
+                            width: '100%',
                             backgroundColor: isLock ? '#CCCCCC' : '#2C7DB5',
                             borderRadius: 20,
                             marginHorizontal: 10,
                             marginVertical: 10,
-                            justifyContent: 'center',
+                            justifyContent: 'space-between',
                             alignItems: 'center',
+                            flexDirection: 'row',
                             opacity: isLock ? 0.5 : 1,
+                            paddingHorizontal: 15,
                           }}>
                           <Text
                             style={{
                               fontSize: 19,
                               color: '#FFFFFF',
-                              fontWeight: '500',
+                              fontWeight: '600',
                             }}>
                             {trans(topicname)}
                           </Text>
-                          {isLock ? (
-                            <Fontisto
-                              style={{color: '#fff'}}
-                              name="locked"
-                              size={15}
-                            />
-                          ) : (
-                            <></>
-                          )}
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              alignItems: 'center',
+                            }}>
+                            {!isLock && (
+                              <Text
+                                style={{
+                                  fontSize: 19,
+                                  fontWeight: '600',
+                                  color: '#FFFFFF',
+                                  marginRight: 10,
+                                }}>
+                                  {'0% Completed'}
+                               {/* {`${completionPercentage.toFixed(
+                                  0,
+                                )}% Completed`} */}
+                              </Text>
+                            )}
+                            {isLock && (
+                              <Fontisto
+                                style={{color: '#fff'}}
+                                name="locked"
+                                size={22}
+                              />
+                            )}
+                          </View>
                         </TouchableOpacity>
                       </View>
                     );
@@ -263,7 +289,6 @@ const TopicDetails = ({route}) => {
                     paddingHorizontal: 15,
                     marginVertical: 10,
                     marginHorizontal: 15,
-                    // borderRadius: 7,
                     alignItems: 'center',
                     justifyContent: 'center',
                     flexDirection: 'row',
@@ -283,8 +308,6 @@ const TopicDetails = ({route}) => {
                       fontWeight: '700',
                       fontSize: 15,
                       textAlign: 'center',
-                      // borderWidth: 1,
-                      // borderLeftWidth:1,
                       width: '85%',
                     }}>
                     {trans('Currently No Content Added')}
@@ -294,7 +317,7 @@ const TopicDetails = ({route}) => {
             )}
           </>
         )}
-        <View style={{position: 'relative'}}>
+        {/* <View style={{position: 'relative'}}>
           <Image
             source={require('../../../assets/assort.png')}
             style={{
@@ -320,8 +343,8 @@ const TopicDetails = ({route}) => {
               zIndex: 2,
             }}
           />
-        </View>
-      </View>
+        </View> */}
+      </ScrollView>
     </SafeAreaView>
   );
 };

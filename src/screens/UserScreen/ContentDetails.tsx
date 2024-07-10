@@ -33,6 +33,8 @@ import {
 import LoadingScreen from '../CommonScreens/LoadingScreen';
 import Modal from 'react-native-modal';
 import LottieView from 'lottie-react-native';
+import moment from 'moment';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const ContentDetails = ({route}) => {
   const navigation = useNavigation();
@@ -303,8 +305,15 @@ const ContentDetails = ({route}) => {
                     videos = [],
                     studentdata = [],
                   } = item;
-                  const {percentage = ''} = studentdata[0] || {};
+                  const {
+                    percentage = '',
+                    numberofattempt = '',
+                    lastattemptDate = '',
+                    totalmark = '',
+                    securmark = '',
+                  } = studentdata[0] || {};
                   const isReattempt = studentdata.length > 0;
+                  let percentageSecure = percentage;
                   //console.log(studentdata[0], '@@@@@@@@@@@studentdata');
                   // const islastexercise =
                   //   reviewquestionsets.length === index + 1;
@@ -313,16 +322,21 @@ const ContentDetails = ({route}) => {
                     <View
                       key={index}
                       style={{
+                        marginTop: 10,
+                        padding: 10,
+                        borderRadius: 10,
+                        borderWidth: 0.5,
                         flexDirection: 'row',
-                        //flex: 1,
-                        alignContent: 'center',
+                        //alignContent: 'center',
+                        alignSelf: 'center',
                         backgroundColor: '#000000',
-                        width: device_width * 0.95,
-                        height: device_height * 0.18,
-                        marginHorizontal: 10,
-                        borderRadius: 12,
+                        width: '94%',
+                        //width: device_width * 0.95,
+                        //height: device_height * 0.18,
+                        //marginHorizontal: 10,
+                        //borderRadius: 12,
                         marginBottom: 5,
-                        marginTop: 24,
+                        //marginTop: 24,
                         //position: 'relative',
                         overflow: 'hidden',
                       }}>
@@ -335,8 +349,8 @@ const ContentDetails = ({route}) => {
                         <View
                           style={{
                             backgroundColor: '#2C7DB5',
-                            width: 55,
-                            height: 55,
+                            width: 40,
+                            height: 40,
                             justifyContent: 'center',
                             alignItems: 'center',
                             borderRadius: 30,
@@ -349,104 +363,334 @@ const ContentDetails = ({route}) => {
                           flexDirection: 'row',
                           alignItems: 'center',
                         }}>
-                        <Image
+                        {/* <Image
                           source={require('../../../assets/book.png')}
                           style={{
-                            padding: 10,
-                            width: 75,
-                            height: 78,
+                            //padding: 10,
+                            width: 55,
+                            height: 58,
                             resizeMode: 'contain',
                             tintColor: '#FFFFFF',
-                            top: -10,
+                            //top: -10,
                           }}
-                        />
-                        <View
-                          style={{
-                            marginHorizontal: 20,
-                            flexDirection: 'column',
-                            width: device_width * 0.58,
+                        /> */}
+                        {isReattempt ? (
+                          <>
+                            <View
+                              style={{
+                                marginHorizontal: 10,
+                                flexDirection: 'column',
+                                //width: device_width * 0.58,
+                                width: '70%',
+                                justifyContent: 'space-between',
+                              }}>
+                              <View
+                                style={{
+                                  flexDirection: 'row',
+                                  alignItems: 'center',
+                                  marginBottom: 15,
+                                }}>
+                                <MaterialCommunityIcons
+                                  name="hand-pointing-right"
+                                  color={'#2C7DB5'}
+                                  size={30}
+                                  style={{marginRight: 10}}
+                                />
+                                <Text
+                                  style={{
+                                    color: '#2C7DB5',
+                                    fontWeight: '500',
+                                    fontSize: 17,
+                                    //top: -10,
+                                  }}>
+                                  {trans(contentset)}
+                                </Text>
+                              </View>
+                              <View
+                                style={{
+                                  flexDirection: 'row',
+                                  alignItems: 'center',
+                                }}>
+                                <Text
+                                  style={{
+                                    color: '#fff',
+                                    fontSize: 14,
+                                    //width: '60%',
+                                    fontWeight: '500',
+                                    marginLeft: 20,
+                                  }}>
+                                  {trans('Total No. of Attempts')}
+                                </Text>
+                                <Text
+                                  style={{
+                                    textTransform: 'capitalize',
+                                    color: '#f1a722',
+                                    fontSize: 14,
+                                    fontWeight: 'bold',
+                                  }}>
+                                  {`: ${numberofattempt}`}
+                                </Text>
+                              </View>
+                              <View
+                                style={{
+                                  flexDirection: 'row',
+                                  alignItems: 'center',
+                                }}>
+                                <Text
+                                  style={{
+                                    color: '#fff',
+                                    fontSize: 14,
+                                    width: '60%',
+                                    fontWeight: '500',
+                                    marginLeft: 20,
+                                    marginBottom: 2,
+                                  }}>
+                                  {trans('Last Attempt on')}
+                                </Text>
+                                <Text
+                                  style={{
+                                    textTransform: 'capitalize',
+                                    color: '#f1a722',
+                                    fontSize: 14,
+                                    fontWeight: '500',
+                                  }}>
+                                  {`: ${moment(lastattemptDate).format(
+                                    'DD/MM/YY',
+                                  )}`}
+                                </Text>
+                              </View>
+                              <View
+                                style={{
+                                  flexDirection: 'row',
+                                  alignItems: 'center',
+                                }}>
+                                <Text
+                                  style={{
+                                    color: '#fff',
+                                    width: '60%',
+                                    fontSize: 14,
+                                    fontWeight: '500',
+                                    marginLeft: 20,
+                                  }}>
+                                  {trans('Total questions')}
+                                </Text>
+                                <Text
+                                  style={{
+                                    textTransform: 'capitalize',
+                                    color: '#f1a722',
+                                    fontSize: 14,
+                                    fontWeight: 'bold',
+                                  }}>
+                                  {`: ${totalmark}`}
+                                </Text>
+                              </View>
+                              <View
+                                style={{
+                                  flexDirection: 'row',
+                                  alignItems: 'center',
+                                }}>
+                                <Text
+                                  style={{
+                                    width: '60%',
+                                    color: '#fff',
+                                    fontSize: 14,
+                                    fontWeight: '500',
+                                    marginLeft: 20,
+                                  }}>
+                                  {trans('Correct Answer')}
+                                </Text>
+                                <Text
+                                  style={{
+                                    textTransform: 'capitalize',
+                                    color: 'lawngreen',
+                                    fontSize: 14,
+                                    fontWeight: 'bold',
+                                  }}>
+                                  {`: ${securmark}`}
+                                </Text>
+                              </View>
+                              <View
+                                style={{
+                                  flexDirection: 'row',
+                                  alignItems: 'center',
+                                }}>
+                                <Text
+                                  style={{
+                                    width: '60%',
+                                    color: '#fff',
+                                    fontSize: 14,
+                                    fontWeight: '500',
+                                    marginLeft: 20,
+                                  }}>
+                                  {trans('Percentage')}%
+                                </Text>
+                                <Text
+                                  style={{
+                                    textTransform: 'capitalize',
+                                    color:
+                                      percentageSecure >= 90
+                                        ? 'lawngreen'
+                                        : 'darkorange',
+                                    fontSize: 14,
+                                    fontWeight: 'bold',
+                                  }}>
+                                  : {percentageSecure}%
+                                </Text>
+                              </View>
+                            </View>
+                          </>
+                        ) : (
+                          <View style={{width: '70%'}}>
+                            <View
+                              style={{
+                                alignItems: 'center',
+                                flexDirection: 'row',
+                                marginBottom: 15
+                              }}>
+                              <MaterialCommunityIcons
+                                name="hand-pointing-right"
+                                color={'#2C7DB5'}
+                                size={30}
+                                style={{marginRight: 10}}
+                              />
+                              <Text
+                                style={{
+                                  fontSize: 17,
+                                  fontWeight: '500',
+                                  color: '#2C7DB5',
+                                  //width: '70%',
+                                }}>
+                                {contentset}
+                              </Text>
+                            </View>
+                            <View
+                              style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                              }}>
+                              <Text
+                                style={{
+                                  color: '#fff',
+                                  fontSize: 14,
+                                  fontWeight: '700',
+                                }}>
+                                {trans('Total Question')}
+                              </Text>
+                              <Text
+                                style={{
+                                  textTransform: 'capitalize',
+                                  color: '#fff',
+                                  width: '50%',
+                                  fontSize: 14,
+                                  fontWeight: 'bold',
+                                }}>
+                                : {item.quizlength}
+                              </Text>
+                            </View>
+                            {timeDuration != '' && (
+                              <View
+                                style={{
+                                  flexDirection: 'row',
+                                  alignItems: 'center',
+                                  justifyContent: 'space-between',
+                                }}>
+                                <Text
+                                  style={{
+                                    color: '#fff',
+                                    fontSize: 14,
+                                    fontWeight: '700',
+                                  }}>
+                                  {trans('Time Duration')}
+                                </Text>
+                                <Text
+                                  style={{
+                                    textTransform: 'capitalize',
+                                    color: '#fff',
+                                    width: '50%',
+                                    fontSize: 14,
+                                    fontWeight: 'bold',
+                                  }}>
+                                  : {timeDuration} mins
+                                </Text>
+                              </View>
+                            )}
+                          </View>
+                        )}
+                        <TouchableOpacity
+                          onPress={async () => {
+                            navigation.navigate('MockTests', {
+                              screenName: 'ExamSets',
+                              subjectName: subjectname,
+                              coursename: coursename,
+                              chapterName: topicname,
+                              examSet: contentset,
+                              contentid: contentid,
+                              isReattempt: isReattempt,
+                              studentdata: studentdata,
+                              ExamQuestionsets: quiz,
+                              // scholarshipid: scholarshipid,
+                              // boardid: boardid,
+                              // scholarshipName: scholarshipName,
+                              subjectId: subjectid,
+                              timeDuration: timeDuration,
+                              is2ndAvailable: index,
+                              topicid: topicid,
+                              topic: topic,
+                              islastexercise: allIndexesContain90Percent,
+                            });
                           }}>
-                          <Text
-                            style={{
-                              color: '#2C7DB5',
-                              fontWeight: '500',
-                              fontSize: 18,
-                              top: -10,
-                            }}>
-                            {trans(contentset)}
-                          </Text>
                           <View
                             style={{
-                              flexDirection: 'row',
-                              alignItems: 'center',
+                              //paddingVertical: 8,
+                              paddingHorizontal: 10,
+                              ///borderRadius: 10,
+                              marginRight: 8,
+                              //borderWidth: 1.2,
+                              //borderColor: '#2C7DB5',
+                              //backgroundColor: '#2C7DB5',
+                              //width: device_width * 0.3,
+                              bottom: -10,
+                              right: -15,
+                              //left: -2,
                             }}>
-                            <View
-                              style={{
-                                backgroundColor: '#2C7DB5',
-                                height: 4,
-                                width: '50%',
-                                borderRadius: 4,
-                              }}
-                            />
-                            <Text
-                              style={{
-                                color: '#2C7DB5',
-                                marginLeft: 10,
-                                width: '20%',
-                              }}>
-                              {`${percentage || 0}%`}
-                            </Text>
-                          </View>
-                          <TouchableOpacity
-                            onPress={async () => {
-                              navigation.navigate('MockTests', {
-                                screenName: 'ExamSets',
-                                subjectName: subjectname,
-                                coursename: coursename,
-                                chapterName: topicname,
-                                examSet: contentset,
-                                contentid: contentid,
-                                isReattempt: isReattempt,
-                                studentdata: studentdata,
-                                ExamQuestionsets: quiz,
-                                // scholarshipid: scholarshipid,
-                                // boardid: boardid,
-                                // scholarshipName: scholarshipName,
-                                subjectId: subjectid,
-                                timeDuration: timeDuration,
-                                is2ndAvailable: index,
-                                topicid: topicid,
-                                topic: topic,
-                                islastexercise: allIndexesContain90Percent,
-                              });
-                            }}>
-                            <View
-                              style={{
-                                paddingVertical: 8,
-                                paddingHorizontal: 10,
-                                borderRadius: 10,
-                                marginRight: 8,
-                                borderWidth: 1.2,
-                                borderColor: '#2C7DB5',
-                                backgroundColor: '#2C7DB5',
-                                width: device_width * 0.3,
-                                bottom: -10,
-                                left: -2,
-                              }}>
+                            {isReattempt && (
+                              <>
+                                <MaterialCommunityIcons
+                                  name="refresh"
+                                  color={'#2C7DB5'}
+                                  size={40}
+                                />
+                                <Text
+                                  style={{
+                                    color: '#2C7DB5',
+                                    fontWeight: '600',
+                                    fontSize: 14,
+                                    letterSpacing: 0.5,
+                                  }}>
+                                  {trans('Reattempt')}
+                                </Text>
+                              </>
+                            )}
+                            {!isReattempt && (
                               <Text
                                 style={{
                                   color: '#FFFFFF',
                                   textAlign: 'center',
                                   fontSize: 16,
                                   fontWeight: '500',
+                                  borderColor: '#2C7DB5',
+                                  backgroundColor: '#2C7DB5',
+                                  paddingVertical: 8,
+                                  paddingHorizontal: 10,
+                                  borderRadius: 10,
+                                  letterSpacing: 0.5,
                                 }}>
-                                {isReattempt
-                                  ? trans('Reattempt')
-                                  : trans('Continue')}
+                                {trans('Continue')}
                               </Text>
-                            </View>
-                          </TouchableOpacity>
-                        </View>
+                            )}
+                          </View>
+                        </TouchableOpacity>
                       </View>
                     </View>
                   );
