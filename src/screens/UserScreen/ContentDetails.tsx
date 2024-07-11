@@ -156,18 +156,21 @@ const ContentDetails = ({route}) => {
   const [allIndexesContain90Percent, setAllIndexesContain90Percent] =
     useState(false);
 
-  console.log(reviewquestionsets[0], '===============reviewquestionsets');
+  //console.log(reviewquestionsets[0], '===============reviewquestionsets');
   const percentageComplete = async () => {
     if (reviewquestionsets[0].studentdata.length === 0) {
+      console.log('@1')
       return false;
     }
     for (const questionSet of reviewquestionsets) {
       console.log(questionSet, '==========questionSet');
       if (questionSet.studentdata.length === 0) {
+        console.log('@2')
         return false;
       }
       for (const student of questionSet.studentdata) {
         if (student.percentage < 90) {
+          console.log('@3')
           return false;
         }
       }
@@ -186,7 +189,7 @@ const ContentDetails = ({route}) => {
       setAllIndexesContain90Percent(false);
     }
   }, [reviewquestionsets]);
-  console.log(reviewquestionsets, '=====reviewquestionsets');
+  //console.log(reviewquestionsets, '=====reviewquestionsets');
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: Colors.secondary}}>
@@ -429,6 +432,7 @@ const ContentDetails = ({route}) => {
                                       marginLeft: 20,
                                     }}>
                                     {trans('Total No. of Attempts')}
+                                    {''}
                                   </Text>
                                   <Text
                                     style={{
@@ -437,6 +441,7 @@ const ContentDetails = ({route}) => {
                                       fontSize: 14,
                                       fontWeight: 'bold',
                                     }}>
+                                    {'    '}
                                     {`: ${numberofattempt}`}
                                   </Text>
                                 </View>

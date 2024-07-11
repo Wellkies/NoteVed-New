@@ -4,7 +4,7 @@ import AsyncStorage from "../../utils/AsyncStorage";
 export const getChildProgressDetailAction = async (data = {}) => {
   const url =
   GET_CHILD_PROGRESS_DETAILS  +
-    data.topicid +
+    data.courseid +
     '/' +
     data.childid ;
 

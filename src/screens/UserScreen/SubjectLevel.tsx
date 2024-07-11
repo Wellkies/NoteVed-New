@@ -77,6 +77,11 @@ import {
 import {handleSetExamName} from '../../redux/reducers/ExamTestNameReducer';
 import {ProgressBar} from 'react-native-paper';
 import {selectUserInfo} from '../../redux/reducers/loginReducer';
+import {
+  getChildProgressDetailAPI,
+  selectChildDetailData,
+} from '../../redux/reducers/GetChildProgressDetailReducer';
+import * as Progress from 'react-native-progress';
 
 const Tab = createBottomTabNavigator();
 
@@ -194,7 +199,7 @@ const SubjectLevel = ({route}) => {
     language = '',
     // coordinates='',
   } = userInfo;
-console.log(childid,'@childid1')
+  console.log(childid, '@childid1');
   useEffect(() => {
     navigation.addListener('focus', () => {
       // const data = {
@@ -234,8 +239,17 @@ console.log(childid,'@childid1')
     dispatch(getAllSubByCourseIdAPI(data));
     return () => {};
   }, []);
-
-  const SubjectByCourse = useAppSelector(selectAllSubjectsInfo);
+  useEffect(() => {
+    const data = {
+      courseid: courseid,
+      childid: childid,
+    };
+    dispatch(getChildProgressDetailAPI(data));
+    return () => {};
+  }, []);
+  const SubjectByCourse = useAppSelector(selectChildDetailData);
+  console.log(SubjectByCourse, '@SubjectByCourse1');
+  //const SubjectByCourse = useAppSelector(selectAllSubjectsInfo);
   const SubLoading = useAppSelector(selectAllSubjectsStatus);
   const SubByCourseID = useAppSelector(selectAllSubByCourseIdInfo);
   //const SubLoading = useAppSelector(selectAllSubByCourseIdStatus);
@@ -302,6 +316,152 @@ console.log(childid,'@childid1')
         ) : (
           <>
             <ScrollView showsVerticalScrollIndicator={false}>
+              {SubjectByCourse.length > 0 ? (
+                <>
+                  {SubjectByCourse.map((item, index) => {
+                    const {
+                      _id = '',
+                      subjectid = '',
+                      subjectname = '',
+                      topics = [],
+                    } = item;
+                    console.log(topics[0], '@topics%%%%');
+                    const progress = topics.filter(
+                      item => item.studenttopic != '',
+                    ).length;
+                    const totalTopic = topics.length;
+                    const proData = progress / totalTopic;
+                    //const completionPercentage = Math.round(proData * 100);
+                    return (
+                      <TouchableOpacity
+                        key={index}
+                        onPress={() => {
+                          const bodydata = {
+                            subjectid: subjectid,
+                            childid: childid,
+                          };
+                          dispatch(getChildProgressDetailAPI(bodydata));
+                          //dispatch(getTopicBySubIdAPI(bodydata));
+                          // dispatch(getTopicBySubIdAPI(subjectid));
+                          navigation.navigate('TopicDetails', {
+                            coursename: coursename,
+                            subjectname: subjectname,
+                            subjectid: subjectid,
+                          });
+                        }}>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            backgroundColor: 'rgba(0,255,0,0.1)',
+                            width: device_width * 0.95,
+                            height: device_height * 0.09,
+                            marginHorizontal: 10,
+                            paddingHorizontal: 10,
+                            borderRadius: 12,
+                            borderWidth: 0.9,
+                            borderColor: '#f1a722',
+                            marginBottom: 15,
+                          }}>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              alignItems: 'center',
+                              gap: 12,
+                            }}>
+                            <Image
+                              source={require('../../../assets/people.png')}
+                              style={{
+                                height: device_height * 0.21,
+                                width: device_width * 0.15,
+                                resizeMode: 'contain',
+                                tintColor: '#f1a722',
+                              }}
+                            />
+                            <Text
+                              style={{
+                                color: '#f1a722',
+                                fontWeight: '500',
+                                fontSize: 20,
+                              }}>
+                              {trans(subjectname)}
+                            </Text>
+                            <View
+                              style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                width: '30%',
+                                justifyContent: 'flex-end',
+                              }}>
+                              <Text
+                                style={{
+                                  fontWeight: '600',
+                                  color: '#def',
+                                  fontSize: 16,
+                                  marginRight: 10,
+                                }}>
+                                {parseFloat(`${proData * 100}% `).toFixed(2)}
+                                {'%'}
+                              </Text>
+                              <Progress.Circle
+                                progress={proData}
+                                size={35}
+                                indeterminate={false}
+                                thickness={6}
+                                allowFontScaling={false}
+                                color={'#def'}
+                                borderWidth={2}
+                                borderColor="orange"
+                                showsText={false}
+                                textStyle={{
+                                  fontSize: 12,
+                                  fontWeight: '600',
+                                }}
+                              />
+                            </View>
+                          </View>
+                        </View>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </>
+              ) : (
+                <>
+                  <View
+                    style={{
+                      backgroundColor: 'burlywood',
+                      paddingVertical: 15,
+                      paddingHorizontal: 15,
+                      marginVertical: 10,
+                      marginHorizontal: 15,
+                      // borderRadius: 7,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexDirection: 'row',
+                    }}>
+                    <AntDesign
+                      style={{
+                        marginHorizontal: 10,
+                        borderWidth: 0,
+                      }}
+                      name={'infocirlce'}
+                      size={30}
+                      color={'darkgreen'}
+                    />
+                    <Text
+                      style={{
+                        color: '#333',
+                        fontWeight: '700',
+                        fontSize: 15,
+                        textAlign: 'center',
+                        width: '85%',
+                      }}>
+                      {trans('Currently No Content Added')}
+                    </Text>
+                  </View>
+                </>
+              )}
+            </ScrollView>
+            {/* <ScrollView showsVerticalScrollIndicator={false}>
               {SubjectByCourse.length > 0 ? (
                 <>
                   {SubjectByCourse.map((item, index) => {
@@ -406,7 +566,7 @@ console.log(childid,'@childid1')
                   </View>
                 </>
               )}
-            </ScrollView>
+            </ScrollView> */}
           </>
         )}
       </ImageBackground>

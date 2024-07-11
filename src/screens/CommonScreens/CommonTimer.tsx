@@ -42,42 +42,41 @@ const CommonTimer = ({duration, handleAnswerSubmit}) => {
         <View
           style={{
             borderWidth: 1,
-            //borderColor: '#f1a722',
-            borderColor:'#2C7DB5',
+            borderColor: '#f1a722',
             padding: 5,
             flexDirection: 'row',
             alignItems: 'center',
             marginHorizontal:5
           }}>
-          <Text style={{fontWeight: '900', color: '#2C7DB5', fontSize: 22}}>
+          <Text style={{fontWeight: '900', color: '#f1a722', fontSize: 22}}>
             {formattedHours}
           </Text>
         </View>
-          <Text style={{fontWeight: '900', color: '#2C7DB5', fontSize: 22}}>:</Text>
+          <Text style={{fontWeight: '900', color: '#f1a722', fontSize: 22}}>:</Text>
         <View
           style={{
             borderWidth: 1,
-            borderColor: '#2C7DB5',
+            borderColor: '#f1a722',
             padding: 5,
             flexDirection: 'row',
             alignItems: 'center',
             marginHorizontal:5
           }}>
-          <Text style={{fontWeight: '900', color: '#2C7DB5', fontSize: 22}}>
+          <Text style={{fontWeight: '900', color: '#f1a722', fontSize: 22}}>
             {formattedMinutes}
           </Text>
         </View>
-          <Text style={{fontWeight: '900', color: '#2C7DB5', fontSize: 22}}>:</Text>
+          <Text style={{fontWeight: '900', color: '#f1a722', fontSize: 22}}>:</Text>
         <View
           style={{
             borderWidth: 1,
-            borderColor: '#2C7DB5',
+            borderColor: '#f1a722',
             padding: 5,
             flexDirection: 'row',
             alignItems: 'center',
             marginHorizontal:5
           }}>
-          <Text style={{fontWeight: '900', color: '#2C7DB5', fontSize: 22}}>
+          <Text style={{fontWeight: '900', color: '#f1a722', fontSize: 22}}>
             {formattedSeconds}
           </Text>
         </View>
