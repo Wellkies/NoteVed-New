@@ -2,6 +2,8 @@
 export const API_URL = 'https://wellkie.org/demoApi/'; // Test url
 
 // export const API_URL = 'https://wellkies.org/demoApi/'; // production url
+// export const API_URL = 'https://notevook.com/demoApi/'; // productsion url
+
 
 export const LOGIN_SEND_OTP_URL = API_URL + 'loginotp';
 export const VERIFY_LOGIN_OTP_URL = API_URL + 'parentlogin';
