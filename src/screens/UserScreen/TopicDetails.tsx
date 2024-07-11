@@ -17,7 +17,6 @@ import {useAppSelector} from '../../redux/store/reducerHook';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {
   getTopicBySubIdAPI,
-  selectChildDetailsInfo,
   selectTopicDetailsInfo,
 } from '../../redux/reducers/GetTopicDetailsReducer';
 import {selectTopicDetailsStatus} from '../../redux/reducers/GetTopicDetailsFormTopicIdReducer';
@@ -33,7 +32,11 @@ import {
   selectAllSubjectLevelInfo,
 } from '../../redux/reducers/GetAllSubjectLevelReducer';
 import SubjectLevel from './SubjectLevel';
-import { getChildProgressDetailAPI, selectChildDetailData } from '../../redux/reducers/GetChildProgressDetailReducer';
+import {
+  getChildProgressDetailAPI,
+  selectChildDetailData,
+} from '../../redux/reducers/GetChildProgressDetailReducer';
+import * as Progress from 'react-native-progress';
 
 const TopicDetails = ({route}) => {
   const navigation = useNavigation();
@@ -49,7 +52,7 @@ const TopicDetails = ({route}) => {
   const studentFilterData = TopicBySubjectId.map(rec => rec.studenttopic);
   console.log(studentFilterData, '@studentFilterData');
   const topicID = filterData[0];
-  console.log(topicID,'@topicID');
+  console.log(topicID, '@topicID');
   // const ChildProgressData = useAppSelector(selectChildDetailData);
   // console.log(ChildProgressData,'@ChildProgressData')
 
@@ -210,8 +213,14 @@ const TopicDetails = ({route}) => {
                       const isLock =
                         index !== 0 &&
                         TopicBySubjectId[index - 1].studenttopic.length === 0;
-                        const completionPercentage = studenttopic.length > 0 ? 100 : 0;
-                          console.log(completionPercentage,'@completionPercentage')
+                      console.log(isLock, '@isLock');
+
+                      const progress = TopicBySubjectId.filter(
+                        item => item.studenttopic != '',
+                      ).length;
+                      const totalTopic = TopicBySubjectId.length;
+                      const proData = progress / totalTopic;
+
                       return (
                         <View key={index}>
                           <TouchableOpacity
@@ -237,10 +246,12 @@ const TopicDetails = ({route}) => {
                             style={{
                               height: device_height * 0.09,
                               width: '100%',
-                              backgroundColor: isLock ? 'rgba(220,220,220,0.1)' : 'rgba(0,255,0,0.1)',
+                              backgroundColor: isLock
+                                ? 'rgba(220,220,220,0.1)'
+                                : 'rgba(0,255,0,0.1)',
                               borderRadius: 20,
-                              borderColor:'#f1a722',
-                              borderWidth:0.9,
+                              borderColor: '#f1a722',
+                              borderWidth: 0.9,
                               marginHorizontal: 10,
                               marginVertical: 10,
                               justifyContent: 'space-between',
@@ -257,32 +268,54 @@ const TopicDetails = ({route}) => {
                               }}>
                               {trans(topicname)}
                             </Text>
-                            <View
-                              style={{
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                              }}>
-                              {!isLock && (
+                            {!isLock && (
+                              <View
+                                style={{
+                                  flexDirection: 'row',
+                                  alignItems: 'center',
+                                  width: '30%',
+                                  justifyContent: 'flex-end',
+                                }}>
                                 <Text
                                   style={{
-                                    fontSize: 19,
                                     fontWeight: '600',
-                                    color: '#FFFFFF',
+                                    color: '#def',
+                                    fontSize: 16,
                                     marginRight: 10,
                                   }}>
-                                  {`${completionPercentage.toFixed(
-                                  0,
-                                )}% Completed`}
+                                  {parseFloat(`${proData * 100}% `).toFixed(2)}
+                                  {'%'}
                                 </Text>
-                              )}
-                              {isLock && (
+                                <Progress.Circle
+                                  progress={proData}
+                                  size={35}
+                                  indeterminate={false}
+                                  thickness={6}
+                                  allowFontScaling={false}
+                                  color={'#def'}
+                                  borderWidth={2}
+                                  borderColor="orange"
+                                  showsText={false}
+                                  textStyle={{
+                                    fontSize: 12,
+                                    fontWeight: '600',
+                                  }}
+                                />
+                              </View>
+                            )}
+                            {isLock && (
+                              <View
+                                style={{
+                                  flexDirection: 'row',
+                                  alignItems: 'center',
+                                }}>
                                 <Fontisto
                                   style={{color: '#fff'}}
                                   name="locked"
                                   size={22}
                                 />
-                              )}
-                            </View>
+                              </View>
+                            )}
                           </TouchableOpacity>
                         </View>
                       );

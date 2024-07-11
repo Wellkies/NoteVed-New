@@ -421,7 +421,7 @@ const LandingScreen = ({}) => {
                   </TouchableOpacity>
                 );
               })}
-              {AllSubjectLevelData.map((item, index) => {
+              {/* {AllSubjectLevelData.map((item, index) => {
                 const {
                   subjectid = '',
                   subjectname = '',
@@ -501,7 +501,7 @@ const LandingScreen = ({}) => {
                     </Text>
                   </TouchableOpacity>
                 );
-              })}
+              })} */}
             </View>
           </Animatable.View>
         </ImageBackground>
