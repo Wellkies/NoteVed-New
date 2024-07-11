@@ -278,10 +278,10 @@ const UserProfile = ({}) => {
           height: device_height,
           flex: 1,
           alignSelf: 'center',
-          backgroundColor: '#272727',
+          //backgroundColor: '#272727',
         }}
-        // resizeMode="cover"
-        // source={require('../../../assets/0.png')}
+        resizeMode="cover"
+        source={require('../../../assets/0.png')}
       >
         <Header
           isbackIconShow={true}

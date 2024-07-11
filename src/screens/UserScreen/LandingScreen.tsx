@@ -305,12 +305,9 @@ const LandingScreen = ({}) => {
             height: device_height,
             flex: 1,
             alignSelf: 'center',
-            backgroundColor: '#1E1E1E',
-            //backgroundColor: '#404040',
           }}
-          resizeMode="contain"
-          // source={require('../../../assets/testBG3.jpg')}
-        >
+          resizeMode="cover"
+          source={require('../../../assets/0.png')}>
           <Text
             style={{
               fontSize: 25,

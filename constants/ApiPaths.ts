@@ -38,6 +38,7 @@ export const EDZ_UPDATE_CHILD_API = API_URL + 'edzupdateChild';
 export const EDZ_GET_ALL_MEMBERSHIP = API_URL + 'edzgetAllmembership';
 export const GET_ALL_SUBJECT_LEVELS = API_URL + 'getAllsubjectlevels';
 export const GET_ALL_SUBJECT_BY_COURSEID = API_URL + 'getAllSubjectbycourseid';
+export const GET_CHILD_PROGRESS_DETAILS = API_URL +'edzgetChildProgressDetails/';
 //=========================================================================//
 
 export const GET_CHILD_PROGRESS_URL = API_URL + 'getChildonProgressDetils/';

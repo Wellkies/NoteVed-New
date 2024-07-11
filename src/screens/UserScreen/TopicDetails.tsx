@@ -5,6 +5,7 @@ import {
   View,
   Image,
   ScrollView,
+  ImageBackground,
 } from 'react-native';
 import React, {useEffect} from 'react';
 import {device_width, device_height} from '../style';
@@ -16,6 +17,7 @@ import {useAppSelector} from '../../redux/store/reducerHook';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {
   getTopicBySubIdAPI,
+  selectChildDetailsInfo,
   selectTopicDetailsInfo,
 } from '../../redux/reducers/GetTopicDetailsReducer';
 import {selectTopicDetailsStatus} from '../../redux/reducers/GetTopicDetailsFormTopicIdReducer';
@@ -31,6 +33,7 @@ import {
   selectAllSubjectLevelInfo,
 } from '../../redux/reducers/GetAllSubjectLevelReducer';
 import SubjectLevel from './SubjectLevel';
+import { getChildProgressDetailAPI, selectChildDetailData } from '../../redux/reducers/GetChildProgressDetailReducer';
 
 const TopicDetails = ({route}) => {
   const navigation = useNavigation();
@@ -43,7 +46,13 @@ const TopicDetails = ({route}) => {
   const TopicLoad = useAppSelector(selectTopicDetailsStatus);
 
   const filterData = TopicBySubjectId.map(rec => rec.topicid);
-  // const topicID = filterData[0];
+  const studentFilterData = TopicBySubjectId.map(rec => rec.studenttopic);
+  console.log(studentFilterData, '@studentFilterData');
+  const topicID = filterData[0];
+  console.log(topicID,'@topicID');
+  // const ChildProgressData = useAppSelector(selectChildDetailData);
+  // console.log(ChildProgressData,'@ChildProgressData')
+
   //const AllSubjectLevelData = useAppSelector(selectAllSubjectLevelInfo);
   // const filterSubjectData = AllSubjectLevelData.map(rec => rec.subjectid);
   // const subjectID = filterSubjectData[0];
@@ -101,223 +110,223 @@ const TopicDetails = ({route}) => {
     language = '',
     // coordinates='',
   } = userInfo;
-
   useEffect(() => {
     const bodydata = {
       subjectid: subjectid,
       childid: childid,
     };
     dispatch(getTopicBySubIdAPI(bodydata));
-    // const data = {
-    //   topicid: topicID,
-    // };
-    //dispatch(getContentByTopicIdAPI(data));
     return () => {};
   }, []);
 
+  // useEffect(() => {
+  //   const bodydata = {
+  //     topicid: topicID,
+  //     childid: childid,
+  //   };
+  //   dispatch(getChildProgressDetailAPI(bodydata));
+  //   return () => {};
+  // }, []);
+
   return (
     <SafeAreaView style={{flex: 1}}>
-      <ScrollView
-        style={{
-          width: device_width,
-          height: device_height,
-          flex: 1,
-          alignSelf: 'center',
-          backgroundColor: '#1E1E1E',
-        }}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
+      <ScrollView>
+        <ImageBackground
           style={{
-            position: 'absolute',
-            top: 30,
-            left: 20,
-          }}>
-          <MaterialIcons
-            name="arrow-back"
-            size={35}
+            width: device_width,
+            height: device_height,
+            flex: 1,
+            alignSelf: 'center',
+          }}
+          resizeMode="cover"
+          source={require('../../../assets/0.png')}>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
             style={{
-              color: '#FFFFFF',
-            }}
-          />
-        </TouchableOpacity>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginVertical: 12,
-            marginHorizontal: 20,
-            gap: 4,
-          }}>
-          <Image
-            source={require('../../../assets/people.png')}
-            style={{
-              height: device_height * 0.069,
-              width: device_width * 0.17,
-              resizeMode: 'contain',
-              tintColor: '#FFFFFF',
-            }}
-          />
-          <Text
-            style={{
-              fontWeight: '400',
-              fontSize: 20,
-              color: '#FFFFFF',
+              position: 'absolute',
+              top: 30,
+              left: 20,
             }}>
-            {coursename !== 'Mind Melters' && coursename !== 'Vidyalaya Vista'
-              ? trans(coursename + ' ' + subjectname)
-              : trans(subjectname)}
-          </Text>
-        </View>
-        {TopicLoad == 'loading' ? (
-          <LoadingScreen flag={TopicLoad == 'loading'} />
-        ) : (
-          <>
-            {TopicBySubjectId.length > 0 ? (
-              <>
-                <View
-                  style={{
-                    flexDirection: 'column',
-                    marginHorizontal: -10,
-                    paddingHorizontal: 10,
-                    marginRight: 10,
-                    marginBottom: 16,
-                    marginTop: 50,
-                    justifyContent: 'center',
-                  }}>
-                  {TopicBySubjectId.map((item, index) => {
-                    const {
-                      topicname = '',
-                      topicid = '',
-                      studenttopic = [],
-                    } = item;
-                    console.log(
-                      studenttopic[0],
-                      'studenttopic%%%%',
-                    );
-                    const isLock =
-                      index !== 0 &&
-                      TopicBySubjectId[index - 1].studenttopic.length === 0;
-                    // const completionPercentage =
-                    //   studenttopic.length > 0
-                    //     ? (studenttopic.filter(st => st.completed).length /
-                    //         studenttopic.length) *
-                    //       100
-                    //     : 0;
-                    return (
-                      <View key={index}>
-                        <TouchableOpacity
-                          onPress={() => {
-                            if (isLock) {
-                              CommonMessage(
-                                'You have to complete previous level to unlock',
-                              );
-                            } else {
-                              const data = {
-                                topicid: topicid,
-                                childid: childid,
-                              };
-                              dispatch(getContentByTopicIdAPI(data));
-                              navigation.navigate('ContentDetails', {
-                                coursename: coursename,
-                                subjectname: subjectname,
-                                topicname: topicname,
-                                topicid: topicid,
-                              });
-                            }
-                          }}
-                          style={{
-                            height: device_height * 0.09,
-                            width: '100%',
-                            backgroundColor: isLock ? '#CCCCCC' : '#2C7DB5',
-                            borderRadius: 20,
-                            marginHorizontal: 10,
-                            marginVertical: 10,
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            flexDirection: 'row',
-                            opacity: isLock ? 0.5 : 1,
-                            paddingHorizontal: 15,
-                          }}>
-                          <Text
-                            style={{
-                              fontSize: 19,
-                              color: '#FFFFFF',
-                              fontWeight: '600',
-                            }}>
-                            {trans(topicname)}
-                          </Text>
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              alignItems: 'center',
-                            }}>
-                            {!isLock && (
-                              <Text
-                                style={{
-                                  fontSize: 19,
-                                  fontWeight: '600',
-                                  color: '#FFFFFF',
-                                  marginRight: 10,
-                                }}>
-                                  {'0% Completed'}
-                               {/* {`${completionPercentage.toFixed(
-                                  0,
-                                )}% Completed`} */}
-                              </Text>
-                            )}
-                            {isLock && (
-                              <Fontisto
-                                style={{color: '#fff'}}
-                                name="locked"
-                                size={22}
-                              />
-                            )}
-                          </View>
-                        </TouchableOpacity>
-                      </View>
-                    );
-                  })}
-                </View>
-              </>
-            ) : (
-              <>
-                <View
-                  style={{
-                    backgroundColor: 'burlywood',
-                    paddingVertical: 15,
-                    paddingHorizontal: 15,
-                    marginVertical: 10,
-                    marginHorizontal: 15,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexDirection: 'row',
-                  }}>
-                  <AntDesign
+            <MaterialIcons
+              name="arrow-back"
+              size={35}
+              style={{
+                color: '#FFFFFF',
+              }}
+            />
+          </TouchableOpacity>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginVertical: 12,
+              marginHorizontal: 20,
+              gap: 4,
+            }}>
+            <Image
+              source={require('../../../assets/people.png')}
+              style={{
+                height: device_height * 0.069,
+                width: device_width * 0.17,
+                resizeMode: 'contain',
+                tintColor: '#FFFFFF',
+              }}
+            />
+            <Text
+              style={{
+                fontWeight: '400',
+                fontSize: 20,
+                color: '#FFFFFF',
+              }}>
+              {coursename !== 'Mind Melters' && coursename !== 'Vidyalaya Vista'
+                ? trans(coursename + ' ' + subjectname)
+                : trans(subjectname)}
+            </Text>
+          </View>
+          {TopicLoad == 'loading' ? (
+            <LoadingScreen flag={TopicLoad == 'loading'} />
+          ) : (
+            <>
+              {TopicBySubjectId.length > 0 ? (
+                <>
+                  <View
                     style={{
-                      marginHorizontal: 10,
-                      borderWidth: 0,
-                    }}
-                    name={'infocirlce'}
-                    size={30}
-                    color={'darkgreen'}
-                  />
-                  <Text
-                    style={{
-                      color: '#333',
-                      fontWeight: '700',
-                      fontSize: 15,
-                      textAlign: 'center',
-                      width: '85%',
+                      flexDirection: 'column',
+                      marginHorizontal: -10,
+                      paddingHorizontal: 10,
+                      marginRight: 10,
+                      marginBottom: 16,
+                      marginTop: 50,
+                      justifyContent: 'center',
                     }}>
-                    {trans('Currently No Content Added')}
-                  </Text>
-                </View>
-              </>
-            )}
-          </>
-        )}
-        {/* <View style={{position: 'relative'}}>
+                    {TopicBySubjectId.map((item, index) => {
+                      const {
+                        topicname = '',
+                        topicid = '',
+                        studenttopic = [],
+                      } = item;
+                      console.log(studenttopic[0], 'studenttopic%%%%');
+                      const isLock =
+                        index !== 0 &&
+                        TopicBySubjectId[index - 1].studenttopic.length === 0;
+                        const completionPercentage = studenttopic.length > 0 ? 100 : 0;
+                          console.log(completionPercentage,'@completionPercentage')
+                      return (
+                        <View key={index}>
+                          <TouchableOpacity
+                            onPress={() => {
+                              if (isLock) {
+                                CommonMessage(
+                                  'You have to complete previous level to unlock',
+                                );
+                              } else {
+                                const data = {
+                                  topicid: topicid,
+                                  childid: childid,
+                                };
+                                dispatch(getContentByTopicIdAPI(data));
+                                navigation.navigate('ContentDetails', {
+                                  coursename: coursename,
+                                  subjectname: subjectname,
+                                  topicname: topicname,
+                                  topicid: topicid,
+                                });
+                              }
+                            }}
+                            style={{
+                              height: device_height * 0.09,
+                              width: '100%',
+                              backgroundColor: isLock ? 'rgba(220,220,220,0.1)' : 'rgba(0,255,0,0.1)',
+                              borderRadius: 20,
+                              borderColor:'#f1a722',
+                              borderWidth:0.9,
+                              marginHorizontal: 10,
+                              marginVertical: 10,
+                              justifyContent: 'space-between',
+                              alignItems: 'center',
+                              flexDirection: 'row',
+                              opacity: isLock ? 0.5 : 1,
+                              paddingHorizontal: 15,
+                            }}>
+                            <Text
+                              style={{
+                                fontSize: 19,
+                                color: '#f1a722',
+                                fontWeight: '600',
+                              }}>
+                              {trans(topicname)}
+                            </Text>
+                            <View
+                              style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                              }}>
+                              {!isLock && (
+                                <Text
+                                  style={{
+                                    fontSize: 19,
+                                    fontWeight: '600',
+                                    color: '#FFFFFF',
+                                    marginRight: 10,
+                                  }}>
+                                  {`${completionPercentage.toFixed(
+                                  0,
+                                )}% Completed`}
+                                </Text>
+                              )}
+                              {isLock && (
+                                <Fontisto
+                                  style={{color: '#fff'}}
+                                  name="locked"
+                                  size={22}
+                                />
+                              )}
+                            </View>
+                          </TouchableOpacity>
+                        </View>
+                      );
+                    })}
+                  </View>
+                </>
+              ) : (
+                <>
+                  <View
+                    style={{
+                      backgroundColor: 'burlywood',
+                      paddingVertical: 15,
+                      paddingHorizontal: 15,
+                      marginVertical: 10,
+                      marginHorizontal: 15,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexDirection: 'row',
+                    }}>
+                    <AntDesign
+                      style={{
+                        marginHorizontal: 10,
+                        borderWidth: 0,
+                      }}
+                      name={'infocirlce'}
+                      size={30}
+                      color={'darkgreen'}
+                    />
+                    <Text
+                      style={{
+                        color: '#333',
+                        fontWeight: '700',
+                        fontSize: 15,
+                        textAlign: 'center',
+                        width: '85%',
+                      }}>
+                      {trans('Currently No Content Added')}
+                    </Text>
+                  </View>
+                </>
+              )}
+            </>
+          )}
+          {/* <View style={{position: 'relative'}}>
           <Image
             source={require('../../../assets/assort.png')}
             style={{
@@ -344,6 +353,7 @@ const TopicDetails = ({route}) => {
             }}
           />
         </View> */}
+        </ImageBackground>
       </ScrollView>
     </SafeAreaView>
   );

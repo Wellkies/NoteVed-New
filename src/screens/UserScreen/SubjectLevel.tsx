@@ -194,7 +194,7 @@ const SubjectLevel = ({route}) => {
     language = '',
     // coordinates='',
   } = userInfo;
-
+console.log(childid,'@childid1')
   useEffect(() => {
     navigation.addListener('focus', () => {
       // const data = {
@@ -243,15 +243,15 @@ const SubjectLevel = ({route}) => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <View
+      <ImageBackground
         style={{
           width: device_width,
           height: device_height,
           flex: 1,
           alignSelf: 'center',
-          // borderWidth: 1,
-          backgroundColor: '#1E1E1E',
-        }}>
+        }}
+        resizeMode="cover"
+        source={require('../../../assets/0.png')}>
         <View
           style={{
             flexDirection: 'row',
@@ -331,12 +331,14 @@ const SubjectLevel = ({route}) => {
                         <View
                           style={{
                             flexDirection: 'row',
-                            backgroundColor: '#2C7DB5',
+                            backgroundColor: 'rgba(0,255,0,0.1)',
                             width: device_width * 0.95,
                             height: device_height * 0.09,
                             marginHorizontal: 10,
                             paddingHorizontal: 10,
                             borderRadius: 12,
+                            borderWidth: 0.9,
+                            borderColor: '#f1a722',
                             marginBottom: 15,
                           }}>
                           <View
@@ -351,12 +353,12 @@ const SubjectLevel = ({route}) => {
                                 height: device_height * 0.21,
                                 width: device_width * 0.15,
                                 resizeMode: 'contain',
-                                tintColor: '#FFFFFF',
+                                tintColor: '#f1a722',
                               }}
                             />
                             <Text
                               style={{
-                                color: '#FFFFFF',
+                                color: '#f1a722',
                                 fontWeight: '500',
                                 fontSize: 20,
                               }}>
@@ -407,7 +409,7 @@ const SubjectLevel = ({route}) => {
             </ScrollView>
           </>
         )}
-      </View>
+      </ImageBackground>
     </SafeAreaView>
   );
 };

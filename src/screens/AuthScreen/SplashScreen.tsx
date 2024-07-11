@@ -97,10 +97,10 @@ console.log(language,"language///////////////")
           height: device_height,
           flex: 1,
           alignSelf: 'center',
-          backgroundColor: '#404040'
+          //backgroundColor: '#404040'
         }}
-        // resizeMode="cover"
-        // source={require('../../../assets/0.png')}
+        resizeMode="cover"
+        source={require('../../../assets/0.png')}
         >
         <View
           style={{
