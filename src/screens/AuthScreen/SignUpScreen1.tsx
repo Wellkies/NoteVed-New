@@ -81,17 +81,6 @@ const SignUpScreen1 = ({ route }) => {
   const VerifyPhone = useAppSelector(selectVerifyPhInfo);
   console.log(VerifyPhone, "VerifyPhone**********")
 
-  // const { message = '', newUser = '' } =
-  //   Object.keys(VerifyPhone).length > 0 ? VerifyPhone : {};
-  // // User already registered,
-  // console.log(
-  //   VerifyPhone.data,
-  //   '===================VerifyPhone',
-  //   // message,
-  //   // '===message',
-  //   // newUser,
-  //   // '==newuser',
-  // );
   const { signOut } = useContext(AuthContext);
   // const [language, setLanguages] = useState([
   //   // {name: 'हिंदी', code: 'hi', isSelected: selectedLanguage === 'hindi'},
@@ -841,12 +830,12 @@ const SignUpScreen1 = ({ route }) => {
           // borderRadius: 25,
           flex: 1,
           alignSelf: 'center',
-          backgroundColor: '#272727'
+          //backgroundColor: '#272727'
           // justifyContent: 'center',
           // alignItems: 'center',
         }}
-        // resizeMode="cover"
-        // source={require('../../../assets/0.png')}
+        resizeMode="cover"
+        source={require('../../../assets/0.png')}
         >
         <View
           style={{
@@ -891,8 +880,8 @@ const SignUpScreen1 = ({ route }) => {
                 marginLeft: -2,
                 // borderWidth:1
               }}
-              // source={require('../../../assets/aa.png')}
-              // resizeMode="contain"
+              source={require('../../../assets/aa.png')}
+              resizeMode="contain"
             />
           </Animatable.View>
           <Animatable.View
@@ -1178,7 +1167,6 @@ const SignUpScreen1 = ({ route }) => {
                                 // marginTop: -10,
                                 marginLeft: 5,
                               }}>
-                              {/* {trans('User already registered !')} */}
                               {'User already registered !'}
                             </Text>
                           </Animatable.View>

@@ -100,6 +100,7 @@ const SubjectLevel = ({route}) => {
     subjectname = '',
     courseid = '',
   } = route.params;
+  console.log(route.params,'@route.params')
   console.log(courseid, '==========courseid');
   //console.log(route.params, '===============route.params');
   // const [loading, setLoading] = useState(false);
@@ -247,6 +248,7 @@ const SubjectLevel = ({route}) => {
     dispatch(getChildProgressDetailAPI(data));
     return () => {};
   }, []);
+  console.log(courseid,'@courseid2')
   const SubjectByCourse = useAppSelector(selectChildDetailData);
   console.log(SubjectByCourse, '@SubjectByCourse1');
   //const SubjectByCourse = useAppSelector(selectAllSubjectsInfo);
@@ -325,7 +327,7 @@ const SubjectLevel = ({route}) => {
                       subjectname = '',
                       topics = [],
                     } = item;
-                    console.log(topics[0], '@topics%%%%');
+                    //console.log(topics[0], '@topics%%%%');
                     const progress = topics.filter(
                       item => item.studenttopic != '',
                     ).length;
@@ -385,12 +387,16 @@ const SubjectLevel = ({route}) => {
                               }}>
                               {trans(subjectname)}
                             </Text>
-                            <View
+                          </View>
+                          <View
                               style={{
                                 flexDirection: 'row',
                                 alignItems: 'center',
-                                width: '30%',
-                                justifyContent: 'flex-end',
+                                position:'absolute',
+                                right: 10,
+                                bottom: 20,
+                                //width: '30%',
+                                //justifyContent: 'flex-end',
                               }}>
                               <Text
                                 style={{
@@ -418,7 +424,6 @@ const SubjectLevel = ({route}) => {
                                 }}
                               />
                             </View>
-                          </View>
                         </View>
                       </TouchableOpacity>
                     );

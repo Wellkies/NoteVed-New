@@ -341,13 +341,14 @@ const SignInScreen = ({route}) => {
 
   const handleLoginWithPassword = async () => {
     const validate = info.phonenum != '' && info.password != '';
-     let phone_validate = false;
+    let phone_validate = false;
     let password_validate = false;
     if (info.phonenum) {
       phone_validate = phoneRegex.test(info.phonenum);
     }
     if (info.password) {
       password_validate = info.password != '' && info.password.length < 6;
+      // password_validate = password_regex.test(info.password);
     }
 
     if (validate == false) {
@@ -406,6 +407,7 @@ const SignInScreen = ({route}) => {
               message = '',
             } = response.data;
             let statusCheck: string[] = user.map((r: any) => r.status);
+            // let passwordCheck = user.map(r => r.password);
 
             console.log(
               LOGIN_WITH_PASSWORD_URL,
@@ -424,6 +426,7 @@ const SignInScreen = ({route}) => {
               user.status == 'inactive',
               "user.status == 'inactive'...................",
             );
+
             if (user.length > 0) {
               //
               if (user.length > 0 && statusCheck[0] == 'inactive') {
@@ -473,6 +476,7 @@ const SignInScreen = ({route}) => {
                 otplogin: false,
                 emailLogin: false,
                 pswdLogin: true,
+                selectedLang:selectedLanguage
               });
               handleReset();
               // let userInfo={...user,phone:phone}
@@ -491,7 +495,6 @@ const SignInScreen = ({route}) => {
       }
     }
   };
-
   const handleReset = () => {
     type Info = {
       id: string;

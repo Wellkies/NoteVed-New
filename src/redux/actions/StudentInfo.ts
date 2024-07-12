@@ -5,11 +5,11 @@ import AsyncStorage from "../../utils/AsyncStorage";
 export const getChildDetailsAPIAction = async (id: any) => {
   const url = GET_CHILD_DETAILS_URL + id;
   console.log(url, "GET_CHILD_DETAILS_URL...........................");
-  // const token = await AsyncStorage.getObject('@auth_Token');
+  const token = await AsyncStorage.getObject('@auth_Token');
   const requestOptions = {
     headers: {
       "Content-Type": "application/json",
-      //  Authorization: `Bearer ${token}`,
+       Authorization: `Bearer ${token}`,
     },
     //   body: JSON.stringify(phone),
   };

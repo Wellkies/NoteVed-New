@@ -44,15 +44,21 @@ const TopicDetails = ({route}) => {
   const {t: trans, i18n} = useTranslation();
   const {coursename = '', subjectname = '', subjectid = ''} = route.params;
 
-  const TopicBySubjectId = useAppSelector(selectTopicDetailsInfo);
-  console.log(TopicBySubjectId, '$$$$$$$$$$$$#####TopicBySubjectId');
+  const TopicBySubjectId = useAppSelector(selectChildDetailData);
+  const topics = TopicBySubjectId.filter(
+    subject => subject.subjectname === subjectname,
+  ).flatMap(subject => subject.topics);
+
+  console.log(subjectname, '@subjectname');
+  //console.log(TopicBySubjectId, '$$$$$$$$$$$$#####TopicBySubjectId');
+  console.log(topics, '@topics');
   const TopicLoad = useAppSelector(selectTopicDetailsStatus);
 
-  const filterData = TopicBySubjectId.map(rec => rec.topicid);
-  const studentFilterData = TopicBySubjectId.map(rec => rec.studenttopic);
-  console.log(studentFilterData, '@studentFilterData');
-  const topicID = filterData[0];
-  console.log(topicID, '@topicID');
+  // const filterData = TopicBySubjectId.map(rec => rec.topicid);
+  // const studentFilterData = TopicBySubjectId.map(rec => rec.studenttopic);
+  // console.log(studentFilterData, '@studentFilterData');
+  // const topicID = filterData[0];
+  // console.log(topicID, '@topicID');
   // const ChildProgressData = useAppSelector(selectChildDetailData);
   // console.log(ChildProgressData,'@ChildProgressData')
 
@@ -122,14 +128,14 @@ const TopicDetails = ({route}) => {
     return () => {};
   }, []);
 
-  // useEffect(() => {
-  //   const bodydata = {
-  //     topicid: topicID,
-  //     childid: childid,
-  //   };
-  //   dispatch(getChildProgressDetailAPI(bodydata));
-  //   return () => {};
-  // }, []);
+  useEffect(() => {
+    const bodydata = {
+      subjectid: subjectid,
+      childid: childid,
+    };
+    dispatch(getChildProgressDetailAPI(bodydata));
+    return () => {};
+  }, []);
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -203,22 +209,23 @@ const TopicDetails = ({route}) => {
                       marginTop: 50,
                       justifyContent: 'center',
                     }}>
-                    {TopicBySubjectId.map((item, index) => {
+                    {topics.map((item, index) => {
                       const {
                         topicname = '',
                         topicid = '',
                         studenttopic = [],
                       } = item;
+                      console.log(topicname, '@topicname');
                       console.log(studenttopic[0], 'studenttopic%%%%');
                       const isLock =
                         index !== 0 &&
-                        TopicBySubjectId[index - 1].studenttopic.length === 0;
+                        topics[index - 1].studenttopic.length === 0;
                       console.log(isLock, '@isLock');
 
-                      const progress = TopicBySubjectId.filter(
-                        item => item.studenttopic != '',
+                      const progress = topics.filter(
+                        item => item.studenttopic.length > 0,
                       ).length;
-                      const totalTopic = TopicBySubjectId.length;
+                      const totalTopic = topics.length;
                       const proData = progress / totalTopic;
 
                       return (
@@ -273,8 +280,10 @@ const TopicDetails = ({route}) => {
                                 style={{
                                   flexDirection: 'row',
                                   alignItems: 'center',
-                                  width: '30%',
-                                  justifyContent: 'flex-end',
+                                  position: 'absolute',
+                                  right: 20,
+                                  // width: '30%',
+                                   //justifyContent: 'flex-end',
                                 }}>
                                 <Text
                                   style={{
@@ -308,11 +317,12 @@ const TopicDetails = ({route}) => {
                                 style={{
                                   flexDirection: 'row',
                                   alignItems: 'center',
+                                  left: -10,
                                 }}>
                                 <Fontisto
-                                  style={{color: '#fff'}}
+                                  style={{color: '#f1a722'}}
                                   name="locked"
-                                  size={22}
+                                  size={28}
                                 />
                               </View>
                             )}
