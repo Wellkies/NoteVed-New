@@ -159,18 +159,18 @@ const ContentDetails = ({route}) => {
   //console.log(reviewquestionsets[0], '===============reviewquestionsets');
   const percentageComplete = async () => {
     if (reviewquestionsets[0].studentdata.length === 0) {
-      console.log('@1')
+      console.log('@1');
       return false;
     }
     for (const questionSet of reviewquestionsets) {
       console.log(questionSet, '==========questionSet');
       if (questionSet.studentdata.length === 0) {
-        console.log('@2')
+        console.log('@2');
         return false;
       }
       for (const student of questionSet.studentdata) {
         if (student.percentage < 90) {
-          console.log('@3')
+          console.log('@3');
           return false;
         }
       }
@@ -206,16 +206,16 @@ const ContentDetails = ({route}) => {
           <LoadingScreen flag={contentLoad == 'loading'} />
         </View>
       ) : (
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <ImageBackground
-            style={{
-              width: device_width,
-              height: device_height,
-              flex: 1,
-              alignSelf: 'center',
-            }}
-            resizeMode="cover"
-            source={require('../../../assets/0.png')}>
+        <ImageBackground
+          style={{
+            width: device_width,
+            // height: device_height,
+            flex: 1,
+            alignSelf: 'center',
+          }}
+          resizeMode="cover"
+          source={require('../../../assets/0.png')}>
+          <ScrollView showsVerticalScrollIndicator={false}>
             <View
               style={{
                 // width: device_width,
@@ -342,7 +342,7 @@ const ContentDetails = ({route}) => {
                           alignSelf: 'center',
                           backgroundColor: 'rgba(0,255,0,0.1)',
                           borderColor: '#f1a722',
-                          width: '94%',
+                          width: '90%',
                           //width: device_width * 0.95,
                           //height: device_height * 0.18,
                           //marginHorizontal: 10,
@@ -441,7 +441,7 @@ const ContentDetails = ({route}) => {
                                       fontSize: 14,
                                       fontWeight: 'bold',
                                     }}>
-                                    {'    '}
+                                    {'   '}
                                     {`: ${numberofattempt}`}
                                   </Text>
                                 </View>
@@ -750,8 +750,8 @@ const ContentDetails = ({route}) => {
               )}
             </View>
             {allIndexesContain90Percent && <LevelCompleted />}
-          </ImageBackground>
-        </ScrollView>
+          </ScrollView>
+        </ImageBackground>
       )}
     </SafeAreaView>
   );

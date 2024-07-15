@@ -339,7 +339,7 @@ const LandingScreen = ({}) => {
             <View
               style={{
                 flexDirection: 'row',
-                flexWrap: 'wrap',
+                //flexWrap: 'wrap',
                 justifyContent: 'center',
                 alignItems: 'center',
                 marginVertical: 20,
@@ -368,14 +368,16 @@ const LandingScreen = ({}) => {
                       alignItems: 'center',
                       backgroundColor: '#2C7DB5',
                       paddingVertical: 25,
-                      height: '55%',
-                      width: '45%',
+                      height: device_height * 0.3,
+                      width: device_width * 0.45,
                       paddingHorizontal: 15,
                       margin: 10,
                       borderWidth: 1,
                       borderColor: '#999',
                       elevation: 15,
                       borderRadius: 10,
+                      // height: '55%',
+                      // width: '45%',
                     }}>
                     {image != '' && image != null ? (
                       <Image
@@ -390,8 +392,10 @@ const LandingScreen = ({}) => {
                       <Image
                         style={{
                           marginTop: 5,
-                          height: device_height * 0.15,
-                          width: device_width * 0.4,
+                          height: '85%',
+                          width: '100%'
+                          // height: device_height * 0.15,
+                          // width: device_width * 0.4,
                         }}
                         source={require('../../../assets/teacher.jpg')}
                         resizeMode="contain"
