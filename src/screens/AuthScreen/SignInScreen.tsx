@@ -33,6 +33,7 @@ import {
 } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {
+  EDZ_LOGIN_WITH_PASSWORD_URL,
   LOGIN_CHILD_OTP_VERIFY_URL,
   // LOGIN_URL,
   LOGIN_USING_EMAIL_URL,
@@ -393,11 +394,11 @@ const SignInScreen = ({route}) => {
         console.log(
           body,
           'body............',
-          LOGIN_WITH_PASSWORD_URL,
-          '================LOGIN_WITH_PASSWORD_URL',
+          EDZ_LOGIN_WITH_PASSWORD_URL,
+          '================EDZ_LOGIN_WITH_PASSWORD_URL',
         );
         await axios
-          .post(LOGIN_WITH_PASSWORD_URL, body)
+          .post(EDZ_LOGIN_WITH_PASSWORD_URL, body)
           .then(function (response) {
             const {
               status,
@@ -410,11 +411,11 @@ const SignInScreen = ({route}) => {
             // let passwordCheck = user.map(r => r.password);
 
             console.log(
-              LOGIN_WITH_PASSWORD_URL,
+              EDZ_LOGIN_WITH_PASSWORD_URL,
               body,
-              'LOGIN_WITH_PASSWORD_URL, body.................',
+              'EDZ_LOGIN_WITH_PASSWORD_URL, body.................',
               response.data,
-              '==============LOGIN_WITH_PASSWORD_URL response',
+              '==============EDZ_LOGIN_WITH_PASSWORD_URL response',
               user.length > 0,
               newUser == false,
               response.data.message,
