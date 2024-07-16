@@ -383,7 +383,7 @@ const SubjectLevel = ({route}) => {
                               style={{
                                 color: '#f1a722',
                                 fontWeight: '500',
-                                fontSize: 20,
+                                fontSize: 18,
                               }}>
                               {trans(subjectname)}
                             </Text>
@@ -394,7 +394,7 @@ const SubjectLevel = ({route}) => {
                                 alignItems: 'center',
                                 position:'absolute',
                                 right: 10,
-                                bottom: 20,
+                                bottom: 15,
                                 //width: '30%',
                                 //justifyContent: 'flex-end',
                               }}>
