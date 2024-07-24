@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Button,
   StyleSheet,
@@ -14,8 +14,8 @@ import {
   Platform,
 } from 'react-native';
 import Storage from '../../utils/AsyncStorage';
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import { Avatar, Chip, RadioButton } from 'react-native-paper';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {Avatar, Chip, RadioButton} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as Animatable from 'react-native-animatable';
@@ -24,13 +24,13 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 // import {RootState, AppDispatch} from '../redux/store/Store';
-import { useTranslation } from 'react-i18next';
-import { Dropdown } from 'react-native-element-dropdown';
+import {useTranslation} from 'react-i18next';
+import {Dropdown} from 'react-native-element-dropdown';
 // import { selectStudentStatus } from '../../redux/reducers/ChildInfoReducer';
-import { useNavigation } from '@react-navigation/native';
-import { RootState } from '../../redux/store/Store';
+import {useNavigation} from '@react-navigation/native';
+import {RootState} from '../../redux/store/Store';
 import {
   getChildDetailsAPI,
   selectStudentInfo,
@@ -41,25 +41,29 @@ import {
   selectStudentStandard,
   selectStudentStandardStatus,
 } from '../../redux/reducers/StandardReducer';
-import { getBoard, selectStudentBoard } from '../../redux/reducers/BoardReducer';
-import { IsTabScreen, emailRegex, name_reg, phoneRegex } from '../../../constants/Constants';
-import { device_height, device_width } from '../style';
-import { updateChildProfile } from '../../redux/actions/UpdateStudentProfile';
+import {getBoard, selectStudentBoard} from '../../redux/reducers/BoardReducer';
+import {
+  IsTabScreen,
+  emailRegex,
+  name_reg,
+  phoneRegex,
+} from '../../../constants/Constants';
+import {device_height, device_width} from '../style';
+import {updateChildProfile} from '../../redux/actions/UpdateStudentProfile';
 import {
   selectStudentLanguage,
   setLanguage,
 } from '../../redux/reducers/languageReducer';
-import { uploadPhotoApi } from '../../redux/actions/UploadPhoto';
-import { getScholarshipByClassAPI } from '../../redux/reducers/GetAllScholarshipReducer';
-import { getUserbyId, selectUserInfo } from '../../redux/reducers/loginReducer';
+import {uploadPhotoApi} from '../../redux/actions/UploadPhoto';
+import {getScholarshipByClassAPI} from '../../redux/reducers/GetAllScholarshipReducer';
+import {getUserbyId, selectUserInfo} from '../../redux/reducers/loginReducer';
 import AsyncStorage from '../../utils/AsyncStorage';
 
-const EditProfile = ({ route }) => {
-
+const EditProfile = ({route}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch<any>();
-  const { t: trans, i18n } = useTranslation();
-  const { childId = '' } = route.params;
+  const {t: trans, i18n} = useTranslation();
+  const {childId = ''} = route.params;
   console.log(childId, '===================childId route.params');
 
   interface ChildInfo {
@@ -94,7 +98,7 @@ const EditProfile = ({ route }) => {
   const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
   const count = useAppSelector(selectStudentStatus);
   // const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
-  const {authToken,status,userInfo} = useAppSelector(selectUserInfo);
+  const {authToken, status, userInfo} = useAppSelector(selectUserInfo);
 
   // console.log(childInfo, 'childInfo..........');
   const Standard = useAppSelector(selectStudentStandard);
@@ -131,7 +135,7 @@ const EditProfile = ({ route }) => {
   const [motherNameError, setMotherNameError] = useState(false);
   const [ageError, setAgeError] = useState(false);
   const [standardError, setStandardError] = useState(false);
-  const [imageData, setImageData] = useState({ image: '', imagename: '' });
+  const [imageData, setImageData] = useState({image: '', imagename: ''});
   const [altPhoneError, setAltPhoneError] = useState(false);
   const [schoolNameError, setSchoolNameError] = useState(false);
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
@@ -145,7 +149,7 @@ const EditProfile = ({ route }) => {
   const [showDropDown, setShowDropDown] = useState(false);
   const [childAge, setChildAge] = useState('');
   const [isFocus, setIsFocus] = useState(false);
-  const [scholarshipId, selectScholarshipId] = useState()
+  const [scholarshipId, selectScholarshipId] = useState();
 
   const data = [
     {
@@ -201,15 +205,18 @@ const EditProfile = ({ route }) => {
   // }, []);
   const asyncScholarship = async () => {
     const asyncScholarshipValue = await Storage.getObject('SchlrshipId');
-    console.log(asyncScholarshipValue, "=======asyncScholarshipValue++++++++++++");
-    selectScholarshipId(asyncScholarshipValue)
-  }
+    console.log(
+      asyncScholarshipValue,
+      '=======asyncScholarshipValue++++++++++++',
+    );
+    selectScholarshipId(asyncScholarshipValue);
+  };
 
   useEffect(() => {
     // asyncScholarship()
     navigation.addListener('focus', () => {
       dispatch(getChildDetailsAPI(childID));
-      dispatch(getUserbyId(childID))
+      dispatch(getUserbyId(childID));
       // dispatch(getStandard());
       // dispatch(getBoard());
       // dispatch(setLanguage(userLang));
@@ -231,9 +238,9 @@ const EditProfile = ({ route }) => {
     // dispatch(getBoard());
     // dispatch(getStandard());
   }, []);
-  
+
   const [language, setLanguages] = useState([
-    { name: 'ଓଡିଆ', code: 'odia', isSelected: selectedLanguage === 'odia' },
+    {name: 'ଓଡିଆ', code: 'odia', isSelected: selectedLanguage === 'odia'},
     {
       name: 'English',
       code: 'english',
@@ -273,12 +280,10 @@ const EditProfile = ({ route }) => {
     // boardid = '',
     // classname = '',
   } = userInfo;
-  console.log(
-    userInfo, "==================userInfo======================"
-  );
+  console.log(userInfo, '==================userInfo======================');
   const [value, setValue] = useState(p_age);
   console.log(value, 'value......................');
-
+  const [ages, setAge] = useState('');
   const [info, setInfo] = useState({
     _id: childID,
     firstName: fname,
@@ -398,11 +403,11 @@ const EditProfile = ({ route }) => {
   // console.log(info, '=========================info');
   const handleRadioChange = value => {
     if (value == 'Male') {
-      setInfo({ ...info, st_gender: 'Male' });
+      setInfo({...info, st_gender: 'Male'});
     } else if (value == 'Female') {
-      setInfo({ ...info, st_gender: 'Female' });
+      setInfo({...info, st_gender: 'Female'});
     } else {
-      setInfo({ ...info, st_gender: 'others' });
+      setInfo({...info, st_gender: 'others'});
     }
     setGenderError(false);
     setGender(value);
@@ -476,8 +481,8 @@ const EditProfile = ({ route }) => {
         setLanguages(prevState =>
           prevState.map(lang =>
             lang.code === 'odia'
-              ? { ...lang, isSelected: true }
-              : { ...lang, isSelected: false },
+              ? {...lang, isSelected: true}
+              : {...lang, isSelected: false},
           ),
         );
       } else {
@@ -486,21 +491,25 @@ const EditProfile = ({ route }) => {
         setLanguages(prevState =>
           prevState.map(lang =>
             lang.code === 'english'
-              ? { ...lang, isSelected: true }
-              : { ...lang, isSelected: false },
+              ? {...lang, isSelected: true}
+              : {...lang, isSelected: false},
           ),
         );
       }
-    }
-    //  else if (inputName == 'age') {
-    //   if (inputValue > 0 && inputValue <= 20) {
-    //     // if (inputValue >=20)
-    //     setAgeError(false);
-    //   } else {
-    //     setAgeError(true);
-    //   }
-    // }
-    else if (inputName == 'parents_phone') {
+    } else if (inputName == 'age') {
+      if (inputValue.length == '') {
+        //setStandardError(true);
+      } else {
+        setAge(inputValue);
+        //setStandardError(false);
+      }
+      // if (inputValue > 0 && inputValue <= 20) {
+      //   // if (inputValue >=20)
+      //   setAgeError(false);
+      // } else {
+      //   setAgeError(true);
+      // }
+    } else if (inputName == 'parents_phone') {
       if (inputValue != '') {
         if (phoneRegex.test(inputValue)) {
           setAltPhoneError(false);
@@ -547,7 +556,7 @@ const EditProfile = ({ route }) => {
     //   setAltPhoneError(false);
     // }
     // }
-    let infodata = { ...info };
+    let infodata = {...info};
     // if (boardid != '') {
     //   infodata = {...infodata, schoolBoard: boardid};
     // }
@@ -555,7 +564,7 @@ const EditProfile = ({ route }) => {
     //   infodata = {...infodata, standard: classid};
     // }
 
-    setInfo({ ...infodata, [inputName]: inputValue });
+    setInfo({...infodata, [inputName]: inputValue});
   };
 
   const ChildFlag = childId != '' && childId != undefined;
@@ -592,13 +601,13 @@ const EditProfile = ({ route }) => {
       name: firstName + ' ' + lastname,
       gender: st_gender,
       email: st_email,
-      phone:phone,
+      phone: phone,
       alterphone: phone_secondary,
       password: '',
       image: p_image,
       imagename: p_imagename,
       age: age.value,
-      status:'',
+      status: '',
       // parentid: '',
       // stage: ClassID != undefined ? ClassID.stage : '',
       // boardname: schoolBoardName != undefined ? schoolBoardName.boardname : '',
@@ -618,13 +627,10 @@ const EditProfile = ({ route }) => {
       // address: '',
     };
 
-    console.log(
-      updatebodyData,
-      '...............updatebodyData//////////////',
-    );
+    console.log(updatebodyData, '...............updatebodyData//////////////');
     // setImageData({image: imageUrl, imagename: originalname});
     // setInfo({...info, p_image: result.assets[0].uri})
-    const { image: Child_imageUrl = '', imagename: child_imageName = '' } =
+    const {image: Child_imageUrl = '', imagename: child_imageName = ''} =
       imageData;
 
     // const bodyData = {
@@ -656,7 +662,7 @@ const EditProfile = ({ route }) => {
     if (
       info.age ||
       info.firstName ||
-      info.lastname 
+      info.lastname
       // info.father_name ||
       // info.mother_name ||
       // info.schoolBoard ||
@@ -825,10 +831,7 @@ const EditProfile = ({ route }) => {
       );
     } else {
       // dispatch(
-      updateChildProfile(
-        updatebodyData,
-        handleUpdateCallback,
-      );
+      updateChildProfile(updatebodyData, handleUpdateCallback);
       // );
     }
   };
@@ -838,10 +841,10 @@ const EditProfile = ({ route }) => {
     // console.log(childList, 'childList=======');
     console.log(updatebodyData, 'updatebodyData????????????????????????');
     const data = userInfo;
-    const childListData = [{ ...data, ...updatebodyData }];
-    const user = AsyncStorage.storeObject("@user", childListData);
+    const childListData = [{...data, ...updatebodyData}];
+    const user = AsyncStorage.storeObject('@user', childListData);
     dispatch(getChildDetailsAPI(childID));
-    dispatch(getUserbyId(childID))
+    dispatch(getUserbyId(childID));
     // const scholardata = {
     //   stageid,
     //   boardid,
@@ -877,8 +880,8 @@ const EditProfile = ({ route }) => {
     console.log(imageUrl, originalname, 'handleImageCallback======');
     // dispatch(
     updateChildProfile(
-      { id: childID, image: imageUrl, imagename: originalname },
-      updateCallback
+      {id: childID, image: imageUrl, imagename: originalname},
+      updateCallback,
       // undefined,
       // false,
       // ),
@@ -889,8 +892,8 @@ const EditProfile = ({ route }) => {
   };
   const updateCallback = () => {
     dispatch(getChildDetailsAPI(childID));
-    dispatch(getUserbyId(childID))
-  }
+    dispatch(getUserbyId(childID));
+  };
   const handleChoosePhoto = async () => {
     const options = {
       storageOptions: {
@@ -904,13 +907,11 @@ const EditProfile = ({ route }) => {
     console.log(result, 'response');
     if (result.didCancel) {
       console.log('User cancelled image picker');
-    }
-    else if (result.error) {
-      console.log("ImagePicker Error: ", result.error);
+    } else if (result.error) {
+      console.log('ImagePicker Error: ', result.error);
     } else if (result.customButton) {
-      console.log("User tapped custom button: ", result.customButton);
-    }
-    else {
+      console.log('User tapped custom button: ', result.customButton);
+    } else {
       // if (ChildFlag) {
       setthumb(result.assets[0].uri);
       const bodyFormData = new FormData();
@@ -924,12 +925,9 @@ const EditProfile = ({ route }) => {
             : result.assets[0].uri.replace('file://', ''),
       });
 
-      setInfo({ ...info, p_image: result.assets[0].uri });
+      setInfo({...info, p_image: result.assets[0].uri});
       // dispatch(
-      uploadPhotoApi(
-        bodyFormData,
-        handleImageCallback,
-      );
+      uploadPhotoApi(bodyFormData, handleImageCallback);
       // }
     }
   };
@@ -953,9 +951,9 @@ const EditProfile = ({ route }) => {
         }}
         resizeMode="cover"
         source={require('../../../assets/0.png')}
-      // source={{uri:'https://as2.ftcdn.net/v2/jpg/02/71/22/77/1000_F_271227781_gt3nHI7H3CgUENSbM3V14x2QhPB04Glb.jpg'}}
+        // source={{uri:'https://as2.ftcdn.net/v2/jpg/02/71/22/77/1000_F_271227781_gt3nHI7H3CgUENSbM3V14x2QhPB04Glb.jpg'}}
       >
-        <View style={{ flex: 1, marginBottom: 20 }}>
+        <View style={{flex: 1, marginBottom: 20}}>
           <View
             style={{
               // flexDirection: 'row',
@@ -967,7 +965,7 @@ const EditProfile = ({ route }) => {
               borderBottomRightRadius: 25,
               height: device_height * 0.25,
             }}>
-            <View style={{ paddingTop: 10, alignItems: 'center' }}>
+            <View style={{paddingTop: 10, alignItems: 'center'}}>
               <TouchableOpacity
                 onPress={() => navigation.goBack()}
                 style={{
@@ -1003,14 +1001,14 @@ const EditProfile = ({ route }) => {
                   }}
                   source={
                     p_image != '' && p_image != null
-                      ? { uri: p_image }
+                      ? {uri: p_image}
                       : st_gender == 'Male'
-                        ? require('../../../assets/boy.png')
-                        : st_gender == 'Female'
-                          ? require('../../../assets/girl.png')
-                          : {
-                            uri: 'https://wkresources.s3.ap-south-1.amazonaws.com/userrr.png',
-                          }
+                      ? require('../../../assets/boy.png')
+                      : st_gender == 'Female'
+                      ? require('../../../assets/girl.png')
+                      : {
+                          uri: 'https://wkresources.s3.ap-south-1.amazonaws.com/userrr.png',
+                        }
                   }
                 />
 
@@ -1050,7 +1048,7 @@ const EditProfile = ({ route }) => {
                 size={30}
                 backgroundColor={'#def'}
                 color={'#fff'}
-                style={{ position: 'absolute', top: 0, left: 20 }}
+                style={{position: 'absolute', top: 0, left: 20}}
                 onPress={() => navigation.goBack()}
               />
 
@@ -1079,7 +1077,7 @@ const EditProfile = ({ route }) => {
           </View>
           <ScrollView
             showsVerticalScrollIndicator={false}
-            style={{ paddingHorizontal: 25 }}>
+            style={{paddingHorizontal: 25}}>
             <View
               style={{
                 flexDirection: 'row',
@@ -1103,7 +1101,7 @@ const EditProfile = ({ route }) => {
               </Text>
             </View>
 
-            <View style={[styles.action, { marginTop: 10 }]}>
+            <View style={[styles.action, {marginTop: 10}]}>
               <FontAwesome name="user" color={'#FFB901'} size={22} />
               <TextInput
                 placeholder={trans("Enter Student's First Name")}
@@ -1131,12 +1129,12 @@ const EditProfile = ({ route }) => {
             {fnameError && (
               <Animatable.View animation="fadeInLeft" duration={500}>
                 <Text
-                  style={{ color: 'red', marginBottom: 10, fontWeight: '600' }}>
+                  style={{color: 'red', marginBottom: 10, fontWeight: '600'}}>
                   {trans("Please Enter Student's First Name")}
                 </Text>
               </Animatable.View>
             )}
-            <View style={[styles.action, { marginTop: 10 }]}>
+            <View style={[styles.action, {marginTop: 10}]}>
               {/* <FontAwesome name="user-o" color={'#333'} size={20} /> */}
               <FontAwesome name="user" color={'#FFB901'} size={22} />
 
@@ -1166,12 +1164,12 @@ const EditProfile = ({ route }) => {
             {lnameError && (
               <Animatable.View animation="fadeInLeft" duration={500}>
                 <Text
-                  style={{ color: 'red', marginBottom: 10, fontWeight: '600' }}>
+                  style={{color: 'red', marginBottom: 10, fontWeight: '600'}}>
                   {trans("Please Enter Student's Last Name")}
                 </Text>
               </Animatable.View>
             )}
-            <View style={[styles.action, { marginTop: 0, paddingVertical: 15 }]}>
+            <View style={[styles.action, {marginTop: 0, paddingVertical: 15}]}>
               <FontAwesome5 name="phone-alt" color={'#FFB901'} size={18} />
 
               <Text
@@ -1191,7 +1189,7 @@ const EditProfile = ({ route }) => {
                 {phone}
               </Text>
             </View>
-            <View style={[styles.action, { marginTop: 0, paddingVertical: 15 }]}>
+            <View style={[styles.action, {marginTop: 0, paddingVertical: 15}]}>
               <MaterialIcons name="email" color={'#FFB901'} size={22} />
 
               <Text
@@ -1229,15 +1227,15 @@ const EditProfile = ({ route }) => {
                   },
                 ]}
                 autoCapitalize="none"
-              // onChangeText={(val) => textInputChange(val)}
-              // onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
-              // onChangeText={val => handleInputChange('st_email', val)}
+                // onChangeText={(val) => textInputChange(val)}
+                // onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
+                // onChangeText={val => handleInputChange('st_email', val)}
               />
             </View>
             {emailError && (
               <Animatable.View animation="fadeInLeft" duration={500}>
                 <Text
-                  style={{ color: 'red', marginBottom: 10, fontWeight: '600' }}>
+                  style={{color: 'red', marginBottom: 10, fontWeight: '600'}}>
                   {trans('Please Enter Valid Email Id')}
                 </Text>
               </Animatable.View>
@@ -1246,7 +1244,7 @@ const EditProfile = ({ route }) => {
             <View
               style={[
                 styles.action,
-                { marginTop: 0, paddingVertical: 5, alignItems: 'center' },
+                {marginTop: 0, paddingVertical: 5, alignItems: 'center'},
               ]}>
               <MaterialCommunityIcons
                 name="human-male-female"
@@ -1256,18 +1254,18 @@ const EditProfile = ({ route }) => {
               <TouchableOpacity
                 key={1}
                 onPress={() => handleRadioChange('Male')}
-                style={{ flexDirection: 'row', alignItems: 'center' }}>
+                style={{flexDirection: 'row', alignItems: 'center'}}>
                 <RadioButton
                   onPress={() => handleRadioChange('Male')}
                   value={st_gender}
                   status={st_gender == 'Male' ? 'checked' : 'unchecked'}
                   selectedColor="#fff"
                   color={'#FFB901'}
-                  style={{ alignaItems: 'center', color: '#FFB901' }}
+                  style={{alignaItems: 'center', color: '#FFB901'}}
                 />
-                <View style={{ paddingHorizontal: 5, flexDirection: 'row' }}>
+                <View style={{paddingHorizontal: 5, flexDirection: 'row'}}>
                   <Text
-                    style={[{ fontSize: 15, color: '#fff', fontWeight: '600' }]}>
+                    style={[{fontSize: 15, color: '#fff', fontWeight: '600'}]}>
                     {trans('Boy')}{' '}
                   </Text>
                 </View>
@@ -1275,20 +1273,20 @@ const EditProfile = ({ route }) => {
               <TouchableOpacity
                 key={2}
                 // onPress={() => handleRadioChange('Female')}
-                style={{ flexDirection: 'row', alignItems: 'center' }}>
+                style={{flexDirection: 'row', alignItems: 'center'}}>
                 <RadioButton
                   status={st_gender == 'Female' ? 'checked' : 'unchecked'}
                   value={st_gender}
                   onPress={() => handleRadioChange('Female')}
                   selectedColor="#fff"
                   color={'#FFB901'}
-                  style={{ paddingHorizontal: 10, color: '#FFB901' }}
+                  style={{paddingHorizontal: 10, color: '#FFB901'}}
                 />
-                <View style={{ paddingHorizontal: 5, flexDirection: 'row' }}>
+                <View style={{paddingHorizontal: 5, flexDirection: 'row'}}>
                   <Text
                     style={[
                       styles.text_footer,
-                      { fontSize: 15, color: '#fff', fontWeight: '600' },
+                      {fontSize: 15, color: '#fff', fontWeight: '600'},
                     ]}>
                     {trans('Girl')}{' '}
                   </Text>
@@ -1298,7 +1296,7 @@ const EditProfile = ({ route }) => {
             {genderError && (
               <Animatable.View animation="fadeInLeft" duration={500}>
                 <Text
-                  style={{ color: 'red', marginBottom: 10, fontWeight: '600' }}>
+                  style={{color: 'red', marginBottom: 10, fontWeight: '600'}}>
                   {trans('Please select your gender')}
                 </Text>
               </Animatable.View>
@@ -1378,7 +1376,7 @@ const EditProfile = ({ route }) => {
                 </Animatable.View>
               )}  */}
 
-            <View style={[styles.action, { marginTop: 10 }]}>
+            <View style={[styles.action, {marginTop: 10}]}>
               <Icon name="old-phone" color={'#FFB901'} size={22} />
               <TextInput
                 placeholder={trans(`Alternate Mobile Number`)}
@@ -1408,7 +1406,7 @@ const EditProfile = ({ route }) => {
             {altPhoneError && (
               <Animatable.View animation="fadeInLeft" duration={500}>
                 <Text
-                  style={{ color: 'red', marginBottom: 10, fontWeight: '600' }}>
+                  style={{color: 'red', marginBottom: 10, fontWeight: '600'}}>
                   {trans('Please enter valid phone number')}
                 </Text>
               </Animatable.View>
@@ -1706,7 +1704,26 @@ const EditProfile = ({ route }) => {
                 color={'#FFB901'}
                 size={20}
               />
-              <Dropdown
+              <Text
+                style={{
+                  width: '100%',
+                  marginTop:10,
+                  marginBottom:10,
+                  paddingLeft: 10,
+                  color: '#fff',
+                  fontWeight: 'bold',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                {age}
+              </Text>
+              {/* //placeholderTextColor={'#aaa'}
+                //placeholder="Enter your age"
+                //value={age}
+                // onChangeText={value => handleInputChange('age', value)}
+                // onFocus={() => setAge(age)} */}
+
+              {/* <Dropdown
                 style={[styles.dropdown, { width: IsTabScreen ? '50%' : '90%' }]}
                 placeholderStyle={styles.placeholderStyle}
                 selectedTextStyle={styles.selectedTextStyle}
@@ -1725,7 +1742,7 @@ const EditProfile = ({ route }) => {
                 value={age}
                 setValue={value}
                 onChange={value => handleInputChange('age', value)}
-              />
+              /> */}
             </View>
             {/* <View
                 style={[styles.action,
@@ -1761,7 +1778,7 @@ const EditProfile = ({ route }) => {
                   </Text>
                 </Animatable.View>
               )} */}
-            <View
+            {/* <View
               style={{
                 backgroundColor: '#79851f',
                 marginTop: 10,
@@ -1769,14 +1786,14 @@ const EditProfile = ({ route }) => {
                 alignItems: 'center',
                 // justifyContent: 'center',
                 flexDirection: 'row',
-              }}>
-              <AntDesign
+              }}> */}
+            {/* <AntDesign
                 // style={{padding:10}}
                 name={'infocirlce'}
                 size={15}
                 color={'#fff'}
-              />
-              <Text
+              /> */}
+            {/* <Text
                 style={{
                   color: '#fff',
                   marginLeft: 10,
@@ -1785,8 +1802,8 @@ const EditProfile = ({ route }) => {
                   justifyContent: 'center',
                 }}>
                 {trans('Age Should Be In Between 9 - 17')}
-              </Text>
-            </View>
+              </Text> */}
+            {/* </View> */}
             {/* <View style={[styles.action]}>
                 <FontAwesome
                   name="address-card"
@@ -1955,7 +1972,7 @@ const EditProfile = ({ route }) => {
 
             {/* </Animatable.View> */}
 
-            <View style={[styles.button, { margin: 15 }]}>
+            <View style={[styles.button, {margin: 15}]}>
               <TouchableOpacity
                 style={styles.signIn}
                 // disabled={loading}
