@@ -57,6 +57,16 @@ import {
   selectAllSubjectLevelStatus,
 } from '../../redux/reducers/GetAllSubjectLevelReducer';
 import Modal from 'react-native-modal';
+import {
+  getDailyFactByDateAPI,
+  selectDailyFactInfo,
+  selectDailyFactStatus,
+  selectDailyFactVisibility,
+} from '../../redux/reducers/GetDailyFactByDateReducer';
+
+import {createShimmerPlaceholder} from 'react-native-shimmer-placeholder';
+import Carousel, {Pagination} from 'react-native-snap-carousel';
+import {IsTabScreen} from '../../../constants/Constants';
 
 const LandingScreen = ({}) => {
   interface ChildInfo {
@@ -89,6 +99,7 @@ const LandingScreen = ({}) => {
     classname: string;
     password: string;
   }
+  const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
   const navigation = useNavigation();
   const dispatch = useDispatch<any>();
   const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
@@ -155,15 +166,22 @@ const LandingScreen = ({}) => {
     const user = userInfo;
     const userid = user._id;
     // const stageid = user.stageid;
-    // const boardid = user.boardid;
+    const boardid = user.boardid;
     // const childid = user.childid;
 
     dispatch(getChildDetailsAPI(userid));
     dispatch(getAllCoursesAPI());
     dispatch(getAllSubjectLevelDataAPI());
+    dispatch(getDailyFactByDateAPI());
   }, []);
 
   const AllSubjectLevelData = useAppSelector(selectAllSubjectLevelInfo);
+  const DailyFact = useAppSelector(selectDailyFactInfo);
+  const DailyFactvisibility = useAppSelector(selectDailyFactVisibility);
+  const FactData = DailyFact?.dailys;
+  const DailyFactData = FactData?.map(r => r.image);
+
+  const factLoading = useAppSelector(selectDailyFactStatus);
 
   console.log(
     AllSubjectLevelData,
@@ -205,6 +223,7 @@ const LandingScreen = ({}) => {
   // ]
 
   const [isModalVisible, setModalVisible] = useState(false);
+  const [activeSlide, setActiveSlide] = useState(0);
 
   const navigateCourseDetails = (course: any) => {
     if (course?.coursename === 'Mind Melters') {
@@ -395,8 +414,7 @@ const LandingScreen = ({}) => {
                       //paddingHorizontal: 15,
                       // borderWidth: 1,
                       //borderColor: '#999',
-                      
-                     
+
                       // height: '55%',
                       // width: '45%',
                     }}>
@@ -467,6 +485,102 @@ const LandingScreen = ({}) => {
                 );
               })}
             </View>
+            <>
+              {factLoading == 'loading' ? (
+                <View
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    paddingVertical: 15,
+                    paddingHorizontal: 5,
+                    marginVertical: 5,
+                    backgroundColor: 'rgba(0,255,0, 0.05)',
+                    borderColor: '#0f6f25',
+                    alignItems: 'center',
+                  }}>
+                  <ShimmerPlaceholder
+                    style={{
+                      width: '100%',
+                      height: device_height * 0.4,
+                      borderRadius: 10,
+                      backgroundColor: '#9e9e9e',
+                      opacity: 0.2,
+                    }}></ShimmerPlaceholder>
+                </View>
+              ) : (
+                DailyFactvisibility && (
+                  <>
+                    {Object.keys(DailyFact).length !== 0 ? (
+                      <>
+                        {DailyFact?.length !== 0 &&
+                          (Array.isArray(DailyFactData) ? (
+                            <>
+                              <Carousel
+                                data={DailyFactData}
+                                renderItem={({item}) => (
+                                  <View
+                                    style={{
+                                      alignItems: 'center',
+                                      justifyContent: 'center',
+                                      alignSelf: 'center',
+                                      height: device_height * 0.47,
+                                      width: device_width * 0.93,
+                                      borderRadius: 15,
+                                      padding: 5,
+                                      marginTop: 10,
+                                      marginRight: 20,
+                                    }}>
+                                    <FastImage
+                                      style={{
+                                        borderRadius: 15,
+                                        height: device_height * 0.46,
+                                        width: device_width * 0.93,
+                                      }}
+                                      source={{uri: item}}
+                                      resizeMode={
+                                        IsTabScreen ? 'contain' : 'cover'
+                                      }
+                                    />
+                                  </View>
+                                )}
+                                sliderWidth={device_width}
+                                itemWidth={device_width}
+                                layout={'default'}
+                                autoplay={true}
+                                autoplayInterval={5000}
+                                loop={true}
+                                onSnapToItem={index => setActiveSlide(index)}
+                              />
+                              <Pagination // Pagination component
+                                dotsLength={DailyFactData.length} // Total number of dots (images)
+                                activeDotIndex={activeSlide} // Active dot index
+                                containerStyle={{paddingVertical: 10}} // Style for the pagination container
+                                dotStyle={{
+                                  // Style for each dot
+                                  width: 10,
+                                  height: 10,
+                                  borderRadius: 5,
+                                  backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                                }}
+                                inactiveDotOpacity={0.4} // Opacity for inactive dots
+                                inactiveDotScale={0.6} // Scale for inactive dots
+                              />
+                            </>
+                          ) : (
+                            <></>
+                          ))}
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                  </>
+                )
+              )}
+            </>
+
             {/* {AllSubjectLevelData.map((item, index) => {
                 const {
                   subjectid = '',
