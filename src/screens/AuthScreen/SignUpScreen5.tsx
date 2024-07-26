@@ -61,6 +61,10 @@ import {useAppSelector} from '../../redux/store/reducerHook';
 import {RegisterNewChild} from '../../redux/actions/RegisterAPI';
 import {login} from '../../redux/reducers/loginReducer';
 import AsyncStorage from '../../utils/AsyncStorage';
+import {
+  getState,
+  selectStudentState,
+} from '../../redux/reducers/GetAllStateReducer';
 const {t: trans} = i18n;
 
 const SignUpScreen5 = ({route}) => {
@@ -99,15 +103,9 @@ const SignUpScreen5 = ({route}) => {
       code: 'english',
       isSelected: selectedLanguage === 'english',
     },
-    // {name: 'हिंदी', code: 'hindi', isSelected: selectedLanguage === 'hindi'},
-
-    // {name: 'বাঙ্গালি', code: 'bn', isSelected: selectedLanguage === 'bn'},
   ]);
-  // console.log(isSelected,"isSelected.....")
 
   const googleSignOut = async () => {
-    // console.log('=======signout func called');
-
     try {
       GoogleSignin.configure();
       await GoogleSignin.signOut();
@@ -144,63 +142,9 @@ const SignUpScreen5 = ({route}) => {
     return true;
   };
 
-  const data = [
-    {
-      label: '8',
-      value: '8',
-    },
-    {
-      label: '9',
-      value: '9',
-    },
-    {
-      label: '10',
-      value: '10',
-    },
-    {
-      label: '11',
-      value: '11',
-    },
-    {
-      label: '12',
-      value: '12',
-    },
-    {
-      label: '13',
-      value: '13',
-    },
-    {
-      label: '14',
-      value: '14',
-    },
-    {
-      label: '15',
-      value: '15',
-    },
-  ];
-
-  const year = [
-    {
-      label: '2020',
-      value: '2020',
-    },
-    {
-      label: '2021',
-      value: '2021',
-    },
-    {
-      label: '2022',
-      value: '2022',
-    },
-    {
-      label: '2023',
-      value: '2023',
-    },
-    {
-      label: '2024',
-      value: '2024',
-    },
-  ];
+  useEffect(() => {
+    dispatch(getState());
+  }, []);
 
   const {signIn} = React.useContext(AuthContext);
 
@@ -220,14 +164,13 @@ const SignUpScreen5 = ({route}) => {
     mother_name: '',
     academyYear: '',
     st_age: '',
+    stateData: '',
     school_name: '',
     board_name: 1,
     boardid: '',
     stage: 5,
     stageid: '',
     st_address: '',
-    // standard:stageid != '' ? stageid : '5',
-    // standard: '',
     st_phone: phone != '' ? phone : '',
     password: '',
     confirmPassword: '',
@@ -242,8 +185,9 @@ const SignUpScreen5 = ({route}) => {
   const [dob, setDob] = useState('');
   const {
     st_age,
+    stateData,
     ref_Code,
-    acdmy_year,
+    // acdmy_year,
     id,
     username,
     secureTextEntry,
@@ -270,6 +214,8 @@ const SignUpScreen5 = ({route}) => {
   const [altPhoneError, setAltPhoneError] = useState(false);
   const [schoolNameError, setSchoolNameError] = useState(false);
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
+  const [statevalue, setStateValue] = useState('');
+  const [stateError, setStateError] = useState(false);
 
   const updateSecureTextEntry = () => {
     setInfo({
@@ -291,7 +237,7 @@ const SignUpScreen5 = ({route}) => {
       // if (phoneRegex.test(inputValue)) {
       if (phoneRegexWithout91.test(inputValue)) {
         setPhoneerror(false);
-        dispatch(childPhoneVerifyAPI(inputValue));
+        //dispatch(childPhoneVerifyAPI(inputValue));
       } else {
         setPhoneerror(true);
       }
@@ -307,8 +253,7 @@ const SignUpScreen5 = ({route}) => {
       } else {
         setFatherNameError(false);
       }
-    }
-    else if (inputName == 'parents_phone') {
+    } else if (inputName == 'parents_phone') {
       if (inputValue != '') {
         if (phoneRegex.test(inputValue)) {
           setAltPhoneError(false);
@@ -363,7 +308,7 @@ const SignUpScreen5 = ({route}) => {
         setStandardError(false);
       }
     } else if (inputName == 'st_age') {
-      console.log(inputValue,'@AGEinputValue');
+      console.log(inputValue, '@AGEinputValue');
       if (inputValue.length == '') {
         setStandardError(true);
       } else {
@@ -376,16 +321,29 @@ const SignUpScreen5 = ({route}) => {
       // } else {
       //   setAgeError(true);
       // }
-    }
-    //  else if (inputName == 'st_age') {
-    //   if (inputValue > 0 && inputValue <= 20) {
-    //     // if (inputValue >=20)
-    //     setAgeError(false);
-    //   } else {
-    //     setAgeError(true);
-    //   }
-    // }
-    else if (inputName == 'lname') {
+    } else if (inputName == 'stateData') {
+      console.log(inputValue.value, 'inputValue.value');
+
+      if (inputValue.value !== 'Odisha1712675266782') {
+        console.log('11111111111111111111111');
+        // i18n.changeLanguage('english');
+        // dispatch(setLanguage('english'));
+      }
+      // else if(inputValue.value=='Odisha1712675266782')
+      // {
+      //  console.log("222222222222222222222")
+      //   i18n.changeLanguage(languages.length>0?languages: selectedLang)
+      //   dispatch(setLanguage(languages.length>0?languages: selectedLang));
+
+      // }
+      else {
+      }
+      if (inputValue.length != '' || inputValue != undefined) {
+        setStateError(false);
+      } else {
+        setStateError(true);
+      }
+    } else if (inputName == 'lname') {
       if (inputValue != '') {
         if (!name_reg.test(inputValue)) {
           setLnameError(true);
@@ -420,11 +378,6 @@ const SignUpScreen5 = ({route}) => {
       } else if (inputValue !== info.password) {
         setConfirmPasswordError(false);
         setmismatchError(true);
-        // if (inputValue == info.password) {
-        //   setmismatchError(false);
-        // } else {
-        //   setmismatchError(true);
-        // }
       } else if (inputValue == info.password) {
         setConfirmPasswordError(false);
         setmismatchError(false);
@@ -442,40 +395,6 @@ const SignUpScreen5 = ({route}) => {
         setEmailError(false);
       }
     }
-    // else if (inputName == 'alt_phone') {
-    //   if (inputValue != '') {
-    //     if (phoneRegex.test(inputValue)) {
-    //       setAltPhoneError(false);
-    //     } else {
-    //       setAltPhoneError(true);
-    //     }
-    //   } else {
-    //     setAltPhoneError(false);
-    //   }
-    // }
-
-    // else if (info.password && info.confirmPassword) {
-    //   if (matchData.test(inputValue)) {
-    //     setmismatchError(true);
-    //   } else {
-    //     setmismatchError(false);
-    //   }
-    // }
-    // else if (inputName == 'password' || inputName == 'confirmPassword') {
-    //   if (password.inputValue !== confirmPassword.inputValue) {
-    //     setmismatchError(true);
-    //   } else {
-    //     setmismatchError(false);
-    //   }
-    // }
-
-    // } else if (inputName == 'age') {
-    //   if (inputValue.length >= 1) {
-    //     setAgeError(false);
-    //   } else {
-    //     setAgeError(true);
-    //   }
-    // }
     let infodata = {...info};
     setInfo({...infodata, [inputName]: inputValue});
   };
@@ -578,8 +497,7 @@ const SignUpScreen5 = ({route}) => {
         25,
         50,
       );
-    }
-    else if (passwordError == true) {
+    } else if (passwordError == true) {
       ToastAndroid.showWithGravityAndOffset(
         `Please Enter Valid Password`,
         ToastAndroid.LONG,
@@ -713,6 +631,51 @@ const SignUpScreen5 = ({route}) => {
   const navigationFunction = () => {
     navigation.navigate('SignInScreen');
   };
+  const stateValue = useAppSelector(selectStudentState);
+  console.log(stateValue, '@stateValue');
+
+  const stateDataDropDown = stateValue.map(state => ({
+    label: state.statename,
+    value: state.stateid,
+  }));
+  const data = [
+    {
+      label: '9',
+      value: '9',
+    },
+    {
+      label: '10',
+      value: '10',
+    },
+    {
+      label: '11',
+      value: '11',
+    },
+    {
+      label: '12',
+      value: '12',
+    },
+    {
+      label: '13',
+      value: '13',
+    },
+    {
+      label: '14',
+      value: '14',
+    },
+    {
+      label: '15',
+      value: '15',
+    },
+    {
+      label: '16',
+      value: '16',
+    },
+    {
+      label: '17',
+      value: '17',
+    },
+  ];
 
   return (
     <View style={styles.container}>
@@ -1205,11 +1168,11 @@ const SignUpScreen5 = ({route}) => {
                             borderWidth:
                               st_age == '' ? 1 : ageError == true ? 1 : 0,
                             borderColor: '#fff',
-                              // st_age == ''
-                              //   ? 'darkorange'
-                              //   : ageError == true
-                              //   ? 'darkorange'
-                              //   : '#fff',
+                            // st_age == ''
+                            //   ? 'darkorange'
+                            //   : ageError == true
+                            //   ? 'darkorange'
+                            //   : '#fff',
                           }}>
                           <MaterialCommunityIcons
                             name="face-recognition"
@@ -1310,7 +1273,7 @@ const SignUpScreen5 = ({route}) => {
                           <></>
                         )}
 
-                        {/* <View
+                        <View
                           style={{
                             flexDirection: 'row',
                             // marginTop: 5,
@@ -1326,20 +1289,16 @@ const SignUpScreen5 = ({route}) => {
                             // marginTop: Platform.OS === 'ios' ? 0 : 10,
                             alignItems: 'center',
                             borderWidth:
-                              acdmy_year == ''
-                                ? 1
-                                : academyYearError == true
-                                ? 1
-                                : 0,
+                              stateData == '' ? 1 : stateError == true ? 1 : 0,
                             borderColor:
-                              acdmy_year == ''
-                                ? 'darkorange'
-                                : academyYearError == true
-                                ? 'darkorange'
+                              stateData == ''
+                                ? 'red'
+                                : stateError == true
+                                ? 'red'
                                 : '#fff',
                           }}>
                           <MaterialCommunityIcons
-                            name="calendar-month-outline"
+                            name="home-city"
                             color={'#263d2d'}
                             size={20}
                           />
@@ -1347,106 +1306,49 @@ const SignUpScreen5 = ({route}) => {
                             style={[styles.dropdown, {width: '90%'}]}
                             placeholderStyle={styles.placeholderStyle}
                             selectedTextStyle={styles.selectedTextStyle}
-                            // inputSearchStyle={styles.inputSearchStyle}
                             iconStyle={styles.iconStyle}
                             itemTextStyle={{color: '#333'}}
                             itemContainerStyle={{
                               borderBottomWidth: 0.5,
                               borderBottomColor: '#999',
                             }}
-                            data={year}
+                            data={stateDataDropDown}
                             maxHeight={300}
                             labelField="label"
                             valueField="value"
-                            // placeholder={trans('Select your age')}
-                            placeholder={'Select academic year'}
-                            searchPlaceholder="Select academic year"
-                            value={acdmy_year}
-                            setValue={yearvalue}
+                            placeholder={trans('Select your state')}
+                            searchPlaceholder="Select your state"
+                            value={stateData}
+                            setValue={statevalue}
                             onChange={value =>
-                              handleInputChange('acdmy_year', value)
+                              handleInputChange('stateData', value)
                             }
-                            // onFocus={value => handleInputChange('st_age', value)}
                             onFocus={() => {
-                              // handleInputChange('cityid', cityid);
-                              // selectAreaForCity(cityid);
-                              setyearValue(yearvalue);
+                              setStateValue(statevalue);
                             }}
                           />
-                        </View> */}
-
-                        {/* <View
-                          style={{
-                            backgroundColor: '#fff',
-                            elevation: 10,
-                            borderRadius: 8,
-                            borderBottomWidth: 1,
-                            borderBottomColor: '#f2f2f2',
-                            paddingVertical: 10,
-                            marginTop: 10,
-                            paddingHorizontal: 20,
-                          }}>
-                          <View style={{ marginBottom: 10 }}>
+                        </View>
+                        {stateData == '' ? (
+                          <Animatable.View
+                            animation="fadeInLeft"
+                            duration={500}>
                             <Text
-                              style={{
-                                fontSize: 15,
-                                fontWeight: '700',
-                                color: '#263d2d',
-                              }}>
-                              {trans('Select Your Preferred Language')}
+                              style={{color: 'darkorange', marginBottom: 10}}>
+                              {trans("Please Enter Student's State Name")}
                             </Text>
-                          </View>
-
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              justifyContent: 'flex-start',
-                              marginBottom: 5,
-                            }}>
-                            {language.map(({ name, code, isSelected }) => (
-                              <View key={code}>
-                                <Chip
-                                  mode={isSelected ? 'outlined' : 'flat'}
-                                  style={{
-                                    marginHorizontal: 5,
-                                    marginLeft: 0,
-                                    // padding: 2,
-                                    borderWidth: 1,
-                                    borderColor: '#263d2d',
-
-                                    // borderRadius: 5,
-                                    // backgroundColor: isSelected ? '#1E88E5' : '#fff',
-                                    paddingHorizontal: 5,
-                                    // paddingVertical: 5,
-                                    // width: '30%',
-                                    borderRadius: 10,
-                                    backgroundColor: isSelected
-                                      ? '#263d2d'
-                                      : '#fff',
-                                  }}
-                                  selectedColor={'#fff'}
-                                  selected={isSelected}
-                                  onPress={() => {
-                                    i18n.changeLanguage(code);
-                                    dispatch(setLanguage(code));
-                                    setLanguages(prevState =>
-                                      prevState.map(lang =>
-                                        lang.code === code
-                                          ? { ...lang, isSelected: true }
-                                          : { ...lang, isSelected: false },
-                                      ),
-                                    );
-                                  }}
-                                  textStyle={{
-                                    color: isSelected ? '#fff' : '#263d2d',
-                                    fontWeight: 'bold',
-                                  }}>
-                                  {name}
-                                </Chip>
-                              </View>
-                            ))}
-                          </View>
-                        </View> */}
+                          </Animatable.View>
+                        ) : stateError ? (
+                          <Animatable.View
+                            animation="fadeInLeft"
+                            duration={500}>
+                            <Text
+                              style={{color: 'darkorange', marginBottom: 10}}>
+                              {trans("Please Enter Student's State Name")}
+                            </Text>
+                          </Animatable.View>
+                        ) : (
+                          <></>
+                        )}
                       </View>
                     </View>
                     <View
@@ -1461,11 +1363,10 @@ const SignUpScreen5 = ({route}) => {
                       }}>
                       <TouchableOpacity
                         disabled={
-                          st_age != '' &&
-                          st_age !== null 
-                          // acdmy_year != '' &&
-                          // acdmy_year !== null
-                            ? false
+                          st_age != '' && st_age !== null
+                            ? // acdmy_year != '' &&
+                              // acdmy_year !== null
+                              false
                             : true
                         }
                         style={{
@@ -1473,11 +1374,10 @@ const SignUpScreen5 = ({route}) => {
                           width: '50%',
                           marginVertical: 5,
                           backgroundColor:
-                            st_age != '' &&
-                            st_age !== null
-                            // acdmy_year != '' &&
-                            // acdmy_year !== null
-                              ? '#a3b448'
+                            st_age != '' && st_age !== null
+                              ? // acdmy_year != '' &&
+                                // acdmy_year !== null
+                                '#a3b448'
                               : '#ccc',
                           marginHorizontal: 20,
                           paddingVertical: 10,
@@ -1491,11 +1391,10 @@ const SignUpScreen5 = ({route}) => {
                         <Text
                           style={{
                             color:
-                              st_age != '' &&
-                              st_age !== null
-                              // acdmy_year != '' &&
-                              // acdmy_year !== null
-                                ? '#333'
+                              st_age != '' && st_age !== null
+                                ? // acdmy_year != '' &&
+                                  // acdmy_year !== null
+                                  '#333'
                                 : '#666',
                             fontSize: 13,
                             fontWeight: '600',
