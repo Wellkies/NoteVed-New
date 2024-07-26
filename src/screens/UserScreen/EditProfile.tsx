@@ -58,6 +58,10 @@ import {uploadPhotoApi} from '../../redux/actions/UploadPhoto';
 import {getScholarshipByClassAPI} from '../../redux/reducers/GetAllScholarshipReducer';
 import {getUserbyId, selectUserInfo} from '../../redux/reducers/loginReducer';
 import AsyncStorage from '../../utils/AsyncStorage';
+import {
+  getState,
+  selectStudentState,
+} from '../../redux/reducers/GetAllStateReducer';
 
 const EditProfile = ({route}) => {
   const navigation = useNavigation();
@@ -94,6 +98,8 @@ const EditProfile = ({route}) => {
     stageid: string;
     boardid: string;
     classname: string;
+    stateid: any;
+    statename: any;
   }
   const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
   const count = useAppSelector(selectStudentStatus);
@@ -106,7 +112,7 @@ const EditProfile = ({route}) => {
   // console.log(Standard, 'Standard//////////////', standardsts, 'standardsts');
   const Board = useAppSelector(selectStudentBoard);
 
-  // console.log(Board, 'Board.....................');
+  const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
 
   const selectedLanguage = useAppSelector(selectStudentLanguage);
 
@@ -114,12 +120,7 @@ const EditProfile = ({route}) => {
   ///////////////////
   const [loading, setLoading] = useState(false);
   const [userLoading, setUserLoading] = useState(false);
-  // const {signOut} = useContext(AuthContext);
-  // const dispatch = useDispatch();
 
-  // const wait = timeout => {
-  //   return new Promise(resolve => setTimeout(resolve, timeout));
-  // };
   const [modalStatus, setModalStatus] = useState(false);
   // const [user, setUser] = React.useState();
   const [nightMode, setNightmode] = useState(false);
@@ -189,20 +190,6 @@ const EditProfile = ({route}) => {
       value: '17',
     },
   ];
-  // useEffect(() => {
-  //   navigation.addListener('focus', () => {
-  //     BackHandler.addEventListener('hardwareBackPress', () => {
-  //       navigation.goBack();
-  //       return true;
-  //     });
-  //   });
-  //   return () => {
-  //     BackHandler.removeEventListener('hardwareBackPress', () => {
-  //       navigation.goBack();
-  //       return true;
-  //     });
-  //   };
-  // }, []);
   const asyncScholarship = async () => {
     const asyncScholarshipValue = await Storage.getObject('SchlrshipId');
     console.log(
@@ -217,26 +204,7 @@ const EditProfile = ({route}) => {
     navigation.addListener('focus', () => {
       dispatch(getChildDetailsAPI(childID));
       dispatch(getUserbyId(childID));
-      // dispatch(getStandard());
-      // dispatch(getBoard());
-      // dispatch(setLanguage(userLang));
-      // if (childId != '')
-      //   // dispatch(getChildDetailsAPI(undefined, childId, setLoading));
-      //   dispatch(
-      //     getChildDetailsAPI(
-      //       undefined,
-      //       signOut,
-      //       undefined,
-      //       setLoading,
-      //       () => {},
-      //       undefined,
-      //     ),
-      //   );
     });
-    // dispatch(getUserInfoAPI(undefined, signOut, setLoading));
-
-    // dispatch(getBoard());
-    // dispatch(getStandard());
   }, []);
 
   const [language, setLanguages] = useState([
@@ -254,6 +222,8 @@ const EditProfile = ({route}) => {
   const {
     _id: childID = '',
     age: p_age = '',
+    statename: stateData = '',
+    stateid = '',
     childid = '',
     image = '',
     imagename = '',
@@ -261,53 +231,30 @@ const EditProfile = ({route}) => {
     lname = '',
     phone = '',
     name = '',
-    // boardname = '',
-    // fathername = '',
-    // mothername = '',
-    // board = '',
-    // subscriptionStartDate = '',
-    // subscriptionEndDate = '',
     isPremium = false,
-    // parentid: parentId = '',
-    // stage = '',
     gender = '',
-    // address = '',
     alterphone = '',
-    // schoolname = '',
-    // language: userLang = '',
     email = '',
-    // stageid = '',
-    // boardid = '',
-    // classname = '',
   } = userInfo;
   console.log(userInfo, '==================userInfo======================');
+
   const [value, setValue] = useState(p_age);
-  console.log(value, 'value......................');
+  const [statevalue, setStateValue] = useState(stateData);
+
   const [ages, setAge] = useState('');
+
   const [info, setInfo] = useState({
     _id: childID,
     firstName: fname,
     lastname: lname,
-    // schoolBoard: boardid != '' ? boardid : 1,
-    // father_name: fathername != '' ? fathername : '',
-    // mother_name: mothername != '' ? mothername : '',
-    // mother_name: '',
-    // SubscriptionStartDate:
-    //   subscriptionStartDate != '' ? subscriptionStartDate : '',
-    // SubscriptionEndDate: subscriptionEndDate != '' ? subscriptionEndDate : '',
-    // IsPremium: isPremium,
     phone: phone,
-    // standard: stageid != '' ? stageid : '5',
     age: p_age != '' ? p_age : '',
+    statename: stateData != '' ? stateData : '',
+    stateid: stateid,
     p_image: image,
     p_imagename: imagename,
     st_gender: gender,
     phone_secondary: alterphone,
-    // school_name: schoolname,
-    // school_name: '',
-    // st_address: address,
-    // st_address: '',
-    // language: userLang,
     st_email: email,
   });
   const {
@@ -315,29 +262,24 @@ const EditProfile = ({route}) => {
     firstName,
     lastname,
     phone_secondary,
-    // standard,
-    // schoolBoard,
-    // father_name,
-    // mother_name,
-    // parents_phone,
     st_gender,
     st_email,
-    // school_name,
-    // st_address,
-    // emailid,
     age,
-    // SubscriptionStartDate,
-    // SubscriptionEndDate,
-    // IsPremium,
+    statename,
     p_image,
     p_imagename,
   } = info;
+
+  useEffect(() => {
+    dispatch(getState());
+  }, []);
 
   useEffect(() => {
     if (childId != '' && Object.keys(userInfo).length != 0) {
       const {
         _id: childID = '',
         age: p_age = '',
+        statename: stateData = '',
         image = '',
         imagename = '',
         fname = '',
@@ -364,43 +306,18 @@ const EditProfile = ({route}) => {
         _id: childID,
         firstName: fname,
         lastname: lname,
-        // schoolBoard: boardid != '' ? boardid : 1,
-        // father_name: fathername != '' ? fathername : '',
-        // mother_name: mothername != '' ? mothername : '',
-        // mother_name: '',
-
-        // SubscriptionStartDate:
-        //   subscriptionStartDate != '' ? subscriptionStartDate : '',
-        // SubscriptionEndDate:
-        //   subscriptionEndDate != '' ? subscriptionEndDate : '',
-        // IsPremium: isPremium,
         phone: phone,
-        // standard: stageid != '' ? stageid : '5',
         age: p_age != '' ? p_age : '',
+        statename: stateData != '' ? stateData : '',
         p_image: image,
         p_imagename: imagename,
-        // gender: gender,
         st_email: email != '' ? email : '',
         phone_secondary: alterphone != '' ? alterphone : '',
-        // school_name: schoolname != '' ? schoolname : '',
-        // school_name: '',
-        // st_address: address != '' ? address : '',
-        // st_address: '',
         st_gender: gender,
-        // language: userLang,
       });
-      // setLanguage(userLang);
-      // setLanguages(prevState =>
-      //   prevState.map(lang =>
-      //     lang.code === userLang
-      //       ? { ...lang, isSelected: true }
-      //       : { ...lang, isSelected: false },
-      //   ),
-      // );
     }
   }, [childId, userInfo]);
 
-  // console.log(info, '=========================info');
   const handleRadioChange = value => {
     if (value == 'Male') {
       setInfo({...info, st_gender: 'Male'});
@@ -509,7 +426,34 @@ const EditProfile = ({route}) => {
       // } else {
       //   setAgeError(true);
       // }
-    } else if (inputName == 'parents_phone') {
+    }
+    else if (inputName == 'statename') {
+      // console.log(
+      //   selectedLanguage,
+      //   'selectedLanguage..........',
+      //   inputValue.value,
+      //   userLang,
+      // );
+      
+      if (inputValue.value != 'Odisha1712675266782') {
+        setLanguages([
+          {
+            name: 'English',
+            code: 'english',
+            isSelected: 'english' === 'english',
+          },
+        ]);
+      } else {
+        setLanguages([
+          {name: 'ଓଡିଆ', code: 'odia', isSelected: selectedLanguage === 'odia'},
+          {
+            name: 'English',
+            code: 'english',
+            isSelected: selectedLanguage === 'english',
+          },
+        ]);
+      }
+    }else if (inputName == 'parents_phone') {
       if (inputValue != '') {
         if (phoneRegex.test(inputValue)) {
           setAltPhoneError(false);
@@ -544,31 +488,13 @@ const EditProfile = ({route}) => {
       } else {
         setEmailError(false);
       }
-      // } else if (inputName == 'parents_phone') {
-      //   // if (inputValue != '') {
-      //   if (phoneRegex.test(inputValue)) {
-      //     setAltPhoneError(false);
-      //   } else {
-      //     setAltPhoneError(true);
-      //   }
+      
     }
-    // else {
-    //   setAltPhoneError(false);
-    // }
-    // }
     let infodata = {...info};
-    // if (boardid != '') {
-    //   infodata = {...infodata, schoolBoard: boardid};
-    // }
-    // if (classid != '') {
-    //   infodata = {...infodata, standard: classid};
-    // }
-
     setInfo({...infodata, [inputName]: inputValue});
   };
 
   const ChildFlag = childId != '' && childId != undefined;
-  // console.log(ChildFlag, '=========childflag', childId);
   const submitForm = async () => {
     const validForm =
       firstName !== '' &&
@@ -582,15 +508,7 @@ const EditProfile = ({route}) => {
       // school_name !== '' &&
       // weight !== '' &&
       age !== '';
-    // !zipError
-    //   ? true
-    //   : false;
-
-    // let userData = {};
-    // await AsyncStorage.getItem('userInfo').then(data => {
-    //   userData = JSON.parse(data);
-    // });
-
+      statename !== '';
     const schoolBoardName = Board.find(rec => rec.boardid == schoolBoard);
     const ClassID = Standard.find(rec => rec.stageid == standard);
     // console.log(age.value, 'ClassID..............',schoolBoardName,"schoolBoardName..");
@@ -608,6 +526,8 @@ const EditProfile = ({route}) => {
       imagename: p_imagename,
       age: age.value,
       status: '',
+      stateid: statename.value,
+      statename: statename.label,
       // parentid: '',
       // stage: ClassID != undefined ? ClassID.stage : '',
       // boardname: schoolBoardName != undefined ? schoolBoardName.boardname : '',
@@ -724,17 +644,6 @@ const EditProfile = ({route}) => {
       } else {
         setAgeError(false);
       }
-      // if (info.phone_secondary == '' || phone_validate == false) {
-      //   // //console.log(phone_validate, 'phone_validate');
-      //   setPhoneError(true);
-      // } else {
-      //   setPhoneError(false);
-      // }
-      // if (info.standard == '') {
-      //   setStandardError(true);
-      // } else {
-      //   setStandardError(false);
-      // }
 
       ToastAndroid.showWithGravityAndOffset(
         trans('Please Enter Valid Input'),
@@ -812,15 +721,6 @@ const EditProfile = ({route}) => {
         50,
       );
     }
-    // else if (schoolNameError == true) {
-    //   ToastAndroid.showWithGravityAndOffset(
-    //     `Please Enter Valid School Name`,
-    //     ToastAndroid.LONG,
-    //     ToastAndroid.BOTTOM,
-    //     25,
-    //     50,
-    //   );
-    // }
     else if (lnameError == true) {
       ToastAndroid.showWithGravityAndOffset(
         trans(`Please Enter Student's Last Name`),
@@ -938,6 +838,11 @@ const EditProfile = ({route}) => {
     // navigation.navigate('UserHome');
   };
 
+  const stateValueData = useAppSelector(selectStudentState);
+  const stateDataDropDown = stateValueData.map(state => ({
+    label: state.statename,
+    value: state.stateid,
+  }));
   return (
     <View style={styles.container}>
       {/* <StatusBar backgroundColor={'#263d2d'} barStyle="light-content" /> */}
@@ -1051,28 +956,6 @@ const EditProfile = ({route}) => {
                 style={{position: 'absolute', top: 0, left: 20}}
                 onPress={() => navigation.goBack()}
               />
-
-              {/* {ChildFlag ? (
-                  <TouchableOpacity
-                    onPress={() => {
-                      setModalStatus(true);
-                      // navigation.navigate('Kids_Profile', {childId: id});
-                    }}
-                    style={{
-                      backgroundColor: Colors.secondary,
-                      position: 'absolute',
-                      top: 15,
-                      right: 25,
-                    }}>
-                    <FontAwesome5
-                      style={{color: 'crimson', backgroundColor: '#def'}}
-                      name="trash"
-                      size={20}
-                    />
-                  </TouchableOpacity>
-                ) : (
-                  ''
-                )} */}
             </View>
           </View>
           <ScrollView
@@ -1094,9 +977,6 @@ const EditProfile = ({route}) => {
                   paddingTop: 10,
                   // letterSpacing: -0.3,
                 }}>
-                {/* {ChildFlag
-                    ? trans('Edit Student Details')
-                    : trans('Register Student')}{' '} */}
                 {trans('Edit Student Details')}
               </Text>
             </View>
@@ -1301,80 +1181,6 @@ const EditProfile = ({route}) => {
                 </Text>
               </Animatable.View>
             )}
-            {/* <View style={[styles.action, { marginTop: 10 }]}>
-              <FontAwesome5 name="user-tie" color={'#FFB901'} size={20} />
-
-              <TextInput
-                placeholder={trans("Enter Guardian's  Name")}
-                placeholderTextColor={'#aaa'}
-                value={father_name}
-                style={[
-                  {
-                    width: '100%',
-                    marginTop: -12,
-                    paddingLeft: 10,
-                    // borderWidth:1,
-                    color: '#fff',
-                    fontWeight: 'bold',
-                    // color: "#fff",
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  },
-                ]}
-                autoCapitalize="none"
-                // onChangeText={(val) => textInputChange(val)}
-                // onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
-                onChangeText={val => handleInputChange('father_name', val)}
-              />
-            </View>
-            {fatherNameError && (
-              <Animatable.View animation="fadeInLeft" duration={500}>
-                <Text
-                  style={{ color: 'red', marginBottom: 10, fontWeight: '600' }}>
-                  {trans("Please Enter Guardian's Name")}
-                </Text>
-              </Animatable.View>
-            )} */}
-
-            {/* <View style={[styles.action, {marginTop: 10}]}>
-                <MaterialCommunityIcons
-                  name="mother-nurse"
-                  color={"#fff"}
-                  size={28}
-                />
-
-                <TextInput
-                  placeholder={trans("Enter Mother's  Name")}
-                 
-                  placeholderTextColor={'#aaa'}
-                  // value={mother_name}
-                  style={[
-                    styles.textInput,
-                    {
-                      width: '100%',
-                      marginTop: -12,
-                      paddingLeft: 10,
-                      // borderWidth:1,
-                      color: "#fff",
-                      fontWeight: 'bold',
-                     
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    },
-                  ]}
-                  autoCapitalize="none"
-                  // onChangeText={(val) => textInputChange(val)}
-                  // onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
-                  // onChangeText={val => handleInputChange('mother_name', val)}
-                />
-              </View>
-              {motherNameError && (
-                <Animatable.View animation="fadeInLeft" duration={500}>
-                  <Text style={{color:'red', marginBottom: 10}}>
-                    {trans("Please Enter Mother's Name")}
-                  </Text>
-                </Animatable.View>
-              )}  */}
 
             <View style={[styles.action, {marginTop: 10}]}>
               <Icon name="old-phone" color={'#FFB901'} size={22} />
@@ -1412,287 +1218,55 @@ const EditProfile = ({route}) => {
               </Animatable.View>
             )}
 
-            {/* <View style={[styles.action, { marginTop: 10 }]}>
-              <FontAwesome5 name="school" color={'#FFB901'} size={20} />
-              <TextInput
-                placeholder={trans(`Student's School Name`)}
-                placeholderTextColor="#aaa"
-                value={school_name}
-                style={{
-                  width: '100%',
-                  marginTop: -12,
-                  paddingLeft: 10,
-                  // borderWidth:1,
-                  color: '#fff',
-                  fontWeight: 'bold',
-                  // color: "#fff",
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-                autoCapitalize="none"
-                // onChangeText={(val) => textInputChange(val)}
-                // onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
-                onChangeText={val => handleInputChange('school_name', val)}
-              />
-            </View>
-            {schoolNameError && (
-              <Animatable.View animation="fadeInLeft" duration={500}>
-                <Text
-                  style={{
-                    color: 'red',
-                    marginBottom: 10,
-                    marginTop: 2,
-                    marginLeft: 5,
-                    fontWeight: '600',
-                  }}>
-                  {trans('Please enter school name')}
-                </Text>
-              </Animatable.View>
-            )} */}
-            {/* <View
-              style={[
-                {
-                  justifyContent: 'space-between',
-                  flexDirection: 'row',
-                  // flexDirection: 'row',
-                  // borderBottomWidth: 1,
-                  // // borderWidth:1,
-                  // borderBottomColor: '#ccc',
-                  // paddingBottom: 5,
-                  marginTop: 10,
-                  paddingBottom: 10,
-                },
-              ]}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  width: '70%',
-                  flexWrap: 'nowrap',
-                }}>
-                <MaterialCommunityIcons
-                  name="account-group"
-                  color={'#FFB901'}
-                  size={22}
-                />
-                <Text
-                  style={{
-                    color: '#FFB901',
-                    marginLeft: 15,
-                    fontWeight: 'bold',
-                  }}>
-                  {trans('Select Standard')}
-                </Text>
-              </View>
-
-              <Text
-                style={{
-                  marginTop: 2,
-                  // paddingLeft: -10,
-                  color: '#FFB901',
-                  fontWeight: 'bold',
-                  // borderWidth:1,
-                  // width: '30%',
-                }}>
-                {trans('Standard')}
-              </Text>
-            </View> */}
-            {/* <View
+            <View
               style={{
-                display: 'flex',
                 flexDirection: 'row',
-                flexWrap: 'wrap',
-
-                // marginTop: 15,
+                width: '100%',
+                alignItems: 'center',
+                borderBottomWidth: 0.9,
+                borderBottomColor: '#999',
               }}>
-              {standardsts == 'idle' && (
-                <>
-                  {Standard?.map((row: any, index: any) => {
-                    const {
-                      classname = '',
-                      classid = '',
-                      isSelected = '',
-                      stage = '',
-                      stageid = '',
-                    } = row;
-
-                    return (
-                      <TouchableOpacity
-                        onPress={() => {
-                          handleInputChange('standard', stageid);
-                        }}
-                        onFocus={() => handleInputChange('standard', stageid)}
-                        key={index}>
-                        <View
-                          style={{
-                            borderWidth: 1,
-                            borderColor:
-                              stageid !== null && info.standard == stageid
-                                ? '#fff'
-                                : '#0f6f25',
-                            backgroundColor:
-                              stageid !== null && info.standard == stageid
-                                ? '#f1a722'
-                                : '#fff',
-                            paddingVertical: 7,
-                            paddingHorizontal: 20,
-                            borderRadius: 10,
-                            margin: 5,
-                          }}
-                          key={index}>
-                          <Text
-                            style={{
-                              color: '#0f6f25',
-                              fontWeight: stageid !== null && info.standard == stageid
-                                ? '900' : '500'
-                            }}>
-                            {stage}
-                          </Text>
-                        </View>
-                      </TouchableOpacity>
-                    );
-                  })}
-                </>
-              )}
-            </View>
-            {standardError && (
-              <Animatable.View animation="fadeInLeft" duration={500}>
-                <Text
-                  style={{
-                    color: 'red',
-                    marginBottom: 10,
-                    width: '100%',
-                  }}>
-                  {trans("Please Enter Student's Standard")}
-                </Text>
-              </Animatable.View>
-            )} */}
-            {/* <View
-              style={[
-                // styles.action,
-                {
-                  justifyContent: 'space-between',
-                  flexDirection: 'row',
-                  // flexDirection: 'row',
-                  // borderBottomWidth: 1,
-                  // // borderWidth:1,
-                  // borderBottomColor: '#ccc',
-                  // paddingBottom: 5,
-                  marginTop: 10,
-                  paddingBottom: 10,
-                },
-              ]}>
-              <View style={{ flexDirection: 'row' }}>
-                <MaterialIcons name="school" color={'#FFB901'} size={25} />
-                <Text
-                  style={{
-                    color: '#FFB901',
-                    marginLeft: 10,
-                    fontWeight: 'bold',
-                  }}>
-                  {trans('Select Board')}
-                </Text>
-              </View>
-
-              <Text
-                style={{
-                  marginTop: 2,
-                  paddingLeft: -10,
-                  color: '#FFB901',
-                  fontWeight: 'bold',
-                  // borderWidth:1,
-                  // borderWidth:1,
-                  // width: '30%',
-                }}>
-                {trans('Board')}
-              </Text>
-            </View> */}
-            {/* <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-                marginTop: 15,
-              }}>
-              {Board.map((row, index, []) => {
-                const { boardname = '', boardid = '', isSelected = '' } = row;
-
-                return (
-                  <TouchableOpacity
-                    onPress={() => {
-                      handleInputChange('schoolBoard', boardid, boardname);
-                      // handledepartmentchange(
-                      //   "department",
-                      //   departmentname,
-                      //   departmentid
-                      // );
-                    }}
-                    onFocus={() => handleInputChange('schoolBoard', boardid)}
-                    // onFocus={() => handleInputChange('departmentname', departmentname)}
-
-                    key={index}>
-                    <Text
-                      style={{
-                        borderWidth: 1,
-                        borderColor:
-                          boardid !== null && info.schoolBoard == boardid
-                            ? '#fff'
-                            : '#0f6f25',
-                        backgroundColor:
-                          boardid !== null && info.schoolBoard == boardid
-                            ? '#f1a722'
-                            : '#fff',
-                        paddingVertical: 7,
-                        paddingHorizontal: 20,
-                        borderRadius: 10,
-                        margin: 5,
-                      }}
-                      key={index}>
-                      <Text
-                        style={{
-                          color: '#0f6f25',
-                          fontWeight:
-                            boardid !== null && info.schoolBoard == boardid
-                              ? '900'
-                              : '500'
-                        }}>
-                        {boardname}
-                      </Text>
-                    </Text>
-                  </TouchableOpacity>
-                );
-              })}
-            </View>
-            {boardError && (
-              <Animatable.View animation="fadeInLeft" duration={500}>
-                <Text style={{ color: 'red', marginBottom: 10 }}>
-                  {trans("Please Enter School's Board Name")}
-                </Text>
-              </Animatable.View>
-            )} */}
-            {/* <View style={styles.action}>
-              <MaterialIcons
-                name="school"
-                color={"#fff"}
+              <MaterialCommunityIcons
+                name="home-city"
+                color={'#FFB901'}
                 size={20}
               />
-              <TextInput
-                placeholder={trans("Enter Student's School Name")}
-                placeholderTextColor={"#fff"}
-                // value={present_address_one}
-                style={[
-                  styles.textInput,
-                  {
-                    color: '#333',
-                  },
-                ]}
-                autoCapitalize="none"
-                // onChangeText={(val) => textInputChange(val)}
-                // onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
-                // onChangeText={val =>
-                //   handleInputChange('present_address_one', val)
-                // }
+              {/* <Text
+                style={{
+                  width: '100%',
+                  marginTop: 10,
+                  marginBottom: 10,
+                  paddingLeft: 10,
+                  color: '#fff',
+                  fontWeight: 'bold',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                {statename}
+              </Text> */}
+              <Dropdown
+                style={[styles.dropdown, {width: IsTabScreen ? '50%' : '90%'}]}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                inputSearchStyle={styles.inputSearchStyle}
+                iconStyle={styles.iconStyle}
+                itemTextStyle={{color: '#333'}}
+                itemContainerStyle={{
+                  borderBottomWidth: 0.5,
+                  borderBottomColor: '#999',
+                }}
+                data={stateDataDropDown}
+                maxHeight={300}
+                labelField="label"
+                valueField="value"
+                placeholder={trans('Select your state name')}
+                value={stateid}
+                setValue={statevalue}
+                onChange={statevalue =>
+                  handleInputChange('statename', statevalue)
+                }
               />
-            </View> */}
+            </View>
             <View
               style={{
                 flexDirection: 'row',
@@ -1707,8 +1281,8 @@ const EditProfile = ({route}) => {
               <Text
                 style={{
                   width: '100%',
-                  marginTop:10,
-                  marginBottom:10,
+                  marginTop: 10,
+                  marginBottom: 10,
                   paddingLeft: 10,
                   color: '#fff',
                   fontWeight: 'bold',
@@ -1744,234 +1318,6 @@ const EditProfile = ({route}) => {
                 onChange={value => handleInputChange('age', value)}
               /> */}
             </View>
-            {/* <View
-                style={[styles.action,
-                  {justifyContent: 'space-between', flexDirection: 'row'},
-                ]}>
-                <View style={{flexDirection: 'row'}}>
-                  <MaterialCommunityIcons
-                    name="face-recognition"
-                    color={"#fff"}
-                    size={20}
-                  /> */}
-
-            {/* {ChildFlag ? (
-                  <Text
-                    style={{
-                      marginTop: 2,
-                      // paddingLeft: -10,
-                      color: "#fff",
-                      fontWeight: 'bold',
-                      borderWidth:1,
-                      width: '30%',
-                    }}>
-                    {trans('Age')}
-                  </Text>
-                ) : (
-                  <></>
-                )} */}
-            {/* </View> */}
-            {/* {ageError && (
-                <Animatable.View animation="fadeInLeft" duration={500}>
-                  <Text style={{color: Colors.red, marginBottom: 10}}>
-                    {trans("Please Enter Student's Age")}
-                  </Text>
-                </Animatable.View>
-              )} */}
-            {/* <View
-              style={{
-                backgroundColor: '#79851f',
-                marginTop: 10,
-                paddingVertical: 5,
-                alignItems: 'center',
-                // justifyContent: 'center',
-                flexDirection: 'row',
-              }}> */}
-            {/* <AntDesign
-                // style={{padding:10}}
-                name={'infocirlce'}
-                size={15}
-                color={'#fff'}
-              /> */}
-            {/* <Text
-                style={{
-                  color: '#fff',
-                  marginLeft: 10,
-                  fontWeight: '600',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                {trans('Age Should Be In Between 9 - 17')}
-              </Text> */}
-            {/* </View> */}
-            {/* <View style={[styles.action]}>
-                <FontAwesome
-                  name="address-card"
-                  color={"#fff"}
-                  size={22}
-                />
-                <TextInput
-                  placeholder={trans(`Enter Your Address`)}
-                  placeholderTextColor='#aaa'
-                  value={st_address}
-                  style={{
-                    width: '100%',
-                    marginTop: Platform.OS === 'ios' ? 0 : -12,
-                    paddingLeft: 10,
-                    // borderWidth:1,
-                    color: "#fff",
-                    fontWeight: 'bold',
-                    color: "#fff",
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                  autoCapitalize="none"
-                  // onChangeText={(val) => textInputChange(val)}
-                  // onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
-                  onChangeText={val => handleInputChange('st_address', val)}
-                />
-              </View> */}
-            {/* <View style={{ padding: 5 }}>
-              <Text
-                style={{
-                  fontSize: 16,
-                  fontWeight: '800',
-                  color: '#FFB901',
-                }}>
-                {trans('Select Your Preferred Language')}
-              </Text>
-            </View>
-
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
-                marginBottom: 15,
-              }}>
-              {language.map(({ name, code, isSelected }) => (
-                <View key={code}>
-                  <Chip
-                    mode={isSelected ? 'outlined' : 'flat'}
-                    style={{
-                      marginHorizontal: 5,
-                      marginLeft: 0,
-                      // padding: 2,
-                      borderWidth: 1,
-                      borderColor: '#fff',
-
-                      // borderRadius: 5,
-                      // backgroundColor: isSelected ? '#1E88E5' : '#fff',
-                      paddingHorizontal: 5,
-                      // paddingVertical: 5,
-                      // width: '30%',
-                      borderRadius: 10,
-                      backgroundColor: isSelected ? '#f1a722' : '#fff',
-                    }}
-                    selectedColor={'#0f6f25'}
-                    selected={isSelected}
-                    onPress={() => {
-                      // i18n.changeLanguage(code);
-                      // setLanguage();
-                      // console.log(
-                      //   isSelected,
-                      //   '********isSelected...........',
-                      //   name,
-                      // );
-                      if (name == 'English') {
-                        dispatch(setLanguage('english'));
-                      } else {
-                        dispatch(setLanguage('odia'));
-                      }
-                      setLanguages(prevState =>
-                        prevState.map(lang =>
-                          lang.code === code
-                            ? { ...lang, isSelected: true }
-                            : { ...lang, isSelected: false },
-                        ),
-                      );
-                    }}
-                    textStyle={{
-                      color: '#0f6f25',
-                      fontWeight: isSelected ? '900' : '700',
-                    }}>
-                    {name}
-                  </Chip>
-                </View>
-              ))}
-            </View> */}
-
-            {/* <View style={styles.action}>
-              <MaterialIcons
-                name="location-on"
-                color={"#fff"}
-                size={20}
-              />
-              <TextInput
-                placeholder={trans("Enter Student's Address")}
-                placeholderTextColor={"#fff"}
-                // value={present_address_one}
-                style={[
-                  styles.textInput,
-                  {
-                    color: '#333',
-                  },
-                ]}
-                autoCapitalize="none"
-                // onChangeText={(val) => textInputChange(val)}
-                // onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
-                // onChangeText={val =>
-                //   handleInputChange('present_address_one', val)
-                // }
-              />
-            </View> */}
-            {/* <Text
-          style={[
-            styles.text_footer,
-            {
-              color: "#fff",
-              fontWeight: 'bold',
-            },
-          ]}>
-          City{' '}
-        </Text> */}
-
-            {/* <Text
-          style={[
-            styles.text_footer,
-            {
-              color: "#fff",
-              fontWeight: 'bold',
-            },
-          ]}>
-          Pincode{' '}
-        </Text> */}
-
-            {/* <View style={styles.action}>
-              <MaterialIcons
-                name="my-location"
-                color={"#fff"}
-                size={20}
-              />
-
-              <TextInput
-                placeholder="Enter your Pincode"
-                placeholderTextColor={"#fff"}
-                value={present_zip}
-                style={[
-                  styles.textInput,
-                  {
-                    color: '#333',
-                  },
-                ]}
-                autoCapitalize="none"
-                // onChangeText={(val) => textInputChange(val)}
-                // onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
-                onChangeText={val => handleInputChange('present_zip', val)}
-              />
-            </View> */}
-
-            {/* </Animatable.View> */}
-
             <View style={[styles.button, {margin: 15}]}>
               <TouchableOpacity
                 style={styles.signIn}

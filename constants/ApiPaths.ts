@@ -41,6 +41,8 @@ export const GET_ALL_SUBJECT_BY_COURSEID = API_URL + 'getAllSubjectbycourseid';
 export const GET_CHILD_PROGRESS_DETAILS = API_URL +'edzgetChildProgressDetails/';
 
 export const EDZ_GET_DAILY_FACT_BY_DATE_URL = API_URL + 'getedzdailyfactbydatenew';
+
+export const GET_ALL_STATES = API_URL + 'getAllStates';
 //=========================================================================//
 
 export const GET_CHILD_PROGRESS_URL = API_URL + 'getChildonProgressDetils/';

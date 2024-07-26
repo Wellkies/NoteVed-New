@@ -47,6 +47,7 @@ import AllMembershipDetailsData from "../reducers/GetAllMembershipReducer";
 import AllSubjectLevelData  from "../reducers/GetAllSubjectLevelReducer";
 import AllSubjectByCourseID from "../reducers/GetAllSubByCourseIdReducer";
 import ChildProgressDetailData  from "../reducers/GetChildProgressDetailReducer";
+import  StudentStateData from "../reducers/GetAllStateReducer";
 
 export const store = configureStore({
   reducer: {
@@ -99,6 +100,7 @@ export const store = configureStore({
     AllSubjectLevelDetails: AllSubjectLevelData,
     AllSubByCourseIdDetails: AllSubjectByCourseID,
     ChildProgressData: ChildProgressDetailData,
+    StateData:StudentStateData,
   },
 });
 
