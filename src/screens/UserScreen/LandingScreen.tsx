@@ -57,6 +57,16 @@ import {
   selectAllSubjectLevelStatus,
 } from '../../redux/reducers/GetAllSubjectLevelReducer';
 import Modal from 'react-native-modal';
+import {
+  getDailyFactByDateAPI,
+  selectDailyFactInfo,
+  selectDailyFactStatus,
+  selectDailyFactVisibility,
+} from '../../redux/reducers/GetDailyFactByDateReducer';
+
+import {createShimmerPlaceholder} from 'react-native-shimmer-placeholder';
+import Carousel, {Pagination} from 'react-native-snap-carousel';
+import {IsTabScreen} from '../../../constants/Constants';
 
 const LandingScreen = ({}) => {
   interface ChildInfo {
@@ -89,6 +99,7 @@ const LandingScreen = ({}) => {
     classname: string;
     password: string;
   }
+  const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
   const navigation = useNavigation();
   const dispatch = useDispatch<any>();
   const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
@@ -155,15 +166,22 @@ const LandingScreen = ({}) => {
     const user = userInfo;
     const userid = user._id;
     // const stageid = user.stageid;
-    // const boardid = user.boardid;
+    const boardid = user.boardid;
     // const childid = user.childid;
 
     dispatch(getChildDetailsAPI(userid));
     dispatch(getAllCoursesAPI());
     dispatch(getAllSubjectLevelDataAPI());
+    dispatch(getDailyFactByDateAPI());
   }, []);
 
   const AllSubjectLevelData = useAppSelector(selectAllSubjectLevelInfo);
+  const DailyFact = useAppSelector(selectDailyFactInfo);
+  const DailyFactvisibility = useAppSelector(selectDailyFactVisibility);
+  const FactData = DailyFact?.dailys;
+  const DailyFactData = FactData?.map(r => r.image);
+
+  const factLoading = useAppSelector(selectDailyFactStatus);
 
   console.log(
     AllSubjectLevelData,
@@ -205,6 +223,7 @@ const LandingScreen = ({}) => {
   // ]
 
   const [isModalVisible, setModalVisible] = useState(false);
+  const [activeSlide, setActiveSlide] = useState(0);
 
   const navigateCourseDetails = (course: any) => {
     if (course?.coursename === 'Mind Melters') {
@@ -235,18 +254,28 @@ const LandingScreen = ({}) => {
             <View
               style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
               <LinearGradient
-                  colors={['#012650','#012650']}
+                colors={['#012650', '#012650']}
                 style={{
                   //backgroundColor: '#222222',
                   padding: 30,
                   borderRadius: 10,
                 }}>
                 <Text
-                  style={{marginBottom: 20, fontSize: 18, fontWeight: '600',color:'#FFFFFF'}}>
+                  style={{
+                    marginBottom: 20,
+                    fontSize: 18,
+                    fontWeight: '600',
+                    color: '#FFFFFF',
+                  }}>
                   {trans('Preparing for JNV and OAV entrance exam!')}
                 </Text>
                 <Text
-                  style={{marginBottom: 20, fontSize: 18, fontWeight: '500',color:'#FFFFFF'}}>
+                  style={{
+                    marginBottom: 20,
+                    fontSize: 18,
+                    fontWeight: '500',
+                    color: '#FFFFFF',
+                  }}>
                   {trans('Please download our app.')}
                 </Text>
                 <View
@@ -282,14 +311,14 @@ const LandingScreen = ({}) => {
                       backgroundColor: '#FF4433',
                       borderRadius: 10,
                       padding: 10,
-                      width: device_width * 0.20,
+                      width: device_width * 0.2,
                     }}>
                     <Text
                       style={{
                         color: '#FFFFFF',
                         fontSize: 18,
                         fontWeight: '600',
-                        textAlign: 'center'
+                        textAlign: 'center',
                       }}>
                       {trans('Exit')}
                     </Text>
@@ -337,14 +366,16 @@ const LandingScreen = ({}) => {
               {`Choose one course to continue`}
             </Text>
             <View
-              style={{
-                flexDirection: 'row',
-                //flexWrap: 'wrap',
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginVertical: 20,
-                // borderWidth: 1
-              }}>
+              style={
+                {
+                  //flexDirection: 'row',
+                  //flexWrap: 'wrap',
+                  // justifyContent: 'center',
+                  // alignItems: 'center',
+                  // marginVertical: 20,
+                  // borderWidth: 1
+                }
+              }>
               {ExamAvailable.map((item, index) => {
                 const {
                   slcourse = '',
@@ -364,68 +395,193 @@ const LandingScreen = ({}) => {
                       navigateCourseDetails(item);
                     }}
                     style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      backgroundColor: '#2C7DB5',
-                      paddingVertical: 25,
-                      height: device_height * 0.3,
-                      width: device_width * 0.45,
-                      paddingHorizontal: 15,
+                      // justifyContent: 'center',
+                      // alignItems: 'center',
+                      backgroundColor: 'rgba(0,255,0,0.1)',
+                      width: device_width * 0.95,
+                      height: device_height * 0.2,
+                      marginHorizontal: 10,
+                      flexDirection: 'column',
                       margin: 10,
-                      borderWidth: 1,
-                      borderColor: '#999',
-                      elevation: 15,
                       borderRadius: 10,
+                      //elevation: 15,
+                      //borderRadius: 12,
+                      //borderWidth: 0.9,
+                      //backgroundColor: '#2C7DB5',
+                      // paddingVertical: 25,
+                      // height: device_height * 0.3,
+                      // width: device_width * 0.45,
+                      //paddingHorizontal: 15,
+                      // borderWidth: 1,
+                      //borderColor: '#999',
+
                       // height: '55%',
                       // width: '45%',
                     }}>
-                    {image != '' && image != null ? (
-                      <Image
-                        style={{
-                          height: '85%',
-                          width: '100%'
-                         }}
-                        source={{uri: image}}
-                        resizeMode="contain"
-                      />
-                    ) : (
-                      <Image
-                        style={{
-                          marginTop: 5,
-                          height: '85%',
-                          width: '100%'
-                          // height: device_height * 0.15,
-                          // width: device_width * 0.4,
-                        }}
-                        source={require('../../../assets/teacher.jpg')}
-                        resizeMode="contain"
-                      />
-                    )}
-                    <Text
+                    <View
                       style={{
-                        borderTopWidth: 1,
-                        borderColor: '#666',
-                        width: '120%',
-                        fontSize: 20,
-                        fontWeight: 'bold',
-                        textAlign: 'center',
-                        color: '#000',
+                        alignItems: 'center',
+                        gap: 10,
                       }}>
-                      {coursename}
-                    </Text>
-                    <Text
+                      {image != '' && image != null ? (
+                        <Image
+                          style={{
+                            marginTop: 10,
+                            height: device_height * 0.11,
+                            width: device_width * 0.6,
+                            resizeMode: 'contain',
+                            tintColor: '#f1a722',
+                            // height: '85%',
+                            // width: '100%'
+                          }}
+                          source={{uri: image}}
+                          resizeMode="contain"
+                        />
+                      ) : (
+                        <Image
+                          style={{
+                            marginTop: 5,
+                            height: device_height * 0.11,
+                            width: device_width * 0.6,
+                            resizeMode: 'contain',
+                            tintColor: '#f1a722',
+                            // height: device_height * 0.15,
+                            // width: device_width * 0.4,
+                          }}
+                          source={require('../../../assets/teacher.jpg')}
+                          resizeMode="contain"
+                        />
+                      )}
+                      <Text
+                        style={{
+                          // borderTopWidth: 1,
+                          // borderColor: '#666',
+                          // width: '120%',
+                          fontSize: 20,
+                          fontWeight: 'bold',
+                          textAlign: 'center',
+                          color: '#f1a722',
+                        }}>
+                        {coursename}
+                      </Text>
+                    </View>
+                    <View
                       style={{
-                        fontSize: 14,
-                        fontWeight: '700',
-                        textAlign: 'center',
-                        color: '#333',
+                        // flexDirection: 'row',
+                        alignItems: 'center',
+                        paddingHorizontal: 10,
                       }}>
-                      {description}
-                    </Text>
+                      <Text
+                        style={{
+                          fontSize: 14,
+                          fontWeight: '700',
+                          // textAlign: 'center',
+                          color: '#fff',
+                        }}>
+                        {description}
+                      </Text>
+                    </View>
                   </TouchableOpacity>
                 );
               })}
-              {/* {AllSubjectLevelData.map((item, index) => {
+            </View>
+            <>
+              {factLoading == 'loading' ? (
+                <View
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    paddingVertical: 15,
+                    paddingHorizontal: 5,
+                    marginVertical: 5,
+                    backgroundColor: 'rgba(0,255,0, 0.05)',
+                    borderColor: '#0f6f25',
+                    alignItems: 'center',
+                  }}>
+                  <ShimmerPlaceholder
+                    style={{
+                      width: '100%',
+                      height: device_height * 0.4,
+                      borderRadius: 10,
+                      backgroundColor: '#9e9e9e',
+                      opacity: 0.2,
+                    }}></ShimmerPlaceholder>
+                </View>
+              ) : (
+                DailyFactvisibility && (
+                  <>
+                    {Object.keys(DailyFact).length !== 0 ? (
+                      <>
+                        {DailyFact?.length !== 0 &&
+                          (Array.isArray(DailyFactData) ? (
+                            <>
+                              <Carousel
+                                data={DailyFactData}
+                                renderItem={({item}) => (
+                                  <View
+                                    style={{
+                                      alignItems: 'center',
+                                      justifyContent: 'center',
+                                      alignSelf: 'center',
+                                      height: device_height * 0.47,
+                                      width: device_width * 0.93,
+                                      borderRadius: 15,
+                                      padding: 5,
+                                      marginTop: 10,
+                                      marginRight: 20,
+                                    }}>
+                                    <FastImage
+                                      style={{
+                                        borderRadius: 15,
+                                        height: device_height * 0.46,
+                                        width: device_width * 0.93,
+                                      }}
+                                      source={{uri: item}}
+                                      resizeMode={
+                                        IsTabScreen ? 'contain' : 'cover'
+                                      }
+                                    />
+                                  </View>
+                                )}
+                                sliderWidth={device_width}
+                                itemWidth={device_width}
+                                layout={'default'}
+                                autoplay={true}
+                                autoplayInterval={5000}
+                                loop={true}
+                                onSnapToItem={index => setActiveSlide(index)}
+                              />
+                              <Pagination // Pagination component
+                                dotsLength={DailyFactData.length} // Total number of dots (images)
+                                activeDotIndex={activeSlide} // Active dot index
+                                containerStyle={{paddingVertical: 10}} // Style for the pagination container
+                                dotStyle={{
+                                  // Style for each dot
+                                  width: 10,
+                                  height: 10,
+                                  borderRadius: 5,
+                                  backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                                }}
+                                inactiveDotOpacity={0.4} // Opacity for inactive dots
+                                inactiveDotScale={0.6} // Scale for inactive dots
+                              />
+                            </>
+                          ) : (
+                            <></>
+                          ))}
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                  </>
+                )
+              )}
+            </>
+
+            {/* {AllSubjectLevelData.map((item, index) => {
                 const {
                   subjectid = '',
                   subjectname = '',
@@ -506,7 +662,6 @@ const LandingScreen = ({}) => {
                   </TouchableOpacity>
                 );
               })} */}
-            </View>
           </Animatable.View>
         </ImageBackground>
       </ScrollView>

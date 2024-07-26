@@ -15,6 +15,7 @@ import {useTranslation} from 'react-i18next';
 import {device_height, device_width} from '../style';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Fontisto from 'react-native-vector-icons/Fontisto';
 import CommonMessage from '../../../constants/CommonMessage';
 import {useAppSelector} from '../../redux/store/reducerHook';
 import {
@@ -328,7 +329,13 @@ const ContentDetails = ({route}) => {
                     } = studentdata[0] || {};
                     const isReattempt = studentdata.length > 0;
                     let percentageSecure = percentage;
-
+                    const isExamAvailable =
+                      index === 0 ||
+                      (index !== 0 &&
+                        reviewquestionsets[index - 1].studentdata.length > 0 &&
+                        reviewquestionsets[index - 1].studentdata[0]
+                          .percentage >= 90);
+                    console.log(isExamAvailable, '@isExamAvailable');
                     return (
                       <View
                         key={index}
@@ -340,11 +347,15 @@ const ContentDetails = ({route}) => {
                           flexDirection: 'row',
                           //alignContent: 'center',
                           alignSelf: 'center',
-                          backgroundColor: 'rgba(0,255,0,0.1)',
-                          borderColor: '#f1a722',
+                          backgroundColor: !isExamAvailable
+                            ? 'rgba(220,220,220,0.1)'
+                            : 'rgba(0,255,0,0.1)',
+                          borderColor: !isExamAvailable
+                            ? 'rgba(220,220,220,0.1)'
+                          :'#f1a722',
                           width: '90%',
-                          //width: device_width * 0.95,
-                          //height: device_height * 0.18,
+                          // width: device_width * 0.95,
+                          // height: device_height * 0.18,
                           //marginHorizontal: 10,
                           //borderRadius: 12,
                           marginBottom: 5,
@@ -360,7 +371,9 @@ const ContentDetails = ({route}) => {
                           }}>
                           <View
                             style={{
-                              backgroundColor: '#f1a722',
+                              backgroundColor:!isExamAvailable
+                              ? '#aaa'
+                               :'#f1a722',
                               width: 40,
                               height: 40,
                               justifyContent: 'center',
@@ -375,17 +388,6 @@ const ContentDetails = ({route}) => {
                             flexDirection: 'row',
                             alignItems: 'center',
                           }}>
-                          {/* <Image
-                          source={require('../../../assets/book.png')}
-                          style={{
-                            //padding: 10,
-                            width: 55,
-                            height: 58,
-                            resizeMode: 'contain',
-                            tintColor: '#FFFFFF',
-                            //top: -10,
-                          }}
-                        /> */}
                           {isReattempt ? (
                             <>
                               <View
@@ -563,7 +565,9 @@ const ContentDetails = ({route}) => {
                                 }}>
                                 <MaterialCommunityIcons
                                   name="hand-pointing-right"
-                                  color={'#f1a722'}
+                                  color={!isExamAvailable
+                                    ? '#aaa'
+                                    : '#f1a722'}
                                   size={30}
                                   style={{marginRight: 10}}
                                 />
@@ -571,7 +575,9 @@ const ContentDetails = ({route}) => {
                                   style={{
                                     fontSize: 17,
                                     fontWeight: '500',
-                                    color: '#f1a722',
+                                    color: !isExamAvailable
+                                    ? '#aaa'
+                                    : '#f1a722',
                                     //width: '70%',
                                   }}>
                                   {contentset}
@@ -585,7 +591,9 @@ const ContentDetails = ({route}) => {
                                 }}>
                                 <Text
                                   style={{
-                                    color: '#fff',
+                                    color: !isExamAvailable
+                                    ? '#aaa'
+                                    : '#fff',
                                     fontSize: 14,
                                     fontWeight: '700',
                                   }}>
@@ -594,7 +602,9 @@ const ContentDetails = ({route}) => {
                                 <Text
                                   style={{
                                     textTransform: 'capitalize',
-                                    color: '#fff',
+                                    color: !isExamAvailable
+                                    ? '#aaa'
+                                    : '#fff',
                                     width: '50%',
                                     fontSize: 14,
                                     fontWeight: 'bold',
@@ -611,7 +621,9 @@ const ContentDetails = ({route}) => {
                                   }}>
                                   <Text
                                     style={{
-                                      color: '#fff',
+                                      color: !isExamAvailable
+                                      ? '#aaa'
+                                      : '#fff',
                                       fontSize: 14,
                                       fontWeight: '700',
                                     }}>
@@ -620,7 +632,9 @@ const ContentDetails = ({route}) => {
                                   <Text
                                     style={{
                                       textTransform: 'capitalize',
-                                      color: '#fff',
+                                      color: !isExamAvailable
+                                      ? '#aaa'
+                                      : '#fff',
                                       width: '50%',
                                       fontSize: 14,
                                       fontWeight: 'bold',
@@ -632,6 +646,7 @@ const ContentDetails = ({route}) => {
                             </View>
                           )}
                           <TouchableOpacity
+                            disabled={!isExamAvailable}
                             onPress={async () => {
                               navigation.navigate('MockTests', {
                                 screenName: 'ExamSets',
@@ -656,17 +671,10 @@ const ContentDetails = ({route}) => {
                             }}>
                             <View
                               style={{
-                                //paddingVertical: 8,
                                 paddingHorizontal: 10,
-                                ///borderRadius: 10,
                                 marginRight: 8,
-                                //borderWidth: 1.2,
-                                //borderColor: '#2C7DB5',
-                                //backgroundColor: '#2C7DB5',
-                                //width: device_width * 0.3,
                                 bottom: -10,
                                 right: -15,
-                                //left: -2,
                               }}>
                               {isReattempt && (
                                 <>
@@ -689,12 +697,16 @@ const ContentDetails = ({route}) => {
                               {!isReattempt && (
                                 <Text
                                   style={{
-                                    color: 'green',
+                                    color: !isExamAvailable
+                                      ? '#aaa'
+                                      : 'green',
                                     textAlign: 'center',
                                     fontSize: 16,
                                     fontWeight: '500',
                                     //borderColor: '#f1a722',
-                                    backgroundColor: '#FFFFFF',
+                                    backgroundColor: !isExamAvailable
+                                      ? 'rgba(220,220,220,0.1)'
+                                      : '#FFFFFF',
                                     paddingVertical: 8,
                                     paddingHorizontal: 10,
                                     borderRadius: 10,

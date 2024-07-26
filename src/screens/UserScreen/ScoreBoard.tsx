@@ -648,7 +648,7 @@ const ScoreBoard = ({route}) => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#1E1E1E'}}>
+    <SafeAreaView style={{flex: 1}}>
       <StatusBar backgroundColor={'#263d2d'} barStyle="light-content" />
       <ImageBackground
         style={{
@@ -1097,7 +1097,9 @@ const ScoreBoard = ({route}) => {
               height: '9%',
               paddingVertical: 10,
               alignSelf: 'center',
-              marginTop: 30,
+              marginTop: 20,
+              flexWrap: 'wrap',
+              gap: 12,
             }}>
             <TouchableOpacity
               onPress={() => {
@@ -1128,7 +1130,7 @@ const ScoreBoard = ({route}) => {
                 }
               }}
               style={{
-                paddingVertical: 5,
+                paddingVertical: 10,
                 borderRadius: 10,
                 width: '45%',
                 marginHorizontal: 5,
@@ -1141,10 +1143,95 @@ const ScoreBoard = ({route}) => {
               <Text
                 style={{
                   color: '#FEFEFE',
-                  fontSize: 15,
-                  fontWeight: '600',
+                  fontSize: 15, 
+                  fontWeight: '600'
                 }}>
                 {percentage >= 90 ? 'Next' : 'Re-attempt'}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              disabled={ansloading == true}
+              onPress={() => {
+                setAnsLoading(true);
+                setTimeout(() => {
+                  setAnsLoading(false);
+                  navigation.navigate('AnswerSheet', {
+                    subjectname: subjectName,
+                    chapterName: chapterName,
+                    examSet: examSet,
+                    quiz: quiz,
+                    securemark: correctanswer,
+                    totalmark: totalmark,
+                    Wronganswer: Wronganswer,
+                    Skipped: Skipped,
+                    isNotificationFlag: false,
+                    is2ndAvailable: is2ndAvailable,
+                    scholarshipName: scholarshipName,
+                    subjectId: subjectId,
+                    scholarshipid: scholarshipid,
+                    topicid: topicid,
+                    boardid: boardid,
+                    contentid: contentid,
+                    studentdata: studentdata,
+                    isReattempt: true,
+                  });
+                }, 1000);
+              }}
+              style={{
+                paddingVertical: 10,
+                borderRadius: 10,
+                width: '45%',
+                // marginVertical: 15,
+                marginHorizontal: 5,
+                // paddingHorizontal: 15,
+                borderWidth: 1,
+                borderColor: '#FFB901',
+                backgroundColor: 'rgba(250,250,250,0.1)',
+                flexDirection: 'row',
+                // backgroundColor: '#fff',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              {ansloading == true ? (
+                <ActivityIndicator
+                  size="small"
+                  color={'#FFB901'}
+                  style={{
+                    alignSelf: 'flex-start',
+                    paddingRight: 10,
+                  }}
+                />
+              ) : (
+                <></>
+              )}
+              <Text
+                style={{
+                  color: '#fff',
+                   fontSize: 15, 
+                   fontWeight: '600',
+                  textAlign: 'center',
+                }}>
+                {trans('View Result')}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('LandingScreen');
+              }}
+              style={{
+                paddingVertical: 10,
+                borderRadius: 10,
+                width: '45%',
+                marginHorizontal: 5,
+                borderWidth: 1,
+                borderColor: '#FFB901',
+                backgroundColor: 'rgba(250,250,250,0.1)',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Text style={{color: '#FEFEFE', fontSize: 15, fontWeight: '600'}}>
+                Home
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -1152,7 +1239,7 @@ const ScoreBoard = ({route}) => {
                 myCustomShare();
               }}
               style={{
-                paddingVertical: 5,
+                paddingVertical: 10,
                 borderRadius: 10,
                 width: '45%',
                 marginHorizontal: 5,
@@ -1166,9 +1253,17 @@ const ScoreBoard = ({route}) => {
               <Text style={{color: '#FEFEFE', fontSize: 15, fontWeight: '600'}}>
                 Share Report
               </Text>
+              <MaterialIcons
+                name="share"
+                color={'#f1a722'}
+                size={22}
+                // style={{height: 30, width: 30}}
+              />
             </TouchableOpacity>
+            
           </View>
-          {/* <View>
+        </ScrollView>
+        {/* <View>
             <ViewShot
               ref={ref}
               options={{fileName: 'Test_Result', format: 'png', quality: 0.9}}
@@ -1315,7 +1410,7 @@ const ScoreBoard = ({route}) => {
                 </View>
               </View> */}
 
-          {/* <Text
+        {/* <Text
                 style={{
                   color: '#FFFFFF',
                   fontWeight: '500',
@@ -1439,7 +1534,7 @@ const ScoreBoard = ({route}) => {
                 </View>
               </View> */}
 
-          {/* <Text
+        {/* <Text
                 style={{
                   fontSize: 17,
                   fontWeight: '700',
@@ -1449,7 +1544,7 @@ const ScoreBoard = ({route}) => {
                 }}>
                 {trans('Quiz Statistics')}
               </Text> */}
-          {/* <View
+        {/* <View
                 style={{
                   justifyContent: 'space-between',
                   alignSelf: 'center',
@@ -1575,7 +1670,7 @@ const ScoreBoard = ({route}) => {
                   </Text>
                 </View>
               </View> */}
-          {/* <View
+        {/* <View
                 style={{
                   flexDirection: 'row',
                   alignItems: 'center',
@@ -1619,12 +1714,11 @@ const ScoreBoard = ({route}) => {
                   coverFill={'#263d2d'}
                 />
               </View> */}
-          {/* </ViewShot> */}
+        {/* </ViewShot> */}
 
-          {/* </View> */}
-        </ScrollView>
+        {/* </View> */}
 
-        <View
+        {/* <View
           style={{
             position: 'absolute',
             bottom: 0,
@@ -1633,8 +1727,8 @@ const ScoreBoard = ({route}) => {
             width: device_width,
             zIndex: -1,
             justifyContent: 'flex-start',
-          }}>
-          {/* <ImageBackground
+          }}> */}
+        {/* <ImageBackground
             style={{
               height: device_height * 0.25,
               width: device_width,
@@ -1645,7 +1739,7 @@ const ScoreBoard = ({route}) => {
             }}
             source={require('../../../assets/jungle.png')}
             resizeMode="contain"></ImageBackground> */}
-        </View>
+        {/* </View> */}
         {/* {reminderModal && (
           <PaymentReminderModal
             reminderModal={reminderModal}

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {
   View,
   Text,
@@ -24,8 +24,8 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Iconz from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 // import { useTheme } from "react-native-paper";
-import { useNavigation, useTheme } from '@react-navigation/native';
-import { Modal, RadioButton } from 'react-native-paper';
+import {useNavigation, useTheme} from '@react-navigation/native';
+import {Modal, RadioButton} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 // import {LOGIN_URL} from '../../../constants/ApiPaths';
 // import axios from "axios";
@@ -39,11 +39,11 @@ import {
   phoneRegex,
   phoneRegexWithout91,
 } from '../../../constants/Constants';
-import { device_height, device_width } from '../style';
-import { Avatar, Chip } from 'react-native-paper';
-import { useDispatch, useSelector } from 'react-redux';
+import {device_height, device_width} from '../style';
+import {Avatar, Chip} from 'react-native-paper';
+import {useDispatch, useSelector} from 'react-redux';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { AuthContext } from '../../../context';
+import {AuthContext} from '../../../context';
 import i18n from 'i18next';
 import {
   GoogleSignin,
@@ -51,17 +51,35 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 // import CommonModalUser from '../UserScreens/CommonModalUser';
-import { ImageBackground } from 'react-native';
+import {ImageBackground} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { useAppSelector } from '../../redux/store/reducerHook';
-import { selectStudentLanguage } from '../../redux/reducers/languageReducer';
-import { getStandard, selectStudentStandard } from '../../redux/reducers/StandardReducer';
-import { getBoard, selectStudentBoard } from '../../redux/reducers/BoardReducer';
-import { childPhoneVerifyAPI, selectVerifyPhInfo } from '../../redux/reducers/VerifyPhoneReducer';
-import { RegisterNewChild } from '../../redux/actions/RegisterAPI';
-const { t: trans } = i18n;
+import {useAppSelector} from '../../redux/store/reducerHook';
+import {selectStudentLanguage} from '../../redux/reducers/languageReducer';
+import {
+  getStandard,
+  selectStudentStandard,
+} from '../../redux/reducers/StandardReducer';
+import {getBoard, selectStudentBoard} from '../../redux/reducers/BoardReducer';
+import {
+  childPhoneVerifyAPI,
+  selectVerifyPhInfo,
+} from '../../redux/reducers/VerifyPhoneReducer';
+import {RegisterNewChild} from '../../redux/actions/RegisterAPI';
+const {t: trans} = i18n;
+import {loginOtp} from '../../redux/actions/LoginAPI';
 
-const SignUpScreen1 = ({ route }) => {
+import {
+  EDZ_LOGIN_WITH_PASSWORD_URL,
+  LOGIN_CHILD_OTP_VERIFY_URL,
+} from '../../../constants/ApiPaths';
+
+import {login} from '../../redux/reducers/loginReducer';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import axios from 'axios';
+
+const SignUpScreen1 = ({route}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch<any>();
 
@@ -79,9 +97,9 @@ const SignUpScreen1 = ({ route }) => {
   // const Standard = useAppSelector(selectStudentStandard);
   // const Board = useAppSelector(selectStudentBoard);
   const VerifyPhone = useAppSelector(selectVerifyPhInfo);
-  console.log(VerifyPhone, "VerifyPhone**********")
+  console.log(VerifyPhone, 'VerifyPhone**********');
 
-  const { signOut } = useContext(AuthContext);
+  const {signOut} = useContext(AuthContext);
   // const [language, setLanguages] = useState([
   //   // {name: 'हिंदी', code: 'hi', isSelected: selectedLanguage === 'hindi'},
   //   { name: 'ଓଡିଆ', code: 'odia', isSelected: selectedLanguage === 'odia' },
@@ -95,32 +113,7 @@ const SignUpScreen1 = ({ route }) => {
   //   // {name: 'বাঙ্গালি', code: 'bn', isSelected: selectedLanguage === 'bn'},
   // ]);
 
-  const [language, setLanguages] = useState('english')
-
-
-  // const googleSignOut = async () => {
-  //   // console.log('=======signout func called');
-  //   try {
-  //     GoogleSignin.configure();
-  //     await GoogleSignin.signOut();
-  //     // setState({ user: null }); // Remember to remove the user from your app's state as well
-  //   } catch (error) {
-  //     // console.error(error, '========signout error');
-  //   }
-  // };
-
-  // const handleRadioChange = value => {
-  //   if (value == 'Male') {
-  //     setInfo({ ...info, gender: 'Male' });
-  //   } else if (value == 'Female') {
-  //     setInfo({ ...info, gender: 'Female' });
-  //   } else {
-  //     setInfo({ ...info, gender: 'others' });
-  //   }
-  //   setGenderError(false);
-  //   setGender(value);
-  //   // handleInputChange( "p_fname", f_name.trim())
-  // };
+  const [language, setLanguages] = useState('english');
 
   useEffect(() => {
     navigation.addListener('focus', () => {
@@ -213,7 +206,7 @@ const SignUpScreen1 = ({ route }) => {
     },
   ];
 
-  const { signIn } = React.useContext(AuthContext);
+  const {signIn} = React.useContext(AuthContext);
   const [loading, setLoading] = React.useState(false);
   const [infoModal, setInfoModal] = useState();
   const [info, setInfo] = useState({
@@ -250,6 +243,7 @@ const SignUpScreen1 = ({ route }) => {
     isValidUser: false,
     isValidPassword: false,
     check_textInputChange: false,
+    otp: '',
   });
   const [dob, setDob] = useState('');
   const {
@@ -276,6 +270,7 @@ const SignUpScreen1 = ({ route }) => {
     confirmPassword,
     secureTextEntry,
     confirmSecureTextEntry,
+    otp,
   } = info;
   const [agevalue, setAgeValue] = useState('');
   // console.log(agevalue, 'agevalue..............');
@@ -298,20 +293,6 @@ const SignUpScreen1 = ({ route }) => {
   const [schoolNameError, setSchoolNameError] = useState(false);
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
 
-  // const updateSecureTextEntry = () => {
-  //   setInfo({
-  //     ...info,
-  //     secureTextEntry: !info.secureTextEntry,
-  //   });
-  // };
-
-  // const updateConfirmSecureTextEntry = () => {
-  //   setInfo({
-  //     ...info,
-  //     confirmSecureTextEntry: !info.confirmSecureTextEntry,
-  //   });
-  // };
-
   const handleInputChange = (inputName: string, inputValue: string) => {
     if (inputName == 'st_phone') {
       // if (phoneRegex.test(inputValue)) {
@@ -333,77 +314,7 @@ const SignUpScreen1 = ({ route }) => {
       } else {
         setFatherNameError(false);
       }
-    }
-    //  else if (inputName == 'mother_name') {
-    //   if (!name_reg.test(inputValue)) {
-    //     setMotherNameError(true);
-    //   } else {
-    //     setMotherNameError(false);
-    //   }
-    // }
-    // else if (inputName == 'parents_phone') {
-    //   if (inputValue != '') {
-    //     if (phoneRegex.test(inputValue)) {
-    //       setAltPhoneError(false);
-    //     } else {
-    //       setAltPhoneError(true);
-    //     }
-    //   } else {
-    //     setAltPhoneError(false);
-    //   }
-    // } else if (inputName == 'school_name') {
-    //   if (!name_reg.test(inputValue)) {
-    //     setSchoolNameError(true);
-    //   } else {
-    //     setSchoolNameError(false);
-    //   }
-    // } else if (inputName == 'board_name') {
-    //   // console.log(inputName, 'inputName.........');
-    //   if (inputValue.length == '') {
-    //     setBoardError(true);
-    //   } else {
-    //     ////console.log(present_zip.length, 'length');
-    //     setBoardError(false);
-    //   }
-
-      // if (inputValue == 1) {
-      // setLanguage('odia', dispatch);
-      // i18n.changeLanguage(selectedLanguage);
-      // setLanguages(prevState =>
-      //   prevState.map(lang =>
-      //     lang.code === 'odia'
-      //       ? {...lang, isSelected: true}
-      //       : {...lang, isSelected: false},
-      //   ),
-      // );
-      // } else {
-      //   setLanguage('english', dispatch);
-      //   i18n.changeLanguage('english');
-      //   setLanguages(prevState =>
-      //     prevState.map(lang =>
-      //       lang.code === 'english'
-      //         ? {...lang, isSelected: true}
-      //         : {...lang, isSelected: false},
-      //     ),
-      //   );
-      // }
-    // } else if (inputName == 'stage') {
-    //   // console.log(inputName, 'inputName.........');
-    //   if (inputValue.length == '') {
-    //     setStandardError(true);
-    //   } else {
-    //     ////console.log(present_zip.length, 'length');
-    //     setStandardError(false);
-    //   }
-    // } else if (inputName == 'st_age') {
-    //   if (inputValue.length != '' || inputValue != undefined) {
-    //     // if (inputValue >=20)
-    //     setAgeError(false);
-    //   } else {
-    //     setAgeError(true);
-    //   }
-    // }
-    else if (inputName == 'lname') {
+    } else if (inputName == 'lname') {
       if (inputValue != '') {
         if (!name_reg.test(inputValue)) {
           setLnameError(true);
@@ -460,364 +371,232 @@ const SignUpScreen1 = ({ route }) => {
         setEmailError(false);
       }
     }
-    // else if (inputName == 'alt_phone') {
-    //   if (inputValue != '') {
-    //     if (phoneRegex.test(inputValue)) {
-    //       setAltPhoneError(false);
-    //     } else {
-    //       setAltPhoneError(true);
-    //     }
-    //   } else {
-    //     setAltPhoneError(false);
-    //   }
-    // }
-
-    // else if (info.password && info.confirmPassword) {
-    //   if (matchData.test(inputValue)) {
-    //     setmismatchError(true);
-    //   } else {
-    //     setmismatchError(false);
-    //   }
-    // }
-    // else if (inputName == 'password' || inputName == 'confirmPassword') {
-    //   if (password.inputValue !== confirmPassword.inputValue) {
-    //     setmismatchError(true);
-    //   } else {
-    //     setmismatchError(false);
-    //   }
-    // }
-
-    // } else if (inputName == 'age') {
-    //   if (inputValue.length >= 1) {
-    //     setAgeError(false);
-    //   } else {
-    //     setAgeError(true);
-    //   }
-    // }
-    let infodata = { ...info };
-    setInfo({ ...infodata, [inputName]: inputValue });
+    let infodata = {...info};
+    setInfo({...infodata, [inputName]: inputValue});
   };
 
   const email_regex_validate = emailRegex.test(st_email);
   const phone_regex_validate = phoneRegex.test(st_phone);
   const phone_regex_without_91_validate = phoneRegexWithout91.test(st_phone);
-  // console.log(email_regex_validate,"========email_regex_validate");
 
-  // const submitForm = async () => {
-  //   // console.log(st_age.value,"=============st_age");
-  //   const validate =
-  //     fname != '' &&
-  //     st_phone != '' &&
-  //     gender != '' &&
-  //     father_name != '' &&
-  //     // mother_name != '' &&
-  //     board_name !== '' &&
-  //     stage != '' &&
-  //     school_name != '' &&
-  //     st_age != '';
-  //   const pswd_validate =
-  //     otplogin == false && password != '' && confirmPassword != '';
+  const navigationFunction = () => {
+    setInfoModal(false);
+    navigation.navigate('SignInScreen');
+  };
 
-  //   // info.p_pass == '';
-  //   // info.gender == '';
-  //   let fname_validate = false;
-  //   let lname_validate = false;
-  //   let phone_validate = false;
-  //   let fathername_validate = false;
-  //   // let mothername_validate = false;
-  //   let email_validate = false;
-  //   let schoolname_validate = false;
-  //   // //console.log(phone_validate, 'phone_validate')
+  const [showOTPContent, setShowOTPContent] = useState(false);
+  const [clicked, setClicked] = useState(false);
+  const [otpMisMatchError, setOtpMissMatchError] = React.useState(false);
+  const [phoneError, setPhoneError] = useState(false);
+  const [setOtp, setShowOtp] = useState(false);
+  const [count, setCount] = useState(0);
+  const [otpError, setOtpError] = React.useState(false);
+  const [otpVerified, setOtpVerified] = useState(false);
 
-  //   if (info.st_phone || info.fname) {
-  //     phone_validate = phoneRegex.test(info.st_phone);
-  //     email_validate = emailRegex.test(info.st_email);
-  //     fname_validate = name_reg.test(info.fname);
-  //     lname_validate = name_reg.test(info.lname);
-  //     fathername_validate = name_reg.test(info.father_name);
-  //     schoolname_validate = name_reg.test(info.school_name);
-  //     // mothername_validate = name_reg.test(info.mother_name);
-  //   }
-  //   if (
-  //     phone == '' || pswdLogin == true
-  //       ? validate == false && pswd_validate == false
-  //       : validate == false
-  //   ) {
-  //     // if (email_validate == false) {
-  //     //   setEmailError(true);
-  //     // } else {
-  //     //   setEmailError(false);
-  //     // }
-  //     if (info.st_phone == '' || phone_validate == false) {
-  //       setPhoneerror(true);
-  //     } else {
-  //       setPhoneerror(false);
-  //     }
-  //     if (info.fname == '' || fname_validate == false) {
-  //       setFnameError(true);
-  //     } else {
-  //       setFnameError(false);
-  //     }
-  //     if (info.school_name == '' || schoolname_validate == false) {
-  //       setSchoolNameError(true);
-  //     } else {
-  //       setSchoolNameError(false);
-  //     }
+  const [f1, setF1] = useState('');
+  const [f2, setF2] = useState('');
+  const [f3, setF3] = useState('');
+  const [f4, setF4] = useState('');
+  const [f5, setF5] = useState('');
+  const [f6, setF6] = useState('');
 
-  //     // if (info.lname == '' || lname_validate == false) {
-  //     //   setLnameError(true);
-  //     // } else {
-  //     //   setLnameError(false);
-  //     // }
-  //     if (info.gender == '') {
-  //       setGenderError(true);
-  //     } else {
-  //       setGenderError(false);
-  //     }
-  //     if (info.father_name == '' || fathername_validate == false) {
-  //       setFatherNameError(true);
-  //     } else {
-  //       setFatherNameError(false);
-  //     }
-  //     // if (info.mother_name == '' || mothername_validate == false) {
-  //     //   setMotherNameError(true);
-  //     // } else {
-  //     //   setMotherNameError(false);
-  //     // }
-  //     if (otplogin == false && info.password == '') {
-  //       setPasswordError(true);
-  //     } else {
-  //       setPasswordError(false);
-  //     }
-  //     if (otplogin == false && info.confirmPassword == '') {
-  //       setConfirmPasswordError(true);
-  //     } else {
-  //       setConfirmPasswordError(false);
-  //     }
-  //     if (info.board_name == '') {
-  //       setBoardError(true);
-  //     } else {
-  //       setBoardError(false);
-  //     }
-  //     if (info.stage == '') {
-  //       setStandardError(true);
-  //     } else {
-  //       setStandardError(false);
-  //     }
-  //     if (info.st_age == '') {
-  //       setAgeError(true);
-  //     } else {
-  //       setAgeError(false);
-  //     }
-  //     // if (info.phone_secondary == '' || phone_validate == false) {
-  //     //   // //console.log(phone_validate, 'phone_validate');
-  //     //   setPhoneError(true);
-  //     // } else {
-  //     //   setPhoneError(false);
-  //   } else if (fnameError == true) {
-  //     ToastAndroid.showWithGravityAndOffset(
-  //       'Please enter your first name',
-  //       ToastAndroid.LONG,
-  //       ToastAndroid.BOTTOM,
-  //       25,
-  //       50,
-  //     );
-  //   } else if (lnameError == true) {
-  //     ToastAndroid.showWithGravityAndOffset(
-  //       'Please enter your last name',
-  //       ToastAndroid.LONG,
-  //       ToastAndroid.BOTTOM,
-  //       25,
-  //       50,
-  //     );
-  //     // } else if (phoneerror == true) {
-  //     //   ToastAndroid.showWithGravityAndOffset(
-  //     //     'Please enter valid phone number',
-  //     //     ToastAndroid.LONG,
-  //     //     ToastAndroid.BOTTOM,
-  //     //     25,
-  //     //     50,
-  //     //   );
-  //   } else if (fatherNameError == true) {
-  //     ToastAndroid.showWithGravityAndOffset(
-  //       `Please Enter Guardian's Name`,
-  //       ToastAndroid.LONG,
-  //       ToastAndroid.BOTTOM,
-  //       25,
-  //       50,
-  //     );
-  //   } else if (schoolNameError == true) {
-  //     ToastAndroid.showWithGravityAndOffset(
-  //       `Please Enter Student's School Name`,
-  //       ToastAndroid.LONG,
-  //       ToastAndroid.BOTTOM,
-  //       25,
-  //       50,
-  //     );
-  //   }
-  //   // else if (motherNameError == true) {
-  //   //   ToastAndroid.showWithGravityAndOffset(
-  //   //     `Please Enter Mother's Name`,
-  //   //     ToastAndroid.LONG,
-  //   //     ToastAndroid.BOTTOM,
-  //   //     25,
-  //   //     50,
-  //   //   );
-  //   // }
-  //   else if (passwordError == true) {
-  //     ToastAndroid.showWithGravityAndOffset(
-  //       `Please Enter Valid Password`,
-  //       ToastAndroid.LONG,
-  //       ToastAndroid.BOTTOM,
-  //       25,
-  //       50,
-  //     );
-  //   } else if (mismatchError == true) {
-  //     ToastAndroid.showWithGravityAndOffset(
-  //       `Password Didn't Matched`,
-  //       ToastAndroid.LONG,
-  //       ToastAndroid.BOTTOM,
-  //       25,
-  //       50,
-  //     );
-  //   } else if (confirmPasswordError == true) {
-  //     ToastAndroid.showWithGravityAndOffset(
-  //       `Please Enter Valid Password`,
-  //       ToastAndroid.LONG,
-  //       ToastAndroid.BOTTOM,
-  //       25,
-  //       50,
-  //     );
-  //   } else if (genderError == true) {
-  //     ToastAndroid.showWithGravityAndOffset(
-  //       `Please Enter Your Gender`,
-  //       ToastAndroid.LONG,
-  //       ToastAndroid.BOTTOM,
-  //       25,
-  //       50,
-  //     );
-  //   } else if (boardError == true) {
-  //     ToastAndroid.showWithGravityAndOffset(
-  //       `Please Enter Student's Board Name`,
-  //       ToastAndroid.LONG,
-  //       ToastAndroid.BOTTOM,
-  //       25,
-  //       50,
-  //     );
-  //   } else if (standardError == true) {
-  //     ToastAndroid.showWithGravityAndOffset(
-  //       `Please Enter Student's Standard Name`,
-  //       ToastAndroid.LONG,
-  //       ToastAndroid.BOTTOM,
-  //       25,
-  //       50,
-  //     );
-  //   } else if (ageError == true) {
-  //     ToastAndroid.showWithGravityAndOffset(
-  //       `Please Enter Student's Age`,
-  //       ToastAndroid.LONG,
-  //       ToastAndroid.BOTTOM,
-  //       25,
-  //       50,
-  //     );
-  //     // } else if (altPhoneError == true) {
-  //     //   ToastAndroid.showWithGravityAndOffset(
-  //     //     `Please Enter Valid Phone Number`,
-  //     //     ToastAndroid.LONG,
-  //     //     ToastAndroid.BOTTOM,
-  //     //     25,
-  //     //     50,
-  //     //   );
-  //   } else if (emailError == true) {
-  //     ToastAndroid.showWithGravityAndOffset(
-  //       'Please enter valid email id',
-  //       ToastAndroid.LONG,
-  //       ToastAndroid.BOTTOM,
-  //       25,
-  //       50,
-  //     );
-  //   } else if (refCodeError == true) {
-  //     ToastAndroid.showWithGravityAndOffset(
-  //       'Please enter valid referal code',
-  //       ToastAndroid.LONG,
-  //       ToastAndroid.BOTTOM,
-  //       25,
-  //       50,
-  //     );
-  //   } else {
-  //     let confirmVal = handlePhoneNumber(info.st_phone);
-  //     //console.log(confirmVal,'SignIn phone Screen');
-  //     phone_validate = phoneRegex.test(confirmVal);
-  //     if (phone_validate) {
-  //       setshowprog(true);
-  //       const schoolBoardName = Board.find(rec => rec.boardid == board_name);
-  //       const ClassID = Standard.find(rec => rec.stageid == stage);
-  //       const bodydata = {
-  //         // email: info.st_email,
-  //         // phone: confirmVal,
-  //         // age: info.st_age,
-  //         // referralcode: ref_Code,
-  //         // fname: info.fname,
-  //         // lname: info.lname,
-  //         // language: selectedLanguage,
+  const btn1 = useRef();
+  const btn2 = useRef();
+  const btn3 = useRef();
+  const btn4 = useRef();
+  const btn5 = useRef();
+  const btn6 = useRef();
 
-  //         email: info.st_email,
-  //         phone: confirmVal,
-  //         age: st_age.value,
-  //         referralcode: ref_Code,
-  //         fname: info.fname,
-  //         lname: info.lname,
-  //         language: selectedLanguage,
-  //         stage: info.stage,
-  //         stageid: ClassID != undefined ? ClassID.stageid : '',
-  //         alterphone: parents_phone,
-  //         password: password,
-  //         schoolname: school_name,
-  //         // schoolname: '',
-  //         // address: info.st_address,
-  //         address: '',
-  //         gender: gender,
-  //         image: '',
-  //         imagename: '',
-  //         boardname:
-  //           schoolBoardName != undefined ? schoolBoardName.boardname : '',
-  //         fathername: father_name,
-  //         // mothername: mother_name,
-  //         mothername: '',
-  //         name: info.fname + ' ' + info.lname,
-  //         isPremium: false,
-  //         subscriptionStartDate: '',
-  //         subscriptionEndDate: '',
-  //         boardid: schoolBoardName != undefined ? schoolBoardName.boardid : '',
-  //       };
-  //       //   let uuu = await Apiconnect.postData_noauth('postdata/usersignup', inf);
-  //       console.log(bodydata, '============RegisterNewChild bodydata');
+  const emptyBtns =
+    f1 == '' && f2 == '' && f3 == '' && f4 == '' && f5 == '' && f6 == '';
 
-  //       dispatch(RegisterNewChild(bodydata, handleCallBack));
-  //     }
-  //   }
-  // };
+  const [otpData, setOtpData] = React.useState({
+    username: '',
+    password: '',
+    check_textInputChange: false,
+    secureTextEntry: true,
+    isValidUser: true,
+    isValidPassword: true,
+    isValidOtp: true,
+  });
+  const handleReset = () => {
+    setF1('');
+    setF2('');
+    setF3('');
+    setF4('');
+    setF5('');
+    setF6('');
+    setShowOtp(false);
+  };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (count == 0) {
+        clearInterval(interval);
+      } else {
+        setCount(count - 1);
+      }
+    }, 1000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [count, clicked]);
 
-  // const handleCallBack = (user, message, authtoken) => {
-  //   if (user != undefined) signIn(user, authtoken);
-  //   else if (message == 'User already registered') {
-  //     // setInfoModal(true);
-  //     CommonMessage(message);
+  const OTPhandle = async () => {
+    if (emptyBtns == true) {
+      setOtpError(true);
+    }
+    const enteredOTP = f1 + f2 + f3 + f4 + f5 + f6;
 
-  //     // CommonMessage("User already registered ! Please Signin instead")
-  //   } else {
-  //     if (message != '') {
-  //       CommonMessage(message);
-  //     }
-  //   }
-  //   // navigation.navigate('SignInScreen');
-  // };
+    const validate = info.st_phone != '' && enteredOTP != '';
+    let phone_validate = false;
+    if (info.st_phone) {
+      phone_validate = phoneRegex.test(info.st_phone);
+    }
 
-  // const navigationFunction = () => {
-  //   setInfoModal(false);
-  //   navigation.navigate('SignInScreen');
-  // };
+    if (validate == false) {
+      const otpvalidate =
+        f1 == '' && f2 == '' && f3 == '' && f4 == '' && f5 == '' && f6 == '';
+      if (info.st_phone == '' || phone_validate == false) {
+        setPhoneError(true);
+      } else {
+        setPhoneError(false);
+      }
+      if (otpvalidate) {
+        setOtpError(true);
+        setOtpMissMatchError(false);
+      } else {
+        setOtpError(false);
+        setOtpMissMatchError(false);
+      }
+    } else if (
+      otpError == true &&
+      phoneError == true &&
+      otpMisMatchError == true
+    ) {
+      ToastAndroid.showWithGravityAndOffset(
+        'Please enter valid input',
+        ToastAndroid.LONG,
+        ToastAndroid.BOTTOM,
+        25,
+        50,
+      );
+    } else {
+      let confirmVal = handlePhoneNumber(st_phone);
+      phone_validate = phoneRegex.test(confirmVal);
+      if (phone_validate) {
+        const body = {
+          phone: confirmVal,
+          senderid: '',
+          status: '',
+          otp: enteredOTP,
+        };
+        console.log(body, '==========LOGIN_CHILD_OTP_VERIFY_URL');
+        await axios
+          .post(LOGIN_CHILD_OTP_VERIFY_URL, body)
+          .then(function (response) {
+            const {
+              authtoken = '',
+              message = '',
+              status,
+              user = [],
+              newUser = false,
+            } = response.data;
+            console.log(
+              response.data,
+              '==============LOGIN_CHILD_OTP_VERIFY_URL response',
+              user.length > 0,
+              '====================user.length > 0',
+              newUser,
+              'newUser============,',
+              authtoken,
+              '=====================authtoken',
+            );
+            if (user.length > 0 && user[0].status == 'active') {
+              signIn(response.data);
+              dispatch(login(response.data));
+              signIn(response.data);
+              signIn(user, authtoken);
+              const tokenstore = Storage.storeObject(
+                '@auth_Token',
+                response.data.authtoken,
+              );
+              const userdata = Storage.storeObject(
+                '@user',
+                response.data.user[0],
+              );
+              console.log(
+                tokenstore,
+                '=========tokenstore',
+                userdata,
+                '----userdata------------------------',
+              );
+            } else if (response.data.message == "OTP didn't match") {
+              setOtpMissMatchError(true);
+              setOtpError(false);
+            } else if (response.data.message == 'OTP verified Successfully') {
+              {
+                setOtpVerified(true);
+                //selectedLanguage == 'english'
+                CommonMessage('Mobile phone number has been verified successfully !');
+              }
+              handleReset();
+              Storage.storeObject('newUser', String(user.length == 0));
+            }
+          })
+          .catch(function (error) {
+            // handle error
+          })
+          .finally(function () {
+            // always executed
+          });
+      }
+    }
+  };
+  const loginphoneHandle = async () => {
+    setClicked(true);
+    setTimeout(() => setClicked(false), 2000);
+    setF1('');
+    setF2('');
+    setF3('');
+    setF4('');
+    setF5('');
+    setF6('');
+    setOtpMissMatchError(false);
+    const validate = info.st_phone == '';
+    let phone_validate = false;
+    if (info.st_phone) {
+      phone_validate = phoneRegex.test(info.st_phone);
+    }
+    if (validate) {
+      if (info.st_phone == '' || phone_validate == false) {
+        setPhoneError(true);
+      } else {
+        setPhoneError(false);
+      }
+    } else if (phone_validate == false) {
+      ToastAndroid.showWithGravityAndOffset(
+        'Please enter valid phone number',
+        ToastAndroid.LONG,
+        ToastAndroid.BOTTOM,
+        25,
+        50,
+      );
+    } else {
+      setShowOtp(true);
+      let phone_validate = false;
+      const phoneVal = info.st_phone;
+      let confirmVal = handlePhoneNumber(phoneVal);
+      //
+      phone_validate = phoneRegex.test(confirmVal);
 
+      if (phone_validate) {
+        const bodydata = {
+          phone: confirmVal,
+        };
+        loginOtp(bodydata, () => setCount(30));
+      }
+    }
+  };
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={'#272727'} barStyle="light-content" />
@@ -835,8 +614,7 @@ const SignUpScreen1 = ({ route }) => {
           // alignItems: 'center',
         }}
         resizeMode="cover"
-        source={require('../../../assets/0.png')}
-        >
+        source={require('../../../assets/0.png')}>
         <View
           style={{
             flexDirection: 'row',
@@ -847,7 +625,7 @@ const SignUpScreen1 = ({ route }) => {
           }}>
           <TouchableOpacity
             onPress={() => goBackFunction()}
-            style={{ paddingLeft: 10, position: 'absolute', left: 0 }}>
+            style={{paddingLeft: 10, position: 'absolute', left: 0}}>
             <MaterialIcons
               name="keyboard-arrow-left"
               size={30}
@@ -870,7 +648,7 @@ const SignUpScreen1 = ({ route }) => {
         </View>
         <ScrollView showsVerticalScrollIndicator={false} style={{}}>
           <Animatable.View
-            style={{ top: 10 }}
+            style={{top: 10}}
             animation="fadeInLeft"
             duration={500}>
             <FastImage
@@ -906,7 +684,7 @@ const SignUpScreen1 = ({ route }) => {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+              <View style={{alignItems: 'center', justifyContent: 'center'}}>
                 <View
                   style={{
                     borderRadius: 15,
@@ -954,7 +732,7 @@ const SignUpScreen1 = ({ route }) => {
                             }}>
                             {/* {trans('Complete Your Registration ')} */}
                             {'Complete Your Registration '}
-                            <Text style={{ fontWeight: '900', fontSize: 16 }}>
+                            <Text style={{fontWeight: '900', fontSize: 16}}>
                               {/* {trans('1/5')} */}
                               {'1/4'}
                             </Text>
@@ -981,8 +759,8 @@ const SignUpScreen1 = ({ route }) => {
                               fname == ''
                                 ? 'darkorange'
                                 : fnameError == true
-                                  ? 'darkorange'
-                                  : '#fff',
+                                ? 'darkorange'
+                                : '#fff',
                           }}>
                           <FontAwesome
                             name="user"
@@ -1007,11 +785,11 @@ const SignUpScreen1 = ({ route }) => {
                             }
                           />
                         </View>
-                        
+
                         {fname == '' ? (
                           <Animatable.View
                             animation="fadeInLeft"
-                            style={{ alignItems: 'flex-start' }}
+                            style={{alignItems: 'flex-start'}}
                             duration={500}>
                             <Text
                               style={{
@@ -1113,8 +891,8 @@ const SignUpScreen1 = ({ route }) => {
                               st_phone == ''
                                 ? 'darkorange'
                                 : phoneerror == true
-                                  ? 'darkorange'
-                                  : '#fff',
+                                ? 'darkorange'
+                                : '#fff',
                           }}>
                           <FontAwesome5
                             name="phone-alt"
@@ -1152,11 +930,11 @@ const SignUpScreen1 = ({ route }) => {
                           />
                           {/* )} */}
                         </View>
-                        {VerifyPhone != undefined && Object.keys(VerifyPhone).length !== 0 &&
-                          phone_regex_without_91_validate == true &&
-                          VerifyPhone.newUser == false &&
-                          VerifyPhone.message ===
-                          'User already registered' ? (
+                        {VerifyPhone != undefined &&
+                        Object.keys(VerifyPhone).length !== 0 &&
+                        phone_regex_without_91_validate == true &&
+                        VerifyPhone.newUser == false &&
+                        VerifyPhone.message === 'User already registered' ? (
                           <Animatable.View
                             animation="fadeInLeft"
                             duration={500}>
@@ -1170,7 +948,8 @@ const SignUpScreen1 = ({ route }) => {
                               {'User already registered !'}
                             </Text>
                           </Animatable.View>
-                        ) : VerifyPhone != undefined && Object.keys(VerifyPhone).length !== 0 &&
+                        ) : VerifyPhone != undefined &&
+                          Object.keys(VerifyPhone).length !== 0 &&
                           phone_regex_without_91_validate == true &&
                           VerifyPhone.newUser == true &&
                           VerifyPhone.message === 'User not registered' ? (
@@ -1190,9 +969,42 @@ const SignUpScreen1 = ({ route }) => {
                                 size={17}
                               />
                               {'  '}
-                              {/* {trans('New user !')} */}
                               {'New user !'}
                             </Text>
+                            <TouchableOpacity
+                              onPress={() => {
+                                setShowOTPContent(true);
+                              }}
+                              style={{
+                                alignItems: 'center',
+                                justifyContent: 'space-evenly',
+                                height: 70,
+                              }}>
+                              <View
+                                style={{
+                                  height: 51,
+                                  width: 51,
+                                  alignItems: 'center',
+                                  borderRadius: 50,
+                                }}>
+                                <Avatar.Image
+                                  source={require('../../../assets/msg.jpg')}
+                                  size={40}
+                                  style={{backgroundColor: '#fff'}}
+                                />
+                              </View>
+                              <Text
+                                style={{
+                                  fontWeight: '800',
+                                  color: '#fff',
+                                  textAlign: 'center',
+                                  textDecorationLine: 'underline',
+                                  fontSize: 13,
+                                  alignSelf: 'center',
+                                }}>
+                                {'Verify with OTP'}
+                              </Text>
+                            </TouchableOpacity>
                           </Animatable.View>
                         ) : (
                           <></>
@@ -1245,12 +1057,13 @@ const SignUpScreen1 = ({ route }) => {
                       <TouchableOpacity
                         disabled={
                           st_phone != '' &&
-                            fname != '' &&
-                            phoneerror == false &&
-                            VerifyPhone != undefined &&
-                            Object.keys(VerifyPhone).length > 0 &&
-                            VerifyPhone.message === 'User not registered' &&
-                            fnameError ==false
+                          otpVerified &&
+                          fname != '' &&
+                          phoneerror == false &&
+                          VerifyPhone != undefined &&
+                          Object.keys(VerifyPhone).length > 0 &&
+                          VerifyPhone.message === 'User not registered' &&
+                          fnameError == false
                             ? false
                             : true
                         }
@@ -1260,12 +1073,13 @@ const SignUpScreen1 = ({ route }) => {
                           marginVertical: 5,
                           backgroundColor:
                             st_phone != '' &&
-                              fname != '' &&
-                              phoneerror == false &&
-                              VerifyPhone != undefined &&
-                              Object.keys(VerifyPhone).length > 0 &&
-                              VerifyPhone.message === 'User not registered' &&
-                              fnameError ==false
+                            otpVerified &&
+                            fname != '' &&
+                            phoneerror == false &&
+                            VerifyPhone != undefined &&
+                            Object.keys(VerifyPhone).length > 0 &&
+                            VerifyPhone.message === 'User not registered' &&
+                            fnameError == false
                               ? '#a3b448'
                               : '#ccc',
                           paddingVertical: 10,
@@ -1289,12 +1103,13 @@ const SignUpScreen1 = ({ route }) => {
                           style={{
                             color:
                               st_phone != '' &&
-                                fname != '' &&
-                                phoneerror == false &&
-                                VerifyPhone != undefined &&
-                                Object.keys(VerifyPhone).length > 0 &&
-                                VerifyPhone.message === 'User not registered' &&
-                                fnameError ==false
+                              otpVerified &&
+                              fname != '' &&
+                              phoneerror == false &&
+                              VerifyPhone != undefined &&
+                              Object.keys(VerifyPhone).length > 0 &&
+                              VerifyPhone.message === 'User not registered' &&
+                              fnameError == false
                                 ? 'white'
                                 : '#666',
                             fontSize: 13,
@@ -1302,7 +1117,6 @@ const SignUpScreen1 = ({ route }) => {
                             textAlign: 'center',
                             alignItems: 'center',
                           }}>
-                          {/* {trans('Next')} */}
                           {'Next'}
                         </Text>
                       </TouchableOpacity>
@@ -1311,65 +1125,629 @@ const SignUpScreen1 = ({ route }) => {
                 </View>
               </View>
             </View>
-
-            {/* <View style={[styles.button, {}]}> */}
-            {/* <Text
-              style={[
-                styles.text_footer,
-                {
-                  color: '#666',
-                  fontWeight: 'bold',
-                  // textAlign: 'left',
-                  alignSelf: 'flex-start',
-                },
-              ]}>
-              Have Referral Code ?
-            </Text>
-
-            <View
-              style={[
-                styles.action,
-                {
-                  marginBottom: 20,
-                  borderBottomColor: '#fff',
-                  paddingVertical: 10,
-                },
-              ]}>
-              {/* <FontAwesome name="user-o" color={'#333'} size={20} /> 
-              <TextInput
-                placeholder="Enter code"
-                placeholderTextColor="#999"
-                value={ref_Code}
-                style={{
-                  color: '#999',
-                  flex: 1,
-                  marginTop: Platform.OS === 'ios' ? 0 : -12,
-                  paddingLeft: 10,
-                  // color: '#05375a',
-                  backgroundColor: '#fff',
-                  elevation: 10,
-                  borderRadius: 15,
-                  height: 50,
-                  fontSize: 18,
-                  fontWeight: '600',
-                }}
-                autoCapitalize="none"
-                // onChangeText={(val) => textInputChange(val)}
-                // onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
-                onChangeText={val => handleInputChange('ref_Code', val)}
-              />
-            </View>
-
-            {refCodeError && (
-              <Animatable.View animation="fadeInLeft" duration={500}>
-                <Text style={{color: Colors.red, marginBottom: 10}}>
-                  Please enter valid referal code
-                </Text>
-              </Animatable.View>
-            )} */}
-            {/* </View> */}
           </Animatable.View>
         </ScrollView>
+        {infoModal && (
+          <Modal transparent={true} visible={infoModal}>
+            <View
+              style={{
+                backgroundColor: '#fff',
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <View
+                style={{
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flex: 1,
+                }}>
+                <View
+                  style={{
+                    borderRadius: 15,
+                    borderWidth: 1,
+                    minHeight: device_height * 0.35,
+                    minWidth: device_width * 0.8,
+                    backgroundColor: '#fff',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                  }}>
+                  <View>
+                    <View
+                      style={{
+                        alignItems: 'center',
+                      }}>
+                      <View style={{alignItems: 'center', paddingVertical: 15}}>
+                        <View
+                          style={{
+                            borderColor: 'green',
+                            borderRadius: 50,
+                            elevation: 15,
+                            backgroundColor: '#dee',
+                          }}>
+                          <MaterialIcons
+                            name="info"
+                            color={'orange'}
+                            size={50}
+                          />
+                        </View>
+
+                        <Text
+                          style={{
+                            textAlign: 'center',
+                            width: device_width * 0.8,
+                            fontSize: 17,
+                            color: '#333',
+                            marginTop: 10,
+                            marginLeft: 10,
+                            fontWeight: '900',
+                          }}>
+                          {trans('User Already Registered with this number')}
+                        </Text>
+                        <Text
+                          style={{
+                            textAlign: 'center',
+                            width: device_width * 0.7,
+                            fontSize: 15,
+                            color: '#666',
+                            marginTop: 5,
+                            fontWeight: '500',
+                          }}>
+                          {trans('Please try new number or login instead')}
+                        </Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        paddingVertical: 15,
+                        alignItems: 'center',
+                        marginTop: 10,
+                        marginLeft: 10,
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignSelf: 'center',
+                        padding: 10,
+                      }}>
+                      <TouchableOpacity
+                        style={{
+                          borderRadius: 10,
+                          width: '30%',
+                          marginVertical: 5,
+                          borderWidth: 1,
+                          marginRight: 25,
+                          borderColor: 'white',
+                          backgroundColor: Colors.primary,
+                          paddingVertical: 5,
+                          justifyContent: 'center',
+                        }}
+                        onPress={() => navigationFunction()}>
+                        <Text
+                          style={{
+                            color: 'white',
+                            fontSize: 15,
+                            fontWeight: 'bold',
+                            textAlign: 'center',
+                            alignItems: 'center',
+                          }}>
+                          {trans('OK')}
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </Modal>
+        )}
+        {showOTPContent && (
+          <Modal
+            transparent={true}
+            visible={showOTPContent}
+            backdropTransitionInTiming={50}
+            backdropTransitionOutTiming={50}
+            onBackdropPress={() => setShowOTPContent(false)}
+            onBackButtonPress={() => setShowOTPContent(false)}>
+            <View
+              style={{
+                width: device_width * 1.28,
+                height: device_height * 0.3,
+                alignSelf: 'center',
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: '#fff',
+                borderRadius: 10,
+                paddingVertical: 20,
+                paddingHorizontal: 20,
+              }}>
+              <TouchableOpacity
+                style={{
+                  position: 'absolute',
+                  top: 1,
+                  borderRadius: 50,
+                  padding: 5,
+                  marginRight: 30,
+                  right: 30,
+                }}
+                onPress={() => setShowOTPContent(false)}>
+                <MaterialCommunityIcons
+                  name="close-circle"
+                  size={40}
+                  style={{
+                    color: 'red',
+                  }}
+                />
+              </TouchableOpacity>
+              <Text
+                style={{
+                  color: '#000',
+                  fontWeight: '700',
+                  fontSize: 24,
+                }}>
+                {trans('Verify the number')}
+              </Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  marginBottom: 10,
+                  marginTop: 10,
+                  borderBottomWidth: 1,
+                  borderBottomColor: Colors.secondary,
+                  width: '50%',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <View
+                  style={{
+                    borderColor: '#ccc',
+                    borderRadius: 3,
+                    paddingVertical: 10,
+                    paddingHorizontal: 15,
+                    backgroundColor: '#fff',
+                    elevation: 10,
+                  }}>
+                  <Text
+                    style={{
+                      color: '#000',
+                      fontWeight: '900',
+                      fontSize: 18,
+                    }}>
+                    {' '}
+                    +91
+                  </Text>
+                </View>
+                <TextInput
+                  placeholder={`Enter Mobile Number *`}
+                  placeholderTextColor="#888"
+                  keyboardType="numeric"
+                  style={{
+                    color: '#000',
+                    textAlign: 'center',
+                    width: '80%',
+                    backgroundColor: '#fff',
+                    elevation: 10,
+                    borderColor: '#ccc',
+                    borderRadius: 3,
+                    height: 45,
+                    marginLeft: 10,
+                    fontSize: st_phone.length < 10 ? 13 : 18,
+                    fontWeight: '900',
+                  }}
+                  value={st_phone}
+                  onChangeText={val => handleInputChange('st_phone', val)}
+                />
+              </View>
+              <View
+                style={{
+                  alignItems: 'center',
+                  top: 20,
+                  width: '80%',
+                }}>
+                <TouchableOpacity
+                  style={{
+                    flexDirection: 'row',
+                    width: '40%',
+                    height: 40,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: 5,
+                    backgroundColor: '#f1a722',
+                  }}
+                  disabled={false}
+                  onPress={() => {
+                    loginphoneHandle();
+                    setShowOTPContent(false);
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      fontWeight: '900',
+                      color: '#000',
+                      fontFamily: 'Yaldevi-Bold',
+                    }}>
+                    {`Continue`}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
+        )}
+        {setOtp == true ? (
+          <Modal transparent={true} visible={setOtp}>
+            <View
+              style={{
+                width: device_width * 1.28,
+                height: device_height * 0.3,
+                paddingTop: 30,
+                alignSelf: 'center',
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: '#fff',
+                borderRadius: 10,
+                paddingVertical: 20,
+                paddingHorizontal: 20,
+              }}>
+              <TouchableOpacity
+                style={{
+                  position: 'absolute',
+                  top: 1,
+                  borderRadius: 50,
+                  padding: 5,
+                  marginRight: 30,
+                  right: 30,
+                }}
+                onPress={() => setShowOtp(false)}>
+                <MaterialCommunityIcons
+                  name="close-circle"
+                  size={40}
+                  style={{
+                    color: 'red',
+                  }}
+                />
+              </TouchableOpacity>
+              <Text
+                style={{
+                  fontSize: 15,
+                  color: '#333',
+                  fontWeight: '900',
+                }}>
+                {'Sending SMS Code to'}{' '}
+                <Text style={{fontSize: 18, color: 'green', fontWeight: '900'}}>
+                  {info.st_phone}
+                </Text>
+              </Text>
+              <View
+                style={{
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: device_width * 0.65,
+                  paddingHorizontal: 5,
+                  borderWidth: 1,
+                  borderColor: '#ccc',
+                  borderRadius: 7,
+                  backgroundColor: '#ccc',
+                }}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: '#333',
+                    fontWeight: '800',
+                  }}>
+                  {'Enter OTP Code'}
+                </Text>
+
+                <View
+                  style={{
+                    paddingHorizontal: 8,
+                    marginTop: 10,
+                    paddingVertical: 7,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexDirection: 'row',
+                    backgroundColor: '#f1a722',
+                    borderRadius: 5,
+                    paddingBottom: 5,
+                  }}>
+                  <TextInput
+                    ref={btn1}
+                    style={{
+                      height: 30,
+                      width: 25,
+                      borderWidth: 1,
+                      borderRadius: 5,
+                      marginHorizontal: 3,
+                      textAlign: 'center',
+                      fontWeight: '700',
+                      fontSize: 20,
+                      borderColor: '#000',
+                      letterSpacing: 5,
+                      color: '#000',
+                      paddingBottom: -10,
+                      paddingTop: -15,
+                    }}
+                    keyboardType="number-pad"
+                    maxLength={6}
+                    value={f1}
+                    onChangeText={txt => {
+                      setF1(txt);
+                      if (txt.length >= 1) {
+                        btn2.current.focus();
+                      }
+                    }}
+                  />
+                  <TextInput
+                    ref={btn2}
+                    style={{
+                      height: 30,
+                      width: 25,
+                      borderWidth: 1,
+                      borderRadius: 5,
+                      marginHorizontal: 3,
+                      textAlign: 'center',
+                      fontWeight: '700',
+                      fontSize: 18,
+                      borderColor: '#000',
+                      color: '#000',
+                      paddingBottom: -10,
+                      paddingTop: -15,
+                    }}
+                    keyboardType="number-pad"
+                    maxLength={1}
+                    value={f2}
+                    onChangeText={txt => {
+                      setF2(txt);
+                      if (txt.length >= 1) {
+                        btn3.current.focus();
+                      } else if (txt.length < 1) {
+                        btn1.current.focus();
+                      }
+                    }}
+                  />
+                  <TextInput
+                    ref={btn3}
+                    style={{
+                      height: 30,
+                      width: 25,
+                      borderWidth: 1,
+                      borderRadius: 5,
+                      marginHorizontal: 3,
+                      textAlign: 'center',
+                      fontWeight: '900',
+                      fontSize: 18,
+                      borderColor: '#000',
+                      color: '#000',
+                      paddingBottom: -10,
+                      paddingTop: -15,
+                    }}
+                    keyboardType="number-pad"
+                    maxLength={1}
+                    value={f3}
+                    onChangeText={txt => {
+                      setF3(txt);
+                      if (txt.length >= 1) {
+                        btn4.current.focus();
+                      } else if (txt.length < 1) {
+                        btn2.current.focus();
+                      }
+                    }}
+                  />
+                  <TextInput
+                    ref={btn4}
+                    style={{
+                      height: 30,
+                      width: 25,
+                      borderWidth: 1,
+                      borderRadius: 5,
+                      marginHorizontal: 3,
+                      textAlign: 'center',
+                      fontWeight: '900',
+                      fontSize: 18,
+                      borderColor: '#000',
+                      color: '#000',
+                      paddingBottom: -10,
+                      paddingTop: -15,
+                    }}
+                    keyboardType="number-pad"
+                    maxLength={1}
+                    value={f4}
+                    onChangeText={txt => {
+                      setF4(txt);
+                      if (txt.length >= 1) {
+                        btn5.current.focus();
+                      } else if (txt.length < 1) {
+                        btn3.current.focus();
+                      }
+                    }}
+                  />
+                  <TextInput
+                    ref={btn5}
+                    style={{
+                      height: 30,
+                      width: 25,
+                      borderWidth: 1,
+                      borderRadius: 5,
+                      marginHorizontal: 3,
+                      textAlign: 'center',
+                      fontWeight: '900',
+                      fontSize: 18,
+                      borderColor: '#000',
+                      color: '#000',
+                      paddingBottom: -10,
+                      paddingTop: -15,
+                    }}
+                    keyboardType="number-pad"
+                    maxLength={1}
+                    value={f5}
+                    onChangeText={txt => {
+                      setF5(txt);
+                      if (txt.length >= 1) {
+                        btn6.current.focus();
+                      } else if (txt.length < 1) {
+                        btn4.current.focus();
+                      }
+                    }}
+                  />
+                  <TextInput
+                    ref={btn6}
+                    style={{
+                      height: 30,
+                      width: 25,
+                      borderWidth: 1,
+                      borderRadius: 5,
+                      marginHorizontal: 3,
+                      textAlign: 'center',
+                      fontWeight: '900',
+                      fontSize: 18,
+                      borderColor: '#000',
+                      color: '#000',
+                      paddingBottom: -10,
+                      paddingTop: -15,
+                    }}
+                    keyboardType="number-pad"
+                    maxLength={1}
+                    value={f6}
+                    onChangeText={txt => {
+                      setF6(txt);
+                      if (txt.length >= 1) {
+                        btn6.current.focus();
+                      } else if (txt.length < 1) {
+                        btn5.current.focus();
+                      }
+                    }}
+                    onSubmitEditing={() => OTPhandle()}
+                  />
+                </View>
+
+                {otpData.check_textInputChange ? (
+                  <Animatable.View animation="bounceIn">
+                    <Feather
+                      name="check-circle"
+                      style={{paddingTop: 12, marginRight: 10}}
+                      color="green"
+                      size={20}
+                    />
+                  </Animatable.View>
+                ) : null}
+                {otp != '' &&
+                  otp.length == 6 &&
+                  !otpError &&
+                  !otpMisMatchError && (
+                    <Animatable.View animation="bounceIn">
+                      <Feather name="check-circle" color="green" size={20} />
+                    </Animatable.View>
+                  )}
+              </View>
+              {otpError && (
+                <Animatable.View animation="fadeInLeft" duration={500}>
+                  <Text style={{color: Colors.red, marginVertical: 0}}>
+                    {`**OTP must be 6 digit code`}
+                  </Text>
+                </Animatable.View>
+              )}
+              <View style={{marginTop: 5}}>
+                {clicked == true ? (
+                  <>
+                    <ActivityIndicator
+                      size="small"
+                      color={Colors.orange}
+                      style={{
+                        alignSelf: 'center',
+                        justifyContent: 'center',
+                        fontSize: 12,
+                      }}
+                    />
+                  </>
+                ) : (
+                  <>
+                    {setOtp == true && count != 0 ? (
+                      <Text
+                        style={{
+                          fontWeight: 'bold',
+                          color: Colors.primary,
+                          textAlign: 'center',
+                        }}>
+                        {`${count} `}
+                        {'seconds'}
+                      </Text>
+                    ) : (
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                        }}>
+                        <Text
+                          style={{
+                            fontWeight: '800',
+                            color: count == 0 ? Colors.primary : '#000',
+                            fontSize: 12,
+                          }}
+                          onPress={() => {
+                            loginphoneHandle();
+                          }}>
+                          {'Not Received SMS Code Yet ?'}
+                        </Text>
+                        <TouchableOpacity
+                          onPress={() => {
+                            loginphoneHandle();
+                          }}
+                          style={{
+                            backgroundColor: 'saddlebrown',
+                            paddingVertical: 8,
+                            borderRadius: 15,
+                            paddingHorizontal: 25,
+                            marginLeft: 10,
+                          }}>
+                          <Text
+                            style={{
+                              fontWeight: '700',
+                              fontSize: 11,
+                              color: count == 0 ? '#fff' : '#999',
+                            }}>
+                            {`Resend `}
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                    )}
+                  </>
+                )}
+              </View>
+              {otpMisMatchError && (
+                <Animatable.View animation="bounceIn" duration={500}>
+                  <Text style={{color: '#FF0000', fontSize: 13}}>
+                    {`OTP didn't match ! Please check`}
+                  </Text>
+                </Animatable.View>
+              )}
+              <TouchableOpacity
+                style={{
+                  backgroundColor: '#f1a722',
+                  flexDirection: 'row',
+                  width: '40%',
+                  marginTop: 10,
+                  height: 30,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: 10,
+                }}
+                onPress={() => {
+                  OTPhandle();
+                }}>
+                <Text
+                  style={[
+                    styles.textSign,
+                    {
+                      color: '#000',
+                      fontWeight: '900',
+                      textAlign: 'center',
+                    },
+                  ]}>
+                  {`Verify & Sign In`}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </Modal>
+        ) : (
+          <></>
+        )}
       </ImageBackground>
     </View>
   );
