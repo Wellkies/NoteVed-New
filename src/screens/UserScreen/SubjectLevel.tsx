@@ -342,8 +342,8 @@ const SubjectLevel = ({route}) => {
                             subjectid: subjectid,
                             childid: childid,
                           };
-                          dispatch(getChildProgressDetailAPI(bodydata));
-                          //dispatch(getTopicBySubIdAPI(bodydata));
+                          //dispatch(getChildProgressDetailAPI(bodydata));
+                          dispatch(getTopicBySubIdAPI(bodydata));
                           // dispatch(getTopicBySubIdAPI(subjectid));
                           navigation.navigate('TopicDetails', {
                             coursename: coursename,

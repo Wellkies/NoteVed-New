@@ -98,6 +98,8 @@ const LandingScreen = ({}) => {
     boardid: string;
     classname: string;
     password: string;
+    statename: string;
+    stateid: string;
   }
   const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
   const navigation = useNavigation();
@@ -183,44 +185,14 @@ const LandingScreen = ({}) => {
 
   const factLoading = useAppSelector(selectDailyFactStatus);
 
-  console.log(
-    AllSubjectLevelData,
-    '@@@@@@@@@@@@@@@@@@@@@***AllSubjectLevelData',
-  );
+  // console.log(
+  //   AllSubjectLevelData,
+  //   '@@@@@@@@@@@@@@@@@@@@@***AllSubjectLevelData',
+  // );
 
   // const ListColor = ['#fee2a3', '#f6c4b9', '#c3ccf5', '#76f0c7'];
 
   const ListColor = ['#50C878', '#00FF7F', '#1dfc8c', '#50C878'];
-
-  // const ExamAvailable = [
-  //   {
-  //     examName: "Exam 1",
-  //     contents: "Adarsha, Navodaya and Medhabruti",
-  //     image: require('../../../assets/OAV_logo.jpg'),
-  //     navigationfunc: () => { navigation.navigate('SubjectList',{stageid:'5', boardid:'1'}) }
-  //   },
-  //   {
-  //     examName: "Exam 2",
-  //     contents: "Adarsha, Navodaya and Medhabruti",
-  //     image: require('../../../assets/Jawahar_Navodaya_Vidyalaya_logo.png'),
-  //     navigationfunc: () => CommonMessage("Coming Soon !"),
-  //     // navigationfunc: () => { navigation.navigate('SubjectList',{stageid:stageid, boardid:boardid}) }
-  //   },
-  //   {
-  //     examName: "Exam 3",
-  //     contents: "Adarsha, Navodaya and Medhabruti",
-  //     image: require('../../../assets/teacher.jpg'),
-  //     navigationfunc: () => CommonMessage("Coming Soon !"),
-  //     // navigationfunc: () => { navigation.navigate('SubjectList',{stageid:stageid, boardid:boardid}) }
-  //   },
-  //   {
-  //     examName: "Exam 4",
-  //     contents: "Adarsha, Navodaya and Medhabruti",
-  //     image: require('../../../assets/test.png'),
-  //     navigationfunc: () => CommonMessage("Coming Soon !"),
-  //     // navigationfunc: () => { navigation.navigate('SubjectList',{stageid:stageid, boardid:boardid}) }
-  //   },
-  // ]
 
   const [isModalVisible, setModalVisible] = useState(false);
   const [activeSlide, setActiveSlide] = useState(0);
@@ -253,28 +225,47 @@ const LandingScreen = ({}) => {
             onBackButtonPress={() => setModalVisible(false)}>
             <View
               style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <LinearGradient
-                colors={['#012650', '#012650']}
+              <View
+                //colors={['#012650', '#012650']}
                 style={{
-                  //backgroundColor: '#222222',
+                  backgroundColor: '#0f6f25',
                   padding: 30,
                   borderRadius: 10,
+                  minHeight: device_height * 0.35,
+                  minWidth: device_width * 0.9,
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  borderColor: '#FFB901',
                 }}>
                 <Text
                   style={{
-                    marginBottom: 20,
-                    fontSize: 18,
-                    fontWeight: '600',
-                    color: '#FFFFFF',
+                    textAlign: 'center',
+                    width: device_width * 0.8,
+                    fontSize: 17,
+                    color: '#fff',
+                    marginTop: 10,
+                    marginLeft: 10,
+                    fontWeight: '900',
+                    // marginBottom: 20,
+                    // fontSize: 18,
+                    // fontWeight: '600',
+                    // color: '#FFFFFF',
                   }}>
                   {trans('Preparing for JNV and OAV entrance exam!')}
                 </Text>
                 <Text
                   style={{
-                    marginBottom: 20,
-                    fontSize: 18,
-                    fontWeight: '500',
-                    color: '#FFFFFF',
+                    textAlign: 'center',
+                    width: device_width * 0.8,
+                    fontSize: 17,
+                    color: '#fff',
+                    //marginTop: 5,
+                    marginLeft: 10,
+                    fontWeight: '600',
+                    // marginBottom: 20,
+                    // fontSize: 18,
+                    // fontWeight: '500',
+                    // color: '#FFFFFF',
                   }}>
                   {trans('Please download our app.')}
                 </Text>
@@ -286,34 +277,93 @@ const LandingScreen = ({}) => {
                   }}>
                   <TouchableOpacity
                     style={{
-                      backgroundColor: '#EEF8FB',
-                      borderRadius: 10,
-                      padding: 10,
-                      width: device_width * 0.25,
+                      borderRadius: 15,
+                      width: '30%',
+                      marginVertical: 5,
+                      borderWidth: 1,
+                      marginRight: 25,
+                      borderColor: 'white',
+                      // backgroundColor: '#EEF8FB',
+                      // borderRadius: 10,
+                      // padding: 10,
+                      // width: device_width * 0.25,
                     }}
                     onPress={() =>
                       Linking.openURL(
                         'https://play.google.com/store/apps/details?id=com.notevook',
                       )
                     }>
-                    <Text
+                    <LinearGradient
+                      colors={['#FFB901', '#FFB901']}
+                      style={{
+                        borderRadius: 15,
+                        width: '100%',
+                        paddingVertical: 5,
+                        justifyContent: 'center',
+                      }}>
+                      <View
+                        style={{
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          flexDirection: 'row',
+                        }}>
+                        {/* {loading && (
+                        <ActivityIndicator
+                          size="small"
+                          color={'#fff'}
+                          style={{alignSelf: 'flex-start', paddingRight: 10}}
+                        />
+                      )} */}
+                        <Text
+                          style={{
+                            color: '#000',
+                            fontSize: 15,
+                            fontWeight: '600',
+                            textAlign: 'center',
+                            alignItems: 'center',
+                          }}>
+                          {'Download'}
+                        </Text>
+                      </View>
+                    </LinearGradient>
+                    {/* <Text
                       style={{
                         color: '#000000',
                         fontSize: 18,
                         fontWeight: '600',
                       }}>
                       {trans('Download')}
-                    </Text>
+                    </Text> */}
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => setModalVisible(false)}
                     style={{
-                      backgroundColor: '#FF4433',
-                      borderRadius: 10,
-                      padding: 10,
-                      width: device_width * 0.2,
+                      borderRadius: 15,
+                      width: '30%',
+                      marginVertical: 5,
+                      borderWidth: 1,
+                      borderColor: '#fff',
                     }}>
-                    <Text
+                    <LinearGradient
+                      colors={['#800000', '#800000']}
+                      style={{
+                        borderRadius: 15,
+                        width: '100%',
+                        paddingVertical: 5,
+                        justifyContent: 'center',
+                      }}>
+                      <Text
+                        style={{
+                          color: '#fff',
+                          fontSize: 15,
+                          fontWeight: '600',
+                          textAlign: 'center',
+                          alignItems: 'center',
+                        }}>
+                        {'Exit'}
+                      </Text>
+                    </LinearGradient>
+                    {/* <Text
                       style={{
                         color: '#FFFFFF',
                         fontSize: 18,
@@ -321,10 +371,10 @@ const LandingScreen = ({}) => {
                         textAlign: 'center',
                       }}>
                       {trans('Exit')}
-                    </Text>
+                    </Text> */}
                   </TouchableOpacity>
                 </View>
-              </LinearGradient>
+              </View>
             </View>
           </Modal>
         )}
@@ -531,11 +581,13 @@ const LandingScreen = ({}) => {
                                       borderRadius: 15,
                                       padding: 5,
                                       marginTop: 10,
-                                      marginRight: 20,
+                                      //marginRight: 20,
                                     }}>
                                     <FastImage
                                       style={{
                                         borderRadius: 15,
+                                        // height:'100%',
+                                        // width: '100%',
                                         height: device_height * 0.46,
                                         width: device_width * 0.93,
                                       }}

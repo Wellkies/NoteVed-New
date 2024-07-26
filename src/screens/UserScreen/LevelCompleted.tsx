@@ -53,7 +53,8 @@ const LevelCompleted = () => {
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
           <View
             style={{
-              backgroundColor: '#012650',
+              //backgroundColor: '#012650',
+              backgroundColor: '#0f6f25',
               padding: 30,
               borderRadius: 10,
             }}>

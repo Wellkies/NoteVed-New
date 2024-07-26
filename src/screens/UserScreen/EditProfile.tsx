@@ -98,8 +98,8 @@ const EditProfile = ({route}) => {
     stageid: string;
     boardid: string;
     classname: string;
-    stateid: any;
-    statename: any;
+    stateid: string;
+    statename: string;
   }
   const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
   const count = useAppSelector(selectStudentStatus);
@@ -242,6 +242,7 @@ const EditProfile = ({route}) => {
   const [statevalue, setStateValue] = useState(stateData);
 
   const [ages, setAge] = useState('');
+  const [states, setStates] = useState('');
 
   const [info, setInfo] = useState({
     _id: childID,
@@ -332,10 +333,6 @@ const EditProfile = ({route}) => {
   };
 
   const handleInputChange = (inputName, inputValue) => {
-    // console.log(inputValue,classid, 'classid');
-    // const name_reg = /^[A-Za-z]{2,}$/;
-    // const phone_reg = /^(\+91[\-\s]?)?[0]?(91)?[789]\d{9}$/;
-    // //console.log(inputValue, inputName.length, 'phone');
     if (inputName == 'phone_secondary') {
       if (phoneRegex.test(inputValue)) {
         setPhoneError(false);
@@ -418,42 +415,17 @@ const EditProfile = ({route}) => {
         //setStandardError(true);
       } else {
         setAge(inputValue);
-        //setStandardError(false);
       }
-      // if (inputValue > 0 && inputValue <= 20) {
-      //   // if (inputValue >=20)
-      //   setAgeError(false);
-      // } else {
-      //   setAgeError(true);
-      // }
     }
-    else if (inputName == 'statename') {
-      // console.log(
-      //   selectedLanguage,
-      //   'selectedLanguage..........',
-      //   inputValue.value,
-      //   userLang,
-      // );
-      
-      if (inputValue.value != 'Odisha1712675266782') {
-        setLanguages([
-          {
-            name: 'English',
-            code: 'english',
-            isSelected: 'english' === 'english',
-          },
-        ]);
-      } else {
-        setLanguages([
-          {name: 'ଓଡିଆ', code: 'odia', isSelected: selectedLanguage === 'odia'},
-          {
-            name: 'English',
-            code: 'english',
-            isSelected: selectedLanguage === 'english',
-          },
-        ]);
-      }
-    }else if (inputName == 'parents_phone') {
+    // else if (inputName == 'statename') {
+    //   if (inputValue.length == '') {
+    //     //setStandardError(true);
+    //   } else {
+    //     setStates(inputValue);
+    //   }
+     
+    // }
+    else if (inputName == 'parents_phone') {
       if (inputValue != '') {
         if (phoneRegex.test(inputValue)) {
           setAltPhoneError(false);
@@ -500,14 +472,14 @@ const EditProfile = ({route}) => {
       firstName !== '' &&
       // lastname !== '' &&
       // lastname !== '' &&
-      st_gender !== '' &&
+      //st_gender !== '' &&
       // standard !== '' &&
       // schoolBoard != '' &&
       // father_name !== '' &&
       // mother_name !== '' &&
       // school_name !== '' &&
       // weight !== '' &&
-      age !== '';
+      //age !== '';
       statename !== '';
     const schoolBoardName = Board.find(rec => rec.boardid == schoolBoard);
     const ClassID = Standard.find(rec => rec.stageid == standard);
@@ -528,73 +500,25 @@ const EditProfile = ({route}) => {
       status: '',
       stateid: statename.value,
       statename: statename.label,
-      // parentid: '',
-      // stage: ClassID != undefined ? ClassID.stage : '',
-      // boardname: schoolBoardName != undefined ? schoolBoardName.boardname : '',
-      // fathername: father_name,
-      // mothername: mother_name,
-      // mothername: '',
-      // subscriptionStartDate: SubscriptionStartDate,
-      // subscriptionEndDate: SubscriptionEndDate,
-      // isPremium: IsPremium,
-      // boardid: schoolBoard,
-      // stageid: standard,
-      // classname: standard,
-      // language: selectedLanguage,
-      // schoolname: school_name,
-      // schoolname: '',
-      // address: st_address,
-      // address: '',
     };
 
     console.log(updatebodyData, '...............updatebodyData//////////////');
-    // setImageData({image: imageUrl, imagename: originalname});
-    // setInfo({...info, p_image: result.assets[0].uri})
+
     const {image: Child_imageUrl = '', imagename: child_imageName = ''} =
       imageData;
-
-    // const bodyData = {
-    //   parentid: '',
-    //   fname: firstName,
-    //   lname: lastname,
-    //   name: firstName + ' ' + lastname,
-    //   stage: ClassID != undefined ? ClassID.stage : '',
-    //   age: age,
-    //   boardname: schoolBoardName != undefined ? schoolBoardName.boardname : '',
-    //   fathername: father_name,
-    //   mothername: mother_name,
-    //   image: p_image,
-    //   imagename: p_imagename,
-    //   subscriptionStartDate: SubscriptionStartDate,
-    //   subscriptionEndDate: SubscriptionEndDate,
-    //   isPremium: false,
-    //   boardid: schoolBoard,
-    //   stageid: standard,
-    //   classname: standard,
-    // };
-    // console.log(bodyData, 'register bodyData//////////////');
     let phone_validate = false;
     let fname_validate = false;
     let lname_validate = false;
     let fathername_validate = false;
     let mothername_validate = false;
-    // let fathername_validate = false;
     if (
       info.age ||
       info.firstName ||
       info.lastname
-      // info.father_name ||
-      // info.mother_name ||
-      // info.schoolBoard ||
-      // info.standard
-      // info.present_zip
     ) {
       phone_validate = phoneRegex.test(info.phone_secondary);
       fname_validate = name_reg.test(info.firstName);
       lname_validate = name_reg.test(info.lastname);
-      // fathername_validate = name_reg.test(info.father_name);
-      // mothername_validate = name_reg.test(info.mother_name);
-      // zip_validate = zip_regex.test(info.present_zip);
     }
     if (validForm == false) {
       // if (info.age == '') {
@@ -608,42 +532,22 @@ const EditProfile = ({route}) => {
         setFnameError(false);
       }
 
-      // if (lname_validate == false) {
-      //   setLnameError(true);
+      
+      // if (info.st_gender == '') {
+      //   setGenderError(true);
       // } else {
-      //   setLnameError(false);
+      //   setGenderError(false);
       // }
-
-      // if (info.father_name == '' || fathername_validate == false) {
-      //   setFatherNameError(true);
-      // } else {
-      //   setFatherNameError(false);
-      // }
-      // if (info.mother_name == '' || mothername_validate == false) {
-      //   setMotherNameError(true);
-      // } else {
-      //   setMotherNameError(false);
-      // }
-      // if (info.schoolBoard == '') {
-      //   setBoardError(true);
-      // } else {
-      //   setBoardError(false);
-      // }
-      if (info.st_gender == '') {
-        setGenderError(true);
-      } else {
-        setGenderError(false);
-      }
       // if (info.school_name == '') {
       //   setSchoolNameError(true);
       // } else {
       //   setSchoolNameError(false);
       // }
-      if (info.age == '') {
-        setAgeError(true);
-      } else {
-        setAgeError(false);
-      }
+      // if (info.age == '') {
+      //   setAgeError(true);
+      // } else {
+      //   setAgeError(false);
+      // }
 
       ToastAndroid.showWithGravityAndOffset(
         trans('Please Enter Valid Input'),
@@ -679,15 +583,7 @@ const EditProfile = ({route}) => {
         50,
       );
     }
-    // else if (motherNameError == true) {
-    //   ToastAndroid.showWithGravityAndOffset(
-    //     `Please Enter Mother's Name`,
-    //     ToastAndroid.LONG,
-    //     ToastAndroid.BOTTOM,
-    //     25,
-    //     50,
-    //   );
-    // }
+   
     else if (boardError == true) {
       ToastAndroid.showWithGravityAndOffset(
         trans('Please Enter School Board Name'),
@@ -1257,10 +1153,10 @@ const EditProfile = ({route}) => {
                 }}
                 data={stateDataDropDown}
                 maxHeight={300}
-                labelField="label"
-                valueField="value"
+                 labelField="label"
+                valueField="label"
                 placeholder={trans('Select your state name')}
-                value={stateid}
+                value={statename}
                 setValue={statevalue}
                 onChange={statevalue =>
                   handleInputChange('statename', statevalue)

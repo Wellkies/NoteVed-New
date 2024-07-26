@@ -165,6 +165,7 @@ const SignUpScreen5 = ({route}) => {
     academyYear: '',
     st_age: '',
     stateData: '',
+    // stateID: '',
     school_name: '',
     board_name: 1,
     boardid: '',
@@ -186,6 +187,7 @@ const SignUpScreen5 = ({route}) => {
   const {
     st_age,
     stateData,
+    //stateID,
     ref_Code,
     // acdmy_year,
     id,
@@ -583,6 +585,9 @@ const SignUpScreen5 = ({route}) => {
           alterphone: alt_phone,
           // age: st_age.value,
           age: st_age,
+          statename:stateData.label,
+          stateid:stateData.value,
+          //stateid:stateID,
           //academicyear: acdmy_year.value,
           password: password,
           gender: gender,
@@ -1324,7 +1329,7 @@ const SignUpScreen5 = ({route}) => {
                               handleInputChange('stateData', value)
                             }
                             onFocus={() => {
-                              setStateValue(statevalue);
+                              setStateValue(statevalue)
                             }}
                           />
                         </View>
