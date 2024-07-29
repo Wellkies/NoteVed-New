@@ -100,7 +100,7 @@ const SubjectLevel = ({route}) => {
     subjectname = '',
     courseid = '',
   } = route.params;
-  console.log(route.params,'@route.params')
+  console.log(route.params, '@route.params');
   console.log(courseid, '==========courseid');
   //console.log(route.params, '===============route.params');
   // const [loading, setLoading] = useState(false);
@@ -248,7 +248,7 @@ const SubjectLevel = ({route}) => {
     dispatch(getChildProgressDetailAPI(data));
     return () => {};
   }, []);
-  console.log(courseid,'@courseid2')
+  console.log(courseid, '@courseid2');
   const SubjectByCourse = useAppSelector(selectChildDetailData);
   console.log(SubjectByCourse, '@SubjectByCourse1');
   //const SubjectByCourse = useAppSelector(selectAllSubjectsInfo);
@@ -379,51 +379,57 @@ const SubjectLevel = ({route}) => {
                                 tintColor: '#f1a722',
                               }}
                             />
-                            <Text
-                              style={{
-                                color: '#f1a722',
-                                fontWeight: '500',
-                                fontSize: 18,
-                              }}>
-                              {trans(subjectname)}
-                            </Text>
-                          </View>
-                          <View
+                            <View
                               style={{
                                 flexDirection: 'row',
-                                alignItems: 'center',
-                                position:'absolute',
-                                right: 10,
-                                bottom: 15,
-                                //width: '30%',
-                                //justifyContent: 'flex-end',
+                                display: 'flex',
+                                flexWrap:
+                                  subjectname.length > 10 ? 'wrap' : 'nowrap',
                               }}>
                               <Text
                                 style={{
-                                  fontWeight: '600',
-                                  color: '#def',
-                                  fontSize: 16,
-                                  marginRight: 10,
+                                  color: '#f1a722',
+                                  fontWeight: '500',
+                                  fontSize: 18,
                                 }}>
-                                {parseFloat(`${proData * 100}% `).toFixed(2)}
-                                {'%'}
+                                {trans(subjectname)}
                               </Text>
-                              <Progress.Circle
-                                progress={proData}
-                                size={35}
-                                indeterminate={false}
-                                thickness={6}
-                                allowFontScaling={false}
-                                color={'#def'}
-                                borderWidth={2}
-                                borderColor="orange"
-                                showsText={false}
-                                textStyle={{
-                                  fontSize: 12,
-                                  fontWeight: '600',
-                                }}
-                              />
                             </View>
+                          </View>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              alignItems: 'center',
+                              position: 'absolute',
+                              right: 10,
+                              bottom: 15,
+                            }}>
+                            <Text
+                              style={{
+                                fontWeight: '600',
+                                color: '#def',
+                                fontSize: 16,
+                                marginRight: 10,
+                              }}>
+                              {parseFloat(`${proData * 100}% `).toFixed(2)}
+                              {'%'}
+                            </Text>
+                            <Progress.Circle
+                              progress={proData}
+                              size={35}
+                              indeterminate={false}
+                              thickness={6}
+                              allowFontScaling={false}
+                              color={'#def'}
+                              borderWidth={2}
+                              borderColor="orange"
+                              showsText={false}
+                              textStyle={{
+                                fontSize: 12,
+                                fontWeight: '600',
+                              }}
+                            />
+                          </View>
                         </View>
                       </TouchableOpacity>
                     );
