@@ -293,10 +293,6 @@ const EditProfile = ({route}) => {
         subscriptionEndDate = '',
         isPremium = false,
         parentid: parentId = '',
-        stage = '',
-        stageid = '',
-        boardid = '',
-        classname = '',
         gender = '',
         address = '',
         alterphone = '',
@@ -417,14 +413,7 @@ const EditProfile = ({route}) => {
         setAge(inputValue);
       }
     }
-    // else if (inputName == 'statename') {
-    //   if (inputValue.length == '') {
-    //     //setStandardError(true);
-    //   } else {
-    //     setStates(inputValue);
-    //   }
-     
-    // }
+    
     else if (inputName == 'parents_phone') {
       if (inputValue != '') {
         if (phoneRegex.test(inputValue)) {
@@ -436,14 +425,7 @@ const EditProfile = ({route}) => {
         setAltPhoneError(false);
       }
     }
-    // else if (inputName == 'age') {
-    //   if (inputValue.length != '') {
-    //     // if (inputValue >=20)
-    //     setAgeError(false);
-    //   } else {
-    //     setAgeError(true);
-    //   }
-    // }
+ 
     else if (inputName == 'school_name') {
       if (inputValue.length == '') {
         setSchoolNameError(true);
@@ -467,6 +449,8 @@ const EditProfile = ({route}) => {
   };
 
   const ChildFlag = childId != '' && childId != undefined;
+
+
   const submitForm = async () => {
     const validForm =
       firstName !== '' &&
@@ -486,6 +470,7 @@ const EditProfile = ({route}) => {
     // console.log(age.value, 'ClassID..............',schoolBoardName,"schoolBoardName..");
     const updatebodyData = {
       id: _id,
+      parentid: '',
       fname: firstName,
       lname: lastname,
       name: firstName + ' ' + lastname,
@@ -496,7 +481,7 @@ const EditProfile = ({route}) => {
       password: '',
       image: p_image,
       imagename: p_imagename,
-      age: age.value,
+      age: age,
       status: '',
       stateid: statename.value,
       statename: statename.label,
@@ -531,23 +516,6 @@ const EditProfile = ({route}) => {
       } else {
         setFnameError(false);
       }
-
-      
-      // if (info.st_gender == '') {
-      //   setGenderError(true);
-      // } else {
-      //   setGenderError(false);
-      // }
-      // if (info.school_name == '') {
-      //   setSchoolNameError(true);
-      // } else {
-      //   setSchoolNameError(false);
-      // }
-      // if (info.age == '') {
-      //   setAgeError(true);
-      // } else {
-      //   setAgeError(false);
-      // }
 
       ToastAndroid.showWithGravityAndOffset(
         trans('Please Enter Valid Input'),
@@ -641,11 +609,7 @@ const EditProfile = ({route}) => {
     const user = AsyncStorage.storeObject('@user', childListData);
     dispatch(getChildDetailsAPI(childID));
     dispatch(getUserbyId(childID));
-    // const scholardata = {
-    //   stageid,
-    //   boardid,
-    // };
-    // dispatch(getScholarshipByClassAPI(scholardata));
+
     ToastAndroid.showWithGravityAndOffset(
       trans(`Student Data Updated Successfully`),
       ToastAndroid.LONG,
@@ -653,20 +617,6 @@ const EditProfile = ({route}) => {
       25,
       50,
     );
-    // const prevQues = {
-    //   stageid,
-    //   boardid,
-    //   scholarshipId: scholarshipId,
-    //   childid,
-    // };
-    // dispatch(getPreviousYearQuestionAPI(prevQues));
-    // dispatch(getChildProbableQuestionDetailsAPI(prevQues));
-    // dispatch({
-    //   type: SET_CHILD_INFO,
-    //   payload: childListData,
-    // });
-    // commonCallback();
-    // navigation.navigate('UserHome');
     navigation.goBack();
   };
 
@@ -727,12 +677,12 @@ const EditProfile = ({route}) => {
       // }
     }
   };
-  const deleteCallBack = () => {
-    dispatch(
-      getChildDetailsAPI(undefined, signOut, undefined, setLoading, undefined),
-    );
-    // navigation.navigate('UserHome');
-  };
+  // const deleteCallBack = () => {
+  //   dispatch(
+  //     getChildDetailsAPI(undefined, signOut, undefined, setLoading, undefined),
+  //   );
+  //   // navigation.navigate('UserHome');
+  // };
 
   const stateValueData = useAppSelector(selectStudentState);
   const stateDataDropDown = stateValueData.map(state => ({

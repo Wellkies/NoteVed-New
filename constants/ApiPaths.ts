@@ -36,9 +36,11 @@ export const EDZ_UPDATE_CHILD_API = API_URL + 'edzupdateChild';
 export const EDZ_GET_ALL_MEMBERSHIP = API_URL + 'edzgetAllmembership';
 export const GET_ALL_SUBJECT_LEVELS = API_URL + 'getAllsubjectlevels';
 export const GET_ALL_SUBJECT_BY_COURSEID = API_URL + 'getAllSubjectbycourseid';
-export const GET_CHILD_PROGRESS_DETAILS = API_URL +'edzgetChildProgressDetails/';
+export const GET_CHILD_PROGRESS_DETAILS =
+  API_URL + 'edzgetChildProgressDetails/';
 
-export const EDZ_GET_DAILY_FACT_BY_DATE_URL = API_URL + 'getedzdailyfactbydatenew';
+export const EDZ_GET_DAILY_FACT_BY_DATE_URL =
+  API_URL + 'getedzdailyfactbydatenew';
 
 export const GET_ALL_STATES = API_URL + 'getAllStates';
 //=========================================================================//
@@ -157,6 +159,7 @@ export const CREATE_SCHOLARSHIP_MEMBERSHIP_URL =
 
 export const REGISTER_NEW_CHILD_URL = API_URL + 'registerChild';
 export const LOGIN_CHILD_OTP_VERIFY_URL = API_URL + 'childotplogin';
+export const EDZ_LOGIN_CHILD_OTP_VERIFY_URL = API_URL + 'edzchildotplogin';
 export const CHILD_PHONE_NUM_VERIFY_URL = API_URL + 'edchildphone/';
 export const LOGIN_WITH_PASSWORD_URL = API_URL + 'childloginusingpassword';
 

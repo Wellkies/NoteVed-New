@@ -18,6 +18,7 @@ import {
   SafeAreaView,
   BackHandler,
   ImageBackground,
+  RefreshControl,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
@@ -108,6 +109,7 @@ const LandingScreen = ({}) => {
   const count = useAppSelector(selectStudentStatus);
   const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
   const {authToken, status, userInfo = {}} = useAppSelector(selectUserInfo);
+  const [refreshing, setRefreshing] = React.useState(false);
 
   // console.log(childInfo, 'in STUDENT PROFILE.............');
 
@@ -185,13 +187,6 @@ const LandingScreen = ({}) => {
 
   const factLoading = useAppSelector(selectDailyFactStatus);
 
-  // console.log(
-  //   AllSubjectLevelData,
-  //   '@@@@@@@@@@@@@@@@@@@@@***AllSubjectLevelData',
-  // );
-
-  // const ListColor = ['#fee2a3', '#f6c4b9', '#c3ccf5', '#76f0c7'];
-
   const ListColor = ['#50C878', '#00FF7F', '#1dfc8c', '#50C878'];
 
   const [isModalVisible, setModalVisible] = useState(false);
@@ -208,9 +203,33 @@ const LandingScreen = ({}) => {
       setModalVisible(true);
     }
   };
+  const wait = (timeout: any) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  };
+  const asydat = async () => {
+    const token = await Storage.getObject('@auth_Token');
+    const user = await Storage.getObject('@user');
+    const userid = user._id;
+    dispatch(getChildDetailsAPI(userid));
+    dispatch(getAllCoursesAPI());
+    dispatch(getAllSubjectLevelDataAPI());
+    dispatch(getDailyFactByDateAPI());
+
+  };
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    asydat();
+    wait(1000).then(() => setRefreshing(false));
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+      <ScrollView  refreshControl={
+                  <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                  />
+                }>
         {isModalVisible && (
           <Modal
             isVisible={isModalVisible}
