@@ -33,6 +33,7 @@ import {
 } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {
+  EDZ_LOGIN_CHILD_OTP_VERIFY_URL,
   EDZ_LOGIN_WITH_PASSWORD_URL,
   LOGIN_CHILD_OTP_VERIFY_URL,
   // LOGIN_URL,
@@ -477,7 +478,7 @@ const SignInScreen = ({route}) => {
                 otplogin: false,
                 emailLogin: false,
                 pswdLogin: true,
-                selectedLang:selectedLanguage
+                selectedLang: selectedLanguage,
               });
               handleReset();
               // let userInfo={...user,phone:phone}
@@ -564,9 +565,9 @@ const SignInScreen = ({route}) => {
           status: '',
           otp: enteredOTP,
         };
-        console.log(body, '==========LOGIN_CHILD_OTP_VERIFY_URL_body');
+        console.log(body, '==========EDZ_LOGIN_CHILD_OTP_VERIFY_URL_body');
         await axios
-          .post(LOGIN_CHILD_OTP_VERIFY_URL, body)
+          .post(EDZ_LOGIN_CHILD_OTP_VERIFY_URL, body)
           .then(function (response) {
             const {
               authtoken = '',
@@ -577,20 +578,22 @@ const SignInScreen = ({route}) => {
             } = response.data;
             console.log(
               response.data,
-              '==============LOGIN_CHILD_OTP_VERIFY_URL response',
+              '==============EDZ_LOGIN_CHILD_OTP_VERIFY_URL response',
               user.length > 0,
               '====================user.length > 0',
               newUser,
               'newUser============,',
-              authtoken,
-              '=====================authtoken',
+              user[0].status,
+              '=====================user[0].status',
             );
             // CommonMessage(message);
-            if (user.length > 0 && user[0].status == 'active') {
-              // signIn(response.data);
+            // if (user.length > 0 && user[0].status == 'active') {
+            if (user.length > 0) {
+              console.log('11111');
+              signIn(response.data);
               dispatch(login(response.data));
               signIn(response.data);
-              // signIn(user, authtoken);
+              signIn(user, authtoken);
               const tokenstore = Storage.storeObject(
                 '@auth_Token',
                 response.data.authtoken,
@@ -1049,7 +1052,6 @@ const SignInScreen = ({route}) => {
                       style={{fontSize: 18, color: 'green', fontWeight: '900'}}>
                       {info.phonenum}
                     </Text>
-              
                   </Text>
                   <View
                     style={{
@@ -1890,7 +1892,7 @@ const SignInScreen = ({route}) => {
                       {/* // : 'नियम और शर्तें'} */}
                     </Text>
                   </Text>
-               
+
                   <TouchableOpacity
                     style={{
                       marginVertical: 17,
@@ -1924,12 +1926,11 @@ const SignInScreen = ({route}) => {
                         : `Verify & Sign In`}
                       {/* : 'सत्यापित करें और साइन इन करें'} */}
                     </Text>
-               
                   </TouchableOpacity>
                 </View>
               </ImageBackground>
 
-                <Text
+              <Text
                 style={{
                   fontWeight: '700',
                   // letterSpacing: 1,
@@ -1962,7 +1963,6 @@ const SignInScreen = ({route}) => {
                   // elevation:15
                   // borderWidth:1
                 }}>
-            
                 <TouchableOpacity
                   // disabled={showprog == true ? true : false}
                   onPress={() => setShowOTPContent(true)}
@@ -2003,13 +2003,7 @@ const SignInScreen = ({route}) => {
                       fontSize: 13,
                       alignSelf: 'center',
                     }}>
-                    {/* {'ଓଟିପି ସହ ସାଇନ୍-ଇନ୍ କରନ୍ତୁ'} */}
-                    {selectedLanguage === 'english'
-                      ? 'Sign-in with OTP'
-                      : selectedLanguage === 'odia'
-                      ? 'ଓଟିପି ସହ ସାଇନ୍-ଇନ୍ କରନ୍ତୁ'
-                      : 'Sign-in with OTP'}
-                    {/* // : 'ओटीपी प्राप्त करें'} */}
+                    {'Sign-in with OTP'}
                   </Text>
                 </TouchableOpacity>
               </View>

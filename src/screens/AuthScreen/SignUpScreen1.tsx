@@ -69,6 +69,7 @@ const {t: trans} = i18n;
 import {loginOtp} from '../../redux/actions/LoginAPI';
 
 import {
+  EDZ_LOGIN_CHILD_OTP_VERIFY_URL,
   EDZ_LOGIN_WITH_PASSWORD_URL,
   LOGIN_CHILD_OTP_VERIFY_URL,
 } from '../../../constants/ApiPaths';
@@ -90,7 +91,7 @@ const SignUpScreen1 = ({route}) => {
     emailLogin = '',
     pswdLogin = false,
   } = route.params;
-  console.log(route.params, '==================route.params');
+  //console.log(route.params, '==================route.params');
 
   // const selectedLanguage = useAppSelector(selectStudentLanguage)
   // console.log(selectedLanguage, "selectedLanguage**********")
@@ -490,9 +491,9 @@ const SignUpScreen1 = ({route}) => {
           status: '',
           otp: enteredOTP,
         };
-        console.log(body, '==========LOGIN_CHILD_OTP_VERIFY_URL');
+        console.log(body, '==========EDZ_LOGIN_CHILD_OTP_VERIFY_URL');
         await axios
-          .post(LOGIN_CHILD_OTP_VERIFY_URL, body)
+          .post(EDZ_LOGIN_CHILD_OTP_VERIFY_URL, body)
           .then(function (response) {
             const {
               authtoken = '',
@@ -503,13 +504,7 @@ const SignUpScreen1 = ({route}) => {
             } = response.data;
             console.log(
               response.data,
-              '==============LOGIN_CHILD_OTP_VERIFY_URL response',
-              user.length > 0,
-              '====================user.length > 0',
-              newUser,
-              'newUser============,',
-              authtoken,
-              '=====================authtoken',
+              '==============EDZ_LOGIN_CHILD_OTP_VERIFY_URL response'
             );
             if (user.length > 0 && user[0].status == 'active') {
               signIn(response.data);

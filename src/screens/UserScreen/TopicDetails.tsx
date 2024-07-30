@@ -44,17 +44,19 @@ const TopicDetails = ({route}) => {
   const {t: trans, i18n} = useTranslation();
   const {coursename = '', subjectname = '', subjectid = ''} = route.params;
 
-  const TopicBySubjectId = useAppSelector(selectChildDetailData);
-  const topics = TopicBySubjectId.filter(
-    subject => subject.subjectname === subjectname,
-  ).flatMap(subject => subject.topics);
+  //const TopicBySubjectId = useAppSelector(selectChildDetailData);
+  const TopicBySubjectId = useAppSelector(selectTopicDetailsInfo);
+  // const topics = contents.filter(
+  //   subject => subject.subjectname === subjectname,
+  // ).flatMap(subject => subject.topics);
+  // console.log(topics, '@topics');
 
   console.log(subjectname, '@subjectname');
   //console.log(TopicBySubjectId, '$$$$$$$$$$$$#####TopicBySubjectId');
-  console.log(topics, '@topics');
+
   const TopicLoad = useAppSelector(selectTopicDetailsStatus);
 
-  // const filterData = TopicBySubjectId.map(rec => rec.topicid);
+  //  const filterData = TopicBySubjectId.map(rec => rec.topicid);
   // const studentFilterData = TopicBySubjectId.map(rec => rec.studenttopic);
   // console.log(studentFilterData, '@studentFilterData');
   // const topicID = filterData[0];
@@ -209,24 +211,64 @@ const TopicDetails = ({route}) => {
                       marginTop: 50,
                       justifyContent: 'center',
                     }}>
-                    {topics.map((item, index) => {
+                    {TopicBySubjectId.map((item, index) => {
                       const {
                         topicname = '',
                         topicid = '',
-                        studenttopic = [],
+                        contents = [],
                       } = item;
-                      console.log(topicname, '@topicname');
-                      console.log(studenttopic[0], 'studenttopic%%%%');
-                      const isLock =
-                        index !== 0 &&
-                        topics[index - 1].studenttopic.length === 0;
+
+                      // Calculate the average percentage for each topic
+                      const totalPercentage = contents.reduce(
+                        (sum, content) => {
+                          const contentPercentage =
+                            content.studentContent.reduce(
+                              (acc, student) => acc + student.percentage,
+                              0,
+                            );
+                          return (
+                            sum +
+                            contentPercentage /
+                              (content.studentContent.length || 1)
+                          ); // Prevent division by zero
+                        },
+                        0,
+                      );
+                      const averagePercentage =
+                        totalPercentage / (contents.length || 1); // Prevent division by zero
+
+                      // Determine if the topic is locked
+                      let isLock = false;
+                      if (index !== 0) {
+                        const previousContents =
+                          TopicBySubjectId[index - 1].contents;
+                        const previousTotalPercentage = previousContents.reduce(
+                          (sum, content) => {
+                            const contentPercentage =
+                              content.studentContent.reduce(
+                                (acc, student) => acc + student.percentage,
+                                0,
+                              );
+                            return (
+                              sum +
+                              contentPercentage /
+                                (content.studentContent.length || 1)
+                            );
+                          },
+                          0,
+                        );
+                        const previousAveragePercentage =
+                          previousTotalPercentage /
+                          (previousContents.length || 1);
+                        isLock = previousAveragePercentage < 90;
+                      }
                       console.log(isLock, '@isLock');
 
-                      const progress = topics.filter(
-                        item => item.studenttopic.length > 0,
-                      ).length;
-                      const totalTopic = topics.length;
-                      const proData = progress / totalTopic;
+                      // const progress = TopicBySubjectId.filter(
+                      //   item => item.studenttopic != '',
+                      // ).length;
+                      // const totalTopic = TopicBySubjectId.length;
+                      // const proData = progress / totalTopic;
 
                       return (
                         <View key={index}>
@@ -283,7 +325,7 @@ const TopicDetails = ({route}) => {
                                   position: 'absolute',
                                   right: 20,
                                   // width: '30%',
-                                   //justifyContent: 'flex-end',
+                                  //justifyContent: 'flex-end',
                                 }}>
                                 <Text
                                   style={{
@@ -292,11 +334,14 @@ const TopicDetails = ({route}) => {
                                     fontSize: 16,
                                     marginRight: 10,
                                   }}>
-                                  {parseFloat(`${proData * 100}% `).toFixed(2)}
-                                  {'%'}
+                                  {`${averagePercentage.toFixed(2)}%`}
+                                  {/* {parseFloat(
+                                    `${averagePercentage.toFixed(2)}%`,
+                                  )}
+                                  {'%'} */}
                                 </Text>
                                 <Progress.Circle
-                                  progress={proData}
+                                  progress={averagePercentage / 100}
                                   size={35}
                                   indeterminate={false}
                                   thickness={6}
