@@ -5,7 +5,7 @@ import AsyncStorage from "../../utils/AsyncStorage";
 
 export const PasswordLoginAction = async (phone = {}) => {
   const url = EDZ_LOGIN_WITH_PASSWORD_URL;
-  console.log(url, "EDZ_LOGIN_WITH_PASSWORD_URL...........................");
+  
   const requestOptions = {
     method: "POST",
     headers: {
@@ -20,10 +20,10 @@ export const PasswordLoginAction = async (phone = {}) => {
       throw new Error("Network response was not ok");
     }
     const data = await response.json();
-    console.log(data, "EDZ_LOGIN_WITH_PASSWORD_URL_response................");
+    
     return { data: data };
   } catch (error) {
-    console.log(error, "EDZ_LOGIN_WITH_PASSWORD_URL_error.......");
+    
     throw error;
   }
 };
@@ -31,7 +31,7 @@ export const PasswordLoginAction = async (phone = {}) => {
 export const getChildDetailsbyidAPIAction = async (id: any) => {
   const url = GET_CHILD_DETAILS_URL + id;
   // const token = await AsyncStorage.getObject("@auth_Token");
-  console.log(url, "GET_CHILD_DETAILS_URL...........................");
+  
   const requestOptions = {
     headers: {
       "Content-Type": "application/json",
@@ -45,11 +45,11 @@ export const getChildDetailsbyidAPIAction = async (id: any) => {
       throw new Error("Network response was not ok");
     }
     const Data = await response.data;
-    console.log(Data, "GET_CHILD_DETAILS_URL_data................");
-    const user = AsyncStorage.storeObject("@user", Data.user[0]);
-    return { data: Data.user[0] };
+    
+    const user = AsyncStorage.storeObject("@user", Data.data);
+    return { data: Data.data };
   } catch (error) {
-    console.log(error, "GET_CHILD_DETAILS_URL_error.......");
+    
     throw error;
   }
 };

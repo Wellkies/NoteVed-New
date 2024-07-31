@@ -95,7 +95,7 @@ const UserProfile = ({}) => {
   const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
   const {authToken, status, userInfo} = useAppSelector(selectUserInfo);
 
-  console.log(userInfo, 'in STUDENT PROFILE.............');
+  
   const {t: trans, i18n} = useTranslation();
   const [modalStatus, setModalStatus] = useState(false);
   const [deleteModalStatus, setDeleteModalStatus] = useState(false);
@@ -105,16 +105,16 @@ const UserProfile = ({}) => {
   let handleselect = () => {
     setSelectReason(!selectReason);
   };
-  console.log(selectReason, 'selectReason...............');
+  
 
   const Logout = async () => {
-    console.log("called");
+    
     dispatch(logout());
     const authValue = await Storage.removeValue('@auth_Token');
     const User = await Storage.removeValue('@user');
     // const navigation = useNavigation();
     dispatch(setLanguage(language));
-    console.log(language, 'language######################################');
+    
     if (language == '') {
       dispatch(setLanguage('english'));
     }
@@ -134,16 +134,16 @@ const UserProfile = ({}) => {
   // const tokenCheck = async () => {
   //   const authValue = await Storage.getObject('@auth_Token');
   //   // setGetAuthdata(authValue);
-  //   // console.log("getAuthdata///////////",authValue)
+  //   // 
   //   const tokenData = {
   //     childid: childid,
   //     devicetoken: authValue,
   //   };
-  //   // console.log(tokenData, 'tokenData................####################');
+  //   // 
   //   dispatch(CheckDeviceTokenApi(tokenData));
   //   // if (CheckToken != undefined) {
   //   if (CheckToken != undefined && CheckToken.message == 'Token not found!') {
-  //     console.log('*****************', CheckToken.message);
+  //     
   //     navigation.navigate('ExpiredTokenScreen');
   //   }
   //   // }
@@ -172,7 +172,7 @@ const UserProfile = ({}) => {
     //   dispatch(
     //     getChildDetailsAPI(undefined, signOut, undefined, undefined, undefined),
     //   );
-    console.log('first///////////////////');
+    
     dispatch(getChildDetailsAPI(id));
   }, []);
 
@@ -197,7 +197,7 @@ const UserProfile = ({}) => {
     language = '',
     // coordinates='',
   } = userInfo;
-  // console.log(language, 'language..........');
+  // 
   const [loading, setLoading] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(1);
   const myCustomShare = async () => {
@@ -210,7 +210,7 @@ const UserProfile = ({}) => {
     try {
       const shareResponse = await Share.open(shareOption);
     } catch (error) {
-      // console.log('Error =>', error);
+      // 
     }
   };
 
@@ -243,14 +243,14 @@ const UserProfile = ({}) => {
     }
   };
   const handleDelete = () => {
-    console.log(id, 'id..................');
+    
 
     const deleteBody = {
       name: userName,
       phone: phone,
       deletereason: reason,
     };
-    console.log(deleteBody, 'deleteBody................');
+    
     deleteUserAccountActionApi(deleteBody, deleteCallback);
     // dispatch(deleteUserAccountApi(deleteBody, deleteCallback));
   };

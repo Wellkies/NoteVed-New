@@ -68,7 +68,7 @@ const EditProfile = ({route}) => {
   const dispatch = useDispatch<any>();
   const {t: trans, i18n} = useTranslation();
   const {childId = ''} = route.params;
-  console.log(childId, '===================childId route.params');
+  
 
   interface ChildInfo {
     _id: string;
@@ -106,17 +106,17 @@ const EditProfile = ({route}) => {
   // const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
   const {authToken, status, userInfo} = useAppSelector(selectUserInfo);
 
-  // console.log(childInfo, 'childInfo..........');
+  // 
   const Standard = useAppSelector(selectStudentStandard);
   const standardsts = useAppSelector(selectStudentStandardStatus);
-  // console.log(Standard, 'Standard//////////////', standardsts, 'standardsts');
+  // 
   const Board = useAppSelector(selectStudentBoard);
 
   const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
 
   const selectedLanguage = useAppSelector(selectStudentLanguage);
 
-  // console.log(selectedLanguage, 'selectedLanguage..........');
+  // 
   ///////////////////
   const [loading, setLoading] = useState(false);
   const [userLoading, setUserLoading] = useState(false);
@@ -236,7 +236,7 @@ const EditProfile = ({route}) => {
     alterphone = '',
     email = '',
   } = userInfo;
-  console.log(userInfo, '==================userInfo======================');
+  
 
   const [value, setValue] = useState(p_age);
   const [statevalue, setStateValue] = useState(stateData);
@@ -298,7 +298,7 @@ const EditProfile = ({route}) => {
         alterphone = '',
         schoolname = '',
       } = userInfo;
-      // console.log(childInfo, 'childInfo===============');
+      // 
       setInfo({
         _id: childID,
         firstName: fname,
@@ -345,7 +345,7 @@ const EditProfile = ({route}) => {
     } else if (inputName == 'lastname') {
       if (inputValue != '') {
         if (!name_reg.test(inputValue)) {
-          // console.log( (!name_reg.test(inputValue)),"inputValue")
+          // 
           setLnameError(true);
         } else {
           setLnameError(false);
@@ -374,18 +374,18 @@ const EditProfile = ({route}) => {
     //   }
     // }
     else if (inputName == 'schoolBoard') {
-      // console.log(inputName, 'inputName.........');
+      // 
       if (inputValue.length == '') {
-        // console.log(inputValue, 'inputValue.........');
+        // 
 
         // if (inputValue.length == 6) {
         setBoardError(true);
       } else {
-        ////console.log(present_zip.length, 'length');
+        ////
         setBoardError(false);
       }
       if (inputValue == 1) {
-        // console.log('.................');
+        // 
 
         dispatch(setLanguage('odia'));
         setLanguages(prevState =>
@@ -467,7 +467,7 @@ const EditProfile = ({route}) => {
       statename !== '';
     const schoolBoardName = Board.find(rec => rec.boardid == schoolBoard);
     const ClassID = Standard.find(rec => rec.stageid == standard);
-    // console.log(age.value, 'ClassID..............',schoolBoardName,"schoolBoardName..");
+    // 
     const updatebodyData = {
       id: _id,
       parentid: '',
@@ -487,7 +487,7 @@ const EditProfile = ({route}) => {
       statename: statename.label,
     };
 
-    console.log(updatebodyData, '...............updatebodyData//////////////');
+    
 
     const {image: Child_imageUrl = '', imagename: child_imageName = ''} =
       imageData;
@@ -525,7 +525,7 @@ const EditProfile = ({route}) => {
         50,
       );
     } else if (fname_validate == false) {
-      // //console.log(fname_validate, 'fname_validate');
+      // //
       setFnameError(true);
       ToastAndroid.showWithGravityAndOffset(
         trans(`Please Enter Student's First Name`),
@@ -602,8 +602,8 @@ const EditProfile = ({route}) => {
   const handleUpdateCallback = (updatebodyData: any) => {
     // dispatch(getChildDetailsAPI(undefined, undefined, setLoading));
     // setChildList({...childList[0],...updatebodyData})
-    // console.log(childList, 'childList=======');
-    console.log(updatebodyData, 'updatebodyData????????????????????????');
+    // 
+    
     const data = userInfo;
     const childListData = [{...data, ...updatebodyData}];
     const user = AsyncStorage.storeObject('@user', childListData);
@@ -622,8 +622,8 @@ const EditProfile = ({route}) => {
 
   const handleImageCallback = (imageUrl: string, originalname: string) => {
     // if (childID != '') {
-    console.log('handleImageCallbackhandleImageCallbackvvvvvvvvvvvvvvv');
-    console.log(imageUrl, originalname, 'handleImageCallback======');
+    
+    
     // dispatch(
     updateChildProfile(
       {id: childID, image: imageUrl, imagename: originalname},
@@ -650,13 +650,13 @@ const EditProfile = ({route}) => {
       includeBase64: true,
     };
     const result = await launchImageLibrary();
-    console.log(result, 'response');
+    
     if (result.didCancel) {
-      console.log('User cancelled image picker');
+      
     } else if (result.error) {
-      console.log('ImagePicker Error: ', result.error);
+      
     } else if (result.customButton) {
-      console.log('User tapped custom button: ', result.customButton);
+      
     } else {
       // if (ChildFlag) {
       setthumb(result.assets[0].uri);
