@@ -101,12 +101,50 @@ import {selectUserInfo} from '../../redux/reducers/loginReducer.ts';
 import {getTopicBySubIdAPI} from '../../redux/reducers/GetTopicDetailsReducer.ts';
 import {getContentByTopicIdAPI} from '../../redux/reducers/GetContentDetailsReducer';
 import CircularProgressBar from './CircularProgressBar.tsx';
+import {
+  TestIds,
+  RewardedAd,
+  RewardedAdEventType,
+} from 'react-native-google-mobile-ads';
 // import PaymentReminderModal from './CommonScreens/PaymentReminderModal.js';
 
 const ScoreBoard = ({route}) => {
   const dispatch = useDispatch<any>();
   const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
   const navigation = useNavigation();
+  const [rewardedad, setRewardedad] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  //
+  const [isRewardedAddCalled, setIsRewardedAddCalled] = useState(false);
+  const adUnitId3 = __DEV__
+    ? TestIds.REWARDED
+    : 'ca-app-pub-1582661677692525~7964330200';
+
+  useEffect(() => {
+    initRewardedad();
+  }, []);
+  useEffect(() => {
+    rewardedadd();
+    setIsRewardedAddCalled(true);
+  }, [isLoaded]);
+  const initRewardedad = () => {
+    const rewarded = RewardedAd.createForAdRequest(adUnitId3, {
+      keywords: ['fashion', 'clothing'],
+    });
+    rewarded.addAdEventListener(RewardedAdEventType.LOADED, () => {
+      setRewardedad(rewarded);
+      setIsLoaded(true);
+    });
+    rewarded.addAdEventListener(RewardedAdEventType.EARNED_REWARD, () => {
+      initRewardedad();
+    });
+    rewarded.load();
+  };
+  const rewardedadd = () => {
+    if (rewardedad) {
+      rewardedad.show();
+    }
+  };
   const {t: trans, i18n} = useTranslation();
   const todayDate = new Date();
   const {

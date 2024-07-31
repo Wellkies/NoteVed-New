@@ -665,21 +665,6 @@ const MockTests = ({route}) => {
                       <></>
                     )
                   ) : (
-                    // <ScrollView
-                    //   horizontal={true}
-                    //   // contentContainerStyle={{height: device_height*0.5}}
-                    //   showsVerticalScrollIndicator={true}
-                    //   showsHorizontalScrollIndicator={true}
-                    //   persistentScrollbar={true}
-                    //   ref={scrollRef}>
-                    //   <Text
-                    //     style={[
-                    //       styles.question,
-                    //       {textAlign: 'center', color: '#000'},
-                    //     ]}>
-                    //     {Questionlist[currentIndex].question}
-                    //   </Text>
-                    // </ScrollView>
                     <View>
                       <Text
                         style={[

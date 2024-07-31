@@ -68,6 +68,11 @@ import {
 import {createShimmerPlaceholder} from 'react-native-shimmer-placeholder';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import {IsTabScreen} from '../../../constants/Constants';
+import {
+  TestIds,
+  RewardedAd,
+  RewardedAdEventType,
+} from 'react-native-google-mobile-ads';
 
 const LandingScreen = ({}) => {
   interface ChildInfo {
@@ -103,6 +108,39 @@ const LandingScreen = ({}) => {
     stateid: string;
   }
   const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
+  const [rewardedad, setRewardedad] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  //
+  const [isRewardedAddCalled, setIsRewardedAddCalled] = useState(false);
+  const adUnitId3 = __DEV__
+    ? TestIds.REWARDED
+    : 'ca-app-pub-1582661677692525~7964330200';
+
+  useEffect(() => {
+    initRewardedad();
+  }, []);
+  useEffect(() => {
+    rewardedadd();
+    setIsRewardedAddCalled(true);
+  }, [isLoaded]);
+  const initRewardedad = () => {
+    const rewarded = RewardedAd.createForAdRequest(adUnitId3, {
+      keywords: ['fashion', 'clothing'],
+    });
+    rewarded.addAdEventListener(RewardedAdEventType.LOADED, () => {
+      setRewardedad(rewarded);
+      setIsLoaded(true);
+    });
+    rewarded.addAdEventListener(RewardedAdEventType.EARNED_REWARD, () => {
+      initRewardedad();
+    });
+    rewarded.load();
+  };
+  const rewardedadd = () => {
+    if (rewardedad) {
+      rewardedad.show();
+    }
+  };
   const navigation = useNavigation();
   const dispatch = useDispatch<any>();
   const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
@@ -214,7 +252,6 @@ const LandingScreen = ({}) => {
     dispatch(getAllCoursesAPI());
     dispatch(getAllSubjectLevelDataAPI());
     dispatch(getDailyFactByDateAPI());
-
   };
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -224,12 +261,10 @@ const LandingScreen = ({}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView  refreshControl={
-                  <RefreshControl
-                    refreshing={refreshing}
-                    onRefresh={onRefresh}
-                  />
-                }>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
         {isModalVisible && (
           <Modal
             isVisible={isModalVisible}
