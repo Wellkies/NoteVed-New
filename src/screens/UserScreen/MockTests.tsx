@@ -60,6 +60,15 @@ import {
   selectContentDetailsStatus,
 } from '../../redux/reducers/GetContentDetailsReducer';
 import {selectUserInfo} from '../../redux/reducers/loginReducer';
+import {
+  BannerAd,
+  BannerAdSize,
+  InterstitialAd,
+  TestIds,
+  RewardedAd,
+  AdEventType,
+  RewardedAdEventType,
+} from 'react-native-google-mobile-ads';
 
 const MockTests = ({route}) => {
   const dispatch = useDispatch<any>();
@@ -236,6 +245,9 @@ const MockTests = ({route}) => {
     setCurrentIndex(currentIndex - 1);
     handlePreviousPress();
   };
+  const adUnitId = __DEV__
+  ? TestIds.BANNER
+  : 'ca-app-pub-1582661677692525~7964330200';
 
   const handleNavigation = () => {
     navigation.navigate('ScoreBoard', {
@@ -934,6 +946,16 @@ const MockTests = ({route}) => {
                 </TouchableOpacity>
               </View>
             )}
+          </View>
+          <View style={{alignItems: 'center', marginVertical: 5}}>
+            <BannerAd
+              unitId={adUnitId}
+              size={BannerAdSize.BANNER}
+              onAdFailedToLoad={error =>
+                console.error('Ad failed to load: ', error)
+              }
+              onAdLoaded={() => console.log('Ad loaded')}
+            />
           </View>
         </ImageBackground>
       )}

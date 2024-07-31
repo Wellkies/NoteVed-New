@@ -20,7 +20,7 @@ export const getChildDetailsAPIAction = async (id: any) => {
     }
     const Data = await response.data;
     console.log(Data, "GET_CHILD_DETAILS_URL_data................");
-    return { data: Data.user[0] };
+    return { data: Data};
   } catch (error) {
     console.log(error, "GET_CHILD_DETAILS_URL_error.......");
     throw error;

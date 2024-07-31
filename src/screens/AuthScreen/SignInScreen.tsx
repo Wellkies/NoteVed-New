@@ -76,11 +76,49 @@ import {
 import {useAppSelector} from '../../redux/store/reducerHook';
 import {selectStudentLanguage} from '../../redux/reducers/languageReducer';
 import {LoginOtpVerifyAPI, loginOtp} from '../../redux/actions/LoginAPI';
+import {
+  TestIds,
+  RewardedAd,
+  RewardedAdEventType,
+} from 'react-native-google-mobile-ads';
 // import VideoCard from '../AppScreens/VideoCard';
 var Spinner = require('react-native-spinkit');
 
 const SignInScreen = ({route}) => {
   const {t: trans, i18n} = useTranslation();
+  const [rewardedad, setRewardedad] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  //
+  const [isRewardedAddCalled, setIsRewardedAddCalled] = useState(false);
+  const adUnitId3 = __DEV__
+    ? TestIds.REWARDED
+    : 'ca-app-pub-1582661677692525~7964330200';
+
+  useEffect(() => {
+    initRewardedad();
+  }, []);
+  useEffect(() => {
+    rewardedadd();
+    setIsRewardedAddCalled(true);
+  }, [isLoaded]);
+  const initRewardedad = () => {
+    const rewarded = RewardedAd.createForAdRequest(adUnitId3, {
+      keywords: ['fashion', 'clothing'],
+    });
+    rewarded.addAdEventListener(RewardedAdEventType.LOADED, () => {
+      setRewardedad(rewarded);
+      setIsLoaded(true);
+    });
+    rewarded.addAdEventListener(RewardedAdEventType.EARNED_REWARD, () => {
+      initRewardedad();
+    });
+    rewarded.load();
+  };
+  const rewardedadd = () => {
+    if (rewardedad) {
+      rewardedad.show();
+    }
+  };
   const navigation = useNavigation();
   const [updateModalStatus, setUpdateModalStatus] = useState(false);
   // const {language: selectedLanguage = ''} = route.params;
