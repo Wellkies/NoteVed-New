@@ -19,8 +19,8 @@ export const getChildDetailsAPIAction = async (id: any) => {
       throw new Error("Network response was not ok");
     }
     const Data = await response.data;
-    console.log(Data, "GET_CHILD_DETAILS_URL_data................");
-    return { data: Data};
+    console.log(Data.data, "GET_CHILD_DETAILS_URL_data................");
+    return { data: Data.data};
   } catch (error) {
     console.log(error, "GET_CHILD_DETAILS_URL_error.......");
     throw error;
