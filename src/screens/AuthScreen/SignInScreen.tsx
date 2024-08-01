@@ -836,7 +836,8 @@ const SignInScreen = ({route}) => {
           alignSelf: 'center',
         }}
         resizeMode="cover"
-        source={require('../../../assets/0.png')}>
+        source={require('../../../assets/0.png')}
+        >
         <StatusBar backgroundColor={'#263d2d'} barStyle="light-content" />
         <View
           style={{
@@ -894,11 +895,12 @@ const SignInScreen = ({route}) => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}
-                  resizeMode="cover"
-                  source={require('../../../assets/01.png')}>
+                  // resizeMode="cover"
+                  // source={require('../../../assets/01.png')}
+                  >
                   <Text
                     style={{
-                      color: '#000',
+                      color: '#FFFFFF',
                       fontWeight: '700',
                       // marginBottom: 20,
                       // fontSize: language === 'english' ? 28 : 24,
@@ -943,14 +945,7 @@ const SignInScreen = ({route}) => {
                       </Text>
                     </View>
                     <TextInput
-                      placeholder={
-                        selectedLanguage === 'odia'
-                          ? 'ମୋବାଇଲ୍ ନମ୍ବର ପ୍ରବେଶ କରନ୍ତୁ *'
-                          : selectedLanguage === 'english'
-                          ? `Enter Mobile Number *`
-                          : // : 'मोबाइल नंबर दर्ज करें *'
-                            `Enter Mobile Number *`
-                      }
+                      placeholder={'Enter Mobile Number *'}
                       placeholderTextColor="#888"
                       // value={p_phone}
                       keyboardType="numeric"
@@ -978,14 +973,7 @@ const SignInScreen = ({route}) => {
                   {phoneError && (
                     <Animatable.View animation="fadeInLeft" duration={500}>
                       <Text style={{color: Colors.red, marginTop: -10}}>
-                        {
-                          selectedLanguage === 'odia'
-                            ? '** ଦୟାକରି ବୈଧ ଫୋନ୍ ନମ୍ବର ପ୍ରବେଶ କରନ୍ତୁ'
-                            : selectedLanguage === 'english'
-                            ? `** Please enter valid phone number`
-                            : `** Please enter valid phone number`
-                          // '** कृपया मान्य फ़ोन नंबर दर्ज करें'
-                        }
+                        {'** Please enter valid phone number'}
                       </Text>
                     </Animatable.View>
                   )}
@@ -1075,17 +1063,16 @@ const SignInScreen = ({route}) => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}
-                  resizeMode="cover"
-                  source={require('../../../assets/01.png')}>
+                  // resizeMode="cover"
+                  // source={require('../../../assets/01.png')}
+                  >
                   <Text
                     style={{
                       fontSize: 15,
                       color: '#333',
                       fontWeight: '900',
                     }}>
-                    {selectedLanguage === 'odia'
-                      ? 'SMS କୋଡ୍ ପଠାଯାଇଛି'
-                      : 'Sending SMS Code to'}{' '}
+                    {'Sending SMS Code to'}{' '}
                     <Text
                       style={{fontSize: 18, color: 'green', fontWeight: '900'}}>
                       {info.phonenum}
@@ -1108,9 +1095,7 @@ const SignInScreen = ({route}) => {
                         color: '#333',
                         fontWeight: '800',
                       }}>
-                      {selectedLanguage === 'odia'
-                        ? 'ଓଟିପି କୋଡ୍ ପ୍ରବେଶ କରନ୍ତୁ'
-                        : 'Enter OTP Code'}
+                      {'Enter OTP Code'}
                     </Text>
 
                     <View
@@ -1752,11 +1737,12 @@ const SignInScreen = ({route}) => {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}
-                resizeMode="cover"
-                source={require('../../../assets/01.png')}>
+                //resizeMode="cover"
+                // source={require('../../../assets/01.png')}
+                >
                 <Text
                   style={{
-                    color: '#000',
+                    color: '#FFFFFF',
                     fontWeight: '800',
                     // marginBottom: 10,
                     // fontSize: language === 'english' ? 28 : 22,

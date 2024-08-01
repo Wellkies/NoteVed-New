@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {
   Button,
   StyleSheet,
@@ -12,9 +12,9 @@ import {
   ScrollView,
   Image,
 } from 'react-native';
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { RootState, AppDispatch } from '../../redux/store/Store';
-import { Avatar, Chip } from 'react-native-paper';
+import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
+import {RootState, AppDispatch} from '../../redux/store/Store';
+import {Avatar, Chip} from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -32,20 +32,21 @@ import {
 // import {selectedLang} from '../redux/reducers/languageReducer'
 import Icon from 'react-native-vector-icons/Entypo';
 import FastImage from 'react-native-fast-image';
-import { device_height, device_width } from '../style';
+import {device_height, device_width} from '../style';
 import Colors from '../../../assets/Colors';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {
   selectStudentLanguage,
   setLanguage,
 } from '../../redux/reducers/languageReducer';
-import { useTranslation } from 'react-i18next';
-import { IsTabScreen } from '../../../constants/Constants';
+import {useTranslation} from 'react-i18next';
+import {IsTabScreen} from '../../../constants/Constants';
+import Carousel, {Pagination} from 'react-native-snap-carousel';
 
 const SplashScreen = () => {
   const dispatch = useDispatch<any>();
   const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
-  const { t: trans, i18n } = useTranslation();
+  const {t: trans, i18n} = useTranslation();
   const count = useAppSelector(selectCount);
   const userData = useAppSelector(selectUserInfo);
 
@@ -63,7 +64,7 @@ const SplashScreen = () => {
 
   const [language, setLanguages] = useState([
     // {name: 'हिंदी', code: 'hi', isSelected: selectedLanguage === 'hindi'},
-    { name: 'ଓଡିଆ', code: 'odia', isSelected: selectedLanguage === 'odia' },
+    {name: 'ଓଡିଆ', code: 'odia', isSelected: selectedLanguage === 'odia'},
     {
       name: 'English',
       code: 'english',
@@ -71,14 +72,14 @@ const SplashScreen = () => {
     },
     //  {name: 'हिंदी', code: 'hindi', isSelected: selectedLanguage === 'hindi'},
   ]);
-console.log(language,"language///////////////")
+  console.log(language, 'language///////////////');
   // The `state` arg is correctly typed as `RootState` already
   // const count = useAppSelector(selectCount);
   // const status = useAppSelector(state => state.counter.status);
   // const dispatch = useAppDispatch();
   const navigation = useNavigation();
   const loginFun = () => {
-    const data = { phone: phone, password: password };
+    const data = {phone: phone, password: password};
     dispatch(fetchUserAsync(Object(data) || {}));
   };
   useEffect(() => {
@@ -87,9 +88,18 @@ console.log(language,"language///////////////")
       dispatch(setLanguage('english'));
     }
   }, [language]);
+  const data = [{title: 'Item 1'}, {title: 'Item 2'}, {title: 'Item 3'}];
+  const [activeSlide, setActiveSlide] = useState(0);
+  const carouselRef = useRef(null);
+
+  const renderItem = ({item}) => (
+    <View style={styles.item}>
+      <Text style={styles.title}>{item.title}</Text>
+    </View>
+  );
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{flex: 1}}>
       <StatusBar backgroundColor={'#263d2d'} barStyle="light-content" />
       <ImageBackground
         style={{
@@ -100,8 +110,7 @@ console.log(language,"language///////////////")
           //backgroundColor: '#404040'
         }}
         resizeMode="cover"
-        source={require('../../../assets/0.png')}
-        >
+        source={require('../../../assets/0.png')}>
         <View
           style={{
             // backgroundColor: Colors.secondary,
@@ -112,26 +121,24 @@ console.log(language,"language///////////////")
             // borderWidth: 1,
             alignSelf: 'center',
           }}>
-          {selectedLanguage === 'odia' ? (
-            <View style={{ height: device_height * 0.52, borderWidth: 0 }}>
-              <Image
-                // animation="bounceIn"
-                // duraton="1500"
-                style={{
-                  // height: device_height * 0.45,
-                  // width: device_width * 0.85,
-                  height: IsTabScreen
+          {/* {selectedLanguage === 'odia' ? (
+            <View style={{height: device_height * 0.52, borderWidth: 0}}>
+              <Image */}
+                {/* // animation="bounceIn"
+                // duraton="1500" */}
+                {/* style={{ */}
+                  {/* // height: device_height * 0.45,
+                  // width: device_width * 0.85, */}
+                  {/* height: IsTabScreen
                     ? device_height * 0.4
                     : device_height * 0.45,
-                  width: IsTabScreen
-                    ? device_width * 0.8
-                    : device_width * 0.85,
+                  width: IsTabScreen ? device_width * 0.8 : device_width * 0.85,
                   top: IsTabScreen ? 0 : -10,
-                }}
-                source={require('../../../assets/odlogo1.png')}
-                resizeMode="contain"
-              />
-              <Text
+                }} */}
+                {/* //source={require('../../../assets/odlogo1.png')}
+                //resizeMode="contain"
+              /> */}
+              {/* <Text
                 style={{
                   fontSize: 14,
                   fontWeight: '700',
@@ -139,13 +146,8 @@ console.log(language,"language///////////////")
                   textAlign: 'center',
                   marginTop: IsTabScreen ? -5 : -15,
                 }}>
-                {selectedLanguage === 'odia'
-                  ? 'A Product of Noteved Siksha Sandhan Pvt. Ltd.'
-                  : selectedLanguage === 'english'
-                    ? 'A Product of Noteved Siksha Sandhan Pvt. Ltd.'
-                    : // : 'कृपया अपनी भाषा प्राथमिकता चुनें'}
-                    'A Product of Noteved Siksha Sandhan Pvt. Ltd.'}
-              </Text>
+                {'A Product of Noteved Siksha Sandhan Pvt. Ltd.'}
+              </Text> */}
               {/* <ImageBackground
               // source={require("../assets/splash.png")}
               source={require('../../../assets/logo1.png')}
@@ -161,22 +163,19 @@ console.log(language,"language///////////////")
               }}
               resizeMode="contain">
             </ImageBackground> */}
-              <View
+              {/* <View
                 style={{
                   alignItems: 'center',
                   marginHorizontal: 10,
-                  // marginTop: IsTabScreen ? -5 : -35,
-                  // borderWidth:1
                 }}>
-                <Text style={{ fontWeight: '900', fontSize: 35, color: '#fff' }}>
-                  {/* {trans('NOTEVED')} */}
-                  {selectedLanguage === 'odia' ? 'ନୋଟଭେଦ' : 'NOTEVED'}
+                <Text style={{fontWeight: '900', fontSize: 35, color: '#fff'}}>
+                  {trans('NOTEVED')}
                 </Text>
-              </View>
-            </View>
-          ) : (
-            <View style={{ height: device_height * 0.52, borderWidth: 0 }}>
-              <Image
+              </View> */}
+            {/* </View> */}
+          {/* ) : ( */}
+            <View style={{height: device_height * 0.60, borderWidth: 0}}>
+              {/* <Image
                 // animation="bounceIn"
                 // duraton="1500"
                 style={{
@@ -190,23 +189,19 @@ console.log(language,"language///////////////")
                     : device_width * 0.91,
                   // top: IsTabScreen ? 0 : -10,
                 }}
-                source={require('../../../assets/enlogo2.png')}
-                resizeMode="contain"
-              />
+                //source={require('../../../assets/enlogo2.png')}
+                //resizeMode="contain"
+              /> */}
               <Text
                 style={{
                   fontSize: 14,
                   fontWeight: '700',
                   color: '#f1a722',
                   textAlign: 'center',
+                  marginTop: 40,
                   // marginTop: IsTabScreen ? -10 : -15,
                 }}>
-                {selectedLanguage === 'odia'
-                  ? 'A Product of Noteved Siksha Sandhan Pvt. Ltd.'
-                  : selectedLanguage === 'english'
-                    ? 'A Product of Noteved Siksha Sandhan Pvt. Ltd.'
-                    : // : 'कृपया अपनी भाषा प्राथमिकता चुनें'}
-                    'A Product of Noteved Siksha Sandhan Pvt. Ltd.'}
+                {'A Product of Noteved Siksha Sandhan Pvt. Ltd.'}
               </Text>
 
               {/* <ImageBackground
@@ -231,22 +226,17 @@ console.log(language,"language///////////////")
                   // marginTop: IsTabScreen ? -5 : -35,
                   // borderWidth:1
                 }}>
-                <Text style={{ fontWeight: '900', fontSize: 35, color: '#fff' }}>
-                  {selectedLanguage === 'odia'
-                    ? 'ନୋଟଭେଦ'
-                    : selectedLanguage === 'english'
-                      ? 'NOTEVED'
-                      : // : 'नोटवेद'}
-                      'NOTEVED'}
+                <Text style={{fontWeight: '900', fontSize: 35, color: '#fff'}}>
+                  {'NOTEVED'}
                 </Text>
               </View>
             </View>
-          )}
+          {/* )} */}
           <ScrollView
-            style={{ borderWidth: 0 }}
+            style={{borderWidth: 0}}
             persistentScrollbar={true}
             showsVerticalScrollIndicator={true}>
-            <Text
+            {/* <Text
               style={{
                 fontWeight: '600',
                 fontSize: 12,
@@ -256,17 +246,10 @@ console.log(language,"language///////////////")
                 width: device_width * 0.92,
                 alignSelf: 'center',
               }}>
-              {selectedLanguage === 'odia'
-                ? 'ଓଡ଼ିଆ (ବିଏସଇ) ଏବଂ ଇଂରାଜୀ ମାଧ୍ୟମ (ସିବିଏସଇ/ ଆଇସିଏସଇ) ଉଭୟ ବର୍ଗର ଶିକ୍ଷାର୍ଥୀଙ୍କ ପାଇଁ ନିର୍ଭରଯୋଗ୍ୟ ଆପ୍ଲିକେସନ୍ ନୋଟଭେଦ'
-                : selectedLanguage === 'english'
-                  ? 'Noteved Academy Application is designed for both Odia (BSE) and English medium (CBSE/ICSE) students'
-                  : // : ' "नोटवेद एकेडमी एप्लिकेशन ओडिया (बीएसई) और अंग्रेजी माध्यम (सीबीएसई/आईसीएसई) दोनों छात्रों के लिए डिज़ाइन किया गया है",'}
-                  'Noteved Academy Application is designed for both Odia (BSE) and English medium (CBSE/ICSE) students'}
-            </Text>
-            <View
+              {'Noteved Academy Application is designed for both Odia (BSE) and English medium (CBSE/ICSE) students'}
+            </Text> */}
+            {/* <View
               style={{
-                // flexDirection: 'row',
-                // alignItems: 'center',
                 width: '94%',
                 borderWidth: 1,
                 borderColor: '#aaa',
@@ -283,8 +266,8 @@ console.log(language,"language///////////////")
                   alignItems: 'center',
                 }}>
                 <FontAwesome name="language" color={'#fff'} size={38} />
-                <View style={{ borderWidth: 0, width: '75%', marginVertical: 0 }}>
-                  <View style={{ padding: 5, marginTop: 8 }}>
+                <View style={{borderWidth: 0, width: '75%', marginVertical: 0}}>
+                  <View style={{padding: 5, marginTop: 8}}>
                     <Text
                       style={{
                         fontSize: 14,
@@ -294,8 +277,8 @@ console.log(language,"language///////////////")
                       {selectedLanguage === 'odia'
                         ? 'ଦୟାକରି ଭାଷା ଚୟନ କରନ୍ତୁ'
                         : selectedLanguage === 'english'
-                          ? 'Please select your preferred language'
-                          : // : 'कृपया अपनी भाषा प्राथमिकता चुनें'}
+                        ? 'Please select your preferred language'
+                        : // : 'कृपया अपनी भाषा प्राथमिकता चुनें'}
                           'Please select your preferred language'}
                     </Text>
                   </View>
@@ -306,7 +289,7 @@ console.log(language,"language///////////////")
                       justifyContent: 'flex-start',
                       marginBottom: 5,
                     }}>
-                    {language.map(({ name, code, isSelected }) => (
+                    {language.map(({name, code, isSelected}) => (
                       <View key={code}>
                         <Chip
                           mode={isSelected ? 'outlined' : 'flat'}
@@ -340,8 +323,8 @@ console.log(language,"language///////////////")
                             setLanguages(prevState =>
                               prevState.map(lang =>
                                 lang.code === code
-                                  ? { ...lang, isSelected: true }
-                                  : { ...lang, isSelected: false },
+                                  ? {...lang, isSelected: true}
+                                  : {...lang, isSelected: false},
                               ),
                             );
                           }}
@@ -386,23 +369,39 @@ console.log(language,"language///////////////")
                     // marginBottom: 10,
                     // textAlign:'center'
                   }}>
-                  {selectedLanguage === 'odia'
-                    ? 'ବି. ଦ୍ର: ଆପଣଙ୍କ ଦ୍ଵାରା ସ୍ଥିରୀକୃତ ଭାଷାରେ ଆପଣ ଆପ୍ଲିକେସନକୁ ଦେଖି ପାରିବେ !'
-                    : selectedLanguage === 'english'
-                      ? 'Note: You can view the content of the application in the language you have selected'
-                      : // : 'नोट: आप एप्लिकेशन की सामग्री को आपके द्वारा चुनी गई भाषा में देख सकते हैं'}
-                      'Note: You can view the content of the application in the language you have selected'}
+                  {'Note: You can view the content of the application in the language you have selected'}
                 </Text>
               </View>
-            </View>
-            <ImageBackground
+            </View> */}
+            {/* <ImageBackground
               style={{
                 // height: device_height * 0.5,
                 width: device_width,
               }}
               // source={require('../../../assets/jungle.png')}
               // resizeMode="contain"
-              >
+            > */}
+              <View>
+                <Carousel
+                  ref={carouselRef}
+                  data={data}
+                  renderItem={renderItem}
+                  sliderWidth={device_width}
+                  itemWidth={device_width - 60}
+                  onSnapToItem={index => setActiveSlide(index)}
+                />
+                <Pagination
+                  dotsLength={data.length}
+                  activeDotIndex={activeSlide}
+                  carouselRef={carouselRef}
+                  tappableDots={true}
+                  containerStyle={styles.paginationContainer}
+                  dotStyle={styles.paginationDot}
+                  inactiveDotStyle={styles.inactiveDot}
+                  inactiveDotOpacity={0.4}
+                  inactiveDotScale={0.6}
+                />
+              </View>
               <View
                 style={{
                   // position: 'absolute',
@@ -411,6 +410,7 @@ console.log(language,"language///////////////")
                   height: device_height * 0.33,
                   width: device_width,
                   justifyContent: 'flex-start',
+                  marginTop: 30,
                 }}>
                 <TouchableOpacity
                   onPress={() => {
@@ -455,13 +455,8 @@ console.log(language,"language///////////////")
                       });
                     }}>
                     <Text
-                      style={{ fontWeight: '700', fontSize: 14, color: 'green' }}>
-                      {selectedLanguage === 'odia'
-                        ? 'ଆରମ୍ଭ କର'
-                        : selectedLanguage === 'english'
-                          ? 'Get Started'
-                          : // : 'आरंभ करें'
-                          'Get Started'}
+                      style={{fontWeight: '700', fontSize: 14, color: 'green'}}>
+                      {'Get Started'}
                     </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
@@ -480,7 +475,7 @@ console.log(language,"language///////////////")
                   </TouchableOpacity>
                 </TouchableOpacity>
               </View>
-            </ImageBackground>
+            {/* </ImageBackground> */}
           </ScrollView>
         </View>
       </ImageBackground>
@@ -489,6 +484,30 @@ console.log(language,"language///////////////")
 };
 
 const styles = StyleSheet.create({
+  item: {
+    backgroundColor: 'lightgray',
+    borderRadius: 8,
+    height: 200,
+    padding: 50,
+    marginLeft: 25,
+    marginRight: 25,
+  },
+  title: {
+    fontSize: 20,
+  },
+  paginationContainer: {
+    paddingVertical: 8,
+  },
+  paginationDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginHorizontal: 8,
+    backgroundColor: '#FFFFFF',
+  },
+  inactiveDot: {
+    backgroundColor: 'gray',
+  },
   container: {
     flex: 1,
     alignItems: 'center',
