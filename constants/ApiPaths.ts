@@ -1,5 +1,7 @@
 // export const API_URL = "https://wellkie.in/demoApi/";
-export const API_URL = 'https://wellkie.org/demoApi/'; // Test url
+//export const API_URL = 'https://wellkie.org/demoApi/'; // Test url
+export const API_URL = 'https://wellkies.com/demoApi/'; // Test url
+
 
 // export const API_URL = 'https://wellkies.org/demoApi/'; // production url
 // export const API_URL = 'https://notevook.com/demoApi/'; // productsion url

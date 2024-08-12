@@ -89,10 +89,10 @@ const SplashScreen = () => {
     }
   }, [language]);
   const data = [
-    'https://wkresources.s3.ap-south-1.amazonaws.com/1711375669645_348037080.png',
-    'https://wkresources.s3.ap-south-1.amazonaws.com/1711375694585_76334385.png',
-    'https://wkresources.s3.ap-south-1.amazonaws.com/1711375713290_21045758.png',
-    'https://wkresources.s3.ap-south-1.amazonaws.com/1711375736090_576690145.png',
+    'https://t3.ftcdn.net/jpg/04/10/08/80/360_F_410088076_yTIvVGLAygAIoML8pYFbEcpr7pRrYe5M.jpg',
+    'https://thumbs.dreamstime.com/b/skill-development-vector-concept-web-banner-website-page-illustration-tiny-people-putting-books-light-bulb-big-man-144566744.jpg',
+    'https://media.istockphoto.com/id/1169342270/photo/rocket-business-words-as-engine-smoke.jpg?s=612x612&w=0&k=20&c=q01O1scsAWipzCy-q9Is_QdqaUg-q86JXZ0WLdAnDNw=',
+    'https://img.freepik.com/free-vector/professional-development-teachers-abstract-concept-illustration-school-authority-initiative-training-teachers-conference-seminar-qualification-programme_335657-3477.jpg?w=740&t=st=1723477050~exp=1723477650~hmac=bfe5817699b88b323c6823064ba4fb684c9f09aa5c21035edaef8f7fed9a9459',
   ];
   console.log(data.length, '@data.length');
   const [activeSlide, setActiveSlide] = useState(0);
@@ -100,24 +100,17 @@ const SplashScreen = () => {
   const renderItem = ({item}) => (
     <View
       style={{
-        alignItems: 'center',
-        justifyContent: 'center',
-        alignSelf: 'center',
-        height: device_height * 0.49,
-        width: device_width,
-        borderRadius: 10,
-        padding: 5,
-        //marginTop: 10,
-        //marginRight: 20,
+        //flex: 1,
+        //justifyContent: 'center',
+        //alignItems: 'center',
       }}>
       <FastImage
         style={{
-          borderRadius: 15,
-          height: device_height * 0.50,
-          width: device_width * 0.93,
+          width: '100%',
+          height: '100%',
         }}
         source={{uri: item}}
-        resizeMode={IsTabScreen ? 'contain' : 'cover'}
+        resizeMode="cover"
       />
     </View>
   );
@@ -131,141 +124,71 @@ const SplashScreen = () => {
           height: device_height,
           flex: 1,
           alignSelf: 'center',
-          //backgroundColor: '#404040'
         }}
         resizeMode="cover"
         source={require('../../../assets/0.png')}>
-        <View
-          style={{
-            // height: device_height,
-            // width: device_width * 0.98,
-            alignSelf: 'center',
-          }}>
-          <View style={{
-            height:device_height * 0.30,
-            justifyContent: 'center',
-          }}>
-            <Text
-              style={{
-                fontSize: 14,
-                fontWeight: '700',
-                color: '#f1a722',
-                textAlign: 'center',
-             marginTop:20
-                // marginTop: IsTabScreen ? -10 : -15,
-              }}>
-              {'A Product of Noteved Siksha Sandhan Pvt. Ltd.'}
-            </Text>
-            <View
+        <View style={{flex: 1, justifyContent: 'flex-end'}}>
+          <Carousel
+            ref={carouselRef}
+            data={data}
+            renderItem={renderItem}
+            sliderWidth={device_width}
+            itemWidth={device_width}
+            autoplay={true}
+            autoplayInterval={5000}
+            loop={true}
+            onSnapToItem={index => setActiveSlide(index)}
+          />
+          <Pagination
+            dotsLength={data.length}
+            activeDotIndex={activeSlide}
+            carouselRef={carouselRef}
+            tappableDots={true}
+            containerStyle={{paddingVertical: 10}}
+            dotStyle={{
+              width: 10,
+              height: 10,
+              borderRadius: 5,
+              backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            }}
+            inactiveDotOpacity={0.4}
+            inactiveDotScale={0.6}
+          />
+          <View
+            style={{
+              height: device_height * 0.1,
+              width: device_width,
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+              marginTop: 20,
+            }}>
+            <TouchableOpacity
+              onPress={() => {
+                dispatch(setLanguage(selectedLanguage));
+                navigation.navigate('SignInScreen', {
+                  language: selectedLanguage,
+                });
+              }}
               style={{
                 alignItems: 'center',
-                marginHorizontal: 10,
-                // marginTop: IsTabScreen ? -5 : -35,
-                // borderWidth:1
+                justifyContent: 'center',
+                width: '80%',
+                backgroundColor: '#ffff',
+                borderRadius: 20,
+                borderWidth: 2,
+                borderColor: '#f1a722',
+                flexDirection: 'row',
+                paddingVertical: 10,
               }}>
-              <Text style={{fontWeight: '900', fontSize: 35, color: '#fff'}}>
-                {'NOTEVED'}
+              <Text style={{fontWeight: '700', fontSize: 15, color: 'green'}}>
+                {'Get Started'}
               </Text>
-            </View>
-          </View>
-          {/* )} */}
-          <View
-            //style={{borderWidth: 0}}
-            //persistentScrollbar={true}
-            //showsVerticalScrollIndicator={true}
-          >
-            <View>
-              <Carousel
-                ref={carouselRef}
-                data={data}
-                renderItem={renderItem}
-                sliderWidth={device_width}
-                itemWidth={device_width}
-                autoplay={true}
-                autoplayInterval={5000}
-                loop={true}
-                onSnapToItem={index => setActiveSlide(index)}
+              <MaterialIcons
+                name="keyboard-arrow-right"
+                size={25}
+                color={'green'}
               />
-              <Pagination
-                dotsLength={data.length}
-                activeDotIndex={activeSlide}
-                carouselRef={carouselRef}
-                tappableDots={true}
-                containerStyle={{paddingVertical: 10}} 
-                dotStyle={{
-                  // Style for each dot
-                  width: 10,
-                  height: 10,
-                  borderRadius: 5,
-                  backgroundColor:
-                    'rgba(255, 255, 255, 0.8)',
-                }}
-                inactiveDotOpacity={0.4} // Opacity for inactive dots
-                inactiveDotScale={0.6} // Scale for inactive dots
-                inactiveDotStyle={styles.inactiveDot}
-              />
-            </View>
-            <View
-              style={{
-                height: device_height * 0.33,
-                width: device_width,
-                justifyContent: 'flex-start',
-                marginTop: 30,
-              }}>
-              <TouchableOpacity
-                onPress={() => {
-                  dispatch(setLanguage(selectedLanguage));
-                  navigation.navigate('SignInScreen', {
-                    language: selectedLanguage,
-                  });
-                }}
-                style={{
-                  zIndex: 1,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  alignSelf: 'center',
-                  width: '60%',
-                  marginHorizontal: 10,
-                  flexDirection: 'row',
-                  backgroundColor: '#ffff',
-                  borderRadius: 20,
-                  borderWidth: 2,
-                  borderColor: '#f1a722',
-                }}>
-                <TouchableOpacity
-                  style={{
-                    alignItems: 'center',
-                    borderRadius: 15,
-                    paddingVertical: 10,
-                    paddingHorizontal: 5,
-                  }}
-                  onPress={() => {
-                    dispatch(setLanguage(selectedLanguage));
-                    navigation.navigate('SignInScreen', {
-                      language: selectedLanguage,
-                    });
-                  }}>
-                  <Text
-                    style={{fontWeight: '700', fontSize: 14, color: 'green'}}>
-                    {'Get Started'}
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    dispatch(setLanguage(selectedLanguage));
-                    navigation.navigate('SignInScreen', {
-                      language: selectedLanguage,
-                    });
-                  }}>
-                  <MaterialIcons
-                    name="keyboard-arrow-right"
-                    size={25}
-                    color={'green'}
-                  />
-                </TouchableOpacity>
-              </TouchableOpacity>
-            </View>
-            {/* </ImageBackground> */}
+            </TouchableOpacity>
           </View>
         </View>
       </ImageBackground>
@@ -274,17 +197,6 @@ const SplashScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  // item: {
-  //   backgroundColor: 'lightgray',
-  //   borderRadius: 8,
-  //   height: 200,
-  //   padding: 50,
-  //   marginLeft: 25,
-  //   marginRight: 25,
-  // },
-  // title: {
-  //   fontSize: 20,
-  // },
   paginationContainer: {
     paddingVertical: 8,
   },
