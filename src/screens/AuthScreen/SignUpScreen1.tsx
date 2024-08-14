@@ -653,8 +653,8 @@ const SignUpScreen1 = ({route}) => {
                 marginLeft: -2,
                 // borderWidth:1
               }}
-              source={require('../../../assets/aa.png')}
-              resizeMode="contain"
+              //source={require('../../../assets/aa.png')}
+              // resizeMode="contain"
             />
           </Animatable.View>
           <Animatable.View

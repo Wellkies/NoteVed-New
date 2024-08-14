@@ -924,8 +924,8 @@ const SignUpScreen3 = ({ route }) => {
                 width: device_width * 0.3,
                 // marginLeft: -30,
               }}
-              source={require('../../../assets/e.png')}
-              resizeMode="contain"
+              // source={require('../../../assets/e.png')}
+              // resizeMode="contain"
             />
           </Animatable.View>
           <Animatable.View
@@ -1257,8 +1257,8 @@ const SignUpScreen3 = ({ route }) => {
                   bottom: -40,
                   marginLeft: 20,
                 }}
-                source={require('../../../assets/dd.png')}
-                resizeMode="contain"
+                // source={require('../../../assets/dd.png')}
+                // resizeMode="contain"
               />
             </View>
           </Animatable.View>
