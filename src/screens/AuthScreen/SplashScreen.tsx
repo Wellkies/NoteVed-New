@@ -89,10 +89,14 @@ const SplashScreen = () => {
     }
   }, [language]);
   const data = [
-    'https://t3.ftcdn.net/jpg/04/10/08/80/360_F_410088076_yTIvVGLAygAIoML8pYFbEcpr7pRrYe5M.jpg',
-    'https://thumbs.dreamstime.com/b/skill-development-vector-concept-web-banner-website-page-illustration-tiny-people-putting-books-light-bulb-big-man-144566744.jpg',
-    'https://media.istockphoto.com/id/1169342270/photo/rocket-business-words-as-engine-smoke.jpg?s=612x612&w=0&k=20&c=q01O1scsAWipzCy-q9Is_QdqaUg-q86JXZ0WLdAnDNw=',
-    'https://img.freepik.com/free-vector/professional-development-teachers-abstract-concept-illustration-school-authority-initiative-training-teachers-conference-seminar-qualification-programme_335657-3477.jpg?w=740&t=st=1723477050~exp=1723477650~hmac=bfe5817699b88b323c6823064ba4fb684c9f09aa5c21035edaef8f7fed9a9459',
+    require('../../../assets/skill1.jpg'),
+    require('../../../assets/skill2.jpg'),
+    require('../../../assets/skill3.jpg'),
+    require('../../../assets/skill4.jpg'),
+    // 'https://t3.ftcdn.net/jpg/04/10/08/80/360_F_410088076_yTIvVGLAygAIoML8pYFbEcpr7pRrYe5M.jpg',
+    // 'https://thumbs.dreamstime.com/b/skill-development-vector-concept-web-banner-website-page-illustration-tiny-people-putting-books-light-bulb-big-man-144566744.jpg',
+    // 'https://media.istockphoto.com/id/1169342270/photo/rocket-business-words-as-engine-smoke.jpg?s=612x612&w=0&k=20&c=q01O1scsAWipzCy-q9Is_QdqaUg-q86JXZ0WLdAnDNw=',
+    // 'https://img.freepik.com/free-vector/professional-development-teachers-abstract-concept-illustration-school-authority-initiative-training-teachers-conference-seminar-qualification-programme_335657-3477.jpg?w=740&t=st=1723477050~exp=1723477650~hmac=bfe5817699b88b323c6823064ba4fb684c9f09aa5c21035edaef8f7fed9a9459',
   ];
   console.log(data.length, '@data.length');
   const [activeSlide, setActiveSlide] = useState(0);
@@ -100,16 +104,16 @@ const SplashScreen = () => {
   const renderItem = ({item}) => (
     <View
       style={{
-        //flex: 1,
-        //justifyContent: 'center',
-        //alignItems: 'center',
+        // flex: 1,
+        // justifyContent: 'center',
+        // alignItems: 'center',
       }}>
       <FastImage
         style={{
           width: '100%',
           height: '100%',
         }}
-        source={{uri: item}}
+        source={item}
         resizeMode="cover"
       />
     </View>
@@ -117,16 +121,18 @@ const SplashScreen = () => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <StatusBar backgroundColor={'#263d2d'} barStyle="light-content" />
+      <StatusBar backgroundColor={'#FFFFFF'} barStyle="light-content" />
       <ImageBackground
         style={{
           width: device_width,
           height: device_height,
           flex: 1,
           alignSelf: 'center',
+          backgroundColor:'#FFFFFF'
         }}
         resizeMode="cover"
-        source={require('../../../assets/0.png')}>
+        //source={require('../../../assets/0.png')}
+        >
         <View style={{flex: 1, justifyContent: 'flex-end'}}>
           <Carousel
             ref={carouselRef}
@@ -149,7 +155,7 @@ const SplashScreen = () => {
               width: 10,
               height: 10,
               borderRadius: 5,
-              backgroundColor: 'rgba(255, 255, 255, 0.8)',
+              backgroundColor: '#1F8434',
             }}
             inactiveDotOpacity={0.4}
             inactiveDotScale={0.6}

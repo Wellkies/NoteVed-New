@@ -1806,16 +1806,9 @@ const SignInScreen = ({route}) => {
                       style={{
                         color: Colors.red,
                         marginTop: -5,
-                        // marginBottom: 5,
                         fontSize: 12,
                       }}>
-                      {/* {'** ଦୟାକରି ବୈଧ ଫୋନ୍ ନମ୍ବର ପ୍ରବେଶ କରନ୍ତୁ'} */}
-                      {selectedLanguage === 'odia'
-                        ? '** ଦୟାକରି ବୈଧ ଫୋନ୍ ନମ୍ବର ପ୍ରବେଶ କରନ୍ତୁ'
-                        : selectedLanguage === 'english'
-                        ? `** Please enter valid phone number`
-                        : `** Please enter valid phone number`}
-                      {/* : '** कृपया मान्य फ़ोन नंबर दर्ज करें'} */}
+                     {'** Please enter valid phone number'}
                     </Text>
                   </Animatable.View>
                 )}
@@ -1832,18 +1825,11 @@ const SignInScreen = ({route}) => {
                   }}>
                   {/* <FontAwesome name="user-o" color={'#333'} size={20} /> */}
                   <TextInput
-                    // placeholder={'ପାସ୍‌ୱାର୍ଡ ପ୍ରବେଶ କରନ୍ତୁ *'}
                     placeholder={
-                      selectedLanguage === 'odia'
-                        ? 'ପାସ୍‌ୱାର୍ଡ ପ୍ରବେଶ କରନ୍ତୁ *'
-                        : selectedLanguage === 'english'
-                        ? `Enter Password *`
-                        : `Enter Password *`
+                     ' Enter Password *'
                     }
-                    // : 'पासवर्ड दर्ज करें *'
                     placeholderTextColor="#888"
-                    // value={p_phone}
-                    // keyboardType="numeric"
+                    secureTextEntry={true}
                     style={{
                       color: '#000',
                       width: '80%',

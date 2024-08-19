@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {
   Image,
   SafeAreaView,
@@ -82,6 +82,8 @@ import {
   selectChildDetailData,
 } from '../../redux/reducers/GetChildProgressDetailReducer';
 import * as Progress from 'react-native-progress';
+import Carousel, {Pagination} from 'react-native-snap-carousel';
+import { IsTabScreen } from '../../../constants/Constants';
 
 const Tab = createBottomTabNavigator();
 
@@ -255,224 +257,274 @@ const SubjectLevel = ({route}) => {
   const SubLoading = useAppSelector(selectAllSubjectsStatus);
   const SubByCourseID = useAppSelector(selectAllSubByCourseIdInfo);
   //const SubLoading = useAppSelector(selectAllSubByCourseIdStatus);
-  console.log(SubByCourseID, '========SubByCourseID');
-
+  // console.log(SubByCourseID, '========SubByCourseID');
+  const data = [
+    require('../../../assets/skillfact3.jpg'),
+    require('../../../assets/skillfact4.jpg'),
+  ];
+  const [activeSlide, setActiveSlide] = useState(0);
+  const carouselRef = useRef(null);
+  const renderItem = ({item}) => (
+    <View
+      style={{
+        alignItems: 'center',
+      }}>
+      <FastImage
+        style={{
+          borderRadius: 15,
+          height: device_height * 0.24,
+          width: device_width * 0.93,
+        }}
+        source={item}
+        resizeMode={'contain'}
+      />
+    </View>
+  );
   return (
     <SafeAreaView style={{flex: 1}}>
-      <ImageBackground
-        style={{
-          width: device_width,
-          height: device_height,
-          flex: 1,
-          alignSelf: 'center',
-        }}
-        resizeMode="cover"
-        source={require('../../../assets/0.png')}>
-        <View
+      <ScrollView>
+        <ImageBackground
           style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginVertical: 12,
-            marginHorizontal: 20,
-            paddingVertical: 6,
-            paddingHorizontal: 25,
-            marginBottom: 30,
-          }}>
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            style={{
-              position: 'absolute',
-              top: 3,
-              left: 0,
-            }}>
-            <MaterialIcons
-              name="arrow-back"
-              size={35}
-              style={{color: '#FFFFFF'}}
-            />
-          </TouchableOpacity>
-          <View style={{flex: 1, alignItems: 'center'}}>
-            <Text
-              style={{
-                color: '#FFFFFF',
-                fontWeight: '600',
-                fontSize: 20,
-                textAlign: 'center',
-              }}>
-              {trans(coursename + ' ' + subjectname)}
-            </Text>
-          </View>
-        </View>
-        {SubLoading == 'loading' ? (
+            width: device_width,
+            height: device_height,
+            flex: 1,
+            alignSelf: 'center',
+          }}
+          resizeMode="cover"
+          source={require('../../../assets/0.png')}>
           <View
             style={{
-              flex: 1,
+              flexDirection: 'row',
               alignItems: 'center',
-              justifyContent: 'center',
-              height: device_height * 0.9,
-              width: device_width,
-              // backgroundColor: Colors.secondary,
+              marginVertical: 12,
+              marginHorizontal: 20,
+              paddingVertical: 6,
+              paddingHorizontal: 25,
+              marginBottom: 30,
             }}>
-            <LoadingScreen flag={SubLoading == 'loading'} />
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={{
+                position: 'absolute',
+                top: 3,
+                left: 0,
+              }}>
+              <MaterialIcons
+                name="arrow-back"
+                size={35}
+                style={{color: '#FFFFFF'}}
+              />
+            </TouchableOpacity>
+            <View style={{flex: 1, alignItems: 'center'}}>
+              <Text
+                style={{
+                  color: '#FFFFFF',
+                  fontWeight: '600',
+                  fontSize: 20,
+                  textAlign: 'center',
+                }}>
+                {trans(coursename + ' ' + subjectname)}
+              </Text>
+            </View>
           </View>
-        ) : (
-          <>
-            <ScrollView showsVerticalScrollIndicator={false}>
-              {SubjectByCourse.length > 0 ? (
-                <>
-                  {SubjectByCourse.map((item, index) => {
-                    const {
-                      _id = '',
-                      subjectid = '',
-                      subjectname = '',
-                      topics = [],
-                    } = item;
-                    //console.log(topics[0], '@topics%%%%');
-                    const progress = topics.filter(
-                      item => item.studenttopic != '',
-                    ).length;
-                    const totalTopic = topics.length;
-                    const proData = progress / totalTopic;
-                    //const completionPercentage = Math.round(proData * 100);
-                    return (
-                      <TouchableOpacity
-                        key={index}
-                        onPress={() => {
-                          const bodydata = {
-                            subjectid: subjectid,
-                            childid: childid,
-                          };
-                          //dispatch(getChildProgressDetailAPI(bodydata));
-                          dispatch(getTopicBySubIdAPI(bodydata));
-                          // dispatch(getTopicBySubIdAPI(subjectid));
-                          navigation.navigate('TopicDetails', {
-                            coursename: coursename,
-                            subjectname: subjectname,
-                            subjectid: subjectid,
-                          });
-                        }}>
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            backgroundColor: 'rgba(0,255,0,0.1)',
-                            width: device_width * 0.95,
-                            height: device_height * 0.09,
-                            marginHorizontal: 10,
-                            paddingHorizontal: 10,
-                            borderRadius: 12,
-                            borderWidth: 0.9,
-                            borderColor: '#f1a722',
-                            marginBottom: 15,
+          <View>
+            <Carousel
+              ref={carouselRef}
+              data={data}
+              renderItem={renderItem}
+              sliderWidth={device_width}
+              itemWidth={device_width}
+              autoplay={true}
+              autoplayInterval={5000}
+              loop={true}
+              onSnapToItem={index => setActiveSlide(index)}
+            />
+            <Pagination
+              dotsLength={data.length}
+              activeDotIndex={activeSlide}
+              carouselRef={carouselRef}
+              tappableDots={true}
+              containerStyle={{paddingVertical: 10}}
+              dotStyle={{
+                width: 10,
+                height: 10,
+                borderRadius: 5,
+                backgroundColor:  'rgba(255, 255, 255, 0.8)',
+              }}
+              inactiveDotOpacity={0.4}
+              inactiveDotScale={0.6}
+            />
+          </View>
+          {SubLoading == 'loading' ? (
+            <View
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: device_height * 0.9,
+                width: device_width,
+                // backgroundColor: Colors.secondary,
+              }}>
+              <LoadingScreen flag={SubLoading == 'loading'} />
+            </View>
+          ) : (
+            <>
+              <ScrollView showsVerticalScrollIndicator={false}>
+                {SubjectByCourse.length > 0 ? (
+                  <>
+                    {SubjectByCourse.map((item, index) => {
+                      const {
+                        _id = '',
+                        subjectid = '',
+                        subjectname = '',
+                        topics = [],
+                      } = item;
+                      //console.log(topics[0], '@topics%%%%');
+                      const progress = topics.filter(
+                        item => item.studenttopic != '',
+                      ).length;
+                      const totalTopic = topics.length;
+                      const proData = progress / totalTopic;
+                      //const completionPercentage = Math.round(proData * 100);
+                      return (
+                        <TouchableOpacity
+                          key={index}
+                          onPress={() => {
+                            const bodydata = {
+                              subjectid: subjectid,
+                              childid: childid,
+                            };
+                            //dispatch(getChildProgressDetailAPI(bodydata));
+                            dispatch(getTopicBySubIdAPI(bodydata));
+                            // dispatch(getTopicBySubIdAPI(subjectid));
+                            navigation.navigate('TopicDetails', {
+                              coursename: coursename,
+                              subjectname: subjectname,
+                              subjectid: subjectid,
+                            });
                           }}>
                           <View
                             style={{
                               flexDirection: 'row',
-                              alignItems: 'center',
-                              gap: 12,
+                              backgroundColor: 'rgba(0,255,0,0.1)',
+                              width: device_width * 0.95,
+                              height: device_height * 0.09,
+                              marginHorizontal: 10,
+                              paddingHorizontal: 10,
+                              borderRadius: 12,
+                              borderWidth: 0.9,
+                              borderColor: '#f1a722',
+                              marginBottom: 15,
                             }}>
-                            <Image
-                              source={require('../../../assets/people.png')}
-                              style={{
-                                height: device_height * 0.21,
-                                width: device_width * 0.15,
-                                resizeMode: 'contain',
-                                tintColor: '#f1a722',
-                              }}
-                            />
                             <View
                               style={{
                                 flexDirection: 'row',
-                                display: 'flex',
-                                flexWrap:
-                                  subjectname.length > 10 ? 'wrap' : 'nowrap',
+                                alignItems: 'center',
+                                gap: 12,
+                              }}>
+                              <Image
+                                source={require('../../../assets/people.png')}
+                                style={{
+                                  height: device_height * 0.21,
+                                  width: device_width * 0.15,
+                                  resizeMode: 'contain',
+                                  tintColor: '#f1a722',
+                                }}
+                              />
+                              <View
+                                style={{
+                                  flexDirection: 'row',
+                                  display: 'flex',
+                                  flexWrap:
+                                    subjectname.length > 10 ? 'wrap' : 'nowrap',
+                                }}>
+                                <Text
+                                  style={{
+                                    color: '#f1a722',
+                                    fontWeight: '500',
+                                    fontSize: 18,
+                                  }}>
+                                  {trans(subjectname)}
+                                </Text>
+                              </View>
+                            </View>
+                            <View
+                              style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                position: 'absolute',
+                                right: 10,
+                                bottom: 15,
                               }}>
                               <Text
                                 style={{
-                                  color: '#f1a722',
-                                  fontWeight: '500',
-                                  fontSize: 18,
+                                  fontWeight: '600',
+                                  color: '#def',
+                                  fontSize: 16,
+                                  marginRight: 10,
                                 }}>
-                                {trans(subjectname)}
+                                {parseFloat(`${proData * 100}% `).toFixed(2)}
+                                {'%'}
                               </Text>
+                              <Progress.Circle
+                                progress={proData}
+                                size={35}
+                                indeterminate={false}
+                                thickness={6}
+                                allowFontScaling={false}
+                                color={'#def'}
+                                borderWidth={2}
+                                borderColor="orange"
+                                showsText={false}
+                                textStyle={{
+                                  fontSize: 12,
+                                  fontWeight: '600',
+                                }}
+                              />
                             </View>
                           </View>
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              alignItems: 'center',
-                              position: 'absolute',
-                              right: 10,
-                              bottom: 15,
-                            }}>
-                            <Text
-                              style={{
-                                fontWeight: '600',
-                                color: '#def',
-                                fontSize: 16,
-                                marginRight: 10,
-                              }}>
-                              {parseFloat(`${proData * 100}% `).toFixed(2)}
-                              {'%'}
-                            </Text>
-                            <Progress.Circle
-                              progress={proData}
-                              size={35}
-                              indeterminate={false}
-                              thickness={6}
-                              allowFontScaling={false}
-                              color={'#def'}
-                              borderWidth={2}
-                              borderColor="orange"
-                              showsText={false}
-                              textStyle={{
-                                fontSize: 12,
-                                fontWeight: '600',
-                              }}
-                            />
-                          </View>
-                        </View>
-                      </TouchableOpacity>
-                    );
-                  })}
-                </>
-              ) : (
-                <>
-                  <View
-                    style={{
-                      backgroundColor: 'burlywood',
-                      paddingVertical: 15,
-                      paddingHorizontal: 15,
-                      marginVertical: 10,
-                      marginHorizontal: 15,
-                      // borderRadius: 7,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      flexDirection: 'row',
-                    }}>
-                    <AntDesign
+                        </TouchableOpacity>
+                      );
+                    })}
+                  </>
+                ) : (
+                  <>
+                    <View
                       style={{
-                        marginHorizontal: 10,
-                        borderWidth: 0,
-                      }}
-                      name={'infocirlce'}
-                      size={30}
-                      color={'darkgreen'}
-                    />
-                    <Text
-                      style={{
-                        color: '#333',
-                        fontWeight: '700',
-                        fontSize: 15,
-                        textAlign: 'center',
-                        width: '85%',
+                        backgroundColor: 'burlywood',
+                        paddingVertical: 15,
+                        paddingHorizontal: 15,
+                        marginVertical: 10,
+                        marginHorizontal: 15,
+                        // borderRadius: 7,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexDirection: 'row',
                       }}>
-                      {trans('Currently No Content Added')}
-                    </Text>
-                  </View>
-                </>
-              )}
-            </ScrollView>
-            {/* <ScrollView showsVerticalScrollIndicator={false}>
+                      <AntDesign
+                        style={{
+                          marginHorizontal: 10,
+                          borderWidth: 0,
+                        }}
+                        name={'infocirlce'}
+                        size={30}
+                        color={'darkgreen'}
+                      />
+                      <Text
+                        style={{
+                          color: '#333',
+                          fontWeight: '700',
+                          fontSize: 15,
+                          textAlign: 'center',
+                          width: '85%',
+                        }}>
+                        {trans('Currently No Content Added')}
+                      </Text>
+                    </View>
+                  </>
+                )}
+              </ScrollView>
+              {/* <ScrollView showsVerticalScrollIndicator={false}>
               {SubjectByCourse.length > 0 ? (
                 <>
                   {SubjectByCourse.map((item, index) => {
@@ -578,9 +630,10 @@ const SubjectLevel = ({route}) => {
                 </>
               )}
             </ScrollView> */}
-          </>
-        )}
-      </ImageBackground>
+            </>
+          )}
+        </ImageBackground>
+      </ScrollView>
     </SafeAreaView>
   );
 };
