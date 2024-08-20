@@ -69,6 +69,9 @@ import {
   AdEventType,
   RewardedAdEventType,
 } from 'react-native-google-mobile-ads';
+import {Modal} from 'react-native-paper';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import {createContactApi} from '../../redux/actions/createContactApi';
 
 const MockTests = ({route}) => {
   const dispatch = useDispatch<any>();
@@ -246,8 +249,8 @@ const MockTests = ({route}) => {
     handlePreviousPress();
   };
   const adUnitId = __DEV__
-  ? TestIds.BANNER
-  : 'ca-app-pub-1582661677692525~7964330200';
+    ? TestIds.BANNER
+    : 'ca-app-pub-1582661677692525~7964330200';
 
   const handleNavigation = () => {
     navigation.navigate('ScoreBoard', {
@@ -494,7 +497,60 @@ const MockTests = ({route}) => {
     newprogressdata = parseFloat(newprogressdata);
     setProgressdata(newprogressdata);
   };
-
+  const [confirmReport, setConfirmReport] = useState(false);
+  const handleReport = () => {
+    setConfirmReport(true);
+  };
+  const reportSubmitForm = async (question: any) => {
+    const bodyData = {
+      edcontactName: childName,
+      edcontactemail: email,
+      subject: subjectName,
+      phone: phone,
+      message:
+        'stageid' +
+        ':' +
+        stageid +
+        ', ' +
+        'boardid' +
+        ':' +
+        boardid +
+        ', ' +
+        'scholarshipid' +
+        ':' +
+        scholarshipid +
+        ',' +
+        'subjectId' +
+        ': ' +
+        subjectId +
+        ', ' +
+        'topicid' +
+        ':' +
+        topicid +
+        ', ' +
+        'contentid' +
+        ':' +
+        contentid +
+        ', ' +
+        'question' +
+        ':' +
+        question +
+        ', ' +
+        'name' +
+        ':' +
+        name,
+      boardid,
+      scholarshipid,
+      subjectName,
+      chapterName,
+      question,
+    };
+    console.log(bodyData, '@bodyData1');
+    createContactApi(bodyData, reporthandleCallback);
+  };
+  const reporthandleCallback = () => {
+    setConfirmReport(false);
+  };
   return (
     <SafeAreaView style={{flex: 1}}>
       {ContentLoading == 'loading' ? (
@@ -510,8 +566,7 @@ const MockTests = ({route}) => {
             //backgroundColor: '#1E1E1E',
           }}
           resizeMode="cover"
-          source={require('../../../assets/0.png')}
-        >
+          source={require('../../../assets/0.png')}>
           <StatusBar barStyle="light-content" />
           <View
             style={{
@@ -562,7 +617,7 @@ const MockTests = ({route}) => {
                     color: '#fff',
                     marginLeft: 5,
                     fontWeight: '700',
-                    fontSize:15
+                    fontSize: 15,
                   }}>
                   {trans('Quit Test')}
                 </Text>
@@ -598,6 +653,25 @@ const MockTests = ({route}) => {
                 style={{marginTop: -5}}
               />
             </View>
+            <TouchableOpacity
+              style={{justifyContent: 'flex-start', flexDirection: 'row'}}
+              onPress={() => handleReport()}>
+              <MaterialIcons
+                name="report"
+                size={20}
+                // backgroundColor={Colors.secondary}
+                color={'#fff'}
+                // onPress={() => navigation.goBack()}
+              />
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 12,
+                  textDecorationLine: 'underline',
+                }}>
+                {trans('Report Wrong Question')}
+              </Text>
+            </TouchableOpacity>
             <Text
               style={[
                 styles.question,
@@ -688,27 +762,6 @@ const MockTests = ({route}) => {
                     </View>
                   )}
                 </View>
-                {/* {Questionlist.map((item, index) => {
-          const {
-            id = '',
-            question = '',
-            options = [],
-            correctanswer = '',
-            selectedAns = '',
-          } = item;
-          return ( */}
-                {/* <View
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: 10,
-                // marginVertical: 10,
-              }}
-           > */}
-                {/* <Text
-              style={[styles.question, {textAlign: 'center', color: '#000'}]}>
-              {Questionlist[currentIndex].question}
-            </Text> */}
               </View>
             </ScrollView>
             <View
@@ -1036,6 +1089,174 @@ const MockTests = ({route}) => {
           nobtnFunction={() => setClearSkipModalStatus(false)}
         />
       )}
+      <Modal transparent={true} visible={confirmReport}>
+        <ImageBackground
+          style={{
+            borderRadius: 20,
+            borderTopWidth: 1,
+            borderLeftWidth: 1,
+            borderRightWidth: 1,
+            borderColor: '#fff',
+            // width: device_width,
+            // height: device_height,
+            minHeight: device_height * 0.3,
+            minWidth: device_width * 0.9,
+            // borderRadius: 15,
+            // flex: 1,
+            alignSelf: 'center',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          resizeMode="cover"
+          source={require('../../../assets/0.png')}>
+          <View
+            style={{
+              // backgroundColor: '#fff',
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <View style={{alignItems: 'flex-end', justifyContent: 'center'}}>
+              <View
+                style={{
+                  borderRadius: 20,
+                  borderWidth: 1,
+                  minHeight: device_height * 0.3,
+                  minWidth: device_width * 0.9,
+                  // backgroundColor: '#fff',
+                  borderColor: '#fff',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                }}>
+                <View>
+                  <View
+                    style={{
+                      alignItems: 'center',
+                    }}>
+                    <View style={{alignItems: 'center'}}>
+                      <Text
+                        style={{
+                          textAlign: 'center',
+                          paddingVertical: 15,
+                          width: device_width * 0.8,
+                          fontSize: 17,
+                          color: '#fff',
+                          marginTop: 25,
+                          marginLeft: 10,
+                          fontWeight: '900',
+                        }}>
+                        {trans(
+                          'Report if this question or answer options are wrong!!!',
+                        )}
+                      </Text>
+                    </View>
+                    <AntDesign
+                      name="closecircleo"
+                      style={{
+                        fontSize: 38,
+                        color: '#fff',
+                        position: 'absolute',
+                        top: -10,
+                        right: -10,
+                        // marginTop: 10,
+                        backgroundColor: 'crimson',
+                        borderRadius: 50,
+                      }}
+                      onPress={() => setConfirmReport(false)}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      // borderWidth: 1,
+                      // backgroundColor:'#fff',
+                      // paddingVertical: 10,
+                      alignItems: 'center',
+                      marginTop: 10,
+                      marginLeft: 10,
+                      flexDirection: 'row',
+                      justifyContent: 'space-around',
+                      // alignSelf: 'center',
+                      // padding: 10,
+                    }}>
+                    <TouchableOpacity
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        borderWidth: 1,
+                        borderRadius: 10,
+                        width: 100,
+                        // marginVertical: 5,
+                        // borderWidth: 1,
+                        alignSelf: 'center',
+                        // marginRight: 25,
+                        alignItems: 'center',
+                        // borderColor: 'white',
+                        backgroundColor: 'white',
+                        paddingVertical: 10,
+                        // paddingHorizontal:30,
+                        justifyContent: 'center',
+                      }}
+                      onPress={() =>
+                        reportSubmitForm(Questionlist[currentIndex]?.question)
+                      }>
+                      <View
+                        style={{
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}>
+                        <Text
+                          style={{
+                            // marginRight: 10,
+                            fontWeight: '700',
+                            color: '#FFB901',
+                          }}>
+                          {trans('Report ')}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        borderWidth: 1,
+                        borderRadius: 10,
+                        width: 100,
+                        // marginVertical: 5,
+                        // borderWidth: 1,
+                        alignSelf: 'center',
+                        // marginRight: 25,
+
+                        // borderColor: 'white',
+                        backgroundColor: 'white',
+                        paddingVertical: 10,
+                        // paddingHorizontal:30,
+                        justifyContent: 'center',
+                      }}
+                      onPress={() => setConfirmReport(false)}>
+                      <View
+                        style={{
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          // alignSelf:"center",
+                        }}>
+                        <Text
+                          style={{
+                            // marginRight: 10,
+                            fontWeight: '700',
+                            color: '#FFB901',
+                            textAlign: 'center',
+                          }}>
+                          {trans('Cancel')}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </ImageBackground>
+      </Modal>
     </SafeAreaView>
   );
 };

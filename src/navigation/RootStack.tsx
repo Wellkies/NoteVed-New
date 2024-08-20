@@ -14,6 +14,7 @@ import SignUpScreen2 from '../screens/AuthScreen/SignUpScreen2';
 import SignUpScreen3 from '../screens/AuthScreen/SignUpScreen3';
 import SignUpScreen4 from '../screens/AuthScreen/SignUpScreen4';
 import SignUpScreen5 from '../screens/AuthScreen/SignUpScreen5';
+import SelectUserScreen from '../screens/AuthScreen/SelectUserScreen';
 
 export type RootStackParamList = {
   onboarding: NavigatorScreenParams<OnboardingStackParamList>;
@@ -29,6 +30,7 @@ export type OnboardingStackParamList = {
   SignUpScreen3: undefined;
   SignUpScreen4: undefined;
   SignUpScreen5: undefined;
+  SelectUserScreen: undefined;
 };
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
@@ -48,6 +50,7 @@ const RootStackScreen = () => {
       <RootStackScreens.Screen name="SignUpScreen5" component={SignUpScreen5} />
       <RootStackScreens.Screen name="TermAndConditions" component={TermAndConditions} />
       <RootStackScreens.Screen name="IntroVideoScreen" component={IntroVideoScreen} />
+      <RootStackScreens.Screen name="SelectUserScreen" component={SelectUserScreen} />
     </RootStackScreens.Navigator>
   );
 };

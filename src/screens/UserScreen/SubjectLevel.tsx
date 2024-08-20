@@ -83,7 +83,7 @@ import {
 } from '../../redux/reducers/GetChildProgressDetailReducer';
 import * as Progress from 'react-native-progress';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
-import { IsTabScreen } from '../../../constants/Constants';
+import {IsTabScreen} from '../../../constants/Constants';
 
 const Tab = createBottomTabNavigator();
 
@@ -267,16 +267,24 @@ const SubjectLevel = ({route}) => {
   const renderItem = ({item}) => (
     <View
       style={{
+        alignContent: 'center',
+        justifyContent: 'center',
         alignItems: 'center',
+        marginLeft: 10,
+        borderWidth: 0.9,
+        borderColor: '#f1a722',
+        borderRadius: 20,
+        width: device_width * 0.96,
+        height: device_height * 0.19,
       }}>
       <FastImage
         style={{
-          borderRadius: 15,
-          height: device_height * 0.24,
-          width: device_width * 0.93,
+          borderRadius: 20,
+          width: device_width * 0.96,
+          height: device_height * 0.19,
         }}
         source={item}
-        resizeMode={'contain'}
+        resizeMode={'stretch'}
       />
     </View>
   );
@@ -349,7 +357,7 @@ const SubjectLevel = ({route}) => {
                 width: 10,
                 height: 10,
                 borderRadius: 5,
-                backgroundColor:  'rgba(255, 255, 255, 0.8)',
+                backgroundColor: 'rgba(255, 255, 255, 0.8)',
               }}
               inactiveDotOpacity={0.4}
               inactiveDotScale={0.6}

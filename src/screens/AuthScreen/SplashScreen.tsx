@@ -171,7 +171,7 @@ const SplashScreen = () => {
             <TouchableOpacity
               onPress={() => {
                 dispatch(setLanguage(selectedLanguage));
-                navigation.navigate('SignInScreen', {
+                navigation.navigate('SelectUserScreen', {
                   language: selectedLanguage,
                 });
               }}
