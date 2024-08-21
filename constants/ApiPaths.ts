@@ -223,3 +223,4 @@ export const GET_CHILD_UNLOCK_URL = API_URL + 'getedchildunlock';
 export const GET_DAILY_MESSAGE_BY_DATE_URL =
   API_URL + 'geteddailymessagebydate';
 export const GET_CHECK_TOKEN_URL = API_URL + 'checkToken';
+export const GET_ALL_LICENSE_DETAILS = API_URL + 'alledzlicense';

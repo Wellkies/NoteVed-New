@@ -18,7 +18,7 @@ import {
   RefreshControl,
   BackHandler,
   ImageBackground,
-  SafeAreaView,
+  FlatList,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
@@ -30,25 +30,15 @@ import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 import {emailRegex, name_reg, phoneRegex} from '../../../constants/Constants';
 import Colors from '../../../assets/Colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {useTheme, FAB} from 'react-native-paper';
-// import {
-//   createContactApi,
-//   getPremiumAccessAPI,
-//   getScholarshipByClassAPI,
-//   getDiwaliCouponAPI,
-//   getScholarshipPremiumAPI,
-// } from '../../redux/actions/Action';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Iconz from 'react-native-vector-icons/Entypo';
+
 import {device_height, device_width} from '../style';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Entypo from 'react-native-vector-icons/Entypo';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
-// import {
-//   GET_PREMIUM_ACCESS,
-//   GET_SCHOLARSHIP_LIST,
-//   SET_CHILD_INFO,
-// } from '../../redux/actions/actiontypes';
+
 import {useTranslation} from 'react-i18next';
 import {AuthContext} from '../../../context';
 // import LoadingScreen from './LoadingScreen';
@@ -67,6 +57,7 @@ import {
   selectPremiumAccessStatus,
 } from '../../redux/reducers/GetPremiumAccessReducer';
 import {
+  getChildDetailsAPI,
   selectStudentInfo,
   selectStudentStatus,
 } from '../../redux/reducers/StudentInfoReducer';
@@ -74,14 +65,18 @@ import {
   getCouponAPI,
   selectCouponData,
 } from '../../redux/reducers/GetAvailableCouponOfferReducer';
-import {
-  getAllMembershipDataAPI,
-  selectAllMembershipDetailsInfo,
-  selectAllMembershipDetailsStatus,
-} from '../../redux/reducers/GetAllMembershipReducer';
-
 import {useNavigation} from '@react-navigation/native';
 import LoadingScreen from '../CommonScreens/LoadingScreen';
+import {selectUserInfo} from '../../redux/reducers/loginReducer';
+// import {
+//   getFreePremiumDetailsApi,
+//   selectFreeScholarshipData,
+// } from '../../redux/reducers/GetFreeLicenseDetailsReducer';
+import {
+  getAllLicenseDataAPI,
+  selectAllLicenseLevelInfo,
+  selectAllLicenseLevelStatus,
+} from '../../redux/reducers/GetAllLicenseReducer';
 
 const PremiumAccess = ({route}) => {
   const {t: trans, i18n} = useTranslation();
@@ -100,7 +95,7 @@ const PremiumAccess = ({route}) => {
     quizList = [],
     showFeedback = '',
   } = route.params;
-  console.log(screenName, '==============screenName');
+
   interface ChildInfo {
     _id: string;
     age: string;
@@ -130,2079 +125,1314 @@ const PremiumAccess = ({route}) => {
     stageid: string;
     boardid: string;
     classname: string;
+    stateid: any;
   }
-  const PricingAvailable = [
-    {
-      featureName: 'Full access to every class',
-      trial: '',
-      premium: require('../../../assets/check.png'),
-    },
-    {
-      featureName: 'Take unlimited classes',
-      trial: require('../../../assets/check.png'),
-      premium: require('../../../assets/check.png'),
-    },
-    {
-      featureName: 'Choose the tutor you want',
-      trial: '',
-      premium: require('../../../assets/check.png'),
-    },
-    {
-      featureName: 'Downloadable content',
-      trial: require('../../../assets/check.png'),
-      premium: require('../../../assets/check.png'),
-    },
-    {
-      featureName: 'Contact private tutor privately',
-      trial: require('../../../assets/check.png'),
-      premium: require('../../../assets/check.png'),
-    },
-    {
-      featureName: 'Set your own courses hours',
-      trial: require('../../../assets/check.png'),
-      premium: require('../../../assets/check.png'),
-    },
-  ];
 
   const navigation = useNavigation();
   const dispatch = useDispatch<any>();
   const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
-  const AllMembershipData = useAppSelector(selectAllMembershipDetailsInfo);
+  const count = useAppSelector(selectStudentStatus);
+  const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
+  const {
+    // _id: childID = '',
+    age: p_age = '',
+    // child = [],
+    image = '',
+    imagename = '',
+    childid = '',
+    name = '',
+    stage: standard = '',
+    // boardofeducation = '',
+    fathername = '',
+    mothername = '',
+    subscriptionStartDate = '',
+    subscriptionEndDate = '',
+    // isPremium = false,
+    parentid: parentId = '',
+    boardid = '',
+    scholarship = [],
+    classname = '',
+    stageid = '',
+    language = '',
+    stateid = '',
+  } = childInfo || {};
+  //
+  // let stateid = 'hhhhh'
+  // const PremiumPurchase = [
+  //   {"__v": 0, "_id": "664eeb93b358306069b6379b", "amount": 1800, "boardid": "2", "boardname": "CBSE", "couponcode": "NVD5", "createon": "2024-05-23T07:09:07.786Z", "discountamount": 0, "durationDays": 365, "gstamount": 0, "gstpercentage": 0, "licenseid": "1716448147785", "licensemessageen": "", "licensemessageod": "", "licensename": "Adarsh & Navodayaa Video", "licensestatus": "active", "offeramount": 501, "offerpercentage": 27, "paidtotalamount": 1299, "scholarshipid": "NVOOKADA1690811843420", "scholarshipimage": "", "scholarshipname": "Adarsha", "stage": "5", "stageid": "5", "updatedon": "2024-05-23T07:09:07.786Z"},
+  // ];
+  const PremiumPurchase = useAppSelector(selectPremiumPurchase);
 
-  console.log(AllMembershipData, '@@@@@@@@@@@@@@@@@@@@@***AllMembershipData');
+  const PremiumDetails = PremiumPurchase?.filter(r => r.licenseid);
 
-  const AllMembershipStatus = useAppSelector(selectAllMembershipDetailsStatus);
+  const PremiumLoading = useAppSelector(selectPremiumPurchaseStatus);
+  //
+  const ScholarshipList = useAppSelector(selectPremiumAccess);
+  //
+  const OtherstateScholarship1 = ScholarshipList?.filter(
+    r => r.licenseid == '1695358760234' || r.licenseid == 'ADA51690528084298',
+  );
+  const OtherstateScholarship2 = ScholarshipList?.filter(
+    r => r.licenseid == '1717413071896',
+  );
 
+  const PremiumAccessLoad = useAppSelector(selectPremiumAccessStatus);
+  //
+  //const FreeScholarship = useAppSelector(selectFreeScholarshipData);
+  //
+  // const Scholarshipdata1 = FreeScholarship?.filter(
+  //   r => r.licenseid == '1717060263931',
+  // );
+  // const Scholarshipdata2 = FreeScholarship?.filter(
+  //   r => r.licenseid == '1716448147785' || r.licenseid == '1716448133885',
+  // );
+  // console.log(
+  //   Scholarshipdata1,
+  //   'Scholarshipdata1',
+  //   Scholarshipdata2,
+  //   'Scholarshipdata2',
+  // );
+  //
+  //const [freeScholar, setFreeScholar] = useState();
+  // useEffect(() => {
+  //   if (FreeScholarship.length > 0 && stateid == '') {
+  //     setFreeScholar(FreeScholarship);
+  //   } else if (
+  //     FreeScholarship.length > 0 &&
+  //     stateid.length > 0 &&
+  //     stateid == 'Odisha1712675266782'
+  //   ) {
+  //     setFreeScholar(Scholarshipdata2);
+  //   } else if (
+  //     FreeScholarship.length > 0 &&
+  //     stateid.length > 0 &&
+  //     stateid != 'Odisha1712675266782'
+  //   ) {
+  //     setFreeScholar(Scholarshipdata1);
+  //   } else {
+  //     setFreeScholar([]);
+  //   }
+  // }, [FreeScholarship]);
+
+  const AvailableCoupon = useAppSelector(selectCouponData);
+  //
   useEffect(() => {
-    dispatch(getAllMembershipDataAPI());
-    return () => {};
+    const freeScholar = {stageid, boardid};
+    const Predata = {childid, stageid, boardid};
+    const PreAccesdata = {stageid, boardid};
+    dispatch(getScholarshipPremiumAPI(Predata));
+    dispatch(getPremiumAccessAPI(PreAccesdata));
+    dispatch(getCouponAPI());
+    // dispatch(getFreePremiumDetailsApi(freeScholar));
+  }, []);
+  useEffect(() => {
+    dispatch(getAllLicenseDataAPI());
   }, []);
 
-  // const count = useAppSelector(selectStudentStatus);
-  // const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
-  // const PremiumPurchase = useAppSelector(selectPremiumPurchase);
-  // console.log(PremiumPurchase, 'PremiumPurchase..........');
-  // console.log(
-  //   PremiumPurchase.length > 0,
-  //   "PremiumPurchase.length > 0 && paymentid == 'free7days'",
-  // );
-  // const PremiumLoading = useAppSelector(selectPremiumPurchaseStatus);
-  // console.log(PremiumLoading, 'PremiumLoading////////////////');
-  // const ScholarshipList = useAppSelector(selectPremiumAccess);
-  // console.log(ScholarshipList, 'ScholarshipList..........%%');
-  // const PremiumAccessLoad = useAppSelector(selectPremiumAccessStatus);
-  // console.log(PremiumAccessLoad, 'PremiumAccessLoad????????????????????');
-  // const AvailableCoupon = useAppSelector(selectCouponData);
-  // console.log(AvailableCoupon, 'AvailableCoupon........');
-  // useEffect(() => {
-  //   const Predata = {childid, stageid, boardid};
-  //   const PreAccesdata = {stageid, boardid};
-  //   dispatch(getScholarshipPremiumAPI(Predata));
-  //   dispatch(getPremiumAccessAPI(PreAccesdata));
-  //   dispatch(getCouponAPI());
-  // }, []);
+  const {couponcode = ''} =
+    AvailableCoupon.length > 0 ? AvailableCoupon[0] : AvailableCoupon;
+  //
 
-  //   const {Premium: ScholarshipList = []} = useSelector(
-  //     state => state.GetPremiumAccessReducer,
-  //   );
-  // console.log(ScholarshipList, 'ScholarshipList...............');
+  const {signOut} = useContext(AuthContext);
+  const [help, setHelp] = useState(false);
 
-  //   const {AvailableCoupon = []} = useSelector(
-  //     state => state.GetAvailableCouponOfferReducer,
-  //   );
-  // console.log(AvailableCoupon,"AvailableCoupon...........")
-  // const {couponcode = ''} =
-  //   AvailableCoupon.length > 0 ? AvailableCoupon[0] : AvailableCoupon;
-  // console.log(AvailableCoupon, 'AvailableCoupon...............');
+  const [scholarshipName, setScholarshipName] = useState('');
 
-  // const {signOut} = useContext(AuthContext);
-  // const [help, setHelp] = useState(false);
+  const [childList, setChildList] = useState([]);
+  const [modalStatus, setModalStatus] = useState(false);
+  const [indexNo, setIndexNo] = useState(0);
+  const [isScholarshipData, setScholarshipData] = useState([]);
 
-  // const [scholarshipName, setScholarshipName] = useState('');
-  // const [selectedBtn, setSelectedbtn] = useState([]);
-  // const [childList, setChildList] = useState([]);
-  // // const [Premium, setPremium] = useState([]);
-  // const [isScholarshipData, setScholarshipData] = useState([]);
-  // const [preminumData, setPreminumData] = useState([]);
-  // const [ispreminumFlag, setIspreminumFlag] = useState([]);
-  // const [isScholarBuy, setIsScholarBuy] = useState([]);
-  // const [isselectedscholarship, setselectedscholarship] = useState([]);
-  // const [selectedId, setSelectedId] = useState(null);
-  // const [loading, setLoading] = useState(false);
-  // const [selectedScholarshipData, setSelectedscholarshipData] = useState();
-  // const [scholarID, setScholarID] = useState('');
+  const [isScholarBuy, setIsScholarBuy] = useState([]);
+  const [isselectedscholarship, setselectedscholarship] = useState([]);
 
-  // const [licenseLastDate, setLicenseLastDate] = useState('');
-  // const schID = ScholarshipList[0]?._id;
-  // useEffect(() => {
-  //   console.log(
-  //     PremiumPurchase.length == 0,
-  //     'bbbb',
+  const [selectedScholarshipData, setSelectedscholarshipData] = useState();
+  const [scholarID, setScholarID] = useState('');
+  //
+  const [licenseLastDate, setLicenseLastDate] = useState('');
+  const schID = ScholarshipList[0]?._id;
+  useEffect(() => {
+    if (ScholarshipList.length > 0 && stateid == '') {
+      setScholarID(ScholarshipList[0]?._id);
+    } else if (
+      ScholarshipList.length > 0 &&
+      stateid.length > 0 &&
+      stateid == 'Odisha1712675266782'
+    ) {
+      setScholarID(ScholarshipList[0]?._id);
+    } else if (
+      ScholarshipList.length > 0 &&
+      stateid.length > 0 &&
+      stateid != 'Odisha1712675266782'
+    ) {
+      setScholarID(ScholarshipList[1]?._id);
+    } else {
+      setScholarID(ScholarshipList[0]?._id);
+    }
+  }, [ScholarshipList]);
+  //
 
-  //     PremiumPurchase.length > 0,
-  //     'cccccccc',
-  //     paymentid == 'free7days',
-  //     'dddddddd',
-  //   );
-  //   dataCall(ScholarshipList);
-  // }, [ScholarshipList]);
+  //
 
-  // const dataCall = ScholarshipList => {
-  //   if (scholarLicenceID.length > 0 && videoLicenceID.length > 0) {
-  //     console.log('11');
-  //     setSelectedscholarshipData([]);
-  //     setScholarID();
-  //   } else if (scholarLicenceID.length > 0) {
-  //     console.log('22');
+  const {userInfo = {}} = useAppSelector(selectUserInfo);
+  const user = userInfo;
+  const userid = user._id;
+  const stageId = user.stageid;
+  const boardId = user.boardid;
 
-  //     setSelectedscholarshipData([ScholarshipList[0]]);
-  //     setScholarID(ScholarshipList[0]?._id);
-  //   } else if (videoLicenceID.length > 0 && paymentid == 'free7days') {
-  //     console.log('44');
-  //     setSelectedscholarshipData([ScholarshipList[0]]);
-  //     setScholarID(ScholarshipList[0]?._id);
-  //   } else if (videoLicenceID.length > 0) {
-  //     console.log('33');
-  //     setSelectedscholarshipData([]);
-  //     setScholarID();
-  //     // setSelectedscholarshipData([ScholarshipList[0]]);
-  //     // setScholarID(ScholarshipList[0]?._id);
-  //   }
-  //   // else if(PremiumPurchase.length>0 && paymentid=='free7days'){
-  //   //  console.log("44")
-  //   //  setSelectedscholarshipData([ScholarshipList[0]]);
-  //   //  setScholarID(ScholarshipList[0]?._id);
-  //   // }
-  //   else {
-  //     console.log('55');
-  //     setSelectedscholarshipData([ScholarshipList[0]]);
-  //     setScholarID(ScholarshipList[0]?._id);
-  //   }
-  // };
-  // console.log(
-  //   selectedScholarshipData,
-  //   'selectedScholarshipData.........................',
-  // );
-  // const stageID = childList.stageid;
-  // const boardID = childList.boardid;
+  //
+  //
 
-  // const childID = childList.childid;
+  const {paymentid = '', enddate = ''} = PremiumPurchase.length
+    ? PremiumPurchase[0]
+    : [];
 
-  // const scholarImage = [
-  //   {
-  //     scholarimg: require('../../../assets/Jawahar_Navodaya_Vidyalaya_logo.png'),
-  //   },
-  //   {
-  //     scholarimg: require('../../../assets/Odisha Adarsha Vidyalaya logo.jpg'),
-  //   },
-  // ];
-
-  //   const images = [
-  //     require('../assets/clinicPic.jpg'), // Local image
-  //     require('../assets/doctors.jpg'), // Local image
-  //     require('../assets/Lab.jpg'), // Local image
-  //   ];
-  //   const {childInfo = {}} = useSelector(state => state.ChildDetailsReducer);
-  // const {
-  //   // _id: childID = '',
-  //   age: p_age = '',
-  //   // child = [],
-  //   image = '',
-  //   imagename = '',
-  //   childid = '',
-  //   name = '',
-  //   stage: standard = '',
-  //   // boardofeducation = '',
-  //   fathername = '',
-  //   mothername = '',
-  //   subscriptionStartDate = '',
-  //   subscriptionEndDate = '',
-  //   // isPremium = false,
-  //   parentid: parentId = '',
-  //   boardid = '',
-  //   scholarship = [],
-  //   classname = '',
-  //   stageid = '',
-  //   language = '',
-  // } = childInfo || {};
-
-  //  console.log(childInfo,"childInfo................");
-  //console.log(scholarship, 'scholarship................');
-
-  // const {paymentid = '', enddate = ''} = PremiumPurchase.length
-  //   ? PremiumPurchase[0]
-  //   : [];
-
-  // console.log(paymentid, 'paymentid,,,,,,,,,,,,,,');
-  // const [scholarLicenceID, setScholarLicenseID] = useState('');
-  // const [videoLicenceID, setVideoLicenseID] = useState('');
-  // console.log(videoLicenceID, 'videoLicenceID.......');
-  // useEffect(() => {
-  //   if (PremiumPurchase.length > 0) {
-  //     handleCall(PremiumPurchase);
-  //     //  console.log(SLicenseID, 'VIDEO', scholarLicenseID, 'SCHOLAR');
-  //   }
-  // }, [PremiumPurchase]);
-
-  // const handleCall = PremiumPurchase => {
-  //   const VLicenseID = PremiumPurchase.filter(
-  //     rec =>
-  //       rec.licenseid == '1704875373950' || rec.licenseid == '1705039500455',
-  //   );
-  //   // console.log(VLicenseID,"VLicenseID{{{{{{{{{{{{{")
-
-  //   {
-  //     if (VLicenseID.length > 0) {
-  //       const VideoLicenseID = VLicenseID[0].licenseid;
-  //       setVideoLicenseID(VideoLicenseID);
-  //       // console.log(VideoLicenseID,"VideoLicenseID+++++++++++++++")
-  //     }
-  //   }
-
-  //   const SLicenseID = PremiumPurchase.filter(
-  //     rec =>
-  //       rec.licenseid == '1695358760234' ||
-  //       rec.licenseid == 'ADA51690528084298',
-  //   );
-  //   // console.log(SLicenseID,"sllllllllID{{{{{{{{{{")
-  //   if (SLicenseID.length > 0) {
-  //     const scholarLicenseID = SLicenseID[0].licenseid;
-  //     setScholarLicenseID(scholarLicenseID);
-  //     // console.log(scholarLicenseID, 'scholarLicenseID++++++++++.');
-  //   }
-  // };
-
-  // const LicenseID = PremiumPurchase.map(
-  //   rec =>
-  //     rec.licenseid == '1695358760234' ||
-  //     rec.licenseid == 'ADA51690528084298' ||
-  //     rec.licenseid == '1704875373950' ||
-  //     rec.licenseid == '1705039500455',
-  // );
-  // console.log(LicenseID[0], 'LicenseID[0]^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
-  // // if (LicenseID[0] == true) {}
-  const BackBtnFunction = () => {
-    // if (screenName === 'ExamSets') {
-    //   navigation.navigate('ExamSets', {
-    //     index: index,
-    //     subjectName: subjectName,
-    //     topicName: topicName,
-    //     ExamQuestionsets: ExamQuestionsets,
-    //     Class: standard,
-    //     subjectId: subjectId,
-    //     boardid: boardid,
-    //     scholarshipid: scholarshipid,
-    //     childId: childid,
-    //     isScoreBoardFlag: isScoreBoardFlag,
-    //     scholarshipName: scholarship_name,
-    //     is2ndAvailable: is2ndAvailable,
-    //     topicid: topicid,
-    //   });
-    // } else if (screenName === 'PrevYearQues') {
-    //   navigation.navigate('PrevYearQues', {
-    //     scholarshipId: scholarshipid,
-    //     scholarshipName: scholarship_name,
-    //     quizList: quizList,
-    //     showFeedback: showFeedback,
-    //   });
-    // } else if (screenName === 'ProbQuestion') {
-    //   navigation.navigate('ProbQuestion', {
-    //     scholarshipName: scholarship_name,
-    //     quizList: quizList,
-    //     showFeedback: showFeedback,
-    //   });
-    // } else navigation.goBack();
-    // navigation.navigate('UserHome');
+  //
+  const [scholarLicenceID, setScholarLicenseID] = useState('');
+  const [videoLicenceID, setVideoLicenseID] = useState('');
+  //
+  useEffect(() => {
+    if (PremiumPurchase.length > 0) {
+      handleCall(PremiumPurchase);
+      //
+    }
+  }, [PremiumPurchase]);
+  const [arrayData, setArraydAta] = useState([]);
+  //
+  const handleDetails = (licensedetails: any) => {
+    // setIndexNo(idx + 1);
+    setArraydAta(licensedetails);
+    setModalStatus(true);
   };
 
+  const handleCall = PremiumPurchase => {
+    const VLicenseID = PremiumPurchase.filter(
+      rec =>
+        rec.licenseid == '1716448147785' || rec.licenseid == '1705039500455',
+    );
+    //
+
+    {
+      if (VLicenseID.length > 0) {
+        const VideoLicenseID = VLicenseID[0].licenseid;
+        setVideoLicenseID(VideoLicenseID);
+        //
+      }
+    }
+
+    const SLicenseID = PremiumPurchase.filter(
+      rec =>
+        rec.licenseid == '1695358760234' ||
+        rec.licenseid == 'ADA51690528084298',
+    );
+    //
+    if (SLicenseID.length > 0) {
+      const scholarLicenseID = SLicenseID[0].licenseid;
+      setScholarLicenseID(scholarLicenseID);
+      //
+    }
+  };
+
+  const LicenseID = PremiumPurchase.map(
+    rec =>
+      rec.licenseid == '1695358760234' ||
+      rec.licenseid == 'ADA51690528084298' ||
+      rec.licenseid == '1704875373950' ||
+      rec.licenseid == '1705039500455',
+  );
+  //
+  // if (LicenseID[0] == true) {}
+  const BackBtnFunction = () => {
+    if (screenName === 'ExamSets') {
+      navigation.navigate('ExamSets', {
+        index: index,
+        subjectName: subjectName,
+        topicName: topicName,
+        ExamQuestionsets: ExamQuestionsets,
+        Class: standard,
+        subjectId: subjectId,
+        boardid: boardid,
+        scholarshipid: scholarshipid,
+        childId: childid,
+        isScoreBoardFlag: isScoreBoardFlag,
+        scholarshipName: scholarship_name,
+        is2ndAvailable: is2ndAvailable,
+        topicid: topicid,
+      });
+    } else if (screenName === 'PrevYearQues') {
+      navigation.navigate('PrevYearQues', {
+        scholarshipId: scholarshipid,
+        scholarshipName: scholarship_name,
+        quizList: quizList,
+        showFeedback: showFeedback,
+      });
+    } else if (screenName === 'ProbQuestion') {
+      navigation.navigate('ProbQuestion', {
+        scholarshipName: scholarship_name,
+        quizList: quizList,
+        showFeedback: showFeedback,
+      });
+    } else navigation.goBack();
+    // navigation.navigate('UserHome');
+  };
+  const licenseData = useAppSelector(selectAllLicenseLevelInfo);
+
+  const filterLicenseByType = type => {
+    return licenseData.filter(license => license.licensetype === type);
+  };
+
+  const premiumLicense = filterLicenseByType('premium');
+  console.log(premiumLicense,'@premiumLicense');
+
+  // Example usage for "freemium" type
+  const freemiumLicense = filterLicenseByType('freemium');
+
+  console.log(freemiumLicense,'@freemiumLicense');
   // const licenseId = isScholarshipData.map(rec => rec._id);
   // const licenseRec = isScholarshipData;
   // const licenseName = isScholarshipData.map(rec => rec.licensename);
-  // console.log(
-  //   licenseId,
-  //   licenseRec[0],
-  //   '===============licenseName',
-  //   licenseName[0],
-  // );
-  // const licenseId1=licenseId[0]
-  // const licenseRec1=licenseRec[0]
-  // const licenseName1=licenseName[0]
-  // useEffect(() => {
-  //   navigation.addListener('focus', () => {
-  //     const Predata = {childid, stageid, boardid};
-  //     const PreAccesdata = {stageid, boardid};
-  //     dispatch(getScholarshipPremiumAPI(Predata));
-  //     dispatch(getPremiumAccessAPI(PreAccesdata));
-  //     dispatch(getCouponAPI());
-  //     //   handleBuy(licenseId, licenseRec, licenseName);
-  //     BackHandler.addEventListener('hardwareBackPress', () => {
-  //       BackBtnFunction();
-  //       return true;
-  //     });
-  //     //   dispatch(getDiwaliCouponAPI());
-  //     if (childid) {
-  //       // dispatch(getPremiumAccessAPI(stageid, boardid, setLoading));
-  //       // dispatch(
-  //       //   getScholarshipPremiumAPI(undefined, childid, stageid, boardid),
-  //       // );
-  //     } else {
-  //       // dispatch({
-  //       //   type: GET_PREMIUM_ACCESS,
-  //       //   payload: [],
-  //       // });
-  //     }
-  //   });
-  //   return () => {
-  //     //   dispatch(getDiwaliCouponAPI());
-  //     handleBuy(licenseId, licenseRec, licenseName);
-  //     BackHandler.removeEventListener('hardwareBackPress', () => {
-  //       // navigation.goBack();
-  //       BackBtnFunction();
-  //       return true;
-  //     });
-  //   };
-  // }, [childid, stageid, boardid, ScholarshipList]);
+  const licenseId = premiumLicense.map(rec => rec._id);
+  const licenseRec = premiumLicense;
+  const licenseName = premiumLicense.map(rec => rec.licensename);
+  //
+  useEffect(() => {
+    navigation.addListener('focus', () => {
+      const Predata = {childid, stageid, boardid};
+      const PreAccesdata = {stageid: stageId, boardid: boardId};
+      //
+      dispatch(getChildDetailsAPI(userid));
+      dispatch(getScholarshipPremiumAPI(Predata));
+      dispatch(getPremiumAccessAPI(PreAccesdata));
+      dispatch(getCouponAPI());
+      //   handleBuy(licenseId, licenseRec, licenseName);
+      BackHandler.addEventListener('hardwareBackPress', () => {
+        BackBtnFunction();
+        return true;
+      });
+      //   dispatch(getDiwaliCouponAPI());
+    });
+    return () => {
+      //   dispatch(getDiwaliCouponAPI());
+      handleBuy(licenseId, licenseRec, licenseName);
+      BackHandler.removeEventListener('hardwareBackPress', () => {
+        // navigation.goBack();
+        BackBtnFunction();
+        return true;
+      });
+    };
+  }, [childid, stageid, boardid, ScholarshipList]);
 
-  // useEffect(() => {
-  //   if (ScholarshipList.length > 0) {
-  //     setScholarshipData(ScholarshipList);
-  //   } else {
-  //     setScholarshipData([]);
-  //   }
-  // }, [ScholarshipList]);
+  useEffect(() => {
+    if (ScholarshipList.length > 0 && stateid == '') {
+      setScholarshipData(ScholarshipList);
+      setSelectedscholarshipData(ScholarshipList);
+    } else if (
+      ScholarshipList.length > 0 &&
+      stateid.length > 0 &&
+      stateid == 'Odisha1712675266782'
+    ) {
+      setScholarshipData(OtherstateScholarship1);
+      setSelectedscholarshipData(OtherstateScholarship1);
+    } else if (
+      ScholarshipList.length > 0 &&
+      stateid.length > 0 &&
+      stateid != 'Odisha1712675266782'
+    ) {
+      setScholarshipData(OtherstateScholarship2);
+      setSelectedscholarshipData(OtherstateScholarship2);
+    } else {
+      setScholarshipData([]);
+    }
+  }, [ScholarshipList]);
 
-  //   const AvlCouponEnglishMsg = AvailableCoupon.map(rec => rec.engmessage);
-  //   const AvlCouponOdiaMsg = AvailableCoupon.map(rec => rec.odmessage);
-  //   const AvlCouponHindiMsg = AvailableCoupon.map(rec => rec.hinmessage);
-
-  // const handleBuy = (_id, item, licensename) => {
-  //   const isExist = isScholarBuy.includes(_id);
-  //   setScholarshipName(licensename);
-  //   if (isExist) {
-  //     let datalist = isScholarBuy.filter(rec => rec != _id);
-  //     let updateddatalist = isselectedscholarship.filter(
-  //       rec => rec._id != item._id,
-  //     );
-  //     // console.log(updateddatalist,"updateddatalist.............")
-  //     setIsScholarBuy(datalist);
-  //     setselectedscholarship(updateddatalist);
-  //   } else {
-  //     setIsScholarBuy([_id]);
-  //     setselectedscholarship([item]);
-  //     // console.log(isScholarBuy, 'isScholarBuy...................');
-  //     // let datalistData = isScholarBuy.map(rec => (rec._id = _id));
-  //     // console.log(datalistData, 'datalistData..................');
-  //   }
-  // };
-  // const handleBuy = (_id, item, licensename) => {
-  //   console.log(
-  //     _id,
-  //     '_id...............',
-  //     isScholarshipData,
-  //     'isScholarshipData...........',
-  //   );
-  //   const isExist = isScholarshipData.filter(rec => rec._id == _id);
-  //   console.log(isExist, 'isExist////////////////');
-  //   setSelectedscholarshipData(isExist);
-  //   setScholarID(_id);
-  //   // licenseRec==isExist
-  //   //setScholarshipName(licensename);
-  //   console.log(licenseRec, 'licenseRec@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-  // };
-  // console.log(PremiumPurchase, 'PremiumPurchase............');
+  const handleBuy = (_id, item, licensename) => {
+    const isExist = premiumLicense.filter(rec => rec._id == _id);
+    //
+    setSelectedscholarshipData(isExist);
+    setScholarID(_id);
+  };
+  
 
   return (
-    <SafeAreaView style={{flex: 1,backgroundColor:'#1E1E1E',}}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+    <View style={styles.container}>
+      <ImageBackground
+        style={{
+          width: device_width,
+          height: device_height,
+          flex: 1,
+          alignSelf: 'center',
+        }}
+        resizeMode="cover"
+        source={require('../../../assets/0.png')}>
         <View
           style={{
-            width: device_width,
-            height: device_height,
-            flex: 1,
-            //backgroundColor: '#282828',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            width: '95%',
+            marginTop: 15,
+            // borderWidth: 1,
           }}>
+          <Header
+            // label1={trans('Available Scholarship')}
+            // label2={`{Std - ${stage}`}
+            // label2={`${trans('Std')}-${stage}`}
+            isbackIconShow={true}
+            functionName={() => BackBtnFunction()}
+          />
           <View
             style={{
-              marginVertical: 12,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              paddingHorizontal: 12,
-              paddingVertical: 6,
-            }}>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-              <MaterialIcons
-                name="arrow-back"
-                size={28}
-                style={{color: '#FFFFFF'}}
-              />
-            </TouchableOpacity>
-            <View
-              style={
-                {
-                  // paddingHorizontal: 12,
-                  // paddingVertical: 6,
-                  //alignItems: 'center',
-                }
-              }>
-              <Text
-                style={{
-                  color: '#FFFFFF',
-                  fontWeight: '600',
-                  fontSize: 18,
-                }}>
-                {trans('Pricing')}
-              </Text>
-            </View>
-            <View
-              style={
-                {
-                  // paddingHorizontal: 12,
-                  // paddingVertical: 6,
-                }
-              }>
-              <TouchableOpacity>
-                <Entypo
-                  name="dots-three-vertical"
-                  size={28}
-                  style={{
-                    color: '#FFFFFF',
-                    fontSize: 18,
-                  }}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}>
-            <TouchableOpacity  style={{
-                  borderRadius: 8,
-                  backgroundColor: '#FFFFFF',
-                  padding: 10,
-                  margin: 10,
-                  width: '50%',
-                  height: '100%',
-                  flex: 1,
-                }}>
-              {/* <View
-                style={{
-                  borderRadius: 8,
-                  backgroundColor: '#FFFFFF',
-                  padding: 10,
-                  margin: 10,
-                  width: device_width * 0.45,
-                  height: device_height * 0.21,
-                }}> */}
-                <View
-                  style={{
-                    alignContent: 'center',
-                    justifyContent: 'space-between',
-                  }}>
-                  <MaterialIcons
-                    name="person-outline"
-                    size={50}
-                    style={{
-                      alignSelf: 'center',
-                      marginTop: 10,
-                      marginBottom: 10,
-                      backgroundColor: '#f8f8f8',
-                      padding: 2,
-                      color: '#000000',
-                    }}
-                  />
-                </View>
-                <View
-                  style={{
-                    alignItems: 'center',
-                    marginTop: 8,
-                  }}>
-                  <Text
-                    style={{
-                      fontWeight: '600',
-                      fontSize: 14,
-                      color: '#000000',
-                    }}>
-                    {trans('TRIAL PLAN')}
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    marginTop: 8,
-                    justifyContent: 'center',
-                    paddingTop: 5,
-                  }}>
-                  <Text
-                    style={{
-                      fontWeight: '600',
-                      fontSize: 28,
-                      color: '#2C7DB5',
-                      textAlign: 'center',
-                    }}>
-                    {trans('Free')}
-                  </Text>
-                  <Text
-                    style={{
-                      textAlign: 'center',
-                      marginTop: 10,
-                      color: '#808080',
-                      fontWeight: '500',
-                    }}>
-                    {trans('/7 days')}
-                  </Text>
-                </View>
-              {/* </View> */}
-            </TouchableOpacity>
-            <TouchableOpacity style={{
-                  borderRadius: 8,
-                  //backgroundColor: '#2CBE99',
-                  backgroundColor:'#2C7DB5',
-                  padding: 10,
-                  margin: 10,
-                  width: '50%',
-                  height: '100%',
-                  flex: 1,
-                  // width: device_width * 0.45,
-                  // height: device_height * 0.21,
-                }}>
-              {/* <View
-                style={{
-                  borderRadius: 8,
-                  backgroundColor: '#2CBE99',
-                  padding: 10,
-                  margin: 10,
-                  width: device_width * 0.45,
-                  height: device_height * 0.21,
-                }}> */}
-                <View
-                  style={{
-                    alignContent: 'center',
-                    justifyContent: 'space-between',
-                  }}>
-                  <MaterialCommunityIcons
-                    name="crown-outline"
-                    size={50}
-                    style={{
-                      alignSelf: 'center',
-                      marginTop: 10,
-                      marginBottom: 10,
-                      backgroundColor: '#FFFFFF',
-                      borderRadius: 10,
-                      padding: 2,
-                      color: '#000000',
-                    }}
-                  />
-                </View>
-                <View
-                  style={{
-                    alignItems: 'center',
-                    marginTop: 8,
-                  }}>
-                  <Text
-                    style={{
-                      fontWeight: '600',
-                      fontSize: 14,
-                      color: '#f8f8f8',
-                    }}>
-                    {trans('PREMIUM PLAN')}
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    marginTop: 8,
-                    justifyContent: 'center',
-                    paddingTop: 5,
-                  }}>
-                  <Text
-                    style={{
-                      fontWeight: '600',
-                      fontSize: 28,
-                      color: '#FFFFFF',
-                      textAlign: 'center',
-                    }}>
-                    {trans('Rs.1499')}
-                  </Text>
-                  <Text
-                    style={{
-                      textAlign: 'center',
-                      marginTop: 10,
-                      color: '#FFFFFF',
-                      fontWeight: '400',
-                    }}>
-                    {trans('/year')}
-                  </Text>
-                </View>
-              {/* </View> */}
-            </TouchableOpacity>
-          </View>
-            <Text
-              style={{
-                color: '#a0a0a0',
-                //color: '#2E3231',
-                fontWeight: '500',
-                fontSize: 18,
-                marginTop: 25,
-                marginBottom: 10,
-                marginHorizontal: 15,
-              }}>
-              {trans('Choose your Subscription')}
-            </Text>
-          <View
-            style={{
-              alignContent: 'center',
-              backgroundColor: '#FFFFFF',
-              paddingVertical: 25,
-              width: device_width * 0.95,
-              height: device_height * 0.4,
-              paddingHorizontal: 25,
-              margin: 10,
+              width: '34%',
+              // paddingVertical:10,
+              // paddingHorizontal:10,
+              borderWidth: 1,
+              borderColor: '#fff',
               borderRadius: 10,
-              overflow: 'hidden',
-              //flex: 1,
-            }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                paddingBottom: 20,
-              }}>
-              <Text
-                style={{
-                  fontSize: 16,
-                  color: '#2C7DB5',
-                  fontWeight:'600'
-                }}>
-                {trans('Features')}
-              </Text>
-              <Text
-                style={{
-                  fontSize: 16,
-                  color: '#2C7DB5',
-                  fontWeight:'600',
-                  textAlign: 'right',
-                  marginRight: 10,
-                  flex: 1,
-                }}>
-                {trans('TRIAL')}
-              </Text>
-              <Text
-                style={{
-                  fontSize: 16,
-                  color: '#2C7DB5',
-                  fontWeight:'600'
-                }}>
-                {trans('PREMIUM')}
-              </Text>
-            </View>
-            {AllMembershipData.map((item, index) => {
-              const {
-                _id = '',
-                membershipid = '',
-                membershipstatus = '',
-                membershipname = '',
-                couponcode = '',
-              } = item;
-              return (
-                <View key={index}>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      marginVertical: 10,
-                    }}>
-                    <Text
-                      style={{
-                        fontWeight: '600',
-                        fontSize: 15,
-                        flex: 1,
-                        color:'#000000'
-                      }}>
-                      {membershipname}
-                    </Text>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        gap: 20,
-                      }}>
-                      <Text
-                        style={{
-                          fontWeight: '600',
-                          fontSize: 15,
-                          color:'#000000',
-                          marginRight: 20,
-                        }}>
-                        {membershipstatus}
-                      </Text>
-                      <Text
-                        style={{
-                          fontWeight: '600',
-                          fontSize: 15,
-                          marginRight: 20,
-                          color:'#000000'
-                        }}>
-                        {couponcode}
-                      </Text>
-                    </View>
-                  </View>
-                  {index !== AllMembershipData.length - 1 && (
-                    <View
-                      style={{
-                        borderBottomColor: '#E0E0E0',
-                        borderBottomWidth: 1,
-                        marginTop: 2,
-                        marginBottom: 2,
-                      }}
-                    />
-                  )}
-                </View>
-              );
-            })}
-          </View>
-          <TouchableOpacity
-            // onPress={async () => {
-            //   navigation.navigate('Details');
-            // }}
-            style={{
-              marginLeft: 20,
-            }}>
-            <View
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginTop: 15,
-                marginBottom: 8,
-                backgroundColor: '#2C7DB5',
-                padding: 10,
-                borderRadius: 10,
-                paddingHorizontal: 10,
-                width: device_width * 0.9,
-                marginRight: 10,
-                paddingRight: 10,
-              }}>
-              <Text
-                style={{
-                  color: '#FFFFFF',
-                  fontWeight: '600',
-                  fontSize: 18,
-                  textAlign: 'center',
-                }}>
-                {trans('Choose Plan')}
-              </Text>
-            </View>
-          </TouchableOpacity>
-          <View
-            style={{
               justifyContent: 'center',
               alignItems: 'center',
-              marginTop: 5,
-              marginBottom: 5,
             }}>
+            <View>
+              <Text
+                style={{
+                  color: '#fff',
+                  // fontWeight: '700',
+                  fontSize: 15,
+                  textAlign: 'center',
+                }}>
+                {'Current plan'}
+              </Text>
+            </View>
+            {/* <View>
+              <Text
+                style={{
+                  color: 'yellow',
+                  // fontWeight: '700',
+                  fontSize: 15,
+                  textAlign: 'center',
+                }}>
+                {' Freemium'}
+              </Text>
+            </View> */}
+          </View>
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <Text
               style={{
-                color: '#a0a0a0',
-                fontSize: 14,
-                fontWeight: '500',
-                marginHorizontal: 10,
+                color: '#fff',
+                textAlign: 'center',
+                fontSize: 12,
+                fontWeight: '700',
               }}>
-              {trans('By joining to our privacy policy and terms of service')}
+              {'1 Device | With Ads'}
             </Text>
           </View>
         </View>
-      </ScrollView>
-    </SafeAreaView>
+        {PremiumAccessLoad == 'loading' ? (
+          <LoadingScreen flag={PremiumAccessLoad == 'loading'} />
+        ) : (
+          <>
+            {/* {AvailableCoupon.length > 0 &&
+              (PremiumPurchase.length == 0 ||
+                (PremiumPurchase.length > 0 && paymentid == 'free7days')) &&
+              isScholarshipData.length != 0 && (
+                <View
+                  style={{
+                    // backgroundColor: 'burlywood',
+                    backgroundColor: '#79851f',
+                    paddingVertical: 10,
+                    paddingHorizontal: 15,
+                    marginVertical: 10,
+                    // marginHorizontal: 15,
+                    // borderRadius: 7,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexDirection: 'row',
+                  }}>
+                  <AntDesign
+                    style={{
+                      marginHorizontal: 10,
+                      backgroundColor: '#fff',
+                      borderRadius: 25,
+                    }}
+                    name={'infocirlce'}
+                    size={30}
+                    color={'#0f6f25'}
+                  />
+                  <Text
+                    style={{
+                      color: '#fff',
+                      fontWeight: '700',
+                      fontSize: 15,
+                      textAlign: 'center',
+                      // borderWidth: 1,
+                      // borderLeftWidth:1,
+                      width: '85%',
+                      // textTransform:'capitalize'
+                    }}>
+                    {/* {language == 'english'
+                    ? AvlCouponEnglishMsg
+                    : language == 'odia'
+                    ? AvlCouponOdiaMsg
+                    : AvlCouponHindiMsg} */}
+            {/* </Text>
+                </View>
+              )} */}
+            {/* {isScholarshipData.length == 0 ? (
+              <View
+                style={{
+                  height: 70,
+                  width: '100%',
+                  marginVertical: 20,
+                  justifyContent: 'center',
+                  flexDirection: 'row',
+                  borderColor: 'darkgoldenrod',
+                  borderWidth: 1,
+                }}>
+                <View
+                  style={{
+                    width: 10,
+                    backgroundColor: 'darkgoldenrod',
+                    height: 69,
+                  }}></View>
+                <View
+                  style={{
+                    width: '98%',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    // justifyContent: 'space-around',
+                    backgroundColor: 'burlywood',
+                    paddingHorizontal: 10,
+                  }}>
+                  <MaterialIcons name="info" color={'green'} size={30} />
+                  <Text
+                    style={{
+                      fontSize: 15,
+                      color: '#0f6f25',
+                      fontWeight: '600',
+                      textAlign: 'center',
+                      alignSelf: 'center',
+                    }}>
+                    {'   '}
+                    {trans('Sorry ! No scholarship Available')}
+                  </Text>
+                </View>
+              </View>
+            ) : ( */}
+            <>
+              <ScrollView
+                contentContainerStyle={{paddingBottom: 50}}
+                showsVerticalScrollIndicator={false}>
+                <View
+                  style={{
+                    width: '90%',
+                    borderWidth: 0.5,
+                    borderColor: '#fff',
+                    height: '0%',
+                    justifyContent: 'center',
+                    alignSelf: 'center',
+                    marginTop: 10,
+                  }}></View>
+                <View
+                  style={{
+                    width: '98%',
+                    justifyContent: 'center',
+                    alignSelf: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={styles.upgradeText}>
+                    Upgrade to{' '}
+                    <Text style={styles.premiumHighlight}>Premium Plan</Text> to
+                    get the ad-free experience and ultimate support
+                  </Text>
+                </View>
 
-    // <View style={styles.container}>
-    //   {/* <StatusBar backgroundColor={'#def'} barStyle="dark-content" /> */}
+                {freemiumLicense?.map((item, index) => {
+                  const {
+                    _id = '',
+                    scholarshipname = '',
+                    scholarshipid: ScholarshipID = '',
+                    amount = '',
+                    offerpercentage = '',
+                    paidtotalamount = '',
+                    offeramount = '',
+                    licenseid = '',
+                    discountamount = '',
+                    licensename = '',
+                    licensestatus = '',
+                    scholarshipimage = '',
+                    licensedetails = [],
+                  } = item;
 
-    //   <ImageBackground
-    //     style={{
-    //       width: device_width,
-    //       height: device_height,
-    //       flex: 1,
-    //       alignSelf: 'center',
-    //     }}
-    //     resizeMode="cover"
-    //     source={require('../../../assets/0.png')}>
-    //     <Header
-    //       label1={trans('Available Scholarship')}
-    //       // label2={`{Std - ${stage}`}
-    //       // label2={`${trans('Std')}-${stage}`}
-    //       isbackIconShow={true}
-    //       functionName={() => BackBtnFunction()}
-    //     />
-    //     {PremiumAccessLoad == 'loading' ? (
-    //       <LoadingScreen flag={PremiumAccessLoad == 'loading'} />
-    //     ) : (
-    //       <>
-    //         {AvailableCoupon.length > 0 &&
-    //           (PremiumPurchase.length == 0 ||
-    //             (PremiumPurchase.length > 0 && paymentid == 'free7days')) &&
-    //           isScholarshipData.length != 0 && (
-    //             <View
-    //               style={{
-    //                 // backgroundColor: 'burlywood',
-    //                 backgroundColor: '#79851f',
-    //                 paddingVertical: 10,
-    //                 paddingHorizontal: 15,
-    //                 marginVertical: 10,
-    //                 // marginHorizontal: 15,
-    //                 // borderRadius: 7,
-    //                 alignItems: 'center',
-    //                 justifyContent: 'center',
-    //                 flexDirection: 'row',
-    //               }}>
-    //               <AntDesign
-    //                 style={{
-    //                   marginHorizontal: 10,
-    //                   backgroundColor: '#fff',
-    //                   borderRadius: 25,
-    //                 }}
-    //                 name={'infocirlce'}
-    //                 size={30}
-    //                 color={'#0f6f25'}
-    //               />
-    //               <Text
-    //                 style={{
-    //                   color: '#fff',
-    //                   fontWeight: '700',
-    //                   fontSize: 15,
-    //                   textAlign: 'center',
-    //                   // borderWidth: 1,
-    //                   // borderLeftWidth:1,
-    //                   width: '85%',
-    //                   // textTransform:'capitalize'
-    //                 }}>
-    //                 {/* {language == 'english'
-    //                 ? AvlCouponEnglishMsg
-    //                 : language == 'odia'
-    //                 ? AvlCouponOdiaMsg
-    //                 : AvlCouponHindiMsg} */}
-    //               </Text>
-    //             </View>
-    //           )}
-    //         {isScholarshipData.length == 0 ? (
-    //           <View
-    //             style={{
-    //               height: 70,
-    //               width: '100%',
-    //               marginVertical: 20,
-    //               justifyContent: 'center',
-    //               flexDirection: 'row',
-    //               borderColor: 'darkgoldenrod',
-    //               borderWidth: 1,
-    //             }}>
-    //             <View
-    //               style={{
-    //                 width: 10,
-    //                 backgroundColor: 'darkgoldenrod',
-    //                 height: 69,
-    //               }}></View>
-    //             <View
-    //               style={{
-    //                 width: '98%',
-    //                 flexDirection: 'row',
-    //                 alignItems: 'center',
-    //                 // justifyContent: 'space-around',
-    //                 backgroundColor: 'burlywood',
-    //                 paddingHorizontal: 10,
-    //               }}>
-    //               <MaterialIcons name="info" color={'green'} size={30} />
-    //               <Text
-    //                 style={{
-    //                   fontSize: 15,
-    //                   color: '#0f6f25',
-    //                   fontWeight: '600',
-    //                   textAlign: 'center',
-    //                   alignSelf: 'center',
-    //                 }}>
-    //                 {'   '}
-    //                 {trans('Sorry ! No scholarship Available')}
-    //               </Text>
-    //             </View>
-    //           </View>
-    //         ) : (
-    //           <>
-    //             <ScrollView
-    //               contentContainerStyle={{paddingBottom: 50}}
-    //               showsVerticalScrollIndicator={false}
-    //               // refreshControl={
-    //               //   <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-    //               // }
-    //             >
-    //               <View style={{marginHorizontal: 0}}>
-    //                 {isScholarshipData.map((item, index) => {
-    //                   const {
-    //                     _id = '',
-    //                     scholarshipname = '',
-    //                     amount = '',
-    //                     offerpercentage = '',
-    //                     paidtotalamount = '',
-    //                     offeramount = '',
-    //                     licenseid = '',
-    //                     discountamount = '',
-    //                     licensename = '',
-    //                     licensestatus = '',
-    //                     scholarshipimage = '',
-    //                   } = item;
+                  return (
+                    <View key={index} style={styles.freemium}>
+                      <Text style={styles.planTitle}>{licensename}</Text>
+                      <View style={styles.planFeature}>
+                        <FlatList
+                          data={licensedetails}
+                          keyExtractor={(item, index) => index.toString()}
+                          renderItem={({item, index}) => (
+                            <Text
+                              style={{
+                                fontSize: 14,
+                                color: '#333',
+                                fontWeight: '600',
+                                marginTop: 5,
+                              }}>
+                              {/* {index + 1} */}
+                              {' - '}
+                              {item}
+                            </Text>
+                          )}
+                        />
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'flex-end',
+                          alignItems: 'center',
+                        }}>
+                        {/* <Iconz name="sound" color={'red'} size={22} /> */}
+                        <FastImage
+                          style={{
+                            width: 23,
+                            height: 23,
+                          }}
+                          resizeMode="contain"
+                          source={require('../../../assets/ads.png')}
+                        />
+                        <Text
+                          style={{
+                            color: 'red',
+                            fontSize: 15,
+                            // marginTop: 5,
+                            fontWeight: 'bold',
+                          }}>
+                          {'ADs present'}
+                        </Text>
+                      </View>
+                    </View>
+                  );
+                })}
 
-    //                   {
-    //                     console.log(
-    //                       videoLicenceID == licenseid,
-    //                       ' videoLicenceID == licenseid............',
-    //                     );
-    //                   }
-    //                   const isExist = isScholarBuy.includes(_id);
-    //                   {
-    //                     /* const premiumFlag = premiumDataVal != licenseid; */
-    //                   }
-    //                   let premiumFlag = false;
-    //                   let endLicenceDate = '';
-    //                   {
-    //                     /* console.log(
-    //                   PremiumPurchase,
-    //                   'premiumrec11111111................',
-    //                   licenseid,
-    //                 ); */
-    //                   }
+                <View style={{marginHorizontal: 0}}>
+                  {premiumLicense.map((item, index) => {
+                    const {
+                      _id = '',
+                      scholarshipname = '',
+                      scholarshipid: ScholarshipID = '',
+                      amount = '',
+                      offerpercentage = '',
+                      paidtotalamount = '',
+                      offeramount = '',
+                      licenseid = '',
+                      discountamount = '',
+                      licensename = '',
+                      licensestatus = '',
+                      scholarshipimage = '',
+                      licensedetails = [],
+                    } = item;
 
-    //                   if (PremiumPurchase.length) {
-    //                     {
-    //                       /* console.log(premiumrec,"premiumrec................") */
-    //                     }
-    //                     const selectedData = PremiumPurchase.find(
-    //                       rec => rec.licenseid == licenseid,
-    //                     );
-    //                     const licenseLastDate = PremiumPurchase.map(
-    //                       rec => rec.enddate,
-    //                     );
+                    const isExist = isScholarBuy.includes(_id);
+                    {
+                      /* const premiumFlag = premiumDataVal != licenseid; */
+                    }
+                    let premiumFlag = false;
+                    let endLicenceDate = '';
+                    let allCarddisable = false;
 
-    //                     {
-    //                       /* console.log(
-    //                     licenseLastDate,
-    //                     'licenseLastDate...........',
-    //                   ); */
-    //                     }
-    //                     if (
-    //                       selectedData != undefined &&
-    //                       licenseLastDate != undefined
-    //                     ) {
-    //                       premiumFlag = true;
-    //                       endLicenceDate = licenseLastDate;
-    //                       {
-    //                         /* console.log(endLicenceDate, 'endLicenceDate.........'); */
-    //                       }
-    //                       {
-    //                         /* setLicenseLastDate(licenseLastDate)  */
-    //                       }
-    //                     }
-    //                   }
-    //                   let licenseInactive = false;
-    //                   if (licensestatus == 'inactive') licenseInactive = true;
-    //                   return (
-    //                     <TouchableOpacity
-    //                       key={index}
-    //                       onPress={() => {
-    //                         handleBuy(_id, item, licensename);
-    //                       }}
-    //                       disabled={
-    //                         paymentid == 'free7days'
-    //                           ? false
-    //                           : scholarLicenceID == licenseid ||
-    //                             videoLicenceID == licenseid ||
-    //                             videoLicenceID.length > 0 ||
-    //                             paymentid == 'free7days'
-    //                           ? // paymentid == 'free7days'
-    //                             true
-    //                           : false
+                    if (PremiumPurchase.length) {
+                      {
+                        /*  */
+                      }
+                      const selectedData = PremiumPurchase.find(
+                        rec => rec.licenseid == licenseid,
+                      );
+                      //
+                      const licenseLastDate = PremiumPurchase.map(
+                        rec => rec.enddate,
+                      );
 
-    //                         // licenseInactive || premiumFlag ? true : false
-    //                       }>
-    //                       <View
-    //                         style={{
-    //                           backgroundColor:
-    //                             (scholarID == _id) == false
-    //                               ? licenseInactive == false
-    //                                 ? premiumFlag == false
-    //                                   ? isExist
-    //                                     ? '#def'
-    //                                     : 'rgba(0,255,0, 0.05)'
-    //                                   : '#fff'
-    //                                 : '#dadada'
-    //                               : 'lightgreen',
-    //                           padding: 20,
-    //                           marginHorizontal: 10,
-    //                           marginVertical: 10,
-    //                           borderRadius: 10,
-    //                           // elevation: 10,
-    //                           borderWidth: 2,
-    //                           borderColor:
-    //                             (scholarID == _id) == false
-    //                               ? '#FFF'
-    //                               : '#FFB901',
-    //                           // width: '95%',
-    //                         }}>
-    //                         <View
-    //                           style={{
-    //                             justifyContent: 'space-between',
-    //                             height: device_height * 0.3,
-    //                             // backgroundColor: colors[index % colors.length],
-    //                             flexDirection: 'row',
-    //                           }}>
-    //                           {/* <View
-    //                           style={{
-    //                             flexDirection: 'row',
-    //                             // justifyContent: 'space-between',
-    //                           }}> */}
+                      const HighvalueLicense = PremiumPurchase.map(
+                        rec =>
+                          rec.licenseid == '1716448147785' ||
+                          rec.licenseid == '1716448133885',
+                      );
 
-    //                           <View
-    //                             style={{
-    //                               // marginHorizontal: 15,
-    //                               justifyContent: 'center',
-    //                               // alignItems: 'center',
-    //                               // borderWidth: 1,
-    //                               width: '63%',
-    //                             }}>
-    //                             <View>
-    //                               <Text
-    //                                 style={{
-    //                                   color:
-    //                                     licenseInactive == false
-    //                                       ? premiumFlag == false
-    //                                         ? Colors.primary
-    //                                         : premiumFlag
-    //                                         ? Colors.primary
-    //                                         : '#fff'
-    //                                       : '#444',
-    //                                   width: '98%',
-    //                                   fontSize: 20,
-    //                                   textAlign: 'left',
-    //                                   fontWeight: 'bold',
-    //                                   // marginRight: 10,
-    //                                 }}>
-    //                                 {licensename}
-    //                               </Text>
-    //                             </View>
+                      //
+                      {
+                        if (HighvalueLicense[0] == true) {
+                          allCarddisable = true;
+                        } else {
+                          allCarddisable = false;
+                        }
+                      }
 
-    //                             {/* {PremiumPurchase.length == 0 ||
-    //                           (PremiumPurchase.length > 0 &&
-    //                             paymentid == 'free7days') ? ( */}
-    //                             {/* {scholarLicenceID == licenseid ||
-    //                             videoLicenceID == licenseid ||
-    //                             paymentid == 'free7days' ? (
-    //                               <></>
-    //                             ) : ( */}
-    //                             <View
-    //                               style={{
-    //                                 width: '100%',
-    //                                 alignItems: 'center',
-    //                                 // borderTopWidth: premiumFlag ? 0 : 0.7,
-    //                                 // marginTop: 5,
-    //                                 justifyContent: 'center',
-    //                                 flexDirection: 'row',
-    //                                 // borderWidth: 1,
-    //                                 borderColor: 'grey',
-    //                               }}>
-    //                               {/* <Text
-    //                                 style={{
-    //                                   color:
-    //                                     PremiumPurchase.length == 0 ||
-    //                                       (PremiumPurchase.length > 0 &&
-    //                                         paymentid == 'free7days')
-    //                                       ? '#000'
-    //                                       : '#fff',
-    //                                 borderWidth: 1,
-    //                                 fontSize: 15,
-    //                                 textAlign:'center',
-    //                                 alignItems:'center',
-    //                                 justifyContent:'center',
-    //                                   fontWeight: '600',
-    //                                 }}> */}
-    //                               {/* <Ionicons
-    //                                 name="pricetag-sharp"
-    //                                 size={20}
-    //                                 style={{ marginRight: 5 }}
-    //                                 color={Colors.primary}
-    //                               /> */}
-    //                               <MaterialCommunityIcons
-    //                                 name="brightness-percent"
-    //                                 // color="#FFB901"
-    //                                 color={Colors.primary}
-    //                                 size={22}
-    //                                 // style={{ marginRight: 10 }}
-    //                               />
-    //                               {/* {trans('Get at')} */}
-    //                               <Text
-    //                                 style={{
-    //                                   fontWeight: 'bold',
-    //                                   fontSize: 15,
-    //                                   color: 'crimson',
-    //                                 }}>
-    //                                 {' '}
-    //                                 {offerpercentage}
-    //                                 {'%'} {trans('off')}{' '}
-    //                               </Text>
-    //                               <Text
-    //                                 style={{
-    //                                   fontSize: 15,
-    //                                   color:
-    //                                     PremiumPurchase.length == 0 ||
-    //                                     (PremiumPurchase.length > 0 &&
-    //                                       paymentid == 'free7days')
-    //                                       ? '#808080'
-    //                                       : '#666',
-    //                                   textDecorationLine: 'line-through',
-    //                                   textDecorationStyle: 'solid',
-    //                                   fontWeight: '700',
-    //                                 }}>
-    //                                 {' '}
-    //                                 ₹{amount}{' '}
-    //                               </Text>
-    //                               <Text
-    //                                 style={{
-    //                                   fontWeight: '900',
-    //                                   fontSize: 20,
-    //                                   color: Colors.primary,
-    //                                 }}>
-    //                                 {' '}
-    //                                 ₹{paidtotalamount}
-    //                               </Text>
-    //                               {/* </Text> */}
+                      if (
+                        selectedData != undefined &&
+                        licenseLastDate != undefined
+                      ) {
+                        premiumFlag = true;
+                        endLicenceDate = licenseLastDate;
+                        {
+                          /*  */
+                        }
+                        {
+                          /* setLicenseLastDate(licenseLastDate)  */
+                        }
+                      }
+                    }
+                    let licenseInactive = false;
+                    if (licensestatus == 'inactive') licenseInactive = true;
+                    return (
+                      <TouchableOpacity
+                        key={index}
+                        disabled={
+                          PremiumDetails[0]?.licenseid == licenseid
+                            ? true
+                            : false
+                        }
+                        style={[
+                          styles.premium,
+                          {
+                            backgroundColor:
+                              PremiumDetails[0]?.licenseid != licenseid
+                                ? (scholarID == _id) == false
+                                  ? licenseInactive == false
+                                    ? premiumFlag == false
+                                      ? isExist
+                                        ? '#def'
+                                        : 'limegreen'
+                                      : '#fff'
+                                    : '#dadada'
+                                  : '#ffeb01'
+                                : 'gray',
+                          },
+                        ]}
+                        onPress={() => {
+                          handleBuy(_id, item, licensename);
+                        }}>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            // height:'10%'
+                          }}>
+                          <Text style={styles.planTitle}>{licensename}</Text>
+                          <FontAwesome5
+                            style={{color: '#000'}}
+                            name={'crown'}
+                            size={25}
+                          />
+                        </View>
+                        {/* <Text style={styles.planSubtitle}>
+                           
+                          </Text> */}
+                        <FlatList
+                          data={licensedetails}
+                          keyExtractor={(item, index) => index.toString()}
+                          renderItem={({item, index}) => {
+                            // Define the word you want to make bold
 
-    //                               {/* <Text
-    //                                 style={{
-    //                                   fontWeight: 'bold',
-    //                                   fontSize: 12,
-    //                                 }}>
-    //                                 {'( '}
-    //                                 {trans(
-    //                                   `Our application's annual subscription comes at an incredible price of just ₹599 for the entire academic year`,
-    //                                 )}
-    //                                 {' )'}
-    //                               </Text> */}
+                            const wordsToBold = [
+                              'Basic Plan',
+                              'Freemium',
+                              'Experience ads',
+                              'Noteved Academy',
+                              'Previous years',
+                              'Most Probable',
+                              'free learning',
+                            ];
 
-    //                               {/* {AvailableCoupon.length > 0 && (
-    //                                   <View
-    //                                     style={{
-    //                                       flexDirection: 'row',
-    //                                       alignItems: 'center',
-    //                                       borderWidth: 1,
-    //                                       borderColor: 'rebeccapurple',
-    //                                       backgroundColor: 'lavender',
-    //                                       width: device_width * 0.6,
-    //                                       padding: 7,
-    //                                       borderRadius: 8,
-    //                                       marginTop: 5,
-    //                                     }}>
-    //                                     <Text
-    //                                       style={{
-    //                                         fontWeight: 'bold',
-    //                                         fontSize: 12,
-    //                                         width: '70%',
+                            // Split the item text into parts based on the word to be bold
+                            const regex = new RegExp(
+                              `(${wordsToBold.join('|')})`,
+                              'gi',
+                            );
+                            const parts = item.split(regex);
+                            return (
+                              <Text
+                                style={{
+                                  fontSize: 14,
+                                  color: '#333',
+                                  fontWeight: '600',
+                                  marginTop: 5,
+                                }}>
+                                {parts.map((part, i) =>
+                                  wordsToBold.some(
+                                    word =>
+                                      word.toUpperCase() === part.toUpperCase(),
+                                  ) ? (
+                                    <Text
+                                      key={i}
+                                      style={{
+                                        fontWeight: 'bold',
+                                        fontSize: 16,
+                                      }}>
+                                      {part}
+                                    </Text>
+                                  ) : (
+                                    <Text key={i}>{part}</Text>
+                                  ),
+                                )}
+                              </Text>
+                            );
+                          }}
+                        />
+                        
 
-    //                                         color: '#333',
-    //                                       }}>
-    //                                       {language == 'english'
-    //                                         ? AvlCouponEnglishMsg
-    //                                         : language == 'odia'
-    //                                         ? AvlCouponOdiaMsg
-    //                                         : AvlCouponHindiMsg}
+                        <View
+                          style={[
+                            styles.priceContainer,
+                            {
+                              height: 100,
+                              width: '100%',
+                              position: 'absolute',
+                              bottom: -32,
+                              // borderWidth: 1,
+                              borderColor: 'red',
+                              // marginTop: -30,
+                              marginBottom: -40,
+                            },
+                          ]}>
+                          {/* <Text style={styles.price}>Rs. 1199/-</Text> */}
+                          <TouchableOpacity style={styles.upgradeButton}>
+                            <Text style={styles.upgradeButtonText}>
+                              Rs. {amount}/-
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </View>
+              </ScrollView>
+              <TouchableOpacity
+                style={{
+                  marginVertical: 10,
+                  alignSelf: 'center',
+                  paddingLeft: 12,
+                  width: device_width * 0.97,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  elevation: 5,
+                  // marginVertical: 5,
+                  backgroundColor: '#ffde59',
+                  paddingVertical: 10,
+                  borderRadius: 7,
+                  // alignSelf: 'flex-end',
+                }}
+                onPress={() => setHelp(true)}>
+                <View
+                  style={{
+                    backgroundColor: 'green',
+                    borderRadius: 50,
+                    padding: 5,
+                  }}>
+                  <AntDesign
+                    name={'customerservice'}
+                    style={{fontSize: 25, color: '#fff'}}
+                  />
+                </View>
+                <View style={{width: '85%', marginLeft: 5, borderWidth: 0}}>
+                  <Text
+                    style={{
+                      fontSize: 17,
+                      fontWeight: '700',
+                      // color: Colors.primary,
+                      color: '#333',
+                      paddingLeft: 10,
+                    }}>
+                    {trans('Help Desk')}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 13,
+                      fontWeight: '600',
+                      // color: Colors.primary,
+                      color: '#333',
+                      paddingLeft: 10,
+                    }}>
+                    {trans(
+                      'If you encounter any issues on our Noteved Academy digital platform, please contact our support team and provide all relevant details using the provided numbers :- 9861302757,7008699927',
+                    )}
+                    {/* {trans('Contact our customer care')} */}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+              <View>
+                <TouchableOpacity
+                  // disabled={
+                  //   PremiumPurchase.length == 0 ||
+                  //   (PremiumPurchase.length > 0 && paymentid == 'free7days')
+                  //     ? false
+                  //     : true
+                  // }
+                  disabled={
+                    PremiumDetails[0]?.licenseid ==
+                    premiumLicense[0]?.licenseid
+                      ? true
+                      : scholarID == ''
+                      ? true
+                      : false
+                  }
+                  style={{
+                    width: '80%',
+                    borderRadius: 10,
 
-    //                                     </Text>
-    //                                     <FastImage
-    //                                       style={{
-    //                                         height: 40,
-    //                                         width: 60,
-    //                                         marginVertical: 5,
-    //                                         backgroundColor: 'lavender',
-    //                                       }}
-    //                                       resizeMode="contain"
-    //                                       source={require('../../../assets/coupon.png')}
-    //                                     />
-    //                                   </View>
-    //                                 )} */}
-    //                             </View>
-    //                             {/* )} */}
-    //                             {PremiumPurchase.length == '' ? (
-    //                               <>
-    //                                 <Text
-    //                                   style={{
-    //                                     color: 'crimson',
-    //                                     fontSize: 13,
-    //                                     fontWeight: 'bold',
-    //                                   }}>
-    //                                   {trans('Your Free trial has expired')}
-    //                                 </Text>
-    //                               </>
-    //                             ) : (
-    //                               <></>
-    //                             )}
-    //                             {premiumFlag == false ? (
-    //                               <>
-    //                                 {isExist == false ? (
-    //                                   <View
-    //                                     style={{
-    //                                       flexDirection: 'row',
-    //                                       marginTop: 5,
-    //                                       justifyContent: 'flex-start',
-    //                                     }}>
-    //                                     <>
-    //                                       {/* <TouchableOpacity
-    //                                       disabled={
-    //                                         licenseInactive ? true : false
-    //                                       }
-    //                                       style={{
-    //                                         paddingVertical: 7,
-    //                                         // paddingHorizontal: 10,
-    //                                         // borderWidth: 1,
-    //                                       }}
-    //                                       onPress={() => {
-    //                                         handleBuy(_id, item, licensename);
-    //                                       }}>
-    //                                       <View
-    //                                         style={{
-    //                                           backgroundColor: licenseInactive
-    //                                             ? '#dadada'
-    //                                             : Colors.primary,
-    //                                           width: licenseInactive
-    //                                             ? 200
-    //                                             : 100,
-    //                                           height: 50,
-    //                                           borderRadius: 10,
-    //                                           flexDirection: 'row',
-    //                                           paddingVertical: 1,
-    //                                           borderWidth: licenseInactive
-    //                                             ? 0
-    //                                             : 1,
-    //                                           borderColor: '#fff',
-    //                                           alignItems: 'center',
-    //                                           justifyContent: licenseInactive
-    //                                             ? 'flex-start'
-    //                                             : 'center',
-    //                                         }}>
-    //                                         <Text
-    //                                           style={{
-    //                                             fontWeight: '800',
-    //                                             color: licenseInactive
-    //                                               ? 'crimson'
-    //                                               : '#fff',
-    //                                             fontSize: licenseInactive
-    //                                               ? 15
-    //                                               : 15,
-    //                                             // textAlign: 'left',
-    //                                             // alignSelf:'center',
-    //                                             textAlign: 'center',
-    //                                           }}>
-    //                                           {licenseInactive
-    //                                             ? trans(
-    //                                                 'Sorry ! We will update shortly',
-    //                                               )
-    //                                             : trans('BUY')}
-    //                                         </Text>
-    //                                       </View>
-    //                                     </TouchableOpacity> */}
-    //                                     </>
-    //                                   </View>
-    //                                 ) : (
-    //                                   <View
-    //                                     style={{
-    //                                       flexDirection: 'row',
-    //                                       marginTop: 5,
-    //                                       justifyContent: 'flex-start',
-    //                                     }}>
-    //                                     {/* <>
-    //                                     <TouchableOpacity
-    //                                       disabled={
-    //                                         licenseInactive || premiumFlag
-    //                                           ? true
-    //                                           : false
-    //                                       }
-    //                                       style={{
-    //                                         paddingVertical: 7,
-    //                                         paddingHorizontal: 10,
-    //                                         // borderWidth: 1,
-    //                                       }}
-    //                                       onPress={() => {
-    //                                         handleBuy(_id, item, licensename);
-    //                                       }}>
-    //                                       <View
-    //                                         style={{
-    //                                           backgroundColor: 'red',
-    //                                           width: 100,
-    //                                           height: 50,
-    //                                           borderRadius: 10,
-    //                                           flexDirection: 'row',
-    //                                           paddingVertical: 1,
-    //                                           paddingHorizontal: 5,
-    //                                           // borderWidth: 1,
-    //                                           borderColor: '#fff',
-    //                                           alignItems: 'center',
-    //                                           justifyContent: 'center',
-    //                                         }}>
-    //                                         <Text
-    //                                           style={{
-    //                                             fontWeight: '800',
-    //                                             color: '#fff',
-    //                                             fontSize: 15,
-    //                                             textAlign: 'center',
-    //                                           }}>
-    //                                           {licenseInactive
-    //                                             ? trans('Not Available')
-    //                                             : trans('REMOVE')}
-    //                                         </Text>
-    //                                       </View>
-    //                                     </TouchableOpacity>
-    //                                   </> */}
-    //                                   </View>
-    //                                 )}
-    //                               </>
-    //                             ) : (
-    //                               <View
-    //                                 style={{
-    //                                   justifyContent: 'center',
-    //                                   // alignItems: 'center',
-    //                                 }}>
-    //                                 {PremiumPurchase.length > 0 &&
-    //                                 paymentid === 'free7days' ? (
-    //                                   <>
-    //                                     <Text
-    //                                       style={{
-    //                                         color: 'green',
-    //                                         fontSize: 13,
-    //                                         // marginTop: 5,
-    //                                         marginBottom: 5,
-    //                                         // textAlign: 'center',
-    //                                         fontWeight: '800',
-    //                                         alignItems: 'flex-start',
-    //                                       }}>
-    //                                       {trans('Free trial ends on : ')}
-    //                                       {moment(enddate).format('DD/MM/YY')}
-    //                                     </Text>
-    //                                   </>
-    //                                 ) : (
-    //                                   <Text
-    //                                     style={{
-    //                                       color: 'darkgreen',
-    //                                       fontSize: 16,
-    //                                       marginTop: 10,
-    //                                       marginBottom: 5,
-    //                                       // textAlign: 'center',
-    //                                       fontWeight: '800',
-    //                                       alignItems: 'flex-start',
-    //                                     }}>
-    //                                     {trans('Purchased')}
-    //                                   </Text>
-    //                                 )}
-    //                                 {PremiumPurchase.length > 0 &&
-    //                                 paymentid == 'free7days' ? (
-    //                                   <>
-    //                                     {isExist == false ? (
-    //                                       <View
-    //                                         style={{
-    //                                           flexDirection: 'row',
-    //                                           marginTop: 5,
-    //                                           justifyContent: 'flex-start',
-    //                                         }}>
-    //                                         <>
-    //                                           {/* <TouchableOpacity
-    //                                           disabled={
-    //                                             licenseInactive ? true : false
-    //                                           }
-    //                                           style={{
-    //                                             paddingVertical: 7,
-    //                                             // paddingHorizontal: 10,
-    //                                             // borderWidth: 1,
-    //                                           }}
-    //                                           onPress={() => {
-    //                                             handleBuy(
-    //                                               _id,
-    //                                               item,
-    //                                               licensename,
-    //                                             );
-    //                                           }}>
-    //                                           <View
-    //                                             style={{
-    //                                               backgroundColor:
-    //                                                 licenseInactive
-    //                                                   ? '#dadada'
-    //                                                   : Colors.primary,
-    //                                               width: licenseInactive
-    //                                                 ? 200
-    //                                                 : 100,
+                    // backgroundColor:
+                    //   // isScholarBuy == '' ||
+                    //   PremiumPurchase.length == 0 ||
+                    //   (PremiumPurchase.length > 0 && paymentid == 'free7days')
+                    //     ? '#FFB901'
+                    //     : '#a9a9a9',
+                    backgroundColor:
+                      PremiumDetails[0]?.licenseid ==
+                      premiumLicense[0]?.licenseid
+                        ? '#a9a9a9'
+                        : scholarID == ''
+                        ? '#a9a9a9'
+                        : '#FFB901',
 
-    //                                               // height: licenseInactive ? 40 : 40,
-    //                                               height: 50,
+                    alignSelf: 'center',
+                    alignItems: 'center',
+                    paddingVertical: 10,
+                    marginBottom: 20,
+                  }}
+                  onPress={() => {
+                    {
+                      console.log(
+                        selectedScholarshipData,
+                        'selectedScholarshipData.................))))))))',
+                      );
+                    }
+                    setScholarID('');
+                    console.log(isselectedscholarship, 'isselectedscholarship');
+                    navigation.navigate('PremiumPurchase', {
+                      selectedscholarship: isselectedscholarship,
+                      scholarshipName: scholarshipName,
+                      screenName: screenName,
+                      subjectId: subjectId,
+                      subjectName: subjectName,
+                      couponcode: couponcode,
+                      topicid: topicid,
+                      topicName: topicName,
+                      ExamQuestionsets: ExamQuestionsets,
+                      isScoreBoardFlag: isScoreBoardFlag,
+                      is2ndAvailable: is2ndAvailable,
+                      index: index,
+                      quizList: quizList,
+                      showFeedback: showFeedback,
 
-    //                                               borderRadius: 10,
-    //                                               flexDirection: 'row',
-    //                                               paddingVertical: 1,
-    //                                               // paddingHorizontal: 3,
+                      licenseRec: premiumLicense,
+                    });
+                  }}>
+                  <Text
+                    style={{
+                      fontWeight: '800',
+                      color: 'darkgreen',
+                      fontSize: 15,
+                    }}>
+                    {trans('Continue to Cart')}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <Modal transparent={true} visible={help}>
+                <ImageBackground
+                  style={{
+                    // borderRadius: 50,
+                    borderTopWidth: 1,
+                    borderLeftWidth: 1,
+                    borderRightWidth: 1,
+                    borderColor: '#fff',
+                    // width: device_width,
+                    // height: device_height,
+                    minHeight: device_height * 0.65,
+                    minWidth: device_width * 0.9,
+                    // borderRadius: 25,
+                    // flex: 1,
+                    alignSelf: 'center',
+                    // justifyContent: 'center',
+                    // alignItems: 'center',
+                  }}
+                  resizeMode="cover"
+                  source={require('../../../assets/0.png')}>
+                  <View
+                    style={{
+                      // backgroundColor: '#fff',
+                      flex: 1,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <View
+                      style={{
+                        alignItems: 'flex-end',
+                        justifyContent: 'center',
+                      }}>
+                      <View
+                        style={{
+                          borderRadius: 15,
+                          // borderWidth: 1,
+                          minHeight: device_height * 0.65,
+                          minWidth: device_width * 0.9,
+                          // backgroundColor: '#fff',
+                          flexDirection: 'column',
+                          justifyContent: 'space-between',
+                        }}>
+                        <View>
+                          <View
+                            style={{
+                              alignItems: 'center',
+                            }}>
+                            <View
+                              style={{
+                                alignItems: 'center',
+                                paddingVertical: 15,
+                              }}>
+                              <Text
+                                style={{
+                                  textAlign: 'center',
+                                  width: device_width * 0.8,
+                                  fontSize: 17,
+                                  color: '#fff',
+                                  marginTop: 10,
+                                  marginLeft: 10,
+                                  fontWeight: '900',
+                                }}>
+                                {trans(
+                                  'Are you facing any problem in our NoteVed digital platform ?',
+                                )}
+                              </Text>
+                              <Text
+                                style={{
+                                  textAlign: 'center',
+                                  width: device_width * 0.7,
+                                  fontSize: 15,
+                                  color: '#fff',
+                                  marginTop: 5,
+                                  // marginLeft: 5,
+                                  fontWeight: '500',
+                                }}>
+                                {trans(
+                                  'Then contact our service agent immediately',
+                                )}
+                              </Text>
+                              <Text
+                                style={{
+                                  textAlign: 'center',
+                                  width: device_width * 0.7,
+                                  fontSize: 15,
+                                  color: '#FFB901',
+                                  marginTop: 5,
+                                  // marginLeft: 5,
+                                  fontWeight: '700',
+                                }}>
+                                {trans('Contact No. :')}
+                              </Text>
+                            </View>
+                            <AntDesign
+                              name="closecircleo"
+                              style={{
+                                fontSize: 38,
+                                color: '#fff',
+                                position: 'absolute',
+                                top: -10,
+                                right: -10,
+                                // marginTop: 10,
+                                backgroundColor: 'crimson',
+                                borderRadius: 50,
+                              }}
+                              onPress={() => setHelp(false)}
+                            />
+                          </View>
 
-    //                                               borderWidth: licenseInactive
-    //                                                 ? 0
-    //                                                 : 1,
-    //                                               borderColor: '#fff',
-    //                                               alignItems: 'center',
-    //                                               justifyContent:
-    //                                                 licenseInactive
-    //                                                   ? 'flex-start'
-    //                                                   : 'center',
-    //                                             }}>
-    //                                             <Text
-    //                                               style={{
-    //                                                 fontWeight: '800',
-    //                                                 color: licenseInactive
-    //                                                   ? 'crimson'
-    //                                                   : '#fff',
-    //                                                 fontSize: licenseInactive
-    //                                                   ? 15
-    //                                                   : 15,
-    //                                                 // textAlign: 'left',
-    //                                                 // alignSelf:'center',
-    //                                                 textAlign: 'center',
-    //                                               }}>
-    //                                               {licenseInactive
-    //                                                 ? trans(
-    //                                                     'Sorry ! We will update shortly',
-    //                                                   )
-    //                                                 : trans('BUY')}
-    //                                             </Text>
-    //                                           </View>
-    //                                         </TouchableOpacity> */}
-    //                                         </>
-    //                                       </View>
-    //                                     ) : (
-    //                                       <View
-    //                                         style={{
-    //                                           flexDirection: 'row',
-    //                                           marginTop: 5,
-    //                                           justifyContent: 'flex-start',
-    //                                         }}>
-    //                                         <>
-    //                                           {/* <TouchableOpacity
-    //                                           disabled={
-    //                                             licenseInactive || premiumFlag
-    //                                               ? false
-    //                                               : true
-    //                                           }
-    //                                           style={{
-    //                                             paddingVertical: 7,
-    //                                             paddingHorizontal: 10,
-    //                                             // borderWidth: 1,
-    //                                           }}
-    //                                           onPress={() => {
-    //                                             handleBuy(
-    //                                               _id,
-    //                                               item,
-    //                                               licensename,
-    //                                             );
-    //                                           }}>
-    //                                           <View
-    //                                             style={{
-    //                                               backgroundColor: 'red',
-    //                                               width: 100,
-    //                                               height: 50,
-    //                                               borderRadius: 10,
-    //                                               flexDirection: 'row',
-    //                                               paddingVertical: 1,
-    //                                               paddingHorizontal: 5,
-    //                                               // borderWidth: 1,
-    //                                               borderColor: '#fff',
-    //                                               alignItems: 'center',
-    //                                               justifyContent: 'center',
-    //                                             }}>
-    //                                             <Text
-    //                                               style={{
-    //                                                 fontWeight: '800',
-    //                                                 color: '#fff',
-    //                                                 fontSize: 15,
-    //                                                 textAlign: 'center',
-    //                                               }}>
-    //                                               {licenseInactive
-    //                                                 ? trans('Not Available')
-    //                                                 : trans('REMOVE')}
-    //                                             </Text>
-    //                                           </View>
-    //                                         </TouchableOpacity> */}
-    //                                         </>
-    //                                       </View>
-    //                                     )}
-    //                                   </>
-    //                                 ) : (
-    //                                   <Text
-    //                                     style={{
-    //                                       // color: '#FFB901',
-    //                                       color: 'darkgreen',
-    //                                       fontWeight: '700',
-    //                                       // textAlign: 'center',
-    //                                     }}>
-    //                                     {trans('Valid Upto :')}{' '}
-    //                                     {trans('Till exam ends')}
-    //                                     {/* {moment(endLicenceDate[index]).format(
-    //                                   'DD-MMM-YYYY',
-    //                                 )} */}
-    //                                   </Text>
-    //                                 )}
-    //                               </View>
-    //                             )}
-    //                           </View>
-    //                           <View
-    //                             style={{
-    //                               // marginTop: 10,
-    //                               marginLeft: 5,
-    //                               // width: 90,
-    //                               // height: 80,
-    //                               // backgroundColor: '#fff',
-    //                               // borderRadius: 10,
-    //                               alignItems: 'center',
-    //                               justifyContent: 'space-evenly',
+                          <View
+                            style={{
+                              // borderWidth: 1,
+                              paddingVertical: 10,
+                              alignItems: 'center',
+                              // marginTop: 10,
+                              marginLeft: 10,
+                              flexDirection: 'row',
+                              justifyContent: 'center',
+                              alignSelf: 'center',
+                              // padding: 10,
+                            }}>
+                            <TouchableOpacity
+                              style={{display: 'flex', flexDirection: 'row'}}
+                              onPress={() =>
+                                Linking.openURL(`tel:${7008699927}`)
+                              }>
+                              <View
+                                style={{
+                                  backgroundColor: Colors.white,
+                                  borderRadius: 1000,
+                                  height: 30,
+                                  width: 30,
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                  marginTop: 5,
+                                  marginRight: 10,
+                                }}>
+                                <Ionicons
+                                  style={{color: '#50B450'}}
+                                  name="call"
+                                  size={22}
+                                />
+                              </View>
+                              <View
+                                style={{
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                }}>
+                                <Text
+                                  style={{
+                                    marginRight: 10,
+                                    fontWeight: '700',
+                                    color: '#FFB901',
+                                  }}>
+                                  +91 7008699927
+                                </Text>
+                              </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                              style={{display: 'flex', flexDirection: 'row'}}
+                              onPress={() =>
+                                Linking.openURL(`tel:${9861302757}`)
+                              }>
+                              <View
+                                style={{
+                                  backgroundColor: Colors.white,
+                                  borderRadius: 1000,
+                                  height: 30,
+                                  width: 30,
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                  marginTop: 5,
+                                  marginRight: 10,
+                                }}>
+                                <Ionicons
+                                  style={{color: '#50B450'}}
+                                  name="call"
+                                  size={22}
+                                />
+                              </View>
+                              <View
+                                style={{
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                }}>
+                                <Text
+                                  style={{
+                                    marginRight: 10,
+                                    fontWeight: '700',
+                                    color: '#FFB901',
+                                  }}>
+                                  +91 9861302757
+                                </Text>
+                              </View>
+                            </TouchableOpacity>
+                          </View>
 
-    //                               // borderWidth: 1,
-    //                             }}>
-    //                             <FastImage
-    //                               style={{
-    //                                 width: 90,
-    //                                 height: 80,
-    //                                 // borderRadius: 10,
-    //                                 // resizeMode: 'contain',
-    //                                 // borderWidth: 1,
-    //                                 // borderColor: '#fff',
-    //                               }}
-    //                               resizeMode="contain"
-    //                               // source={
-    //                               // subjectimage
-    //                               source={require('../../../assets/OAV_logo.jpg')}
+                          <View
+                            style={{
+                              // borderWidth: 1,
+                              paddingVertical: 10,
+                              alignItems: 'center',
+                              // marginTop: 10,
+                              marginLeft: 10,
+                              flexDirection: 'row',
+                              justifyContent: 'center',
+                              alignSelf: 'center',
+                              // padding: 10,
+                            }}></View>
 
-    //                               //   scholarshipimage != ''
-    //                               //     ? { uri: scholarshipimage }
-    //                               //     : {
-    //                               //       uri: 'https://img.freepik.com/premium-vector/graduation-cost-expensive-education-scholarship-loan-budget_101884-1023.jpg',
-    //                               //     }
-    //                               // }
-    //                             />
-    //                             <FastImage
-    //                               style={{
-    //                                 width: 90,
-    //                                 height: 80,
-    //                                 // borderRadius: 10,
+                          <TouchableOpacity
+                            style={{
+                              flexDirection: 'row',
+                              borderRadius: 10,
+                              paddingHorizontal: 5,
+                              borderWidth: 1,
+                              // backgroundColor:  '#FFB901',
+                              marginTop: 10,
+                              backgroundColor: 'limegreen',
+                              paddingVertical: 10,
+                              width: '90%',
+                              alignSelf: 'center',
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              borderColor: '#FFB901',
+                              // height: '20%',
+                            }}
+                            onPress={() =>
+                              Linking.openURL(
+                                'whatsapp://send?phone=9861302757',
+                              )
+                            }>
+                            <FontAwesome
+                              name={'whatsapp'}
+                              size={28}
+                              color={'#fff'}
+                              // whatsapp://send?text=hello&phone=9861302757'
+                              onPress={() =>
+                                Linking.openURL(
+                                  'whatsapp://send?phone=9861302757',
+                                )
+                              }
+                            />
+                            <Text
+                              style={{
+                                left: 15,
+                                fontSize: 15,
+                                color: '#fff',
+                                fontWeight: '900',
+                              }}>
+                              {trans('Whatsapp Us')}
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        position: 'absolute',
+                        bottom: -20,
+                        height: 100,
+                        width: '100%',
+                      }}>
+                      <FastImage
+                        style={{
+                          height: 100,
+                          width: '100%',
+                          // position:'absolute', bottom:-23
+                          // borderWidth: 1,
+                          borderColor: 'red',
+                          marginTop: -30,
+                          marginBottom: -15,
+                        }}
+                        source={require('../../../assets/resting1.png')}
+                        resizeMode="contain"
+                      />
+                      <FastImage
+                        style={{
+                          height: 30,
+                          width: '100%',
+                          // borderWidth: 1,
+                          borderColor: 'blue',
+                          // position:'absolute', bottom:-23
+                          // marginTop:-8
+                        }}
+                        source={require('../../../assets/grass.png')}
+                        resizeMode="contain"
+                      />
+                    </View>
+                  </View>
+                </ImageBackground>
+              </Modal>
+            </>
+            {/* )} */}
+            {modalStatus && arrayData.length > 0 && (
+              <Modal transparent={true} visible={modalStatus}>
+                <View
+                  style={{
+                    padding: 10,
+                    borderWidth: 1,
+                    width: '98%',
+                    height: device_height * 0.92,
+                    backgroundColor: '#fff',
+                    borderRadius: 20,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    alignSelf: 'center',
+                  }}>
+                  <MaterialIcons name="info" color={'green'} size={40} />
 
-    //                                 // borderWidth: 1,
-    //                                 // borderColor: '#fff',
-    //                               }}
-    //                               resizeMode="contain"
-    //                               source={require('../../../assets/Jawahar_Navodaya_Vidyalaya_logo.png')}
-    //                             />
-    //                           </View>
-
-    //                           {/* </View> */}
-    //                         </View>
-
-    //                         {/* <View
-    //                           style={{
-    //                             marginTop: 10,
-    //                             marginLeft: 5,
-    //                             width: 190,
-    //                             height: 90,
-    //                             backgroundColor: '#fff',
-    //                             borderRadius: 10,
-    //                             alignItems: 'center',
-    //                             justifyContent: 'center',
-    //                             alignSelf:'center',
-    //                             // borderWidth: 1,
-    //                           }}>
-    //                           <Image
-    //                             style={{
-    //                               width: 190,
-    //                               height: 90,
-    //                               borderRadius: 10,
-    //                               resizeMode: 'contain',
-    //                               // borderWidth: 1,
-    //                               // borderColor: '#fff',
-    //                             }}
-    //                             source={require('../../../assets/Jawahar_Navodaya_Vidyalaya_logo.png')}
-    //                           />
-    //                         </View> */}
-    //                       </View>
-    //                     </TouchableOpacity>
-    //                   );
-    //                 })}
-    //               </View>
-    //             </ScrollView>
-    //             {/* <TouchableOpacity
-    //             style={{
-    //               paddingLeft: 12,
-    //               flexDirection: 'row',
-    //               alignItems: 'center',
-    //               marginBottom: 20,
-    //             }}
-    //             onPress={() => setHelp(true)}>
-    //             <AntDesign
-    //               name={'customerservice'}
-    //               style={{fontSize: 25, color: Colors.primary}}></AntDesign>
-    //             <Text
-    //               style={{
-    //                 fontSize: 20,
-    //                 fontWeight: '700',
-    //                 color: Colors.primary,
-    //                 paddingLeft: 10,
-    //               }}>
-    //               {trans('Help Desk')}
-    //             </Text>
-    //           </TouchableOpacity> */}
-    //             {/* <View
-    //           style={{
-    //             backgroundColor: '#ffde59',
-    //             padding: 8,
-    //             borderRadius: 10,
-    //           }}>
-
-    //           </View> */}
-    //             <TouchableOpacity
-    //               style={{
-    //                 marginVertical: 10,
-    //                 alignSelf: 'center',
-    //                 paddingLeft: 12,
-    //                 width: device_width * 0.97,
-    //                 flexDirection: 'row',
-    //                 alignItems: 'center',
-    //                 elevation: 5,
-    //                 // marginVertical: 5,
-    //                 backgroundColor: '#ffde59',
-    //                 paddingVertical: 10,
-    //                 borderRadius: 7,
-    //                 // alignSelf: 'flex-end',
-    //               }}
-    //               onPress={() => setHelp(true)}>
-    //               <View
-    //                 style={{
-    //                   backgroundColor: 'green',
-    //                   borderRadius: 50,
-    //                   padding: 5,
-    //                 }}>
-    //                 <AntDesign
-    //                   name={'customerservice'}
-    //                   style={{fontSize: 25, color: '#fff'}}
-    //                 />
-    //               </View>
-    //               <View style={{width: '85%', marginLeft: 5, borderWidth: 0}}>
-    //                 <Text
-    //                   style={{
-    //                     fontSize: 17,
-    //                     fontWeight: '700',
-    //                     // color: Colors.primary,
-    //                     color: '#333',
-    //                     paddingLeft: 10,
-    //                   }}>
-    //                   {trans('Help Desk')}
-    //                 </Text>
-    //                 <Text
-    //                   style={{
-    //                     fontSize: 13,
-    //                     fontWeight: '600',
-    //                     // color: Colors.primary,
-    //                     color: '#333',
-    //                     paddingLeft: 10,
-    //                   }}>
-    //                   {trans(
-    //                     'If you encounter any issues on our Noteved Academy digital platform, please contact our support team and provide all relevant details using the provided numbers :- 9861302757,7008699927,9337052091',
-    //                   )}
-    //                   {/* {trans('Contact our customer care')} */}
-    //                 </Text>
-    //               </View>
-    //             </TouchableOpacity>
-    //             <View>
-    //               <TouchableOpacity
-    //                 disabled={
-    //                   PremiumPurchase.length == 0 ||
-    //                   (PremiumPurchase.length > 0 && paymentid == 'free7days')
-    //                     ? false
-    //                     : true
-    //                 }
-    //                 // disabled={
-    //                 //   paymentid == 'free7days'
-    //                 //     ? false
-    //                 //     : videoLicenceID.length > 0
-    //                 //       ? true
-    //                 //       : false
-    //                 // }
-    //                 style={{
-    //                   width: '80%',
-    //                   borderRadius: 10,
-    //                   // backgroundColor:
-    //                   //   // isScholarBuy == '' ||
-    //                   //   PremiumPurchase.length == 0 ||
-    //                   //   (PremiumPurchase.length > 0 && paymentid == 'free7days')
-    //                   //     ? Colors.primary
-    //                   //     : '#a9a9a9',
-    //                   backgroundColor:
-    //                     // isScholarBuy == '' ||
-    //                     PremiumPurchase.length == 0 ||
-    //                     (PremiumPurchase.length > 0 && paymentid == 'free7days')
-    //                       ? '#FFB901'
-    //                       : '#a9a9a9',
-    //                   // backgroundColor:
-    //                   //   paymentid == 'free7days'
-    //                   //     ? '#FFB901'
-    //                   //     : videoLicenceID.length > 0
-    //                   //       ? '#a9a9a9'
-    //                   //       : '#FFB901',
-    //                   alignSelf: 'center',
-    //                   alignItems: 'center',
-    //                   paddingVertical: 10,
-    //                   marginBottom: 20,
-    //                 }}
-    //                 onPress={() => {
-    //                   {
-    //                     console.log(
-    //                       selectedScholarshipData,
-    //                       'selectedScholarshipData.................))))))))',
-    //                     );
-    //                   }
-    //                   navigation.navigate('PremiumPurchase', {
-    //                     selectedscholarship: isselectedscholarship,
-    //                     scholarshipName: scholarshipName,
-    //                     screenName: screenName,
-    //                     subjectId: subjectId,
-    //                     subjectName: subjectName,
-    //                     couponcode: couponcode,
-    //                     topicid: topicid,
-    //                     topicName: topicName,
-    //                     ExamQuestionsets: ExamQuestionsets,
-    //                     isScoreBoardFlag: isScoreBoardFlag,
-    //                     is2ndAvailable: is2ndAvailable,
-    //                     index: index,
-    //                     quizList: quizList,
-    //                     showFeedback: showFeedback,
-    //                     // stageID: childList.stageid,
-    //                     // boardID: childList.boardid,
-    //                     // childID: childList.childid,
-    //                     licenseRec: selectedScholarshipData,
-    //                     //                   selectedscholarship = [],
-    //                     // scholarshipName = '',
-    //                     // couponcode = '',
-    //                     // screenName = '',
-    //                     // subjectId = '',
-    //                     // subjectName = '',
-    //                     // topicid = '',
-    //                     // topicName = '',
-    //                     // ExamQuestionsets = [],
-    //                     // isScoreBoardFlag = '',
-    //                     // is2ndAvailable = '',
-    //                     // index = '',
-    //                     // quizList = [],
-    //                     // showFeedback = '',
-    //                   });
-    //                 }}>
-    //                 <Text
-    //                   style={{
-    //                     fontWeight: '800',
-    //                     color: 'darkgreen',
-    //                     fontSize: 15,
-    //                   }}>
-    //                   {trans('Continue to Cart')}
-    //                 </Text>
-    //               </TouchableOpacity>
-    //             </View>
-    //             <Modal transparent={true} visible={help}>
-    //               <ImageBackground
-    //                 style={{
-    //                   // borderRadius: 50,
-    //                   borderTopWidth: 1,
-    //                   borderLeftWidth: 1,
-    //                   borderRightWidth: 1,
-    //                   borderColor: '#fff',
-    //                   // width: device_width,
-    //                   // height: device_height,
-    //                   minHeight: device_height * 0.6,
-    //                   minWidth: device_width * 0.9,
-    //                   // borderRadius: 25,
-    //                   // flex: 1,
-    //                   alignSelf: 'center',
-    //                   // justifyContent: 'center',
-    //                   // alignItems: 'center',
-    //                 }}
-    //                 resizeMode="cover"
-    //                 source={require('../../../assets/0.png')}>
-    //                 <View
-    //                   style={{
-    //                     // backgroundColor: '#fff',
-    //                     flex: 1,
-    //                     alignItems: 'center',
-    //                     justifyContent: 'center',
-    //                   }}>
-    //                   <View
-    //                     style={{
-    //                       alignItems: 'flex-end',
-    //                       justifyContent: 'center',
-    //                     }}>
-    //                     <View
-    //                       style={{
-    //                         borderRadius: 15,
-    //                         // borderWidth: 1,
-    //                         minHeight: device_height * 0.6,
-    //                         minWidth: device_width * 0.9,
-    //                         // backgroundColor: '#fff',
-    //                         flexDirection: 'column',
-    //                         justifyContent: 'space-between',
-    //                       }}>
-    //                       <View>
-    //                         <View
-    //                           style={{
-    //                             alignItems: 'center',
-    //                           }}>
-    //                           <View
-    //                             style={{
-    //                               alignItems: 'center',
-    //                               paddingVertical: 15,
-    //                             }}>
-    //                             <Text
-    //                               style={{
-    //                                 textAlign: 'center',
-    //                                 width: device_width * 0.8,
-    //                                 fontSize: 17,
-    //                                 color: '#fff',
-    //                                 marginTop: 10,
-    //                                 marginLeft: 10,
-    //                                 fontWeight: '900',
-    //                               }}>
-    //                               {trans(
-    //                                 'Are you facing any problem in our NoteVed digital platform ?',
-    //                               )}
-    //                             </Text>
-    //                             <Text
-    //                               style={{
-    //                                 textAlign: 'center',
-    //                                 width: device_width * 0.7,
-    //                                 fontSize: 15,
-    //                                 color: '#fff',
-    //                                 marginTop: 5,
-    //                                 // marginLeft: 5,
-    //                                 fontWeight: '500',
-    //                               }}>
-    //                               {trans(
-    //                                 'Then contact our service agent immediately',
-    //                               )}
-    //                             </Text>
-    //                             <Text
-    //                               style={{
-    //                                 textAlign: 'center',
-    //                                 width: device_width * 0.7,
-    //                                 fontSize: 15,
-    //                                 color: '#FFB901',
-    //                                 marginTop: 5,
-    //                                 // marginLeft: 5,
-    //                                 fontWeight: '700',
-    //                               }}>
-    //                               {trans('Contact No. :')}
-    //                             </Text>
-    //                           </View>
-    //                           <AntDesign
-    //                             name="closecircleo"
-    //                             style={{
-    //                               fontSize: 38,
-    //                               color: '#fff',
-    //                               position: 'absolute',
-    //                               top: -10,
-    //                               right: -10,
-    //                               // marginTop: 10,
-    //                               backgroundColor: 'crimson',
-    //                               borderRadius: 50,
-    //                             }}
-    //                             onPress={() => setHelp(false)}
-    //                           />
-    //                         </View>
-
-    //                         <View
-    //                           style={{
-    //                             // borderWidth: 1,
-    //                             paddingVertical: 10,
-    //                             alignItems: 'center',
-    //                             // marginTop: 10,
-    //                             marginLeft: 10,
-    //                             flexDirection: 'row',
-    //                             justifyContent: 'center',
-    //                             alignSelf: 'center',
-    //                             // padding: 10,
-    //                           }}>
-    //                           <TouchableOpacity
-    //                             style={{display: 'flex', flexDirection: 'row'}}
-    //                             onPress={() =>
-    //                               Linking.openURL(`tel:${7008699927}`)
-    //                             }>
-    //                             <View
-    //                               style={{
-    //                                 backgroundColor: Colors.white,
-    //                                 borderRadius: 1000,
-    //                                 height: 30,
-    //                                 width: 30,
-    //                                 justifyContent: 'center',
-    //                                 alignItems: 'center',
-    //                                 marginTop: 5,
-    //                                 marginRight: 10,
-    //                               }}>
-    //                               <Ionicons
-    //                                 style={{color: '#50B450'}}
-    //                                 name="call"
-    //                                 size={22}
-    //                               />
-    //                             </View>
-    //                             <View
-    //                               style={{
-    //                                 justifyContent: 'center',
-    //                                 alignItems: 'center',
-    //                               }}>
-    //                               <Text
-    //                                 style={{
-    //                                   marginRight: 10,
-    //                                   fontWeight: '700',
-    //                                   color: '#FFB901',
-    //                                 }}>
-    //                                 +91 7008699927
-    //                               </Text>
-    //                             </View>
-    //                           </TouchableOpacity>
-    //                           <TouchableOpacity
-    //                             style={{display: 'flex', flexDirection: 'row'}}
-    //                             onPress={() =>
-    //                               Linking.openURL(`tel:${9861302757}`)
-    //                             }>
-    //                             <View
-    //                               style={{
-    //                                 backgroundColor: Colors.white,
-    //                                 borderRadius: 1000,
-    //                                 height: 30,
-    //                                 width: 30,
-    //                                 justifyContent: 'center',
-    //                                 alignItems: 'center',
-    //                                 marginTop: 5,
-    //                                 marginRight: 10,
-    //                               }}>
-    //                               <Ionicons
-    //                                 style={{color: '#50B450'}}
-    //                                 name="call"
-    //                                 size={22}
-    //                               />
-    //                             </View>
-    //                             <View
-    //                               style={{
-    //                                 justifyContent: 'center',
-    //                                 alignItems: 'center',
-    //                               }}>
-    //                               <Text
-    //                                 style={{
-    //                                   marginRight: 10,
-    //                                   fontWeight: '700',
-    //                                   color: '#FFB901',
-    //                                 }}>
-    //                                 +91 9861302757
-    //                               </Text>
-    //                             </View>
-    //                           </TouchableOpacity>
-    //                         </View>
-
-    //                         <View
-    //                           style={{
-    //                             // borderWidth: 1,
-    //                             paddingVertical: 10,
-    //                             alignItems: 'center',
-    //                             // marginTop: 10,
-    //                             marginLeft: 10,
-    //                             flexDirection: 'row',
-    //                             justifyContent: 'center',
-    //                             alignSelf: 'center',
-    //                             // padding: 10,
-    //                           }}>
-    //                           <TouchableOpacity
-    //                             style={{display: 'flex', flexDirection: 'row'}}
-    //                             onPress={() =>
-    //                               Linking.openURL(`tel:${9337052091}`)
-    //                             }>
-    //                             <View
-    //                               style={{
-    //                                 backgroundColor: Colors.white,
-    //                                 borderRadius: 1000,
-    //                                 height: 30,
-    //                                 width: 30,
-    //                                 justifyContent: 'center',
-    //                                 alignItems: 'center',
-    //                                 marginTop: 5,
-    //                                 marginRight: 10,
-    //                               }}>
-    //                               <Ionicons
-    //                                 style={{color: '#50B450'}}
-    //                                 name="call"
-    //                                 size={22}
-    //                               />
-    //                             </View>
-    //                             <View
-    //                               style={{
-    //                                 justifyContent: 'center',
-    //                                 alignItems: 'center',
-    //                               }}>
-    //                               <Text
-    //                                 style={{
-    //                                   marginRight: 10,
-    //                                   fontWeight: '700',
-    //                                   color: '#FFB901',
-    //                                 }}>
-    //                                 +91 9337052091
-    //                               </Text>
-    //                             </View>
-    //                           </TouchableOpacity>
-
-    //                         </View>
-    //                       </View>
-    //                     </View>
-    //                   </View>
-    //                   <View
-    //                     style={{
-    //                       position: 'absolute',
-    //                       bottom: -20,
-    //                       height: 100,
-    //                       width: '100%',
-    //                     }}>
-    //                     <FastImage
-    //                       style={{
-    //                         height: 100,
-    //                         width: '100%',
-    //                         // position:'absolute', bottom:-23
-    //                         // borderWidth: 1,
-    //                         borderColor: 'red',
-    //                         marginTop: -30,
-    //                         marginBottom: -15,
-    //                       }}
-    //                       source={require('../../../assets/resting1.png')}
-    //                       resizeMode="contain"
-    //                     />
-    //                     <FastImage
-    //                       style={{
-    //                         height: 30,
-    //                         width: '100%',
-    //                         // borderWidth: 1,
-    //                         borderColor: 'blue',
-    //                         // position:'absolute', bottom:-23
-    //                         // marginTop:-8
-    //                       }}
-    //                       source={require('../../../assets/grass.png')}
-    //                       resizeMode="contain"
-    //                     />
-    //                   </View>
-    //                 </View>
-    //               </ImageBackground>
-    //             </Modal>
-    //           </>
-    //         )}
-    //       </>
-    //     )}
-    //   </ImageBackground>
-    // </View>
+                  <Text
+                    style={{
+                      fontSize: 22,
+                      color: '#333',
+                      fontWeight: '800',
+                      textAlign: 'center',
+                      textDecorationLine: 'underline',
+                      marginVertical: 15,
+                      width: '92%',
+                    }}>
+                    {premiumLicense[indexNo].licensename}
+                  </Text>
+                  <View
+                    style={{
+                      width: '90%',
+                      borderWidth: 1,
+                      borderColor: '#999',
+                      alignItems: 'left',
+                      justifyContent: 'center',
+                      alignSelf: 'center',
+                      paddingHorizontal: 10,
+                      paddingVertical: 15,
+                    }}>
+                    <FlatList
+                      data={arrayData}
+                      keyExtractor={(item, index) => index.toString()}
+                      renderItem={({item, index}) => (
+                        <Text
+                          style={{
+                            fontSize: 14,
+                            color: '#333',
+                            fontWeight: '600',
+                            marginTop: 5,
+                          }}>
+                          {index + 1}
+                          {' - '}
+                          {item}
+                        </Text>
+                      )}
+                    />
+                    {/* {isScholarshipData[indexNo].licensedetails.map(
+                      (item, index) => {
+                        return (
+                          <View style={{flexDirection: 'row'}} key={index}>
+                            <Text
+                              style={{
+                                fontSize: 14,
+                                color: '#333',
+                                fontWeight: '600',
+                              }}>
+                              {item}
+                            </Text>
+                          </View>
+                        );
+                      },
+                    )} */}
+                  </View>
+                  <TouchableOpacity
+                    style={{
+                      width: '60%',
+                      paddingHorizontal: 20,
+                      paddingVertical: 15,
+                      backgroundColor: 'green',
+                      borderRadius: 20,
+                      borderWidth: 1,
+                      borderColor: 'gold',
+                      marginTop: 15,
+                    }}
+                    onPress={() => {
+                      setModalStatus(false);
+                    }}>
+                    <Text
+                      style={{
+                        textAlign: 'center',
+                        alignItems: 'center',
+                        fontSize: 16,
+                        color: 'gold',
+                        fontWeight: '600',
+                      }}>
+                      {trans('OK')}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </Modal>
+            )}
+          </>
+        )}
+      </ImageBackground>
+    </View>
   );
 };
 
@@ -2298,5 +1528,92 @@ const styles = StyleSheet.create({
   },
   label: {
     margin: 8,
+  },
+
+  currentPlan: {
+    fontSize: 18,
+    color: 'white',
+  },
+  deviceInfo: {
+    fontSize: 14,
+    // color: '#B0BEC5',
+  },
+  upgradeText: {
+    textAlign: 'left',
+    marginVertical: 20,
+    fontSize: 16,
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  premiumHighlight: {
+    color: '#F1C40F',
+    fontWeight: 'bold',
+  },
+  planContainer: {
+    width: '100%',
+  },
+  freemium: {
+    backgroundColor: '#fff',
+    padding: 15,
+    borderRadius: 25,
+    marginBottom: 10,
+    width: '90%',
+    justifyContent: 'center',
+    // alignItems:'center',
+    alignContent: 'center',
+    // alignSelf:''
+    borderWidth: 1,
+    alignSelf: 'center',
+  },
+  premium: {
+    backgroundColor: '#F1C40F',
+    padding: 15,
+    borderRadius: 25,
+    color: '#2C3E50',
+    width: '90%',
+    justifyContent: 'center',
+    alignSelf: 'center',
+  },
+  planTitle: {
+    marginBottom: 10,
+    fontSize: 20,
+    fontWeight: '800',
+    color: '#2C3E50',
+  },
+  planSubtitle: {
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  planFeature: {
+    fontSize: 14,
+    marginVertical: 2,
+  },
+  boldText: {
+    fontWeight: 'bold',
+  },
+  priceContainer: {
+    // marginTop: 20,
+    alignItems: 'flex-end',
+  },
+  price: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#2C3E50',
+  },
+  upgradeButton: {
+    heigth: '40%',
+    // borderWidth:1,
+    borderColor: '#fff',
+    backgroundColor: '#000',
+    borderRadius: 20,
+    paddingVertical: 5,
+    paddingHorizontal: 15,
+    marginTop: 10,
+  },
+  upgradeButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '700',
+    fontStyle: 'italic',
   },
 });
