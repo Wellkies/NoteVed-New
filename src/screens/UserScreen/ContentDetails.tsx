@@ -50,14 +50,7 @@ const ContentDetails = ({route}) => {
     topicid: topicID = '',
     //percentage = '',
   } = route.params;
-  console.log(
-    coursename,
-    // subjectname,
-    topicname,
-    //percentage,
-    '=======coursename, subjectname, topicname, percentage',
-  );
-  //const Percentage = Math.trunc(percentage);
+console.log(route.params,'@contentParams')
   const {authToken, status, userInfo} = useAppSelector(selectUserInfo);
   interface ChildInfo {
     _id: string;

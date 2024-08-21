@@ -177,10 +177,7 @@ const ScoreBoard = ({route}) => {
     topicid = '',
   } = route.params;
   console.log(
-    subjectName,
-    coursename,
-    chapterName,
-    '======???subjectName,coursename,chapterName',
+   route.params,'@scoreboardParams',
   );
   const [loading, setLoading] = useState(false);
   const [ansloading, setAnsLoading] = useState(false);
@@ -1157,6 +1154,7 @@ const ScoreBoard = ({route}) => {
                     topicid: topicid,
                     childid: childid,
                   };
+                  console.log(data,'@ReData')
                   dispatch(getContentByTopicIdAPI(data));
                   navigation.navigate('ContentDetails', {
                     coursename: coursename,

@@ -67,7 +67,7 @@ const SubjectList = ({route}) => {
   const dispatch = useDispatch<any>();
   const {t: trans, i18n} = useTranslation();
   const {stageid = '', boardid = '', coursename = ''} = route.params;
-  console.log(route.params, '===============route.params');
+  //console.log(route.params, '===============route.params');
   // const [loading, setLoading] = useState(false);
   // const SchlrshipId = 'NVOOKADA1690811843420';
   // const ScholarshipName = 'Adarsha';

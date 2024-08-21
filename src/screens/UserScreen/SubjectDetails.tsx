@@ -65,7 +65,7 @@ const SubjectsDetails = ({ route }) => {
     topicimage='' ,
     topicname='' ,
   } = route.params;
-  console.log(route.params, "=================route.params");
+  //console.log(route.params, "=================route.params");
 
   // console.log(childId, "childId................")
   const [highlightedIndex, setHighlightedIndex] = useState(0);
@@ -119,7 +119,7 @@ const SubjectsDetails = ({ route }) => {
   // );
   const TopicList = useAppSelector(selectTopicInfo);
   const TopicListLoading = useAppSelector(selectTopicStatus);
-  console.log(TopicList, "==========TopicList", TopicListLoading);
+  //console.log(TopicList, "==========TopicList", TopicListLoading);
 
   // const {UnlockChild = []} = useSelector(state => state.GetUnlockChildReducer);
   const UnlockChild = useAppSelector(selectUnlockStudent)
@@ -286,9 +286,9 @@ const SubjectsDetails = ({ route }) => {
         navigation.goBack();
         return true;
       });
-      console.log(
-        Revdata, "============Revdata"
-      );
+      // console.log(
+      //   Revdata, "============Revdata"
+      // );
     });
     return () => {
       BackHandler.removeEventListener('hardwareBackPress', () => {
@@ -315,17 +315,17 @@ const SubjectsDetails = ({ route }) => {
       // RevisionData.map((row,index)=>{
       //   RevisionData.push({...row, isExamAvailable: false});
       // })
-      console.log(index, '...............v..................');
+      //console.log(index, '...............v..................');
 
       if (index < 1) {
         topicdetails.push({ ...row, isExamAvailable: true });
       } else if (index == 1) {
         let topiconePer = RevisionData[0].studenttopic;
-        console.log(
-          topiconePer,
-          'topiconePer*************',
-          topiconePer.length > 0,
-        );
+        // console.log(
+        //   topiconePer,
+        //   'topiconePer*************',
+        //   topiconePer.length > 0,
+        // );
         if (topiconePer.length > 0) {
           topicdetails.push({ ...row, isExamAvailable: true });
         } else {
@@ -341,7 +341,7 @@ const SubjectsDetails = ({ route }) => {
         // let topicprePer = RevisionData.map(
         //   item => item.studenttopic,
         // );
-        console.log(topiconePers.length, '________________________________');
+       // console.log(topiconePers.length, '________________________________');
         if (topiconePers.length > 0) {
           topicdetails.push({ ...row, isExamAvailable: true });
         } else {

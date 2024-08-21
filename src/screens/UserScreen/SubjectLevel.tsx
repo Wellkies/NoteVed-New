@@ -102,8 +102,8 @@ const SubjectLevel = ({route}) => {
     subjectname = '',
     courseid = '',
   } = route.params;
-  console.log(route.params, '@route.params');
-  console.log(courseid, '==========courseid');
+ // console.log(route.params, '@route.params');
+ // console.log(courseid, '==========courseid');
   //console.log(route.params, '===============route.params');
   // const [loading, setLoading] = useState(false);
   // const SchlrshipId = 'NVOOKADA1690811843420'
@@ -113,13 +113,13 @@ const SubjectLevel = ({route}) => {
   const filterData = TopicBySubjectId.map(rec => rec.topicid);
   // TopicBySubjectId.filter((rec) => rec.sltopic == 1)
   const topicID = filterData[0];
-  console.log(
-    topicID,
-    '================topicID***************',
-    topicId,
-    '=============topicId******************',
-    filterData,
-  );
+  // console.log(
+  //   topicID,
+  //   '================topicID***************',
+  //   topicId,
+  //   '=============topicId******************',
+  //   filterData,
+  // );
   // console.log(TopicBySubjectId, '==============TopicBySubjectId');
   // useEffect(() => {
   //   dispatch(getTopicBySubIdAPI(subjectid));
@@ -202,7 +202,7 @@ const SubjectLevel = ({route}) => {
     language = '',
     // coordinates='',
   } = userInfo;
-  console.log(childid, '@childid1');
+  //console.log(childid, '@childid1');
   useEffect(() => {
     navigation.addListener('focus', () => {
       // const data = {
@@ -250,9 +250,9 @@ const SubjectLevel = ({route}) => {
     dispatch(getChildProgressDetailAPI(data));
     return () => {};
   }, []);
-  console.log(courseid, '@courseid2');
+  //console.log(courseid, '@courseid2');
   const SubjectByCourse = useAppSelector(selectChildDetailData);
-  console.log(SubjectByCourse, '@SubjectByCourse1');
+  //console.log(SubjectByCourse, '@SubjectByCourse1');
   //const SubjectByCourse = useAppSelector(selectAllSubjectsInfo);
   const SubLoading = useAppSelector(selectAllSubjectsStatus);
   const SubByCourseID = useAppSelector(selectAllSubByCourseIdInfo);

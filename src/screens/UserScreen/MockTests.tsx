@@ -100,11 +100,11 @@ const MockTests = ({route}) => {
     islastexercise = false,
     isReattempt = false,
   } = route.params;
-  console.log(route.params, 'route.params........?///////////////');
+  console.log(route.params, '@Mocktest');
 
   // const ContentQuiz = useAppSelector(selectContentDetailsInfo);
   const ContentLoading = useAppSelector(selectContentDetailsStatus);
-  console.log(ContentQuiz, 'ContentQuiz..........');
+  //console.log(ContentQuiz, 'ContentQuiz..........');
   // {
   // const quizz = ContentQuiz.map(rec => rec.quiz);
   let quiz = ContentQuiz[0] ? ContentQuiz[0] : [];
@@ -173,13 +173,13 @@ const MockTests = ({route}) => {
     phone = '',
     name = '',
   } = userInfo;
-  console.log(userInfo, 'userInfo..............');
+  //console.log(userInfo, 'userInfo..............');
   const TopicList = useAppSelector(selectTopicDetails);
-  console.log(TopicList, 'TopicList//////////////////////');
+  //console.log(TopicList, 'TopicList//////////////////////');
   const TopicId = useAppSelector(selectTopicId);
-  console.log(TopicId, 'TopicId//////////////');
+  //console.log(TopicId, 'TopicId//////////////');
   const selectedTopic = TopicList.find(rec => rec.topicid == TopicId);
-  console.log(selectedTopic, 'selectedTopic///////////////////////');
+  //console.log(selectedTopic, 'selectedTopic///////////////////////');
   let ContentIndex = -1;
   if (selectedTopic != undefined) {
     ContentIndex = selectedTopic.reviewquestionsets.findIndex(
@@ -205,10 +205,10 @@ const MockTests = ({route}) => {
         },
       ],
     };
-    console.log(
-      revisionbody,
-      '********************revisionbody***********************',
-    );
+    // console.log(
+    //   revisionbody,
+    //   '********************revisionbody***********************',
+    // );
 
     AddChildRevisionAPI(revisionbody);
   };
@@ -299,7 +299,7 @@ const MockTests = ({route}) => {
       percentage = 0,
     } = markCalculation(Questionlist);
     // } = markCalculation(submitData);
-    console.log(percentage, 'percentage...................');
+    //console.log(percentage, 'percentage...................');
     if (isReattempt) {
       let bodyReattemptAnswerData = {
         id: studentdata[0]._id,

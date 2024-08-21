@@ -294,6 +294,7 @@ const AnswerSheet = ({route}) => {
           studentdata: '',
           contentid: '',
           scholarshipid: '',
+          topicid: topicid,
           subjectId: '',
           boardid: '',
           is2ndAvailable: is2ndAvailable,
@@ -361,10 +362,10 @@ const AnswerSheet = ({route}) => {
           flex: 1,
           alignSelf: 'center',
          // backgroundColor: '#272727',
-         backgroundColor:'#1E1E1E',
+         //backgroundColor:'#1E1E1E',
         }}
-        //resizeMode="cover"
-        // source={require('../../../assets/0.png')}
+        resizeMode="cover"
+        source={require('../../../assets/0.png')}
       >
         <Header
           label1={trans('Answer Sheet')}
@@ -730,15 +731,16 @@ const AnswerSheet = ({route}) => {
                 );
               } else {
                 return (
-                  <LinearGradient
-                  colors={['#012650','#012650']}
+                  <View
+                  //colors={['#012650','#012650']}
                     key={index}
                     //disabled={true}
                     style={{
                       // elevation: 15,
                       width: '96%',
                       alignSelf: 'center',
-                      backgroundColor: '#2E2E2E',
+                      backgroundColor: 'rgba(0,255,0, 0.1)',
+                      //backgroundColor: '#2E2E2E',
                       marginTop: 10,
                       padding: 10,
                       // justifyContent: 'center',
@@ -939,12 +941,12 @@ const AnswerSheet = ({route}) => {
                         </TouchableOpacity>
                       )}
                     </View>
-                  </LinearGradient>
+                  </View>
                 );
               }
             })}
           </View>
-          <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+          {/* <View style={{flexDirection: 'row', justifyContent: 'center'}}>
             <TouchableOpacity
               onPress={() => {
                 const data = {
@@ -961,7 +963,7 @@ const AnswerSheet = ({route}) => {
                 });
               }}
               style={{
-                backgroundColor: '#2C7DB5',
+                backgroundColor: 'rgba(0,255,0, 0.1)',
                 width: device_width * 0.2,
                 justifyContent: 'center',
                 borderRadius: 10,
@@ -975,7 +977,7 @@ const AnswerSheet = ({route}) => {
                 OK
               </Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
         </ScrollView>
       </ImageBackground>
     </SafeAreaView>

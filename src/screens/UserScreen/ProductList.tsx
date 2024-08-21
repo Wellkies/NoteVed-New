@@ -60,7 +60,7 @@ const ProductList = () => {
   // const {AllProduct = []} = useSelector(state => state.GetAllProductReducer);
   const AllProduct = useAppSelector(selectAllProduct);
   const ProductLoading = useAppSelector(selectAllProductStatus)
-  console.log(AllProduct, 'AllProduct.............');
+ // console.log(AllProduct, 'AllProduct.............');
 
   // const {AllAddress = []} = useSelector(state => state.GetAllAddressReducer);
   const AllAddress = useAppSelector(selectAllAddressInfo);

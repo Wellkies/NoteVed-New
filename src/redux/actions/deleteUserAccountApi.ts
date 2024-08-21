@@ -6,7 +6,7 @@ export const deleteUserAccountActionApi = async (
   callBack: any,
 ) => {
   const url = DELETE_USER_URL;
-  console.log(url, 'DELETE_USER_URL...........................');
+  //console.log(url, 'DELETE_USER_URL...........................');
   const token = await AsyncStorage.getObject('@auth_Token');
   const requestOptions = {
     method: 'POST',
@@ -26,11 +26,11 @@ export const deleteUserAccountActionApi = async (
     if (response.ok) {
       if (callBack) callBack();
 
-      console.log(data, 'DELETE_USER_URL_response................');
+      //console.log(data, 'DELETE_USER_URL_response................');
       return {data: data};
     }
   } catch (error) {
-    console.log(error, 'DELETE_USER_URL_error.......');
+    //console.log(error, 'DELETE_USER_URL_error.......');
 
     throw error;
   }

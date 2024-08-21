@@ -26,10 +26,10 @@ export const getDailyFactActionAPI = async () => {
   //   ],
   // };
 
-  console.log(
-    url,
-    'EDZ_GET_DAILY_FACT_BY_DATE_URL======================='
-  );
+  // console.log(
+  //   url,
+  //   'EDZ_GET_DAILY_FACT_BY_DATE_URL======================='
+  // );
   const token = await AsyncStorage.getObject('@auth_Token');
   const requestOptions = {
     method: 'GET',
@@ -46,14 +46,14 @@ export const getDailyFactActionAPI = async () => {
       throw new Error('Network response was not ok');
     }
     const Data = await response.json();
-    console.log(Data, 'EDZ_GET_DAILY_FACT_BY_DATE_URL_response................');
+    //console.log(Data, 'EDZ_GET_DAILY_FACT_BY_DATE_URL_response................');
     if (Data.data.length === 0) {
       return {data: DailyImageArrayCBSE, visibility: Data.visibility};
     } else {
       return {data: Data.data, visibility: Data.visibility};
     }
   } catch (error) {
-    console.log(error, 'GET_DAILY_FACT_BY_DATE_URL_error.......');
+    //console.log(error, 'GET_DAILY_FACT_BY_DATE_URL_error.......');
     throw error;
   }
 };
