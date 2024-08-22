@@ -163,7 +163,7 @@ const PremiumAccess = ({route}) => {
   // ];
   const PremiumPurchase = useAppSelector(selectPremiumPurchase);
 
-  const PremiumDetails = PremiumPurchase?.filter(r => r.licenseid);
+  const PremiumDetails = PremiumPurchase?.filter(r => r.membershipid);
 
   const PremiumLoading = useAppSelector(selectPremiumPurchaseStatus);
   //
@@ -787,7 +787,7 @@ const PremiumAccess = ({route}) => {
                       <TouchableOpacity
                         key={index}
                         disabled={
-                          PremiumDetails[0]?.licenseid == licenseid
+                          PremiumDetails[0]?.membershipid == licenseid
                             ? true
                             : false
                         }
@@ -795,7 +795,7 @@ const PremiumAccess = ({route}) => {
                           styles.premium,
                           {
                             backgroundColor:
-                              PremiumDetails[0]?.licenseid != licenseid
+                              PremiumDetails[0]?.membershipid != licenseid
                                 ? (scholarID == _id) == false
                                   ? licenseInactive == false
                                     ? premiumFlag == false
@@ -968,8 +968,8 @@ const PremiumAccess = ({route}) => {
                   //     : true
                   // }
                   disabled={
-                    PremiumDetails[0]?.licenseid ==
-                    premiumLicense[0]?.licenseid
+                    PremiumDetails[0]?.membershipid ==
+                    premiumLicense[0]?.membershipid
                       ? true
                       : scholarID == ''
                       ? true
@@ -986,8 +986,8 @@ const PremiumAccess = ({route}) => {
                     //     ? '#FFB901'
                     //     : '#a9a9a9',
                     backgroundColor:
-                      PremiumDetails[0]?.licenseid ==
-                      premiumLicense[0]?.licenseid
+                      PremiumDetails[0]?.membershipid ==
+                      premiumLicense[0]?.membershipid
                         ? '#a9a9a9'
                         : scholarID == ''
                         ? '#a9a9a9'
