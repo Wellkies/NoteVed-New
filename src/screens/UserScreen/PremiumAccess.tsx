@@ -299,11 +299,11 @@ const PremiumAccess = ({route}) => {
   }, [PremiumPurchase]);
   const [arrayData, setArraydAta] = useState([]);
   //
-  const handleDetails = (licensedetails: any) => {
-    // setIndexNo(idx + 1);
-    setArraydAta(licensedetails);
-    setModalStatus(true);
-  };
+  // const handleDetails = (licensedetails: any) => {
+  //   // setIndexNo(idx + 1);
+  //   setArraydAta(licensedetails);
+  //   setModalStatus(true);
+  // };
 
   const handleCall = PremiumPurchase => {
     const VLicenseID = PremiumPurchase.filter(

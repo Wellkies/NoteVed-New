@@ -58,6 +58,7 @@ import {selectExamName} from '../../redux/reducers/ExamTestNameReducer';
 import {
   getScholarshipPremiumAPI,
   selectPremiumPurchase,
+  selectPremiumPurchaseStatus,
 } from '../../redux/reducers/GetPremiumPurchaseReducer';
 import {
   getChildRevisionDetailsAPI,
@@ -106,6 +107,11 @@ import {
   RewardedAd,
   RewardedAdEventType,
 } from 'react-native-google-mobile-ads';
+import {
+  getAdsStatus,
+  selectAdsStatus,
+  selectAdsStatuss,
+} from '../../redux/reducers/GetAdsStatusReducer.ts';
 // import PaymentReminderModal from './CommonScreens/PaymentReminderModal.js';
 
 const ScoreBoard = ({route}) => {
@@ -119,14 +125,39 @@ const ScoreBoard = ({route}) => {
   const adUnitId3 = __DEV__
     ? TestIds.REWARDED
     : 'ca-app-pub-1582661677692525~7964330200';
+  const PremiumPurchaseLoad = useAppSelector(selectPremiumPurchaseStatus);
+  const AdsStatus = useAppSelector(selectAdsStatus);
+  const AdLoadStatuss = useAppSelector(selectAdsStatuss);
 
   useEffect(() => {
     initRewardedad();
   }, []);
   useEffect(() => {
-    rewardedadd();
-    setIsRewardedAddCalled(true);
-  }, [isLoaded]);
+    if (
+      isLoaded &&
+      !isRewardedAddCalled &&
+      PremiumPurchase.length === 0 &&
+      PremiumPurchaseLoad === 'idle'
+    ) {
+      rewardedadd();
+      setIsRewardedAddCalled(true);
+    }
+    if (
+      isLoaded &&
+      !isRewardedAddCalled &&
+      PremiumPurchase.length != 0 &&
+      AdsStatus?.adstatus == true &&
+      PremiumPurchaseLoad === 'idle' &&
+      AdLoadStatuss === 'idle'
+    ) {
+      rewardedadd();
+      setIsRewardedAddCalled(true);
+    }
+  }, [isLoaded, PremiumPurchaseLoad, AdLoadStatuss]);
+  // useEffect(() => {
+  //   rewardedadd();
+  //   setIsRewardedAddCalled(true);
+  // }, [isLoaded]);
   const initRewardedad = () => {
     const rewarded = RewardedAd.createForAdRequest(adUnitId3, {
       keywords: ['fashion', 'clothing'],
@@ -176,9 +207,7 @@ const ScoreBoard = ({route}) => {
     is2ndAvailable = '',
     topicid = '',
   } = route.params;
-  console.log(
-   route.params,'@scoreboardParams',
-  );
+  console.log(route.params, '@scoreboardParams');
   const [loading, setLoading] = useState(false);
   const [ansloading, setAnsLoading] = useState(false);
   const [modalStatus, setModalStatus] = useState(false);
@@ -663,6 +692,9 @@ const ScoreBoard = ({route}) => {
       console.log('screenshot captured ! do something with ', uri);
       setImageUri(uri);
     });
+  }, []);
+  useEffect(() => {
+    dispatch(getAdsStatus());
   }, []);
 
   const myCustomShare = async () => {
@@ -1154,7 +1186,7 @@ const ScoreBoard = ({route}) => {
                     topicid: topicid,
                     childid: childid,
                   };
-                  console.log(data,'@ReData')
+                  console.log(data, '@ReData');
                   dispatch(getContentByTopicIdAPI(data));
                   navigation.navigate('ContentDetails', {
                     coursename: coursename,
@@ -1179,8 +1211,8 @@ const ScoreBoard = ({route}) => {
               <Text
                 style={{
                   color: '#FEFEFE',
-                  fontSize: 15, 
-                  fontWeight: '600'
+                  fontSize: 15,
+                  fontWeight: '600',
                 }}>
                 {percentage >= 90 ? 'Next' : 'Re-attempt'}
               </Text>
@@ -1243,8 +1275,8 @@ const ScoreBoard = ({route}) => {
               <Text
                 style={{
                   color: '#fff',
-                   fontSize: 15, 
-                   fontWeight: '600',
+                  fontSize: 15,
+                  fontWeight: '600',
                   textAlign: 'center',
                 }}>
                 {trans('View Result')}
@@ -1296,7 +1328,6 @@ const ScoreBoard = ({route}) => {
                 // style={{height: 30, width: 30}}
               />
             </TouchableOpacity>
-            
           </View>
         </ScrollView>
         {/* <View>

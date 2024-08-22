@@ -56,19 +56,6 @@ const TopicDetails = ({route}) => {
 
   const TopicLoad = useAppSelector(selectTopicDetailsStatus);
 
-  //  const filterData = TopicBySubjectId.map(rec => rec.topicid);
-  // const studentFilterData = TopicBySubjectId.map(rec => rec.studenttopic);
-  // console.log(studentFilterData, '@studentFilterData');
-  // const topicID = filterData[0];
-  // console.log(topicID, '@topicID');
-  // const ChildProgressData = useAppSelector(selectChildDetailData);
-  // console.log(ChildProgressData,'@ChildProgressData')
-
-  //const AllSubjectLevelData = useAppSelector(selectAllSubjectLevelInfo);
-  // const filterSubjectData = AllSubjectLevelData.map(rec => rec.subjectid);
-  // const subjectID = filterSubjectData[0];
-  //console.log(subjectID,'==========!!subjectID')
-
   const {authToken, status, userInfo} = useAppSelector(selectUserInfo);
   interface ChildInfo {
     _id: string;

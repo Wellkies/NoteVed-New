@@ -73,6 +73,15 @@ import {
   RewardedAd,
   RewardedAdEventType,
 } from 'react-native-google-mobile-ads';
+import {
+  getAdsStatus,
+  selectAdsStatus,
+  selectAdsStatuss,
+} from '../../redux/reducers/GetAdsStatusReducer.ts';
+import {
+  selectPremiumPurchase,
+  selectPremiumPurchaseStatus,
+} from '../../redux/reducers/GetPremiumPurchaseReducer.ts';
 
 const LandingScreen = ({}) => {
   interface ChildInfo {
@@ -108,10 +117,17 @@ const LandingScreen = ({}) => {
     stateid: string;
   }
   const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
+  const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
   const [rewardedad, setRewardedad] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   //
   const [isRewardedAddCalled, setIsRewardedAddCalled] = useState(false);
+
+  const PremiumPurchase = useAppSelector(selectPremiumPurchase);
+  const PremiumPurchaseLoad = useAppSelector(selectPremiumPurchaseStatus);
+
+  const AdsStatus = useAppSelector(selectAdsStatus);
+  const AdLoadStatuss = useAppSelector(selectAdsStatuss);
   const adUnitId3 = __DEV__
     ? TestIds.REWARDED
     : 'ca-app-pub-1582661677692525~7964330200';
@@ -120,9 +136,31 @@ const LandingScreen = ({}) => {
     initRewardedad();
   }, []);
   useEffect(() => {
-    rewardedadd();
-    setIsRewardedAddCalled(true);
-  }, [isLoaded]);
+    if (
+      isLoaded &&
+      !isRewardedAddCalled &&
+      PremiumPurchase.length === 0 &&
+      PremiumPurchaseLoad === 'idle'
+    ) {
+      rewardedadd();
+      setIsRewardedAddCalled(true);
+    }
+    if (
+      isLoaded &&
+      !isRewardedAddCalled &&
+      PremiumPurchase.length != 0 &&
+      AdsStatus?.adstatus == true &&
+      PremiumPurchaseLoad === 'idle' &&
+      AdLoadStatuss === 'idle'
+    ) {
+      rewardedadd();
+      setIsRewardedAddCalled(true);
+    }
+  }, [isLoaded, PremiumPurchaseLoad, AdLoadStatuss]);
+  // useEffect(() => {
+  //   rewardedadd();
+  //   setIsRewardedAddCalled(true);
+  // }, [isLoaded]);
   const initRewardedad = () => {
     const rewarded = RewardedAd.createForAdRequest(adUnitId3, {
       keywords: ['fashion', 'clothing'],
@@ -143,7 +181,7 @@ const LandingScreen = ({}) => {
   };
   const navigation = useNavigation();
   const dispatch = useDispatch<any>();
-  const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+
   const count = useAppSelector(selectStudentStatus);
   const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
   const {authToken, status, userInfo = {}} = useAppSelector(selectUserInfo);

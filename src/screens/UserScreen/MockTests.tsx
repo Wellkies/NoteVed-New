@@ -72,6 +72,7 @@ import {
 import {Modal} from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {createContactApi} from '../../redux/actions/createContactApi';
+import CommonMessage from '../../../constants/CommonMessage';
 
 const MockTests = ({route}) => {
   const dispatch = useDispatch<any>();
@@ -502,9 +503,15 @@ const MockTests = ({route}) => {
     setConfirmReport(true);
   };
   const reportSubmitForm = async (question: any) => {
+    console.log(Questionlist[currentIndex]?.question,'@QS')
+    console.log(subjectName,stageid,childName,boardid,
+      scholarshipid,
+      subjectName,
+      chapterName,
+      question,contentid,'@DataBody')
     const bodyData = {
       edcontactName: childName,
-      edcontactemail: email,
+      //edcontactemail: email,
       subject: subjectName,
       phone: phone,
       message:
@@ -544,9 +551,13 @@ const MockTests = ({route}) => {
       subjectName,
       chapterName,
       question,
+      apptype:'Skill Development',
     };
     console.log(bodyData, '@bodyData1');
     createContactApi(bodyData, reporthandleCallback);
+    CommonMessage(
+      'Your query has been successfully sent.',
+    );
   };
   const reporthandleCallback = () => {
     setConfirmReport(false);
