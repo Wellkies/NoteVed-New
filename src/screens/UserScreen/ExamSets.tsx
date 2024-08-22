@@ -327,7 +327,8 @@ const ExamSets = ({route}) => {
   useEffect(() => {
     dispatch(getUnlockChildAPI());
     premiumdata();
-    const Predata = {childid, stageid, boardid};
+    //const Predata = {childid, stageid, boardid};
+    const Predata = {childid};
     dispatch(getScholarshipPremiumAPI(Predata));
     dispatch(getTopicBySubClassAPI(TopicData));
     dispatch(getUnlockChildAPI());

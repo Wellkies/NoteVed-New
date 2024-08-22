@@ -645,7 +645,8 @@ const ScoreBoard = ({route}) => {
   const ListColor = ['#fee2a3', '#f6c4b9', '#c3ccf5', '#76f0c7'];
 
   useEffect(() => {
-    const Predata = {childid, stageid, boardid};
+    //const Predata = {childid, stageid, boardid};
+    const Predata = {childid};
     // console.log(Predata, 'Predata...............');
     dispatch(getScholarshipPremiumAPI(Predata));
     dispatch(getChildDetailsAPI(childid));

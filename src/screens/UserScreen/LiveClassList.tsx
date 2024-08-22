@@ -347,7 +347,8 @@ const LiveClassList = ({ route }) => {
   const [asyncpremiumData, setasyncpremiumData] = useState([]);
 
   useEffect(() => {
-    const Predata = { childid, stageid, boardid };
+    //const Predata = { childid, stageid, boardid };
+    const Predata = {childid};
     dispatch(getScholarshipPremiumAPI(Predata));
     return () => { };
   }, [PremiumPurchase]);

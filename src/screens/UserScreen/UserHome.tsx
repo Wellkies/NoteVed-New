@@ -810,10 +810,13 @@ const UserHome = () => {
       boardid,
       scholarshipid: SchlrshipId,
     };
+    // const Premiumdata = {
+    //   childid,
+    //   stageid,
+    //   boardid,
+    // };
     const Premiumdata = {
-      childid,
-      stageid,
-      boardid,
+      childid
     };
     const zoomdata = {
       scholarshipid,

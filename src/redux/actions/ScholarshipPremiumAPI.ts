@@ -16,11 +16,7 @@ export const getScholarshipPremiumActionAPI = async (data = {}) => {
   const url =
     GET_SCHOLARSHIP_PREMIUM_URL +
     '/' +
-    data.childid +
-    '/' +
-    data.stageid +
-    '/' +
-    data.boardid;
+    data.childid;
   console.log(url, 'GET_SCHOLARSHIP_PREMIUM_URL...........................');
   const token = await AsyncStorage.getObject('@auth_Token');
   const requestOptions = {

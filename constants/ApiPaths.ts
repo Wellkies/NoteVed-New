@@ -155,11 +155,15 @@ export const REATTEMPT_ANSWER_SUBMIT_SUBJECTWISE_PROBABLE_URL =
 export const GET_MOST_PROBABLE_QUESTION_SET_URL =
   API_URL + 'getedmostprobaquestionSetsbyclsidandbrdidandchilid';
 
+// export const GET_SCHOLARSHIP_PREMIUM_URL =
+//   API_URL + 'getedchildmembershipbychildidandparentid';
 export const GET_SCHOLARSHIP_PREMIUM_URL =
-  API_URL + 'getedchildmembershipbychildidandparentid';
+  API_URL + 'getzedchildmembershipbychildidandparentid';
 
-export const CREATE_SCHOLARSHIP_MEMBERSHIP_URL =
-  API_URL + 'addedchildmembership';
+// export const CREATE_SCHOLARSHIP_MEMBERSHIP_URL =
+//   API_URL + 'addedchildmembership';
+  export const CREATE_SCHOLARSHIP_MEMBERSHIP_URL =
+  API_URL + 'edzaddMembership';
 
 export const REGISTER_NEW_CHILD_URL = API_URL + 'registerChild';
 export const LOGIN_CHILD_OTP_VERIFY_URL = API_URL + 'childotplogin';

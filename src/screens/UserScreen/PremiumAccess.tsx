@@ -218,7 +218,8 @@ const PremiumAccess = ({route}) => {
   //
   useEffect(() => {
     const freeScholar = {stageid, boardid};
-    const Predata = {childid, stageid, boardid};
+    //const Predata = {childid, stageid, boardid};
+    const Predata = {childid};
     const PreAccesdata = {stageid, boardid};
     dispatch(getScholarshipPremiumAPI(Predata));
     dispatch(getPremiumAccessAPI(PreAccesdata));
@@ -397,7 +398,8 @@ const PremiumAccess = ({route}) => {
   //
   useEffect(() => {
     navigation.addListener('focus', () => {
-      const Predata = {childid, stageid, boardid};
+      //const Predata = {childid, stageid, boardid};
+      const Predata = {childid};
       const PreAccesdata = {stageid: stageId, boardid: boardId};
       //
       dispatch(getChildDetailsAPI(userid));

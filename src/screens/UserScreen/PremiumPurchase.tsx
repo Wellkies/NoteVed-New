@@ -379,40 +379,51 @@ const PremiumPurchase = ({route}) => {
     );
   };
   const handleCallback = async razorpay_payment_id => {
-    // navigation.navigate('UserHome')
-
-    // dispatch(
-    //   getScholarshipPremiumAPI(
-    //     undefined,
-    //     ChildID,
-    //     stageID,
-    //     boardID,
-    //     schoalrshipID,
-    //   ),
-    // );
     const bodyData = {
+      // childid: childid,
+      // parentid: '',
+      // licensename: licensename,
+      // licenseid: licenseid,
+      // duration: durationDays,
+      // startdate: nowDate,
+      // enddate: dueDatedata,
+      // childname: userName,
+      // parentname: '',
+      // scholarshipid: scholarshipid,
+      // scholarshipname: licensename,
+      // scholarshipimage: scholarshipimage,
+      // stageid: stageid,
+      // stage: stage,
+      // boardid: boardid,
+      // boardname: boardname,
+      // amountpaid: isReferalCodeamount ? totalAmount : initialAmount,
+      // couponapplied: 'false',
+      // coupondiscountamount: '',
+      // offerapplied: 'true',
+      // offerdiscountamount: offeramount,
+      // paymentid: razorpay_payment_id,
+
       childid: childid,
-      parentid: '',
       licensename: licensename,
       licenseid: licenseid,
-      duration: durationDays,
+      durationDays: durationDays,
+      gstamount: gstamount,
+      offerpercentage:offerpercentage,
+      paidtotalamount: paidtotalamount,
       startdate: nowDate,
       enddate: dueDatedata,
       childname: userName,
-      parentname: '',
       scholarshipid: scholarshipid,
       scholarshipname: licensename,
       scholarshipimage: scholarshipimage,
-      stageid: stageid,
-      stage: stage,
-      boardid: boardid,
-      boardname: boardname,
       amountpaid: isReferalCodeamount ? totalAmount : initialAmount,
       couponapplied: 'false',
-      coupondiscountamount: '',
+      discountamount: '',
       offerapplied: 'true',
       offerdiscountamount: offeramount,
       paymentid: razorpay_payment_id,
+      membershipstatus:'',
+      membershipname:'',
     };
     console.log(bodyData, '................bodyData................');
     craeteScholarshipMembershipApi(bodyData, callBack);
@@ -422,30 +433,7 @@ const PremiumPurchase = ({route}) => {
     const initialAmount = paidtotalamount + '00';
     const data = await axios.post(API_URL + '/edsubscription', {
       amount: isReferalCodeamount ? totalAmount : initialAmount,
-    }); // for live data
-
-    // const data = await axios.get('https://wellkie.org/demoApi/edsubscription'); // for test data
-
-    //
-    //
-
-    // var options = {
-    //   description: 'WELLKIES PAYMENT',
-    //   image: 'https://wkresources.s3.ap-south-1.amazonaws.com/WHPL.png',
-    //   currency: 'INR',
-    //   key: "rzp_test_PioX2Xi5hjQ6Om", //test api key
-    //   // key: "rzp_live_dhcsVqGgxMqkbi",//live api key
-    //   amount: doc_charge !== '' ? Math.round(doc_charge) * 100 : '10000',
-    //   // amount: '1000',
-    //   name: "Wellkies Healthcare Pvt Ltd.",
-    //   prefill: {
-    //     email: ee,
-    //     contact: pp,
-    //     name: '',
-    //   },
-    //   theme: {color: '#4372b8'},
-    // };
-
+    });
     var options = {
       description: 'Subscription Payment',
       image: 'https://notevook.s3.ap-south-1.amazonaws.com/Noteved+logo.jpeg',
@@ -467,61 +455,8 @@ const PremiumPurchase = ({route}) => {
       theme: {color: '#fff'},
     };
 
-    // var options = {
-    //   key: 'rzp_test_PioX2Xi5hjQ6Om', //test api key
-    //   // key: "rzp_live_dhcsVqGgxMqkbi",//live api key
-    //   // amount: "1000",
-
-    //   amount: data.data.data.amount,
-    //   currency: 'INR',
-    //   name: 'Education APP',
-    //   description: 'Subscription PAYMENT',
-    //   image: 'https://wkresources.s3.ap-south-1.amazonaws.com/WHPL.png',
-    //   order_id: data.data.data.id,
-    //   // handler: async function (response) {
-    //   //   if (response.razorpay_payment_id) {
-    //   //     const data = {
-    //   //       userid: parentid,
-    //   //       amount:data.data.data.amount,
-    //   //       razorpay_payment_id: response.razorpay_payment_id,
-
-    //   //       razorpay_order_id: response.razorpay_order_id,
-    //   //       razorpay_signature: response.razorpay_signature,
-    //   //     };
-    //   //
-
-    //   //     //  const bodyData={
-    //   //     //   :'',
-    //   //     //   :amount,razorpay_order_id,razorpay_payment_id,razorpay_signature
-    //   //     //  }
-    //   //     dispatch(getSignatureVerification(bodyData, handleCallback()));
-    //   //   } else {
-    //   //     CommonMessage('Razorpay SDK fails to load. Are you online?');
-    //   //   }
-    //   // },
-    //   // callback_url: '',
-    //   prefill: {
-    //     name: userName,
-    //     email: email,
-    //     contact: parentPhone,
-
-    //   },
-    //   notes: {
-    //     address: 'Wellkies Healthcare Pvt Ltd.',
-    //   },
-    //   theme: {
-    //     color: '#0756bb',
-    //   },
-    // };
-
     RazorpayCheckout.open(options)
       .then(response => {
-        // console.log(
-        //   response,
-        //   'response--------',
-        //   'response.razorpay_payment_id',
-        //   response.razorpay_payment_id,
-        // );
         if (response.razorpay_payment_id) {
           const bodydata = {
             userid: childid,
@@ -530,23 +465,11 @@ const PremiumPurchase = ({route}) => {
             razorpay_order_id: response.razorpay_order_id,
             razorpay_signature: response.razorpay_signature,
           };
-          //
-
-          //  const bodyData={
-          //   :'',
-          //   :amount,razorpay_order_id,razorpay_payment_id,razorpay_signature
-          //  }
 
           getSignatureVerification(bodydata, handleCallback);
         } else {
           CommonMessage('Razorpay SDK fails to load. Are you online?');
         }
-        // handle success
-        //alert(`Success: ${data.razorpay_payment_id}`);
-        // setshowprog(true);
-
-        // BookSlotApi(data.razorpay_payment_id);
-        // setLoading(false);
       })
       .catch(error => {
         Alert.alert('Oops!', 'Could not complete payment.', [{text: 'Retry'}]);
