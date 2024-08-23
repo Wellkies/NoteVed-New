@@ -68,7 +68,6 @@ const EditProfile = ({route}) => {
   const dispatch = useDispatch<any>();
   const {t: trans, i18n} = useTranslation();
   const {childId = ''} = route.params;
-  
 
   interface ChildInfo {
     _id: string;
@@ -106,17 +105,17 @@ const EditProfile = ({route}) => {
   // const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
   const {authToken, status, userInfo} = useAppSelector(selectUserInfo);
 
-  // 
+  //
   const Standard = useAppSelector(selectStudentStandard);
   const standardsts = useAppSelector(selectStudentStandardStatus);
-  // 
+  //
   const Board = useAppSelector(selectStudentBoard);
 
   const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
 
   const selectedLanguage = useAppSelector(selectStudentLanguage);
 
-  // 
+  //
   ///////////////////
   const [loading, setLoading] = useState(false);
   const [userLoading, setUserLoading] = useState(false);
@@ -236,7 +235,6 @@ const EditProfile = ({route}) => {
     alterphone = '',
     email = '',
   } = userInfo;
-  
 
   const [value, setValue] = useState(p_age);
   const [statevalue, setStateValue] = useState(stateData);
@@ -298,7 +296,7 @@ const EditProfile = ({route}) => {
         alterphone = '',
         schoolname = '',
       } = userInfo;
-      // 
+      //
       setInfo({
         _id: childID,
         firstName: fname,
@@ -345,7 +343,7 @@ const EditProfile = ({route}) => {
     } else if (inputName == 'lastname') {
       if (inputValue != '') {
         if (!name_reg.test(inputValue)) {
-          // 
+          //
           setLnameError(true);
         } else {
           setLnameError(false);
@@ -374,9 +372,9 @@ const EditProfile = ({route}) => {
     //   }
     // }
     else if (inputName == 'schoolBoard') {
-      // 
+      //
       if (inputValue.length == '') {
-        // 
+        //
 
         // if (inputValue.length == 6) {
         setBoardError(true);
@@ -385,7 +383,7 @@ const EditProfile = ({route}) => {
         setBoardError(false);
       }
       if (inputValue == 1) {
-        // 
+        //
 
         dispatch(setLanguage('odia'));
         setLanguages(prevState =>
@@ -412,9 +410,7 @@ const EditProfile = ({route}) => {
       } else {
         setAge(inputValue);
       }
-    }
-    
-    else if (inputName == 'parents_phone') {
+    } else if (inputName == 'parents_phone') {
       if (inputValue != '') {
         if (phoneRegex.test(inputValue)) {
           setAltPhoneError(false);
@@ -424,9 +420,7 @@ const EditProfile = ({route}) => {
       } else {
         setAltPhoneError(false);
       }
-    }
- 
-    else if (inputName == 'school_name') {
+    } else if (inputName == 'school_name') {
       if (inputValue.length == '') {
         setSchoolNameError(true);
       } else {
@@ -442,14 +436,12 @@ const EditProfile = ({route}) => {
       } else {
         setEmailError(false);
       }
-      
     }
     let infodata = {...info};
     setInfo({...infodata, [inputName]: inputValue});
   };
 
   const ChildFlag = childId != '' && childId != undefined;
-
 
   const submitForm = async () => {
     const validForm =
@@ -467,7 +459,7 @@ const EditProfile = ({route}) => {
       statename !== '';
     const schoolBoardName = Board.find(rec => rec.boardid == schoolBoard);
     const ClassID = Standard.find(rec => rec.stageid == standard);
-    // 
+    //
     const updatebodyData = {
       id: _id,
       parentid: '',
@@ -486,9 +478,7 @@ const EditProfile = ({route}) => {
       stateid: statename.value,
       statename: statename.label,
     };
-
-    
-
+    console.log(updatebodyData, '@updatebodyData');
     const {image: Child_imageUrl = '', imagename: child_imageName = ''} =
       imageData;
     let phone_validate = false;
@@ -496,11 +486,7 @@ const EditProfile = ({route}) => {
     let lname_validate = false;
     let fathername_validate = false;
     let mothername_validate = false;
-    if (
-      info.age ||
-      info.firstName ||
-      info.lastname
-    ) {
+    if (info.age || info.firstName || info.lastname) {
       phone_validate = phoneRegex.test(info.phone_secondary);
       fname_validate = name_reg.test(info.firstName);
       lname_validate = name_reg.test(info.lastname);
@@ -550,9 +536,7 @@ const EditProfile = ({route}) => {
         25,
         50,
       );
-    }
-   
-    else if (boardError == true) {
+    } else if (boardError == true) {
       ToastAndroid.showWithGravityAndOffset(
         trans('Please Enter School Board Name'),
         ToastAndroid.LONG,
@@ -584,8 +568,7 @@ const EditProfile = ({route}) => {
         25,
         50,
       );
-    }
-    else if (lnameError == true) {
+    } else if (lnameError == true) {
       ToastAndroid.showWithGravityAndOffset(
         trans(`Please Enter Student's Last Name`),
         ToastAndroid.LONG,
@@ -602,8 +585,8 @@ const EditProfile = ({route}) => {
   const handleUpdateCallback = (updatebodyData: any) => {
     // dispatch(getChildDetailsAPI(undefined, undefined, setLoading));
     // setChildList({...childList[0],...updatebodyData})
-    // 
-    
+    //
+
     const data = userInfo;
     const childListData = [{...data, ...updatebodyData}];
     const user = AsyncStorage.storeObject('@user', childListData);
@@ -622,8 +605,7 @@ const EditProfile = ({route}) => {
 
   const handleImageCallback = (imageUrl: string, originalname: string) => {
     // if (childID != '') {
-    
-    
+
     // dispatch(
     updateChildProfile(
       {id: childID, image: imageUrl, imagename: originalname},
@@ -650,13 +632,10 @@ const EditProfile = ({route}) => {
       includeBase64: true,
     };
     const result = await launchImageLibrary();
-    
+
     if (result.didCancel) {
-      
     } else if (result.error) {
-      
     } else if (result.customButton) {
-      
     } else {
       // if (ChildFlag) {
       setthumb(result.assets[0].uri);
@@ -1103,7 +1082,7 @@ const EditProfile = ({route}) => {
                 }}
                 data={stateDataDropDown}
                 maxHeight={300}
-                 labelField="label"
+                labelField="label"
                 valueField="label"
                 placeholder={trans('Select your state name')}
                 value={statename}

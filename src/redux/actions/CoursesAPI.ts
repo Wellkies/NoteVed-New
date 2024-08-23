@@ -65,7 +65,7 @@ export const getAllSubjectActionAPI = async () => {
 
 export const getTopicsBySubIdActionAPI = async (data = {}) => {
   const url = GET_TOPICS_BY_SUBJECTID_URL + data.subjectid + '/' + data.childid;
-  //console.log(url, 'GET_TOPICS_BY_SUBJECTID_URL=======================');
+  console.log(url, 'GET_TOPICS_BY_SUBJECTID_URL=======================');
   const token = await AsyncStorage.getObject('@auth_Token');
   const requestOptions = {
     method: 'GET',
@@ -90,12 +90,10 @@ export const getTopicsBySubIdActionAPI = async (data = {}) => {
 
 export const getContentByTopicIdActionAPI = async (data = {}) => {
   const url = GET_CONTENT_BY_TOPICID_URL + data.topicid + '/' + data.childid;
-  // console.log(
-  //   url,
-  //   'GET_CONTENT_BY_TOPICID_URL=======================',
-  //   data,
-  //   '========data',
-  // );
+  console.log(
+    url,
+    'GET_CONTENT_BY_TOPICID_URL======================='
+  );
   const token = await AsyncStorage.getObject('@auth_Token');
   const requestOptions = {
     method: 'GET',

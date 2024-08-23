@@ -286,7 +286,7 @@ const UserProfile = ({}) => {
         <Header
           isbackIconShow={true}
           label1={trans('Profile')}
-          functionName={() => navigation.navigate('LandingScreen')}
+          functionName={() => navigation.navigate('SubjectLevel')}
           label2={
             <TouchableOpacity
               // onPress={() => {

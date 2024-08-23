@@ -178,7 +178,7 @@ export const GET_MOST_PROBABLE_QUESTION_SET_URL =
 // export const GET_SCHOLARSHIP_PREMIUM_URL =
 //   API_URL + 'getedchildmembershipbychildidandparentid';
 export const GET_SCHOLARSHIP_PREMIUM_URL =
-  API_URL + 'getzedchildmembershipbychildidandparentid';
+  API_URL + 'getedzchildmembershipbychildidandparentid';
 
 // export const CREATE_SCHOLARSHIP_MEMBERSHIP_URL =
 //   API_URL + 'addedchildmembership';

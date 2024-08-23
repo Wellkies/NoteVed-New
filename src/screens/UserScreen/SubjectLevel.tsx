@@ -68,11 +68,11 @@ import {
   selectAllSubjectsInfo,
   selectAllSubjectsStatus,
 } from '../../redux/reducers/GetSubjectByCourseReducer';
-import {
-  getAllSubByCourseIdAPI,
-  selectAllSubByCourseIdInfo,
-  selectAllSubByCourseIdStatus,
-} from '../../redux/reducers/GetAllSubByCourseIdReducer';
+// import {
+//   getAllSubByCourseIdAPI,
+//   selectAllSubByCourseIdInfo,
+//   selectAllSubByCourseIdStatus,
+// } from '../../redux/reducers/GetAllSubByCourseIdReducer';
 
 import {handleSetExamName} from '../../redux/reducers/ExamTestNameReducer';
 import {ProgressBar} from 'react-native-paper';
@@ -84,6 +84,17 @@ import {
 import * as Progress from 'react-native-progress';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import {IsTabScreen} from '../../../constants/Constants';
+import {
+  TestIds,
+  RewardedAd,
+  RewardedAdEventType,
+} from 'react-native-google-mobile-ads';
+import {
+  getAdsStatus,
+  selectAdsStatus,
+  selectAdsStatuss,
+} from '../../redux/reducers/GetAdsStatusReducer.ts';
+import { selectPremiumPurchase, selectPremiumPurchaseStatus } from '../../redux/reducers/GetPremiumPurchaseReducer.ts';
 
 const Tab = createBottomTabNavigator();
 
@@ -93,18 +104,15 @@ const SubjectLevel = ({route}) => {
   const {t: trans, i18n} = useTranslation();
   const [selectedIndex, setSelectedIndex] = useState(1);
   const [topicId, setTopicId] = useState('');
-  const {
-    // stageid = '',
-    // boardid = '',
-    // scholarshipId = '',
-    // scholarshipName = '',
-    coursename = '',
-    subjectname = '',
-    courseid = '',
-  } = route.params;
- // console.log(route.params, '@route.params');
- // console.log(courseid, '==========courseid');
-  //console.log(route.params, '===============route.params');
+  // const {
+  //   // stageid = '',
+  //   // boardid = '',
+  //   // scholarshipId = '',
+  //   // scholarshipName = '',
+  //   coursename = '',
+  //   subjectname = '',
+  //   courseid = '',
+  // } = route.params;
   // const [loading, setLoading] = useState(false);
   // const SchlrshipId = 'NVOOKADA1690811843420'
   const TopicBySubjectId = useAppSelector(selectTopicDetailsInfo);
@@ -113,14 +121,7 @@ const SubjectLevel = ({route}) => {
   const filterData = TopicBySubjectId.map(rec => rec.topicid);
   // TopicBySubjectId.filter((rec) => rec.sltopic == 1)
   const topicID = filterData[0];
-  // console.log(
-  //   topicID,
-  //   '================topicID***************',
-  //   topicId,
-  //   '=============topicId******************',
-  //   filterData,
-  // );
-  // console.log(TopicBySubjectId, '==============TopicBySubjectId');
+ 
   // useEffect(() => {
   //   dispatch(getTopicBySubIdAPI(subjectid));
   //   // setTopicId(topicID)
@@ -145,8 +146,6 @@ const SubjectLevel = ({route}) => {
   //   ? ContentByTopicId[0]
   //   : [];
   // const ContentLoad = useAppSelector(selectContentDetailsStatus);
-  // console.log(ContentByTopicId, '==============ContentByTopicId');
-  // console.log(reviewquestionsets, '==============reviewquestionsets');
 
   const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
 
@@ -202,7 +201,6 @@ const SubjectLevel = ({route}) => {
     language = '',
     // coordinates='',
   } = userInfo;
-  //console.log(childid, '@childid1');
   useEffect(() => {
     navigation.addListener('focus', () => {
       // const data = {
@@ -226,38 +224,35 @@ const SubjectLevel = ({route}) => {
     };
   }, []);
 
-  const handleTabSelect = (sltopic, topicid, childid) => {
-    setSelectedIndex(sltopic);
-    const data = {
-      topicid: topicid,
-      childid: childid,
-    };
-    dispatch(getContentByTopicIdAPI(data));
-  };
+  // const handleTabSelect = (sltopic, topicid, childid) => {
+  //   setSelectedIndex(sltopic);
+  //   const data = {
+  //     topicid: topicid,
+  //     childid: childid,
+  //   };
+  //   dispatch(getContentByTopicIdAPI(data));
+  // };
+  // useEffect(() => {
+  //   dispatch(getAllSubByCourseAPI());
+  //   const data = {
+  //     courseid: courseid,
+  //   };
+  //   dispatch(getAllSubByCourseIdAPI(data));
+  //   return () => {};
+  // }, []);
   useEffect(() => {
-    dispatch(getAllSubByCourseAPI());
     const data = {
-      courseid: courseid,
-    };
-    dispatch(getAllSubByCourseIdAPI(data));
-    return () => {};
-  }, []);
-  useEffect(() => {
-    const data = {
-      courseid: courseid,
+      //courseid: courseid,
       childid: childid,
     };
     dispatch(getChildProgressDetailAPI(data));
     return () => {};
   }, []);
-  //console.log(courseid, '@courseid2');
   const SubjectByCourse = useAppSelector(selectChildDetailData);
-  //console.log(SubjectByCourse, '@SubjectByCourse1');
   //const SubjectByCourse = useAppSelector(selectAllSubjectsInfo);
   const SubLoading = useAppSelector(selectAllSubjectsStatus);
-  const SubByCourseID = useAppSelector(selectAllSubByCourseIdInfo);
+  //const SubByCourseID = useAppSelector(selectAllSubByCourseIdInfo);
   //const SubLoading = useAppSelector(selectAllSubByCourseIdStatus);
-  // console.log(SubByCourseID, '========SubByCourseID');
   const data = [
     require('../../../assets/skillfact3.jpg'),
     require('../../../assets/skillfact4.jpg'),
@@ -288,6 +283,64 @@ const SubjectLevel = ({route}) => {
       />
     </View>
   );
+  const [rewardedad, setRewardedad] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  //
+  const [isRewardedAddCalled, setIsRewardedAddCalled] = useState(false);
+
+  const PremiumPurchase = useAppSelector(selectPremiumPurchase);
+  const PremiumPurchaseLoad = useAppSelector(selectPremiumPurchaseStatus);
+
+  const AdsStatus = useAppSelector(selectAdsStatus);
+  const AdLoadStatuss = useAppSelector(selectAdsStatuss);
+  const adUnitId3 = __DEV__
+    ? TestIds.REWARDED
+    : 'ca-app-pub-1582661677692525~7964330200';
+
+  useEffect(() => {
+    initRewardedad();
+  }, []);
+  useEffect(() => {
+    if (
+      isLoaded &&
+      !isRewardedAddCalled &&
+      PremiumPurchase.length === 0 &&
+      PremiumPurchaseLoad === 'idle'
+    ) {
+      rewardedadd();
+      setIsRewardedAddCalled(true);
+    }
+    if (
+      isLoaded &&
+      !isRewardedAddCalled &&
+      PremiumPurchase.length != 0 &&
+      AdsStatus?.adstatus == true &&
+      PremiumPurchaseLoad === 'idle' &&
+      AdLoadStatuss === 'idle'
+    ) {
+      rewardedadd();
+      setIsRewardedAddCalled(true);
+    }
+  }, [isLoaded, PremiumPurchaseLoad, AdLoadStatuss]);
+
+  const initRewardedad = () => {
+    const rewarded = RewardedAd.createForAdRequest(adUnitId3, {
+      keywords: ['fashion', 'clothing'],
+    });
+    rewarded.addAdEventListener(RewardedAdEventType.LOADED, () => {
+      setRewardedad(rewarded);
+      setIsLoaded(true);
+    });
+    rewarded.addAdEventListener(RewardedAdEventType.EARNED_REWARD, () => {
+      initRewardedad();
+    });
+    rewarded.load();
+  };
+  const rewardedadd = () => {
+    if (rewardedad) {
+      rewardedad.show();
+    }
+  };
   return (
     <SafeAreaView style={{flex: 1}}>
       <ScrollView>
@@ -300,7 +353,7 @@ const SubjectLevel = ({route}) => {
           }}
           resizeMode="cover"
           source={require('../../../assets/0.png')}>
-          <View
+          {/* <View
             style={{
               flexDirection: 'row',
               alignItems: 'center',
@@ -334,8 +387,10 @@ const SubjectLevel = ({route}) => {
                 {trans(coursename + ' ' + subjectname)}
               </Text>
             </View>
-          </View>
-          <View>
+          </View> */}
+          <View style={{
+            marginTop:20
+          }}>
             <Carousel
               ref={carouselRef}
               data={data}
@@ -406,7 +461,7 @@ const SubjectLevel = ({route}) => {
                             dispatch(getTopicBySubIdAPI(bodydata));
                             // dispatch(getTopicBySubIdAPI(subjectid));
                             navigation.navigate('TopicDetails', {
-                              coursename: coursename,
+                              //coursename: coursename,
                               subjectname: subjectname,
                               subjectid: subjectid,
                             });

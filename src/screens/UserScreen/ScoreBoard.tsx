@@ -1284,7 +1284,7 @@ const ScoreBoard = ({route}) => {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate('LandingScreen');
+                navigation.navigate('SubjectLevel');
               }}
               style={{
                 paddingVertical: 10,

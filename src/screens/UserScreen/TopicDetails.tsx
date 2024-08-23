@@ -42,7 +42,10 @@ const TopicDetails = ({route}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch<any>();
   const {t: trans, i18n} = useTranslation();
-  const {coursename = '', subjectname = '', subjectid = ''} = route.params;
+  const {
+    //coursename = '',
+     subjectname = '', 
+     subjectid = ''} = route.params;
 
   //const TopicBySubjectId = useAppSelector(selectChildDetailData);
   const TopicBySubjectId = useAppSelector(selectTopicDetailsInfo);
@@ -177,9 +180,10 @@ const TopicDetails = ({route}) => {
                 fontSize: 20,
                 color: '#FFFFFF',
               }}>
-              {coursename !== 'Mind Melters' && coursename !== 'Vidyalaya Vista'
+              {/* {coursename !== 'Mind Melters' && coursename !== 'Vidyalaya Vista'
                 ? trans(coursename + ' ' + subjectname)
-                : trans(subjectname)}
+                : trans(subjectname)} */}
+                {trans(subjectname)}
             </Text>
           </View>
           {TopicLoad == 'loading' ? (
@@ -195,7 +199,7 @@ const TopicDetails = ({route}) => {
                       paddingHorizontal: 10,
                       marginRight: 10,
                       marginBottom: 16,
-                      marginTop: 50,
+                      marginTop: 20,
                       justifyContent: 'center',
                     }}>
                     {TopicBySubjectId.map((item, index) => {
@@ -272,7 +276,7 @@ const TopicDetails = ({route}) => {
                                 };
                                 dispatch(getContentByTopicIdAPI(data));
                                 navigation.navigate('ContentDetails', {
-                                  coursename: coursename,
+                                  //coursename: coursename,
                                   subjectname: subjectname,
                                   topicname: topicname,
                                   topicid: topicid,
