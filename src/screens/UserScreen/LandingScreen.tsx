@@ -82,6 +82,7 @@ import {
   selectPremiumPurchase,
   selectPremiumPurchaseStatus,
 } from '../../redux/reducers/GetPremiumPurchaseReducer.ts';
+import { REWARDEDAD } from '../../../constants/ApiPaths.ts';
 
 const LandingScreen = ({}) => {
   interface ChildInfo {
@@ -128,9 +129,7 @@ const LandingScreen = ({}) => {
 
   const AdsStatus = useAppSelector(selectAdsStatus);
   const AdLoadStatuss = useAppSelector(selectAdsStatuss);
-  const adUnitId3 = __DEV__
-    ? TestIds.REWARDED
-    : 'ca-app-pub-1582661677692525~7964330200';
+  const adUnitId3 = REWARDEDAD;
 
   useEffect(() => {
     initRewardedad();

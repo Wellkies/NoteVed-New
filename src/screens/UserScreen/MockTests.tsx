@@ -73,6 +73,7 @@ import {Modal} from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {createContactApi} from '../../redux/actions/createContactApi';
 import CommonMessage from '../../../constants/CommonMessage';
+import { BANNERAD } from '../../../constants/ApiPaths';
 
 const MockTests = ({route}) => {
   const dispatch = useDispatch<any>();
@@ -249,9 +250,7 @@ const MockTests = ({route}) => {
     setCurrentIndex(currentIndex - 1);
     handlePreviousPress();
   };
-  const adUnitId = __DEV__
-    ? TestIds.BANNER
-    : 'ca-app-pub-1582661677692525~7964330200';
+  const adUnitId =BANNERAD;
 
   const handleNavigation = () => {
     navigation.navigate('ScoreBoard', {

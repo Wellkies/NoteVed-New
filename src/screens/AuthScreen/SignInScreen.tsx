@@ -39,6 +39,7 @@ import {
   // LOGIN_URL,
   LOGIN_USING_EMAIL_URL,
   LOGIN_WITH_PASSWORD_URL,
+  REWARDEDAD,
   VERIFY_LOGIN_OTP_URL,
 } from '../../../constants/ApiPaths';
 import Colors from '../../../assets/Colors';
@@ -90,9 +91,7 @@ const SignInScreen = ({route}) => {
   const [isLoaded, setIsLoaded] = useState(false);
   //
   const [isRewardedAddCalled, setIsRewardedAddCalled] = useState(false);
-  const adUnitId3 = __DEV__
-    ? TestIds.REWARDED
-    : 'ca-app-pub-1582661677692525~7964330200';
+  const adUnitId3 = REWARDEDAD;
 
   useEffect(() => {
     initRewardedad();
