@@ -250,7 +250,6 @@ const ChangePassword = ({}) => {
     navigation.navigate('UserProfile');
   };
   const submitForm = async () => {
-    //console.log("PRESSEDDDD");
     const updatebodyData = {
       id: childID,
       parentid: '',
@@ -280,22 +279,8 @@ const ChangePassword = ({}) => {
     };
     const validate = info.new_password != '' && info.confirmPassword != '';
 
-    // console.log(
-    //   info.new_password,
-    //   'info.new_password',
-    //   info.confirmPassword,
-    //   'info.confirmPassword',
-    // );
-
     console.log(updatebodyData, 'bodyData....CONTACTUS');
     if (validate == false) {
-      // console.log(validate, 'validate.........................');
-      // if (info.old_password == '') {
-      //   setOldPasswordError(true);
-      // } else {
-      //   setOldPasswordError(false);
-      // }
-
       if (info.new_password == '' || info.new_password.length < 6) {
         setNewPasswordError(true);
       } else {
@@ -314,8 +299,6 @@ const ChangePassword = ({}) => {
         50,
       );
     } else if (newPasswordError == true) {
-      // console.log("passerror","................");
-      // setNewPasswordError(true)
       ToastAndroid.showWithGravityAndOffset(
         trans('Please Enter Valid Password'),
         ToastAndroid.LONG,
@@ -324,7 +307,6 @@ const ChangePassword = ({}) => {
         50,
       );
     } else if (confirmPasswordError == true) {
-      // console.log("confirm........error","................");
       ToastAndroid.showWithGravityAndOffset(
         trans('Please Enter Valid Password'),
         ToastAndroid.LONG,
@@ -333,7 +315,6 @@ const ChangePassword = ({}) => {
         50,
       );
     } else if (mismatchError == true) {
-      // console.log('pass........error', '................');
       ToastAndroid.showWithGravityAndOffset(
         trans('Please Enter Valid Password'),
         ToastAndroid.LONG,
@@ -342,28 +323,11 @@ const ChangePassword = ({}) => {
         50,
       );
     }
-    // else if (oldpasswordError == true) {
-    //   setOldPasswordError(true)
-    //   ToastAndroid.showWithGravityAndOffset(
-    //     'Please Enter Valid Password',
-    //     ToastAndroid.LONG,
-    //     ToastAndroid.BOTTOM,
-    //     25,
-    //     50,
-    //   );
-    // }
-    else {
-      // console.log('called..................');
-      // console.log(updatebodyData, '.........................');
-      
+    else {      
         updateChildProfile(
           updatebodyData,
-          // undefined,
-          // setLoading,
           handleUpdateCallback,
-          // true,
         );
-    
     }
   };
 
@@ -412,7 +376,7 @@ const ChangePassword = ({}) => {
             paddingHorizontal: 20,
             paddingBottom: 15,
           }}>
-          <View
+          {/* <View
             style={{
               height: 120,
               width: device_width,
@@ -422,16 +386,16 @@ const ChangePassword = ({}) => {
               // position: "absolute",
               alignItems: 'center',
               alignSelf: 'center',
-            }}>
-            <FastImage
+            }}> */}
+            {/* <FastImage
               style={{height: 100, width: device_width * 0.5, marginTop: 5}}
-              // source={{
-              //   uri: 'https://t3.ftcdn.net/jpg/03/55/93/36/360_F_355933634_1BaLq0FIg4tWUXfztbFvfaPRRtEKx7rp.jpg',
-              // }}
+              source={{
+                uri: 'https://t3.ftcdn.net/jpg/03/55/93/36/360_F_355933634_1BaLq0FIg4tWUXfztbFvfaPRRtEKx7rp.jpg',
+              }}
               source={require('../../../assets/el3.png')}
               resizeMode="contain"
-            />
-          </View>
+            /> */}
+          {/* </View> */}
           <View style={{width: '100%', marginTop: 25, marginBottom: 20}}>
             <Text style={{fontSize: 25, fontWeight: '900', color: '#FFB901'}}>
               {trans('New Password')}

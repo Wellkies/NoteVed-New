@@ -193,10 +193,10 @@ const AppStack = props => {
             },
           }
         )}
-        initialRouteName={'LANDINGSCREEN'}>
+        initialRouteName={'SubjectLevel'}>
         <Stack.Screen
-          name={ROUTES.LANDINGSCREEN}
-          component={LandingScreen}
+          name={ROUTES.SUBJECT_LEVEL}
+          component={SubjectLevel}
           // options={({ route, navigation }) => ({
           //   title: 'LandingScreen',
           //   headerLeft: () => (
@@ -226,7 +226,7 @@ const AppStack = props => {
           // })}
         />
 
-        <Stack.Screen
+        {/* <Stack.Screen
           name={ROUTES.SUBJECT_LEVEL}
           component={SubjectLevel}
           options={({route, navigation}) => ({
@@ -240,7 +240,7 @@ const AppStack = props => {
               />
             ),
           })}
-        />
+        /> */}
 
         <Stack.Screen
           name={'UserHome'}
