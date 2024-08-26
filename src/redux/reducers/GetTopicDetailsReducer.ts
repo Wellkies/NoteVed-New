@@ -30,6 +30,8 @@ export const TopicDetailsBySubData = createSlice({
     builder
       .addCase(getTopicBySubIdAPI.pending, (state) => {
         state.status = "loading";
+        
+        
       })
       .addCase(getTopicBySubIdAPI.fulfilled, (state, action) => {
         state.status = "idle";
