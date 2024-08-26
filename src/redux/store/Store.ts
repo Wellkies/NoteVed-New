@@ -50,6 +50,7 @@ import ChildProgressDetailData from '../reducers/GetChildProgressDetailReducer';
 import StudentStateData from '../reducers/GetAllStateReducer';
 import AllLicenseData from '../reducers/GetAllLicenseReducer';
 import AdsStatusData from '../reducers/GetAdsStatusReducer';
+import ExamTimeData from "../reducers/ExamTimeTakenReducer";
 
 export const store = configureStore({
   reducer: {
@@ -105,6 +106,7 @@ export const store = configureStore({
     StateData: StudentStateData,
     AllLicensedetails: AllLicenseData,
     AdsStates: AdsStatusData,
+    ExamTime: ExamTimeData,
   },
 });
 

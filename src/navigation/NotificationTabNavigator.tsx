@@ -12,8 +12,6 @@ const Stack = createStackNavigator();
 
 function NotificationTabNavigator() {
   const { t: trans, i18n } = useTranslation();
-  //   console.log(Stack);
-  //   const Clinicparams={isTodaysFlag : false, isbookingAppointment : false}
   return (
     <>
       <StatusBar backgroundColor={'#263d2d'} barStyle="light-content" />
@@ -36,7 +34,6 @@ function NotificationTabNavigator() {
           name={ROUTES.NOTIFICATION}
           component={Notification}
           options={({ route, navigation }) => ({
-            // title: trans('Profile'),
             headerLeft: () => (
               <MaterialIcons.Button
                 name="keyboard-arrow-left"
@@ -48,36 +45,6 @@ function NotificationTabNavigator() {
             ),
           })}
         />
-        {/* <Stack.Screen
-          name={ROUTES.USERHOME}
-          component={UserHome}
-          options={({route, navigation}) => ({
-            title: 'Add Own Clinic',
-            // title: route.params.isTodaysFlag == true ? 'Todays Appointment' : 'Clinics List',
-            headerLeft: () => (
-              <Icon.Button
-                name="ios-chevron-back-outline"
-                size={25}
-                backgroundColor={Colors.primary}
-                onPress={() => navigation.goBack()}></Icon.Button>
-            ),
-          })}
-        /> */}
-        {/* <Stack.Screen
-          name={ROUTES.SUBJECTDETAILS}
-          component={SubjectDetails}
-          options={({route, navigation}) => ({
-            title: 'Subject Details',
-            // title: route.params.isTodaysFlag == true ? 'Todays Appointment' : 'Clinics List',
-            headerLeft: () => (
-              <Icon.Button
-                name="ios-chevron-back-outline"
-                size={25}
-                backgroundColor={Colors.primary}
-                onPress={() => navigation.goBack()}></Icon.Button>
-            ),
-          })}
-        /> */}
       </Stack.Navigator>
     </>
   );

@@ -271,6 +271,8 @@ const MockTests = ({route}) => {
       scholarshipName: scholarshipName,
       is2ndAvailable: is2ndAvailable,
       topicid: topicid,
+      timeDuration: timeDuration,
+      islastexercise: islastexercise,
     });
   };
   const handleCallback = async () => {
@@ -298,8 +300,8 @@ const MockTests = ({route}) => {
       totalmark = 0,
       percentage = 0,
     } = markCalculation(Questionlist);
-    // } = markCalculation(submitData);
-    //console.log(percentage, 'percentage...................');
+
+    setQuitModalStatus(false);
     if (isReattempt) {
       let bodyReattemptAnswerData = {
         id: studentdata[0]._id,
@@ -502,12 +504,19 @@ const MockTests = ({route}) => {
     setConfirmReport(true);
   };
   const reportSubmitForm = async (question: any) => {
-    console.log(Questionlist[currentIndex]?.question,'@QS')
-    console.log(subjectName,stageid,childName,boardid,
+    console.log(Questionlist[currentIndex]?.question, '@QS');
+    console.log(
+      subjectName,
+      stageid,
+      childName,
+      boardid,
       scholarshipid,
       subjectName,
       chapterName,
-      question,contentid,'@DataBody')
+      question,
+      contentid,
+      '@DataBody',
+    );
     const bodyData = {
       edcontactName: childName,
       //edcontactemail: email,
@@ -550,13 +559,11 @@ const MockTests = ({route}) => {
       subjectName,
       chapterName,
       question,
-      apptype:'Skill Development',
+      apptype: 'Skill Development',
     };
     console.log(bodyData, '@bodyData1');
     createContactApi(bodyData, reporthandleCallback);
-    CommonMessage(
-      'Your query has been successfully sent.',
-    );
+    CommonMessage('Your query has been successfully sent.');
   };
   const reporthandleCallback = () => {
     setConfirmReport(false);
@@ -1056,7 +1063,10 @@ const MockTests = ({route}) => {
           // }questions ')}`}
           yesbtnName={trans('YES')}
           loading={loading}
-          yesbtnFunction={() => handleAnswerSubmit()}
+          yesbtnFunction={() => {
+            handleAnswerSubmit();
+            setQuitModalStatus(false);
+          }}
           nobtnName={trans('NO')}
           nobtnFunction={() => {
             setQuitModalStatus(false);

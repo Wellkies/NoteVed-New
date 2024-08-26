@@ -663,9 +663,7 @@ const SignInScreen = ({route}) => {
               setOtpError(false);
             } else if (user.length == 0) {
               {
-                selectedLanguage == 'english'
-                  ? CommonMessage('Please create an account to continue !')
-                  : CommonMessage('ଜାରି ରଖିବାକୁ ଦୟାକରି ଏକ ଖାତା ସୃଷ୍ଟି କରନ୍ତୁ!');
+                CommonMessage('Please create an account to continue !')
               }
               setPaused(true);
               navigation.navigate('SignUpScreen1', {
@@ -979,19 +977,13 @@ const SignInScreen = ({route}) => {
                   <View style={{marginTop: 0, marginHorizontal: 0}}>
                     <Text
                       style={{
-                        color: '#000',
+                        color: '#ffffff',
                         fontWeight: '600',
                         fontSize: 11,
                         marginLeft: 15,
                         marginTop: 20,
                       }}>
-                      {/* {'ସାଇନ୍ ଇନ୍ କରି, ମୁଁ ଏହାକୁ ଗ୍ରହଣ କରେ'} */}
-                      {selectedLanguage === 'odia'
-                        ? 'ସାଇନ୍ ଇନ୍ କରି, ମୁଁ ଏହାକୁ ଗ୍ରହଣ କରେ'
-                        : selectedLanguage === 'english'
-                        ? `By signing in, I accept the`
-                        : // : 'साइन इन करके, मैं स्वीकार करता हूं'}
-                          `By signing in, I accept the`}
+                      {'By signing in, I accept the'}
                       <Text
                         onPress={() => {
                           setPaused(true);
@@ -1405,17 +1397,13 @@ const SignInScreen = ({route}) => {
                     )}
                     <Text
                       style={{
-                        color: '#000',
+                        color: '#ffffff',
                         fontWeight: '600',
                         fontSize: 11,
                         marginLeft: 15,
                         marginTop: 10,
                       }}>
-                      {selectedLanguage === 'odia'
-                        ? 'ସାଇନ୍ ଇନ୍ କରି, ମୁଁ ଏହାକୁ ଗ୍ରହଣ କରେ'
-                        : selectedLanguage === 'english'
-                        ? `By signing in, I accept the`
-                        : `By signing in, I accept the`}{' '}
+                      {'By signing in, I accept the'}{' '}
                       <Text
                         onPress={() => {
                           setPaused(true);
@@ -1647,7 +1635,7 @@ const SignInScreen = ({route}) => {
                     </Text>
                   </View>
                 </TouchableOpacity>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   style={{
                     paddingLeft: 12,
                     flexDirection: 'row',
@@ -1671,8 +1659,8 @@ const SignInScreen = ({route}) => {
                       name={'playcircleo'}
                       style={{fontSize: 25, color: '#fff'}}
                     />
-                  </View>
-                  <View style={{width: '85%', marginLeft: 5, borderWidth: 0}}>
+                  </View> */}
+                  {/* <View style={{width: '85%', marginLeft: 5, borderWidth: 0}}>
                     <Text
                       style={{
                         fontSize: 17,
@@ -1682,14 +1670,14 @@ const SignInScreen = ({route}) => {
                         paddingLeft: 10,
                       }}>
                       {/* {'ଟ୍ୟୁଟୋରିଆଲ୍ ଭିଡିଓ'} */}
-                      {selectedLanguage === 'odia'
+                      {/* {selectedLanguage === 'odia'
                         ? 'ଟ୍ୟୁଟୋରିଆଲ୍ ଭିଡିଓ'
                         : selectedLanguage === 'english'
                         ? 'Tutorial Video'
-                        : 'Tutorial Video'}
+                        : 'Tutorial Video'} */}
                       {/* : 'ट्यूटोरियल वीडियो'} */}
-                    </Text>
-                    <Text
+                    {/* </Text> */}
+                    {/* <Text
                       style={{
                         fontSize: 13,
                         fontWeight: '600',
@@ -1702,9 +1690,9 @@ const SignInScreen = ({route}) => {
                         : selectedLanguage === 'english'
                         ? 'Guide video of how to use the app'
                         : 'Guide video of how to use the app'}
-                    </Text>
-                  </View>
-                </TouchableOpacity>
+                    </Text> */}
+                  {/* </View>  */}
+                {/* </TouchableOpacity> */}
               </View>
             </Animatable.View>
           ) : (
@@ -1868,18 +1856,12 @@ const SignInScreen = ({route}) => {
                   }}>
                   <Text
                     style={{
-                      color: '#000',
+                      color: '#ffffff',
                       fontSize: 11,
                       fontWeight: '600',
                       // marginLeft: 15,
                     }}>
-                    {/* {'ସାଇନ୍ ଇନ୍ କରି, ମୁଁ ଏହାକୁ ଗ୍ରହଣ କରେ'} */}
-                    {selectedLanguage === 'odia'
-                      ? 'ସାଇନ୍ ଇନ୍ କରି, ମୁଁ ଏହାକୁ ଗ୍ରହଣ କରେ'
-                      : selectedLanguage === 'english'
-                      ? `By signing in, I accept the`
-                      : `By signing in, I accept the`}{' '}
-                    {/* : 'साइन इन करके, मैं स्वीकार करता हूं'}{' '} */}
+                    {'By signing in, I accept the'}{' '}
                     <Text
                       onPress={() => {
                         setPaused(true);
@@ -2141,7 +2123,7 @@ const SignInScreen = ({route}) => {
                   width: device_width * 0.94,
                   alignSelf: 'center',
                 }}>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   style={{
                     paddingLeft: 12,
                     flexDirection: 'row',
@@ -2175,13 +2157,13 @@ const SignInScreen = ({route}) => {
                         paddingLeft: 10,
                       }}>
                       {/* {'ଟ୍ୟୁଟୋରିଆଲ୍ ଭିଡିଓ'} */}
-                      {selectedLanguage === 'odia'
+                      {/* {selectedLanguage === 'odia'
                         ? 'ଟ୍ୟୁଟୋରିଆଲ୍ ଭିଡିଓ'
                         : selectedLanguage === 'english'
                         ? 'Tutorial Video'
-                        : 'Tutorial Video'}
+                        : 'Tutorial Video'} */}
                       {/* : 'ट्यूटोरियल वीडियो'} */}
-                    </Text>
+                    {/* </Text>
                     <Text
                       style={{
                         fontSize: 13,
@@ -2194,11 +2176,11 @@ const SignInScreen = ({route}) => {
                         ? 'ଆପ୍ କିପରି ବ୍ୟବହାର କରାଯିବ ତାହାର ଗାଇଡ୍ ଭିଡିଓ'
                         : selectedLanguage === 'english'
                         ? 'Guide video of how to use the app'
-                        : 'Guide video of how to use the app'}
+                        : 'Guide video of how to use the app'} */}
                       {/* : 'एप्लिकेशन का उपयोग करने के तरीके के बारे में वीडियो गाइड करें'} */}
-                    </Text>
+                    {/* </Text>
                   </View>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <TouchableOpacity
                   style={{
                     paddingLeft: 12,
@@ -2738,14 +2720,14 @@ const SignInScreen = ({route}) => {
                   </View>
                 </View>
               </View>
-              <View
+              {/* <View
                 style={{
                   position: 'absolute',
                   bottom: -20,
                   height: 100,
                   width: '100%',
-                }}>
-                <FastImage
+                }}> */}
+                {/* <FastImage
                   style={{
                     height: 100,
                     width: '100%',
@@ -2755,8 +2737,8 @@ const SignInScreen = ({route}) => {
                   }}
                   source={require('../../../assets/resting1.png')}
                   resizeMode="contain"
-                />
-                <FastImage
+                /> */}
+                {/* <FastImage
                   style={{
                     height: 30,
                     width: device_width * 0.97,
@@ -2764,8 +2746,8 @@ const SignInScreen = ({route}) => {
                   }}
                   source={require('../../../assets/grass.png')}
                   resizeMode="contain"
-                />
-              </View>
+                /> */}
+               {/* </View> */}
             </View>
           </ImageBackground>
         </Modal>

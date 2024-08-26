@@ -196,16 +196,16 @@ function BottomTabNavigator() {
           //   tabBarButton: props => <CustomTabBarButton route="home" {...props} />,
           // }}
         />
-         <Tab.Screen
+         {/* <Tab.Screen
           name={ROUTES.STORE_TAB}
           component={StoreTabNavigator}
           options={({route, navigation}) => ({
             title: trans('My Store'),
-          })}
-          // options={{
-          //   tabBarButton: props => <CustomTabBarButton route="home" {...props} />,
-          // }}
-        /> 
+          })} */}
+          {/* // options={{ */}
+          {/* //   tabBarButton: props => <CustomTabBarButton route="home" {...props} />, */}
+          {/* // }}
+        // />  */}
         {/* subjectName = '', chapterName = '', examSet = '' */}
 
         <Tab.Screen

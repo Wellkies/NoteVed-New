@@ -100,14 +100,14 @@ const Notification = () => {
     navigation.addListener('focus', () => {
       BackHandler.addEventListener('hardwareBackPress', () => {
         // navigation.goBack();
-        navigation.navigate('UserHome');
+        navigation.navigate('SubjectLevel');
         return true;
       });
     });
     return () => {
       BackHandler.removeEventListener('hardwareBackPress', () => {
         // navigation.goBack();
-        navigation.navigate('UserHome');
+        navigation.navigate('SubjectLevel');
         return true;
       });
     };
@@ -157,7 +157,7 @@ const Notification = () => {
           label1={trans('Notification')}
           label2={<FontAwesome name={'bell'} size={22} color={'#fff'} />}
           isbackIconShow={true}
-          functionName={() => navigation.navigate('UserHome')}
+          functionName={() => navigation.navigate('SubjectLevel')}
         />
         {fcmLoading == 'loading' ? (
           <LoadingScreen flag={fcmLoading == 'loading'} />
