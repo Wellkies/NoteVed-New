@@ -341,6 +341,14 @@ const SubjectLevel = ({route}) => {
       rewardedad.show();
     }
   };
+  useEffect(() => {
+    navigation.addListener('focus', () => {
+      BackHandler.addEventListener('hardwareBackPress', () => {
+        BackHandler.exitApp();
+        return true;
+      });
+    });
+  }, []);
   return (
     <SafeAreaView style={{flex: 1}}>
       <ScrollView>
