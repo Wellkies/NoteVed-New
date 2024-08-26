@@ -18,8 +18,9 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import {
   getTopicBySubIdAPI,
   selectTopicDetailsInfo,
+  selectTopicDetailsStatus
 } from '../../redux/reducers/GetTopicDetailsReducer';
-import {selectTopicDetailsStatus} from '../../redux/reducers/GetTopicDetailsFormTopicIdReducer';
+// import {selectTopicDetailsStatus} from '../../redux/reducers/GetTopicDetailsFormTopicIdReducer';
 import {dataclearstate} from '../../redux/reducers/GetContentDetailsReducer';
 import LoadingScreen from '../CommonScreens/LoadingScreen';
 import {selectUserInfo} from '../../redux/reducers/loginReducer';
@@ -52,12 +53,13 @@ const TopicDetails = ({route}) => {
   // const topics = contents.filter(
   //   subject => subject.subjectname === subjectname,
   // ).flatMap(subject => subject.topics);
-  // console.log(topics, '@topics');
+  // 
 
-  console.log(subjectname, '@subjectname');
-  //console.log(TopicBySubjectId, '$$$$$$$$$$$$#####TopicBySubjectId');
+  
+  //
 
   const TopicLoad = useAppSelector(selectTopicDetailsStatus);
+
 
   const {authToken, status, userInfo} = useAppSelector(selectUserInfo);
   interface ChildInfo {
@@ -190,7 +192,7 @@ const TopicDetails = ({route}) => {
             <LoadingScreen flag={TopicLoad == 'loading'} />
           ) : (
             <>
-              {TopicBySubjectId.length > 0 ? (
+              {TopicLoad.length > 0 ? (
                 <>
                   <View
                     style={{
@@ -253,7 +255,7 @@ const TopicDetails = ({route}) => {
                           (previousContents.length || 1);
                         isLock = previousAveragePercentage < 90;
                       }
-                      console.log(isLock, '@isLock');
+                      
 
                       // const progress = TopicBySubjectId.filter(
                       //   item => item.studenttopic != '',

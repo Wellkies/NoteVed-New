@@ -112,6 +112,7 @@ import {
   selectAdsStatus,
   selectAdsStatuss,
 } from '../../redux/reducers/GetAdsStatusReducer.ts';
+import { REWARDEDAD } from '../../../constants/ApiPaths.ts';
 import {handleExamTimeTaken} from '../../redux/reducers/ExamTimeTakenReducer.ts';
 // import PaymentReminderModal from './CommonScreens/PaymentReminderModal.js';
 
@@ -123,9 +124,7 @@ const ScoreBoard = ({route}) => {
   const [isLoaded, setIsLoaded] = useState(false);
   //
   const [isRewardedAddCalled, setIsRewardedAddCalled] = useState(false);
-  const adUnitId3 = __DEV__
-    ? TestIds.REWARDED
-    : 'ca-app-pub-1582661677692525~7964330200';
+  const adUnitId3 = REWARDEDAD;
   const PremiumPurchaseLoad = useAppSelector(selectPremiumPurchaseStatus);
   const AdsStatus = useAppSelector(selectAdsStatus);
   const AdLoadStatuss = useAppSelector(selectAdsStatuss);

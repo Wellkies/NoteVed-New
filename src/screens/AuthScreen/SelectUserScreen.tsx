@@ -25,6 +25,7 @@ import {
     RewardedAd,
     RewardedAdEventType,
   } from "react-native-google-mobile-ads";
+import { REWARDEDAD } from '../../../constants/ApiPaths';
 // import Header from '../CommonScreens/Header';
 
 const SelectUserScreen = ({ route }) => {
@@ -39,7 +40,7 @@ const SelectUserScreen = ({ route }) => {
 const [rewardedad,setRewardedad] =useState(null)
 const [isLoaded, setIsLoaded] = useState(false);
 const [isRewardedAddCalled, setIsRewardedAddCalled] = useState(false)
-const adUnitId3 = __DEV__ ? TestIds.REWARDED : 'ca-app-pub-1582661677692525~7964330200';
+const adUnitId3 = REWARDEDAD;
 
 useEffect(() => {
 
