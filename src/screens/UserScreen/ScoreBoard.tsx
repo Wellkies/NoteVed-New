@@ -112,6 +112,7 @@ import {
   selectAdsStatus,
   selectAdsStatuss,
 } from '../../redux/reducers/GetAdsStatusReducer.ts';
+import {handleExamTimeTaken} from '../../redux/reducers/ExamTimeTakenReducer.ts';
 // import PaymentReminderModal from './CommonScreens/PaymentReminderModal.js';
 
 const ScoreBoard = ({route}) => {
@@ -206,6 +207,8 @@ const ScoreBoard = ({route}) => {
     scholarshipName = '',
     is2ndAvailable = '',
     topicid = '',
+    islastexercise = false,
+    QuestionsList = [],
   } = route.params;
   console.log(route.params, '@scoreboardParams');
   const [loading, setLoading] = useState(false);
@@ -1171,18 +1174,31 @@ const ScoreBoard = ({route}) => {
             }}>
             <TouchableOpacity
               onPress={() => {
-                if (percentage >= 90) {
+                if (percentage < 90) {
                   const bodydata = {
                     subjectid: subjectId,
                     childid: childid,
                   };
-                  dispatch(getTopicBySubIdAPI(bodydata));
-                  navigation.navigate('TopicDetails', {
+                  //console.log(examSet, quiz,'@timeDuration');
+                  dispatch(handleExamTimeTaken(0));
+                  navigation.navigate('MockTests', {
+                    screenName: 'ExamSets',
+                    subjectName: subjectName,
                     coursename: coursename,
-                    subjectname: subjectName,
-                    subjectid: subjectId,
+                    chapterName: topicName,
+                    examSet: examSet,
+                    contentid: contentid,
+                    isReattempt: isReattempt,
+                    studentdata: studentdata,
+                    ExamQuestionsets: quiz,
+                    subjectId: subjectId,
+                    timeDuration: timeDuration,
+                    is2ndAvailable: is2ndAvailable,
+                    topicid: topicid,
+                    //topic: topic,
+                    islastexercise: islastexercise,
                   });
-                } else {
+                } else if (!islastexercise) {
                   const data = {
                     topicid: topicid,
                     childid: childid,
@@ -1195,6 +1211,17 @@ const ScoreBoard = ({route}) => {
                     topicname: chapterName,
                     percentage: percentage,
                     topicid: topicid,
+                  });
+                } else {
+                  const bodydata = {
+                    subjectid: subjectId,
+                    childid: childid,
+                  };
+                  dispatch(getTopicBySubIdAPI(bodydata));
+                  navigation.navigate('TopicDetails', {
+                    coursename: coursename,
+                    subjectname: subjectName,
+                    subjectid: subjectId,
                   });
                 }
               }}
