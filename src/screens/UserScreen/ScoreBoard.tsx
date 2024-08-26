@@ -1180,7 +1180,6 @@ const ScoreBoard = ({route}) => {
                     childid: childid,
                   };
                   //console.log(examSet, quiz,'@timeDuration');
-                  dispatch(handleExamTimeTaken(0));
                   navigation.navigate('MockTests', {
                     screenName: 'ExamSets',
                     subjectName: subjectName,
