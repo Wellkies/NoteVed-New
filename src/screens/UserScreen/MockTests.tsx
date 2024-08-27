@@ -27,7 +27,6 @@ import {useNavigation} from '@react-navigation/native';
 import {useAppSelector} from '../../redux/store/reducerHook';
 import {
   getContentQuizAPI,
-  selectContentQuiz,
   selectContentQuizStatus,
 } from '../../redux/reducers/GetContentQuizReducer';
 import CommonModalUser from '../CommonScreens/CommonModalUser';
@@ -56,8 +55,10 @@ import {
   selectTopicDetails,
 } from '../../redux/reducers/GetTopicDetailsFormTopicIdReducer';
 import {
+  getContentByContentIdAPI,
   selectContentDetailsInfo,
   selectContentDetailsStatus,
+  selectContentQuiz,
 } from '../../redux/reducers/GetContentDetailsReducer';
 import {selectUserInfo} from '../../redux/reducers/loginReducer';
 import {
@@ -98,19 +99,24 @@ const MockTests = ({route}) => {
     is2ndAvailable = '',
     topicid = '',
     topic = '',
-    ExamQuestionsets: ContentQuiz = [],
+    bQuiz= [],
+    ExamQuestionsets:  [],
     islastexercise = false,
-    isReattempt = false,
+    isReattempt = "",
   } = route.params;
-  console.log(route.params, '@Mocktest');
+  
 
-  // const ContentQuiz = useAppSelector(selectContentDetailsInfo);
+// let baseQuiz = ContentQuiz[0] ? ContentQuiz[0] : [];
+  const ContentQuiz = useAppSelector(selectContentQuiz);
   const ContentLoading = useAppSelector(selectContentDetailsStatus);
-  //console.log(ContentQuiz, 'ContentQuiz..........');
+
   // {
   // const quizz = ContentQuiz.map(rec => rec.quiz);
-  let quiz = ContentQuiz[0] ? ContentQuiz[0] : [];
+  let quiz = ContentQuiz[0]?.quiz ? ContentQuiz[0].quiz : [];
 
+  
+  
+const baseQuiz = ContentQuiz[0] ? ContentQuiz[0] : [];
   const sortedQuestionList = ContentQuiz.slice().sort(
     (a, b) => a.questionno - b.questionno,
   );
@@ -175,13 +181,13 @@ const MockTests = ({route}) => {
     phone = '',
     name = '',
   } = userInfo;
-  //console.log(userInfo, 'userInfo..............');
+  //
   const TopicList = useAppSelector(selectTopicDetails);
-  //console.log(TopicList, 'TopicList//////////////////////');
+  //
   const TopicId = useAppSelector(selectTopicId);
-  //console.log(TopicId, 'TopicId//////////////');
+  //
   const selectedTopic = TopicList.find(rec => rec.topicid == TopicId);
-  //console.log(selectedTopic, 'selectedTopic///////////////////////');
+  //
   let ContentIndex = -1;
   if (selectedTopic != undefined) {
     ContentIndex = selectedTopic.reviewquestionsets.findIndex(
@@ -273,6 +279,7 @@ const MockTests = ({route}) => {
       topicid: topicid,
       timeDuration: timeDuration,
       islastexercise: islastexercise,
+      bQuiz:baseQuiz
     });
   };
   const handleCallback = async () => {
@@ -322,7 +329,7 @@ const MockTests = ({route}) => {
       //     skippedquestion: Skipped,
       //     percentagescored: percentage,
       //   };
-      //   console.log(above90Body, 'above90Body/////////////');
+      //   
       //   if (boardid == 1 && percentage >= 90) {
       //     createabove90PercentageBSEApi(above90Body, undefined);
       //   } else if (boardid !== 1 && percentage >= 90) {
@@ -438,7 +445,7 @@ const MockTests = ({route}) => {
     return true;
   };
 
-  // useEffect(() => {
+  useEffect(() => {
   //   const TopicDetails = {
   //     Class: stageid,
   //     subjectId,
@@ -450,19 +457,19 @@ const MockTests = ({route}) => {
   //   dispatch(getTopicDetailsAPI(TopicDetails));
   //   dispatch(handleSetTopicIdForRevision(topicid));
 
-  //   const contentData = {
-  //     contentid,
-  //   };
-  //   dispatch(getContentQuizAPI(contentData));
-  // }, []);
+    const contentData = {
+      contentid,
+    };
+    dispatch(getContentByContentIdAPI(contentData));
+  }, []);
 
   useEffect(() => {
     // dispatch(handleSetTopicIdForRevision(topicid));
     navigation.addListener('focus', () => {
-      // const contentData = {
-      //   contentid,
-      // };
-      // dispatch(getContentQuizAPI(contentData));
+      const contentData = {
+        contentid,
+      };
+      dispatch(getContentByContentIdAPI(contentData));
       BackHandler.addEventListener('hardwareBackPress', () =>
         handleBackButtonClick(),
       );
@@ -478,14 +485,14 @@ const MockTests = ({route}) => {
   }, []);
 
   useEffect(() => {
-    // if (isReattempt == false) {
-    //   if (quiz?.length > 0) {
-    //     setQuestionlist(quiz);
-    //   }
-    // } else {
-    //   if (quiz?.length > 0) setQuestionlist(quiz);
-    // }
-    if (quiz?.length > 0) setQuestionlist(quiz);
+    if (isReattempt == false) {
+      if (quiz?.length > 0) {
+        setQuestionlist(quiz);
+      }
+    } else {
+      if (quiz?.length > 0) setQuestionlist(quiz);
+    }
+    // if (quiz?.length > 0) setQuestionlist(quiz);
   }, [ContentQuiz]);
 
   const handlePress = () => {
@@ -504,7 +511,7 @@ const MockTests = ({route}) => {
     setConfirmReport(true);
   };
   const reportSubmitForm = async (question: any) => {
-    console.log(Questionlist[currentIndex]?.question, '@QS');
+    
     console.log(
       subjectName,
       stageid,
@@ -561,7 +568,7 @@ const MockTests = ({route}) => {
       question,
       apptype: 'Skill Development',
     };
-    console.log(bodyData, '@bodyData1');
+    
     createContactApi(bodyData, reporthandleCallback);
     CommonMessage('Your query has been successfully sent.');
   };
@@ -1021,10 +1028,10 @@ const MockTests = ({route}) => {
             <BannerAd
               unitId={adUnitId}
               size={BannerAdSize.BANNER}
-              onAdFailedToLoad={error =>
-                console.error('Ad failed to load: ', error)
-              }
-              onAdLoaded={() => console.log('Ad loaded')}
+              // onAdFailedToLoad={error =>
+              //   // 
+              // }
+              // onAdLoaded={() => }
             />
           </View>
         </ImageBackground>
