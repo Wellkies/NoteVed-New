@@ -254,8 +254,10 @@ const SubjectLevel = ({route}) => {
   //const SubByCourseID = useAppSelector(selectAllSubByCourseIdInfo);
   //const SubLoading = useAppSelector(selectAllSubByCourseIdStatus);
   const data = [
-    require('../../../assets/skillfact3.jpg'),
-    require('../../../assets/skillfact4.jpg'),
+    require('../../../assets/prepare.png'),
+    require('../../../assets/practice.png'),
+    require('../../../assets/aquestion.png'),
+    //require('../../../assets/skillfact4.jpg'),
   ];
   const [activeSlide, setActiveSlide] = useState(0);
   const carouselRef = useRef(null);
@@ -266,8 +268,8 @@ const SubjectLevel = ({route}) => {
         justifyContent: 'center',
         alignItems: 'center',
         marginLeft: 10,
-        borderWidth: 0.9,
-        borderColor: '#f1a722',
+        // borderWidth: 0.9,
+        // borderColor: '#f1a722',
         borderRadius: 20,
         width: device_width * 0.96,
         height: device_height * 0.19,
