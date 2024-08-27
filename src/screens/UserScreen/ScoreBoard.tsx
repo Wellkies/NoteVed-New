@@ -208,8 +208,9 @@ const ScoreBoard = ({route}) => {
     topicid = '',
     islastexercise = false,
     QuestionsList = [],
+    bQuiz=[]
   } = route.params;
-  console.log(route.params, '@scoreboardParams');
+  
   const [loading, setLoading] = useState(false);
   const [ansloading, setAnsLoading] = useState(false);
   const [modalStatus, setModalStatus] = useState(false);
@@ -272,7 +273,7 @@ const ScoreBoard = ({route}) => {
   const TopicId = useAppSelector(selectTopicId);
 
   const ExamName = useAppSelector(selectExamName);
-  // console.log(ExamName, 'ExamName.............');
+  // 
 
   useEffect(() => {
     dispatch(handleSetTopicIdForRevision(topicid));
@@ -306,7 +307,7 @@ const ScoreBoard = ({route}) => {
   ) as prevYearQuestion;
   const {studentdata: prevStudentData = []} = PrevYearQuestion;
 
-  // console.log(prevStudentData,"prevStudentData.................")
+  // 
 
   // const {ProbableQuestions = []} = useSelector(
   //   state => state.GetMostProbQuesReducer,
@@ -359,7 +360,7 @@ const ScoreBoard = ({route}) => {
         yearid: matchingYearid.year,
         childid,
       };
-      // console.log(qsSet, 'qsSet................');
+      // 
       dispatch(getPreviousYearQuestionSetAPI(qsSet));
       if (matchingYearid) {
         // If a matching child is found, console log its childId
@@ -398,11 +399,11 @@ const ScoreBoard = ({route}) => {
       dispatch(getPreviousYearQuestionAPI(prevQues));
       return true;
     } else if (ExamName == 'ProbableQuestion') {
-      // console.log('called..............');
+      // 
       const matchingSetid = ProbableQuestions.find(
         child => child.setid == setid,
       );
-      // console.log(matchingSetid, 'matchingSetid................');
+      // 
       if (matchingSetid) {
         if (subjectWise == false && percentage >= 90) {
           navigation.navigate('ProbQuestion', {
@@ -635,21 +636,21 @@ const ScoreBoard = ({route}) => {
   const sliceColor = ['red', 'green', 'orange'];
 
   // const {TopStudent = []} = useSelector(state => state.GetTopStudentReducer);
-  // console.log(modalStatus, TopStudent, 'TopStudent================');
+  // 
 
   // const {ProbableTopStudent = []} = useSelector(
   //   state => state.MostProbTopStudentReducer,
   // );
   const TopStudent = useAppSelector(selectTopStudent);
-  // console.log(TopStudent,"TopStudent.............")
+  // 
   const ProbableTopStudent = useAppSelector(selectProbTopStudent);
-  // console.log(ProbableTopStudent,"ProbableTopStudent//////////////")
+  // 
   const ListColor = ['#fee2a3', '#f6c4b9', '#c3ccf5', '#76f0c7'];
 
   useEffect(() => {
     //const Predata = {childid, stageid, boardid};
     const Predata = {childid};
-    // console.log(Predata, 'Predata...............');
+    // 
     dispatch(getScholarshipPremiumAPI(Predata));
     dispatch(getChildDetailsAPI(childid));
     const revisionData = {
@@ -677,7 +678,7 @@ const ScoreBoard = ({route}) => {
       childId: childid,
     };
 
-    // console.log(TopicDetails, 'TopicDetails/////////////////>>>>>>>>>>>>>>>>');
+    // 
     dispatch(getTopicDetailsAPI(TopicDetails));
     dispatch(getTopicBySubClassAPI(TopicData));
     const prevQues = {stageid, boardid, scholarshipId: scholarshipid, childid};
@@ -692,7 +693,7 @@ const ScoreBoard = ({route}) => {
   useEffect(() => {
     // on mount
     ref.current.capture().then(uri => {
-      console.log('screenshot captured ! do something with ', uri);
+      
       setImageUri(uri);
     });
   }, []);
@@ -713,7 +714,7 @@ const ScoreBoard = ({route}) => {
       // const shareResponse =
       await Share.open(shareOption);
     } catch (error) {
-      // console.log('Error =>', error);
+      // 
     }
   };
 
@@ -1178,6 +1179,8 @@ const ScoreBoard = ({route}) => {
                     subjectid: subjectId,
                     childid: childid,
                   };
+                  //
+                  dispatch(handleExamTimeTaken(0));
                   //console.log(examSet, quiz,'@timeDuration');
                   navigation.navigate('MockTests', {
                     screenName: 'ExamSets',
@@ -1186,7 +1189,8 @@ const ScoreBoard = ({route}) => {
                     chapterName: topicName,
                     examSet: examSet,
                     contentid: contentid,
-                    isReattempt: isReattempt,
+                    isReattempt: true,
+                    bQuiz:bQuiz,
                     studentdata: studentdata,
                     ExamQuestionsets: quiz,
                     subjectId: subjectId,
@@ -1201,7 +1205,7 @@ const ScoreBoard = ({route}) => {
                     topicid: topicid,
                     childid: childid,
                   };
-                  console.log(data, '@ReData');
+                  
                   dispatch(getContentByTopicIdAPI(data));
                   navigation.navigate('ContentDetails', {
                     coursename: coursename,

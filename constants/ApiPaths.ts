@@ -54,6 +54,7 @@ export const GET_ALL_SUBJECTS_BY_COURSE_URL = API_URL + 'getAllsubject';
 export const GET_TOPICS_BY_SUBJECTID_URL =
   API_URL + 'getTopicbysubjectidandchildid/';
 export const GET_CONTENT_BY_TOPICID_URL = API_URL + 'edzgetContentbytopicid/';
+export const GET_CONTENT_BY_CONTENTID_URL = API_URL + 'getedzContentQuiz/';
 export const GET_ALL_CHILD_CONTENT_URL = API_URL + 'edzgetAllchildContent/';
 export const EDZ_ANSWER_SUBMIT_URL = API_URL + 'edzcreatechildcontent';
 export const EDZ_UPDATE_CHILD_API = API_URL + 'edzupdateChild';
