@@ -112,6 +112,7 @@ const SplashScreen = () => {
         style={{
           width: '100%',
           height: '100%',
+          position:'relative',
         }}
         source={item}
         resizeMode="cover"
@@ -133,7 +134,9 @@ const SplashScreen = () => {
         resizeMode="cover"
         //source={require('../../../assets/0.png')}
         >
-        <View style={{flex: 1, justifyContent: 'flex-end'}}>
+        <View 
+        style={{justifyContent: 'flex-end',marginBottom:20}}
+        >
           <Carousel
             ref={carouselRef}
             data={data}
