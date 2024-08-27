@@ -48,6 +48,7 @@ const ContentDetails = ({route}) => {
     subjectname = '',
     topicname = '',
     topicid: topicID = '',
+    subjectimage=''
     //percentage = '',
   } = route.params;
 console.log(route.params,'@contentParams')
@@ -250,10 +251,10 @@ console.log(route.params,'@contentParams')
                     gap: 4,
                   }}>
                   <Image
-                    source={require('../../../assets/people.png')}
+                    source={{ uri: subjectimage }}
                     style={{
-                      height: device_height * 0.069,
-                      width: device_width * 0.17,
+                      height: device_height * 0.060,
+                      width: device_width * 0.11,
                       resizeMode: 'contain',
                       tintColor: '#FFFFFF',
                     }}

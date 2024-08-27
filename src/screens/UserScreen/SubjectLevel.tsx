@@ -450,6 +450,7 @@ const SubjectLevel = ({route}) => {
                         _id = '',
                         subjectid = '',
                         subjectname = '',
+                        subjectimage='',
                         topics = [],
                       } = item;
                       //console.log(topics[0], '@topics%%%%');
@@ -474,6 +475,7 @@ const SubjectLevel = ({route}) => {
                               //coursename: coursename,
                               subjectname: subjectname,
                               subjectid: subjectid,
+                              subjectimage: subjectimage,
                             });
                           }}>
                           <View
@@ -496,10 +498,10 @@ const SubjectLevel = ({route}) => {
                                 gap: 12,
                               }}>
                               <Image
-                                source={require('../../../assets/people.png')}
+                                source={{ uri: subjectimage }}
                                 style={{
-                                  height: device_height * 0.21,
-                                  width: device_width * 0.15,
+                                  height: device_height * 0.20,
+                                  width: device_width * 0.12,
                                   resizeMode: 'contain',
                                   tintColor: '#f1a722',
                                 }}
