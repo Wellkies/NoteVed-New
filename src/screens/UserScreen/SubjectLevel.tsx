@@ -18,6 +18,7 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import Colors from '../../../assets/Colors';
 import {device_height, device_width} from '../style';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FastImage from 'react-native-fast-image';
 import LoadingScreen from '../CommonScreens/LoadingScreen';
@@ -95,6 +96,7 @@ import {
   selectAdsStatuss,
 } from '../../redux/reducers/GetAdsStatusReducer.ts';
 import { selectPremiumPurchase, selectPremiumPurchaseStatus } from '../../redux/reducers/GetPremiumPurchaseReducer.ts';
+import { CreateFcmTokenAPI } from '../../redux/actions/CreateFCMtokenAPI.ts';
 
 const Tab = createBottomTabNavigator();
 
@@ -240,12 +242,45 @@ const SubjectLevel = ({route}) => {
   //   dispatch(getAllSubByCourseIdAPI(data));
   //   return () => {};
   // }, []);
+
+  const _retrieveFcmToken = async (childid: string, userName: string) => {
+    try {
+      let value: string | null = null;
+      await AsyncStorage.getItem('fcmToken').then(data => {
+        value = data;
+      });
+      console.log(value,"value=======================================");
+      
+      const bodyData = {
+        childid: childid,
+        usertype: 'NoteVook SkilzUp',
+        token: value,
+        childname: `${userName}`,
+      };
+      
+      if (value !== null) {
+        // We have data!!
+        dispatch(CreateFcmTokenAPI(bodyData));
+      }
+    } catch (error) {
+      console.log(error,"----------------------------------");
+      
+      
+      // Error retrieving data
+    }
+  }
+ 
   useEffect(() => {
+    
     const data = {
       //courseid: courseid,
       childid: childid,
     };
     dispatch(getChildProgressDetailAPI(data));
+    const {
+      name = '',
+    } = childInfo;
+     _retrieveFcmToken(childid, name);
     return () => {};
   }, []);
   const SubjectByCourse = useAppSelector(selectChildDetailData);
@@ -450,10 +485,9 @@ const SubjectLevel = ({route}) => {
                         _id = '',
                         subjectid = '',
                         subjectname = '',
-                        subjectimage='',
                         topics = [],
                       } = item;
-                      //console.log(topics[0], '@topics%%%%');
+                      //
                       const progress = topics.filter(
                         item => item.studenttopic != '',
                       ).length;
@@ -475,7 +509,6 @@ const SubjectLevel = ({route}) => {
                               //coursename: coursename,
                               subjectname: subjectname,
                               subjectid: subjectid,
-                              subjectimage: subjectimage,
                             });
                           }}>
                           <View
@@ -498,10 +531,10 @@ const SubjectLevel = ({route}) => {
                                 gap: 12,
                               }}>
                               <Image
-                                source={{ uri: subjectimage }}
+                                source={require('../../../assets/people.png')}
                                 style={{
-                                  height: device_height * 0.20,
-                                  width: device_width * 0.12,
+                                  height: device_height * 0.21,
+                                  width: device_width * 0.15,
                                   resizeMode: 'contain',
                                   tintColor: '#f1a722',
                                 }}

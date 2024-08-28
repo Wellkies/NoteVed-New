@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1010202872856",
+    "project_id": "sk-lzup",
+    "storage_bucket": "sk-lzup.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1010202872856:android:1be8e336b2f2394c4dc76d",
+        "android_client_info": {
+          "package_name": "com.notevedpro"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDh4WhHVOYJ9W-z2xeF2EYbqA-9e_3At7A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
