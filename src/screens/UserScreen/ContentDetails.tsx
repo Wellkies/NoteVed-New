@@ -24,7 +24,7 @@ import {
   selectContentDetailsInfo,
   selectContentDetailsStatus,
 } from '../../redux/reducers/GetContentDetailsReducer';
-import {selectTopicDetailsInfo} from '../../redux/reducers/GetTopicDetailsReducer';
+import {getTopicBySubIdAPI, selectTopicDetailsInfo} from '../../redux/reducers/GetTopicDetailsReducer';
 import {selectTopicDetailsStatus} from '../../redux/reducers/GetTopicDetailsFormTopicIdReducer';
 import {selectUserInfo} from '../../redux/reducers/loginReducer';
 import LevelCompleted from '../UserScreen/LevelCompleted';
@@ -220,7 +220,14 @@ const ContentDetails = ({route}) => {
                   marginHorizontal: 20,
                 }}>
                 <TouchableOpacity
-                  onPress={() => navigation.goBack()}
+                  onPress={() => {
+                    const bodydata = {
+                      subjectid: subjectid,
+                      childid: childid,
+                    };
+                    dispatch(getTopicBySubIdAPI(bodydata));
+                    navigation.goBack();
+                  }}
                   style={{
                     position: 'absolute',
                     top: 30,
