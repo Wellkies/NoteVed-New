@@ -156,14 +156,14 @@ const UserProfile = ({}) => {
       dispatch(getChildDetailsAPI(id));
       setSelectedIndex(1);
       BackHandler.addEventListener('hardwareBackPress', () => {
-        navigation.navigate('UserHome');
+        navigation.navigate('SubjectLevel');
         return true;
       });
     });
     return () => {
       setSelectedIndex(1);
       BackHandler.removeEventListener('hardwareBackPress', () => {
-        navigation.navigate('UserHome');
+        navigation.navigate('SubjectLevel');
         return true;
       });
     };

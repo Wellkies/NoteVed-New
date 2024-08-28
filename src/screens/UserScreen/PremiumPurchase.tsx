@@ -362,11 +362,6 @@ const PremiumPurchase = ({route}) => {
   const nowDate = now.toISOString();
   const dueDatedata = duedate.toISOString();
 
-  //
-  //
-
-  // const schoalrshipID = selectedscholarship[0].scholarshipid;
-
   const callBack = () => {
     // navigation.navigate('UserHome');
     setModalStatus(true);
@@ -1108,7 +1103,7 @@ const PremiumPurchase = ({route}) => {
                 // top: -60,
                 // borderWidth:1
               }}
-              source={require('../../../assets/jungle.png')}
+              //source={require('../../../assets/jungle.png')}
               resizeMode="contain"></ImageBackground>
           </View>
         </Modal>
