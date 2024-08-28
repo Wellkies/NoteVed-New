@@ -150,7 +150,7 @@ const TopicDetails = ({route}) => {
               }}
             style={{
               position: 'absolute',
-              top: 30,
+              top: 20,
               left: 20,
             }}>
             <MaterialIcons
