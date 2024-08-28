@@ -95,8 +95,11 @@ import {
   selectAdsStatus,
   selectAdsStatuss,
 } from '../../redux/reducers/GetAdsStatusReducer.ts';
-import { selectPremiumPurchase, selectPremiumPurchaseStatus } from '../../redux/reducers/GetPremiumPurchaseReducer.ts';
-import { CreateFcmTokenAPI } from '../../redux/actions/CreateFCMtokenAPI.ts';
+import {
+  selectPremiumPurchase,
+  selectPremiumPurchaseStatus,
+} from '../../redux/reducers/GetPremiumPurchaseReducer.ts';
+import {CreateFcmTokenAPI} from '../../redux/actions/CreateFCMtokenAPI.ts';
 
 const Tab = createBottomTabNavigator();
 
@@ -123,7 +126,7 @@ const SubjectLevel = ({route}) => {
   const filterData = TopicBySubjectId.map(rec => rec.topicid);
   // TopicBySubjectId.filter((rec) => rec.sltopic == 1)
   const topicID = filterData[0];
- 
+
   // useEffect(() => {
   //   dispatch(getTopicBySubIdAPI(subjectid));
   //   // setTopicId(topicID)
@@ -249,38 +252,34 @@ const SubjectLevel = ({route}) => {
       await AsyncStorage.getItem('fcmToken').then(data => {
         value = data;
       });
-      console.log(value,"value=======================================");
-      
+      console.log(value, 'value=======================================');
+
       const bodyData = {
         childid: childid,
         usertype: 'NoteVook SkilzUp',
         token: value,
         childname: `${userName}`,
       };
-      
+
       if (value !== null) {
         // We have data!!
         dispatch(CreateFcmTokenAPI(bodyData));
       }
     } catch (error) {
-      console.log(error,"----------------------------------");
-      
-      
+      console.log(error, '----------------------------------');
+
       // Error retrieving data
     }
-  }
- 
+  };
+
   useEffect(() => {
-    
     const data = {
       //courseid: courseid,
       childid: childid,
     };
     dispatch(getChildProgressDetailAPI(data));
-    const {
-      name = '',
-    } = childInfo;
-     _retrieveFcmToken(childid, name);
+    const {name = ''} = childInfo;
+    _retrieveFcmToken(childid, name);
     return () => {};
   }, []);
   const SubjectByCourse = useAppSelector(selectChildDetailData);
@@ -433,9 +432,10 @@ const SubjectLevel = ({route}) => {
               </Text>
             </View>
           </View> */}
-          <View style={{
-            marginTop:20
-          }}>
+          <View
+            style={{
+              marginTop: 20,
+            }}>
             <Carousel
               ref={carouselRef}
               data={data}
@@ -486,6 +486,7 @@ const SubjectLevel = ({route}) => {
                         subjectid = '',
                         subjectname = '',
                         topics = [],
+                        subjectimage = '',
                       } = item;
                       //
                       const progress = topics.filter(
@@ -509,6 +510,7 @@ const SubjectLevel = ({route}) => {
                               //coursename: coursename,
                               subjectname: subjectname,
                               subjectid: subjectid,
+                              subjectimage: subjectimage,
                             });
                           }}>
                           <View
@@ -530,15 +532,27 @@ const SubjectLevel = ({route}) => {
                                 alignItems: 'center',
                                 gap: 12,
                               }}>
-                              <Image
-                                source={require('../../../assets/people.png')}
-                                style={{
-                                  height: device_height * 0.21,
-                                  width: device_width * 0.15,
-                                  resizeMode: 'contain',
-                                  tintColor: '#f1a722',
-                                }}
-                              />
+                              {subjectimage != '' ? (
+                                <Image
+                                  source={{uri: subjectimage}}
+                                  style={{
+                                    height: device_height * 0.2,
+                                    width: device_width * 0.12,
+                                    resizeMode: 'contain',
+                                    tintColor: '#f1a722',
+                                  }}
+                                />
+                              ) : (
+                                <Image
+                                  source={require('../../../assets/people.png')}
+                                  style={{
+                                    height: device_height * 0.21,
+                                    width: device_width * 0.15,
+                                    resizeMode: 'contain',
+                                    tintColor: '#f1a722',
+                                  }}
+                                />
+                              )}
                               <View
                                 style={{
                                   flexDirection: 'row',
