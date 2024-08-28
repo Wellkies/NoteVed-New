@@ -18,7 +18,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import {
   getTopicBySubIdAPI,
   selectTopicDetailsInfo,
-  selectTopicDetailsStatus
+  selectTopicDetailsStatus,
 } from '../../redux/reducers/GetTopicDetailsReducer';
 // import {selectTopicDetailsStatus} from '../../redux/reducers/GetTopicDetailsFormTopicIdReducer';
 import {dataclearstate} from '../../redux/reducers/GetContentDetailsReducer';
@@ -45,21 +45,15 @@ const TopicDetails = ({route}) => {
   const {t: trans, i18n} = useTranslation();
   const {
     //coursename = '',
-     subjectname = '', 
-     subjectid = ''} = route.params;
+    subjectname = '',
+    subjectid = '',
+    subjectimage = '',
+  } = route.params;
 
   //const TopicBySubjectId = useAppSelector(selectChildDetailData);
   const TopicBySubjectId = useAppSelector(selectTopicDetailsInfo);
-  // const topics = contents.filter(
-  //   subject => subject.subjectname === subjectname,
-  // ).flatMap(subject => subject.topics);
-  // 
-
-  
-  //
 
   const TopicLoad = useAppSelector(selectTopicDetailsStatus);
-
 
   const {authToken, status, userInfo} = useAppSelector(selectUserInfo);
   interface ChildInfo {
@@ -165,13 +159,13 @@ const TopicDetails = ({route}) => {
               justifyContent: 'center',
               marginVertical: 12,
               marginHorizontal: 20,
-              gap: 4,
+              gap: 10,
             }}>
             <Image
-              source={require('../../../assets/people.png')}
+               source={{ uri: subjectimage }}
               style={{
-                height: device_height * 0.069,
-                width: device_width * 0.17,
+                height: device_height * 0.060,
+                width: device_width * 0.11,
                 resizeMode: 'contain',
                 tintColor: '#FFFFFF',
               }}
@@ -185,7 +179,7 @@ const TopicDetails = ({route}) => {
               {/* {coursename !== 'Mind Melters' && coursename !== 'Vidyalaya Vista'
                 ? trans(coursename + ' ' + subjectname)
                 : trans(subjectname)} */}
-                {trans(subjectname)}
+              {trans(subjectname)}
             </Text>
           </View>
           {TopicLoad == 'loading' ? (
@@ -255,13 +249,6 @@ const TopicDetails = ({route}) => {
                           (previousContents.length || 1);
                         isLock = previousAveragePercentage < 90;
                       }
-                      
-
-                      // const progress = TopicBySubjectId.filter(
-                      //   item => item.studenttopic != '',
-                      // ).length;
-                      // const totalTopic = TopicBySubjectId.length;
-                      // const proData = progress / totalTopic;
 
                       return (
                         <View key={index}>
@@ -282,6 +269,7 @@ const TopicDetails = ({route}) => {
                                   subjectname: subjectname,
                                   topicname: topicname,
                                   topicid: topicid,
+                                  subjectimage:subjectimage,
                                 });
                               }
                             }}

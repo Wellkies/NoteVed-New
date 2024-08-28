@@ -112,7 +112,7 @@ import {
   selectAdsStatus,
   selectAdsStatuss,
 } from '../../redux/reducers/GetAdsStatusReducer.ts';
-import { REWARDEDAD } from '../../../constants/ApiPaths.ts';
+import {REWARDEDAD} from '../../../constants/ApiPaths.ts';
 import {handleExamTimeTaken} from '../../redux/reducers/ExamTimeTakenReducer.ts';
 // import PaymentReminderModal from './CommonScreens/PaymentReminderModal.js';
 
@@ -208,9 +208,9 @@ const ScoreBoard = ({route}) => {
     topicid = '',
     islastexercise = false,
     QuestionsList = [],
-    bQuiz=[]
+    bQuiz = [],
   } = route.params;
-  
+
   const [loading, setLoading] = useState(false);
   const [ansloading, setAnsLoading] = useState(false);
   const [modalStatus, setModalStatus] = useState(false);
@@ -273,7 +273,7 @@ const ScoreBoard = ({route}) => {
   const TopicId = useAppSelector(selectTopicId);
 
   const ExamName = useAppSelector(selectExamName);
-  // 
+  //
 
   useEffect(() => {
     dispatch(handleSetTopicIdForRevision(topicid));
@@ -307,7 +307,7 @@ const ScoreBoard = ({route}) => {
   ) as prevYearQuestion;
   const {studentdata: prevStudentData = []} = PrevYearQuestion;
 
-  // 
+  //
 
   // const {ProbableQuestions = []} = useSelector(
   //   state => state.GetMostProbQuesReducer,
@@ -360,7 +360,7 @@ const ScoreBoard = ({route}) => {
         yearid: matchingYearid.year,
         childid,
       };
-      // 
+      //
       dispatch(getPreviousYearQuestionSetAPI(qsSet));
       if (matchingYearid) {
         // If a matching child is found, console log its childId
@@ -399,11 +399,11 @@ const ScoreBoard = ({route}) => {
       dispatch(getPreviousYearQuestionAPI(prevQues));
       return true;
     } else if (ExamName == 'ProbableQuestion') {
-      // 
+      //
       const matchingSetid = ProbableQuestions.find(
         child => child.setid == setid,
       );
-      // 
+      //
       if (matchingSetid) {
         if (subjectWise == false && percentage >= 90) {
           navigation.navigate('ProbQuestion', {
@@ -636,21 +636,21 @@ const ScoreBoard = ({route}) => {
   const sliceColor = ['red', 'green', 'orange'];
 
   // const {TopStudent = []} = useSelector(state => state.GetTopStudentReducer);
-  // 
+  //
 
   // const {ProbableTopStudent = []} = useSelector(
   //   state => state.MostProbTopStudentReducer,
   // );
   const TopStudent = useAppSelector(selectTopStudent);
-  // 
+  //
   const ProbableTopStudent = useAppSelector(selectProbTopStudent);
-  // 
+  //
   const ListColor = ['#fee2a3', '#f6c4b9', '#c3ccf5', '#76f0c7'];
 
   useEffect(() => {
     //const Predata = {childid, stageid, boardid};
     const Predata = {childid};
-    // 
+    //
     dispatch(getScholarshipPremiumAPI(Predata));
     dispatch(getChildDetailsAPI(childid));
     const revisionData = {
@@ -678,7 +678,7 @@ const ScoreBoard = ({route}) => {
       childId: childid,
     };
 
-    // 
+    //
     dispatch(getTopicDetailsAPI(TopicDetails));
     dispatch(getTopicBySubClassAPI(TopicData));
     const prevQues = {stageid, boardid, scholarshipId: scholarshipid, childid};
@@ -693,7 +693,6 @@ const ScoreBoard = ({route}) => {
   useEffect(() => {
     // on mount
     ref.current.capture().then(uri => {
-      
       setImageUri(uri);
     });
   }, []);
@@ -714,7 +713,7 @@ const ScoreBoard = ({route}) => {
       // const shareResponse =
       await Share.open(shareOption);
     } catch (error) {
-      // 
+      //
     }
   };
 
@@ -1190,7 +1189,7 @@ const ScoreBoard = ({route}) => {
                     examSet: examSet,
                     contentid: contentid,
                     isReattempt: true,
-                    bQuiz:bQuiz,
+                    bQuiz: bQuiz,
                     studentdata: studentdata,
                     ExamQuestionsets: quiz,
                     subjectId: subjectId,
@@ -1205,7 +1204,7 @@ const ScoreBoard = ({route}) => {
                     topicid: topicid,
                     childid: childid,
                   };
-                  
+
                   dispatch(getContentByTopicIdAPI(data));
                   navigation.navigate('ContentDetails', {
                     coursename: coursename,
@@ -1230,7 +1229,8 @@ const ScoreBoard = ({route}) => {
               style={{
                 paddingVertical: 10,
                 borderRadius: 10,
-                width: '45%',
+                //width: '42%',
+                width: device_width * 0.44,
                 marginHorizontal: 5,
                 borderWidth: 1,
                 borderColor: '#FFB901',
@@ -1278,7 +1278,8 @@ const ScoreBoard = ({route}) => {
               style={{
                 paddingVertical: 10,
                 borderRadius: 10,
-                width: '45%',
+                //width: '42%',
+                width: device_width * 0.44,
                 // marginVertical: 15,
                 marginHorizontal: 5,
                 // paddingHorizontal: 15,
@@ -1319,7 +1320,8 @@ const ScoreBoard = ({route}) => {
               style={{
                 paddingVertical: 10,
                 borderRadius: 10,
-                width: '45%',
+                // width: '42%',
+                width: device_width * 0.44,
                 marginHorizontal: 5,
                 borderWidth: 1,
                 borderColor: '#FFB901',
@@ -1339,7 +1341,8 @@ const ScoreBoard = ({route}) => {
               style={{
                 paddingVertical: 10,
                 borderRadius: 10,
-                width: '45%',
+                // width: '42%',
+                width: device_width * 0.44,
                 marginHorizontal: 5,
                 borderWidth: 1,
                 borderColor: '#FFB901',
