@@ -192,20 +192,20 @@ const App: React.FC = () => {
     [],
   );
 
-  // useEffect(() => {
-  //   setTimeout(async () => {
-  //     let userToken;
-  //     userToken = null;
-  //     try {
-  //       // userToken = await AsyncStorage.getItem('userToken');
-  //     } catch (e) {
-  //       //console.log(e);
-  //     }
-  //     // dispatch({type: 'RETRIEVE_TOKEN', token: userToken});
-  //   }, 1000);
-  //   // requestUserPermission();
-  //   // NotificationServices();
-  // }, []);
+  useEffect(() => {
+    // setTimeout(async () => {
+    //   let userToken;
+    //   userToken = null;
+    //   try {
+    //     // userToken = await AsyncStorage.getItem('userToken');
+    //   } catch (e) {
+    //     //console.log(e);
+    //   }
+    //   // dispatch({type: 'RETRIEVE_TOKEN', token: userToken});
+    // }, 1000);
+    requestUserPermission();
+    NotificationServices();
+  }, []);
 
   // if (loginState.isLoading) {
   //   return (

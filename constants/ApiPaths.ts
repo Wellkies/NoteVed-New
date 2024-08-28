@@ -118,7 +118,7 @@ export const GET_PROBABLE_QUES_URL =
 export const GET_CHILD_PROBABLE_QUES_DETAILS_URL =
   API_URL + 'getchildmostprobablequestiondetails/';
 
-export const CREATE_FCM_TOKEN_URL = API_URL + 'createedfcmToken';
+export const CREATE_FCM_TOKEN_URL = API_URL + 'createedzfcmToken';
 export const CREATE_FCM_TOKEN_WITH_DEVICE_URL =
   API_URL + 'createedfcmTokenwithdeviceid';
 
