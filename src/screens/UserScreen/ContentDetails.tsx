@@ -38,6 +38,7 @@ import LottieView from 'lottie-react-native';
 import moment from 'moment';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Colors from '../../../assets/Colors';
+import {changeIsoTimeToLocalTime} from '../../constant/Constants';
 
 const ContentDetails = ({route}) => {
   const navigation = useNavigation();
@@ -48,10 +49,10 @@ const ContentDetails = ({route}) => {
     subjectname = '',
     topicname = '',
     topicid: topicID = '',
-    subjectimage=''
+    subjectimage = '',
     //percentage = '',
   } = route.params;
-console.log(route.params,'@contentParams')
+  console.log(route.params, '@contentParams');
   const {authToken, status, userInfo} = useAppSelector(selectUserInfo);
   interface ChildInfo {
     _id: string;
@@ -122,14 +123,6 @@ console.log(route.params,'@contentParams')
       childid: childid,
     };
     dispatch(getContentByTopicIdAPI(data));
-    // setTimeout(() => {
-    // }, 2000)
-    // const data = {
-    //   stageid,
-    //   boardid,
-    //   scholarshipid: scholarshipId,
-    // };
-    // dispatch(getSubjectByClassAPI(data));
     return () => {};
   }, [topicID]);
 
@@ -140,18 +133,18 @@ console.log(route.params,'@contentParams')
   const ContentByTopicId = useAppSelector(selectContentDetailsInfo);
   const {
     reviewquestionsets = [],
+    subquestions =[],
     subjectid = '',
     //subjectname = '',
     topic = '',
     topicid = '',
   } = ContentByTopicId[0] ? ContentByTopicId[0] : [];
 
-  //console.log(reviewquestionsets.studentdata, '@@@@@@@@@@@@@@@@@@@@@@@review');
+  console.log(ContentByTopicId, '@review');
 
   const [allIndexesContain90Percent, setAllIndexesContain90Percent] =
     useState(false);
 
-  //console.log(reviewquestionsets[0], '===============reviewquestionsets');
   const percentageComplete = async () => {
     if (reviewquestionsets[0].studentdata.length === 0) {
       console.log('@1');
@@ -251,9 +244,9 @@ console.log(route.params,'@contentParams')
                     gap: 4,
                   }}>
                   <Image
-                    source={{ uri: subjectimage }}
+                    source={{uri: subjectimage}}
                     style={{
-                      height: device_height * 0.060,
+                      height: device_height * 0.06,
                       width: device_width * 0.11,
                       resizeMode: 'contain',
                       tintColor: '#FFFFFF',
@@ -306,7 +299,7 @@ console.log(route.params,'@contentParams')
                       quiz = [],
                       slsubject = '',
                       sltopic = '',
-                      subjectimage = '',
+                      // subjectimage = '',
                       // subjectname = '',
                       timeDuration = '',
                       topicimage = '',
@@ -314,6 +307,7 @@ console.log(route.params,'@contentParams')
                       videos = [],
                       studentdata = [],
                     } = item;
+                    const studentId = _id;
                     const {
                       percentage = '',
                       numberofattempt = '',
@@ -346,7 +340,7 @@ console.log(route.params,'@contentParams')
                             : 'rgba(0,255,0,0.1)',
                           borderColor: !isExamAvailable
                             ? 'rgba(220,220,220,0.1)'
-                          :'#f1a722',
+                            : '#f1a722',
                           width: '90%',
                           // width: device_width * 0.95,
                           // height: device_height * 0.18,
@@ -365,9 +359,9 @@ console.log(route.params,'@contentParams')
                           }}>
                           <View
                             style={{
-                              backgroundColor:!isExamAvailable
-                              ? '#aaa'
-                               :'#f1a722',
+                              backgroundColor: !isExamAvailable
+                                ? '#aaa'
+                                : '#f1a722',
                               width: 40,
                               height: 40,
                               justifyContent: 'center',
@@ -388,7 +382,6 @@ console.log(route.params,'@contentParams')
                                 style={{
                                   marginHorizontal: 10,
                                   flexDirection: 'column',
-                                  //width: device_width * 0.58,
                                   width: '70%',
                                   justifyContent: 'space-between',
                                 }}>
@@ -559,9 +552,7 @@ console.log(route.params,'@contentParams')
                                 }}>
                                 <MaterialCommunityIcons
                                   name="hand-pointing-right"
-                                  color={!isExamAvailable
-                                    ? '#aaa'
-                                    : '#f1a722'}
+                                  color={!isExamAvailable ? '#aaa' : '#f1a722'}
                                   size={30}
                                   style={{marginRight: 10}}
                                 />
@@ -570,8 +561,8 @@ console.log(route.params,'@contentParams')
                                     fontSize: 17,
                                     fontWeight: '500',
                                     color: !isExamAvailable
-                                    ? '#aaa'
-                                    : '#f1a722',
+                                      ? '#aaa'
+                                      : '#f1a722',
                                     //width: '70%',
                                   }}>
                                   {contentset}
@@ -585,9 +576,7 @@ console.log(route.params,'@contentParams')
                                 }}>
                                 <Text
                                   style={{
-                                    color: !isExamAvailable
-                                    ? '#aaa'
-                                    : '#fff',
+                                    color: !isExamAvailable ? '#aaa' : '#fff',
                                     fontSize: 14,
                                     fontWeight: '700',
                                   }}>
@@ -596,9 +585,7 @@ console.log(route.params,'@contentParams')
                                 <Text
                                   style={{
                                     textTransform: 'capitalize',
-                                    color: !isExamAvailable
-                                    ? '#aaa'
-                                    : '#fff',
+                                    color: !isExamAvailable ? '#aaa' : '#fff',
                                     width: '50%',
                                     fontSize: 14,
                                     fontWeight: 'bold',
@@ -615,9 +602,7 @@ console.log(route.params,'@contentParams')
                                   }}>
                                   <Text
                                     style={{
-                                      color: !isExamAvailable
-                                      ? '#aaa'
-                                      : '#fff',
+                                      color: !isExamAvailable ? '#aaa' : '#fff',
                                       fontSize: 14,
                                       fontWeight: '700',
                                     }}>
@@ -626,9 +611,7 @@ console.log(route.params,'@contentParams')
                                   <Text
                                     style={{
                                       textTransform: 'capitalize',
-                                      color: !isExamAvailable
-                                      ? '#aaa'
-                                      : '#fff',
+                                      color: !isExamAvailable ? '#aaa' : '#fff',
                                       width: '50%',
                                       fontSize: 14,
                                       fontWeight: 'bold',
@@ -642,6 +625,7 @@ console.log(route.params,'@contentParams')
                           <TouchableOpacity
                             disabled={!isExamAvailable}
                             onPress={async () => {
+                              console.log(studentdata, 'studentdataContent');
                               navigation.navigate('MockTests', {
                                 screenName: 'ExamSets',
                                 subjectName: subjectname,
@@ -658,6 +642,7 @@ console.log(route.params,'@contentParams')
                                 topicid: topicid,
                                 topic: topic,
                                 islastexercise: allIndexesContain90Percent,
+                                subjectimage:subjectimage,
                               });
                             }}>
                             <View
@@ -688,9 +673,7 @@ console.log(route.params,'@contentParams')
                               {!isReattempt && (
                                 <Text
                                   style={{
-                                    color: !isExamAvailable
-                                      ? '#aaa'
-                                      : 'green',
+                                    color: !isExamAvailable ? '#aaa' : 'green',
                                     textAlign: 'center',
                                     fontSize: 16,
                                     fontWeight: '500',

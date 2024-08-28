@@ -103,8 +103,9 @@ const MockTests = ({route}) => {
     ExamQuestionsets:  [],
     islastexercise = false,
     isReattempt = "",
+    subjectimage ="",
   } = route.params;
-  
+  console.log(studentdata,'@studentdataExam')
 
 // let baseQuiz = ContentQuiz[0] ? ContentQuiz[0] : [];
   const ContentQuiz = useAppSelector(selectContentQuiz);
@@ -114,8 +115,6 @@ const MockTests = ({route}) => {
   // const quizz = ContentQuiz.map(rec => rec.quiz);
   let quiz = ContentQuiz[0]?.quiz ? ContentQuiz[0].quiz : [];
 
-  
-  
 const baseQuiz = ContentQuiz[0] ? ContentQuiz[0] : [];
   const sortedQuestionList = ContentQuiz.slice().sort(
     (a, b) => a.questionno - b.questionno,
@@ -259,6 +258,7 @@ const baseQuiz = ContentQuiz[0] ? ContentQuiz[0] : [];
   const adUnitId =BANNERAD;
 
   const handleNavigation = () => {
+    console.log(studentdata,'@studentdataMock')
     navigation.navigate('ScoreBoard', {
       screenName: screenName,
       contentid: contentid,
@@ -279,7 +279,8 @@ const baseQuiz = ContentQuiz[0] ? ContentQuiz[0] : [];
       topicid: topicid,
       timeDuration: timeDuration,
       islastexercise: islastexercise,
-      bQuiz:baseQuiz
+      bQuiz:baseQuiz,
+      subjectimage:subjectimage,
     });
   };
   const handleCallback = async () => {
@@ -307,7 +308,7 @@ const baseQuiz = ContentQuiz[0] ? ContentQuiz[0] : [];
       totalmark = 0,
       percentage = 0,
     } = markCalculation(Questionlist);
-
+// console.log( studentdata[0],'studentdata[0]_id')
     setQuitModalStatus(false);
     if (isReattempt) {
       let bodyReattemptAnswerData = {
@@ -316,6 +317,7 @@ const baseQuiz = ContentQuiz[0] ? ContentQuiz[0] : [];
         quiz: Questionlist,
         percentage: percentage,
       };
+      
       //   const below90Body = {
       //     phone: phone,
       //     userName: name,
@@ -351,15 +353,7 @@ const baseQuiz = ContentQuiz[0] ? ContentQuiz[0] : [];
       ) {
         handleUnlockChapter();
       }
-      // dispatch(
       answerReattemptSubmitApi(bodyReattemptAnswerData, handleCallback);
-      // );
-      //   answerReattemptSubmitApi(
-      //     bodyReattemptAnswerData,
-      //     handleCallback,
-      //     //   setLoading,
-      //     // ),
-      //   );
     } else {
       const bodyAnswerData = {
         childid: childid,

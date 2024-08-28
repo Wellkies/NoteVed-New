@@ -209,7 +209,9 @@ const ScoreBoard = ({route}) => {
     islastexercise = false,
     QuestionsList = [],
     bQuiz = [],
+    subjectimage="",
   } = route.params;
+  console.log(studentdata[0],'@studentdataParam')
 
   const [loading, setLoading] = useState(false);
   const [ansloading, setAnsLoading] = useState(false);
@@ -1180,7 +1182,6 @@ const ScoreBoard = ({route}) => {
                   };
                   //
                   dispatch(handleExamTimeTaken(0));
-                  //console.log(examSet, quiz,'@timeDuration');
                   navigation.navigate('MockTests', {
                     screenName: 'ExamSets',
                     subjectName: subjectName,
@@ -1198,6 +1199,7 @@ const ScoreBoard = ({route}) => {
                     topicid: topicid,
                     //topic: topic,
                     islastexercise: islastexercise,
+                    subjectimage: subjectimage
                   });
                 } else if (!islastexercise) {
                   const data = {
@@ -1212,6 +1214,7 @@ const ScoreBoard = ({route}) => {
                     topicname: chapterName,
                     percentage: percentage,
                     topicid: topicid,
+                    subjectimage: subjectimage
                   });
                 } else {
                   const bodydata = {
@@ -1223,6 +1226,7 @@ const ScoreBoard = ({route}) => {
                     coursename: coursename,
                     subjectname: subjectName,
                     subjectid: subjectId,
+                    subjectimage: subjectimage
                   });
                 }
               }}
