@@ -11,6 +11,7 @@ import {
   ImageBackground,
   ScrollView,
   Image,
+  BackHandler,
 } from 'react-native';
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 import {RootState, AppDispatch} from '../../redux/store/Store';
@@ -97,7 +98,14 @@ const SplashScreen = () => {
       resizeMode="contain"
     />
   );
-
+  useEffect(() => {
+    navigation.addListener('focus', () => {
+      BackHandler.addEventListener('hardwareBackPress', () => {
+        BackHandler.exitApp();
+        return true;
+      });
+    });
+  }, []);
   return (
     <SafeAreaView style={{flex: 1}}>
       <StatusBar backgroundColor={'#FFFFFF'} barStyle="light-content" />

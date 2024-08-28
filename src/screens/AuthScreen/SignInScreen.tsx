@@ -880,14 +880,8 @@ const SignInScreen = ({route}) => {
               {showprog == false && (
                 <ImageBackground
                   style={{
-                    // borderRadius: 50,
-                    // borderWidth: 1,
                     width: device_width * 1.28,
                     height: device_height * 0.7,
-                    // marginTop:-50,
-                    // paddingTop: 20,
-                    // borderRadius: 25,
-                    // flex: 1,
                     alignSelf: 'center',
                     justifyContent: 'center',
                     alignItems: 'center',
@@ -1363,9 +1357,7 @@ const SignInScreen = ({route}) => {
                               onPress={() => {
                                 loginphoneHandle();
                               }}>
-                              {selectedLanguage === 'odia'
-                                ? 'ଏପର୍ଯ୍ୟନ୍ତ SMS କୋଡ୍ ଗ୍ରହଣ କରି ନାହାଁନ୍ତି କି?'
-                                : 'Not Received SMS Code Yet ?'}
+                              {'Not Received SMS Code Yet ?'}
                             </Text>
                             <TouchableOpacity
                               onPress={() => {
@@ -1415,11 +1407,7 @@ const SignInScreen = ({route}) => {
                           textDecorationLine: 'underline',
                           fontWeight: '600',
                         }}>
-                        {selectedLanguage === 'odia'
-                          ? 'ସର୍ତ୍ତାବଳୀ'
-                          : selectedLanguage === 'english'
-                          ? `Terms & Conditions`
-                          : `Terms & Conditions`}
+                        {'Terms & Conditions'}
                       </Text>
                     </Text>
                   </View>
@@ -1458,11 +1446,7 @@ const SignInScreen = ({route}) => {
                           textAlign: 'center',
                         },
                       ]}>
-                      {selectedLanguage === 'odia'
-                        ? 'ଯାଞ୍ଚ ଏବଂ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ'
-                        : selectedLanguage === 'english'
-                        ? `Verify & Sign In`
-                        : `Verify & Sign In`}
+                      {'Verify & Sign In'}
                     </Text>
                   </TouchableOpacity>
                 </ImageBackground>
@@ -1481,11 +1465,7 @@ const SignInScreen = ({route}) => {
                       fontSize: 13,
                       margin: 10,
                     }}>
-                    {selectedLanguage === 'odia'
-                      ? 'ଲଗଇନ୍ କରିବାକୁ ଅନ୍ୟ ଉପାୟ ଚେଷ୍ଟା କରନ୍ତୁ'
-                      : selectedLanguage === 'english'
-                      ? 'Try other ways to login'
-                      : 'Try other ways to login'}
+                    {'Try other ways to login'}
                   </Text>
                   <View
                     style={{
@@ -1533,12 +1513,7 @@ const SignInScreen = ({route}) => {
                           marginTop: 5,
                           alignSelf: 'center',
                         }}>
-                        {selectedLanguage == 'english'
-                          ? 'Sign-in with Password'
-                          : selectedLanguage == 'odia'
-                          ? 'ପାସୱାର୍ଡ ଦ୍ଵାରା ସାଇନ୍-ଇନ୍ କରନ୍ତୁ'
-                          : 'Sign-in with Password'}
-                        {/* // : 'पासवर्ड'} */}
+                        {'Sign-in with Password'}
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -1557,13 +1532,7 @@ const SignInScreen = ({route}) => {
                       textDecorationLine: 'underline',
                       // alignSelf: 'center',
                     }}>
-                    {/* {'ଲଗଇନ୍ କରିବାକୁ ଅନ୍ୟ ଉପାୟ ଚେଷ୍ଟା କରନ୍ତୁ'} */}
-                    {selectedLanguage === 'odia'
-                      ? 'ଲଗଇନ୍ କରିବାକୁ ଅନ୍ୟ ଉପାୟ ଚେଷ୍ଟା କରନ୍ତୁ'
-                      : selectedLanguage === 'english'
-                      ? 'Try other ways to login'
-                      : 'Try other ways to login'}
-                    {/* : 'लॉगिन करने के अन्य तरीकों का प्रयास करें'} */}
+                    {'Try other ways to login'}
                   </Text>
                 </View>
               )}
@@ -1610,13 +1579,7 @@ const SignInScreen = ({route}) => {
                         color: '#333',
                         paddingLeft: 10,
                       }}>
-                      {/* {'ସହାୟତା କେନ୍ଦ୍ର'} */}
-                      {selectedLanguage === 'odia'
-                        ? 'ସହାୟତା କେନ୍ଦ୍ର'
-                        : selectedLanguage === 'english'
-                        ? 'Help Desk'
-                        : 'Help Desk'}
-                      {/* : 'हेल्प डेस्क'} */}
+                      {'Help Desk'}
                     </Text>
                     <Text
                       style={{
@@ -1627,72 +1590,10 @@ const SignInScreen = ({route}) => {
                         paddingLeft: 10,
                       }}>
                       {/* 'ଯଦି ଆପଣ ଆପ୍ ଲଗଇନ୍ କିମ୍ବା ଓଟିପି ପାଇବାରେ କୌଣସି ଅସୁବିଧାର ସମ୍ମୁଖୀନ ହେଉଛନ୍ତି, ଦୟାକରି ଏହି ସମସ୍ତ ନମ୍ବର ସହିତ ଯୋଗାଯୋଗ କରନ୍ତୁ :- 8018990558, 8249375247, 7008699927' */}
-                      {selectedLanguage === 'odia'
-                        ? 'ଯଦି ଆପଣ ଆପ୍ ଲଗଇନ୍ କିମ୍ବା ଓଟିପି ପାଇବାରେ କୌଣସି ଅସୁବିଧାର ସମ୍ମୁଖୀନ ହେଉଛନ୍ତି, ଦୟାକରି ଏହି ସମସ୍ତ ନମ୍ବର ସହିତ ଯୋଗାଯୋଗ କରନ୍ତୁ :- 9861302757,7008699927'
-                        : selectedLanguage === 'english'
-                        ? 'We kindly request you to reach out to our dedicated support team if you  encounter any issues with app login or OTP . Please contact on. 9861302757,7008699927'
-                        : 'We kindly request you to reach out to our dedicated support team if you  encounter any issues with app login or OTP . Please contact on. 9861302757,7008699927'}
+                      {'We kindly request you to reach out to our dedicated support team if you  encounter any issues with app login or OTP . Please contact on. 9861302757,7008699927'}
                     </Text>
                   </View>
                 </TouchableOpacity>
-                {/* <TouchableOpacity
-                  style={{
-                    paddingLeft: 12,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    elevation: 5,
-                    marginVertical: 5,
-                    backgroundColor: '#ffde59',
-                    paddingVertical: 10,
-                    borderRadius: 7,
-                    // alignSelf: 'flex-end',
-                  }}
-                  onPress={() => setLangModal(true)}>
-                  <View
-                    style={{
-                      // borderWidth:1,
-                      backgroundColor: 'green',
-                      borderRadius: 50,
-                      padding: 5,
-                    }}>
-                    <AntDesign
-                      name={'playcircleo'}
-                      style={{fontSize: 25, color: '#fff'}}
-                    />
-                  </View> */}
-                  {/* <View style={{width: '85%', marginLeft: 5, borderWidth: 0}}>
-                    <Text
-                      style={{
-                        fontSize: 17,
-                        fontWeight: '700',
-                        // color: Colors.primary,
-                        color: '#333',
-                        paddingLeft: 10,
-                      }}>
-                      {/* {'ଟ୍ୟୁଟୋରିଆଲ୍ ଭିଡିଓ'} */}
-                      {/* {selectedLanguage === 'odia'
-                        ? 'ଟ୍ୟୁଟୋରିଆଲ୍ ଭିଡିଓ'
-                        : selectedLanguage === 'english'
-                        ? 'Tutorial Video'
-                        : 'Tutorial Video'} */}
-                      {/* : 'ट्यूटोरियल वीडियो'} */}
-                    {/* </Text> */}
-                    {/* <Text
-                      style={{
-                        fontSize: 13,
-                        fontWeight: '600',
-                        // color: Colors.primary,
-                        color: '#333',
-                        paddingLeft: 10,
-                      }}>
-                      {selectedLanguage === 'odia'
-                        ? 'ଆପ୍ କିପରି ବ୍ୟବହାର କରାଯିବ ତାହାର ଗାଇଡ୍ ଭିଡିଓ'
-                        : selectedLanguage === 'english'
-                        ? 'Guide video of how to use the app'
-                        : 'Guide video of how to use the app'}
-                    </Text> */}
-                  {/* </View>  */}
-                {/* </TouchableOpacity> */}
               </View>
             </Animatable.View>
           ) : (
@@ -1735,7 +1636,6 @@ const SignInScreen = ({route}) => {
                     // fontSize: language === 'english' ? 28 : 22,
                     fontSize: 22,
                   }}>
-                  {/* {'ଚାଲ ଆରମ୍ଭ କରିବା '} */}
                   {selectedLanguage === 'odia'
                     ? 'ଚାଲ ଆରମ୍ଭ କରିବା '
                     : selectedLanguage === 'english'
@@ -1756,16 +1656,7 @@ const SignInScreen = ({route}) => {
                   }}>
                   {/* <FontAwesome name="user-o" color={'#333'} size={20} /> */}
                   <TextInput
-                    // placeholder={'ମୋବାଇଲ୍ ନମ୍ବର ପ୍ରବେଶ କରନ୍ତୁ *'}
-                    placeholder={
-                      selectedLanguage === 'odia'
-                        ? 'ମୋବାଇଲ୍ ନମ୍ବର ପ୍ରବେଶ କରନ୍ତୁ *'
-                        : selectedLanguage === 'english'
-                        ? `Enter Mobile Number *`
-                        : `Enter Mobile Number *`
-                    }
-                    // : 'मोबाइल नंबर दर्ज करें *'
-                    // }
+                    placeholder={'Enter Mobile Number *'}
                     placeholderTextColor="#888"
                     // value={p_phone}
                     keyboardType="numeric"
@@ -1874,13 +1765,7 @@ const SignInScreen = ({route}) => {
                         textDecorationLine: 'underline',
                         fontWeight: '600',
                       }}>
-                      {/* {'ସର୍ତ୍ତାବଳୀ'} */}
-                      {selectedLanguage === 'odia'
-                        ? 'ସର୍ତ୍ତାବଳୀ'
-                        : selectedLanguage === 'english'
-                        ? `Terms & Conditions`
-                        : `Terms & Conditions`}
-                      {/* // : 'नियम और शर्तें'} */}
+                      {'Terms & Conditions'}
                     </Text>
                   </Text>
 
@@ -1909,13 +1794,7 @@ const SignInScreen = ({route}) => {
                         fontSize: 16,
                         fontWeight: '900',
                       }}>
-                      {/* {'ଯାଞ୍ଚ ଏବଂ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ'} */}
-                      {selectedLanguage === 'odia'
-                        ? 'ଯାଞ୍ଚ ଏବଂ ସାଇନ୍ ଇନ୍ କରନ୍ତୁ'
-                        : selectedLanguage === 'english'
-                        ? `Verify & Sign In`
-                        : `Verify & Sign In`}
-                      {/* : 'सत्यापित करें और साइन इन करें'} */}
+                      {'Verify & Sign In'}
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -1924,21 +1803,13 @@ const SignInScreen = ({route}) => {
               <Text
                 style={{
                   fontWeight: '700',
-                  // letterSpacing: 1,
-                  // color: '#f1a722',
                   color: 'gold',
                   fontSize: 17,
                   top: -25,
                   marginLeft: 15,
                   // alignSelf: 'center',
                 }}>
-                {/* {'ଲଗଇନ୍ କରିବାକୁ ଅନ୍ୟ ଉପାୟ ଚେଷ୍ଟା କରନ୍ତୁ'} */}
-                {selectedLanguage === 'odia'
-                  ? 'ଲଗଇନ୍ କରିବାକୁ ଅନ୍ୟ ଉପାୟ ଚେଷ୍ଟା କରନ୍ତୁ'
-                  : selectedLanguage === 'english'
-                  ? 'Try other ways to login'
-                  : 'Try other ways to login'}
-                {/* : 'लॉगिन करने के अन्य तरीकों का प्रयास करें'} */}
+                {'Try other ways to login'}
               </Text>
               <View
                 style={{
@@ -2058,13 +1929,7 @@ const SignInScreen = ({route}) => {
                         fontSize: 11,
                         fontWeight: '700',
                       }}>
-                      {/* {'ନୂତନ ବ୍ୟବହାରକାରୀ ?'} */}
-                      {selectedLanguage === 'odia'
-                        ? 'ନୂତନ ବ୍ୟବହାରକାରୀ ?'
-                        : selectedLanguage === 'english'
-                        ? 'New User ?'
-                        : 'New User ?'}{' '}
-                      {/* // : 'नया उपयोगकर्ता?'}{' '} */}
+                      {'New User ?'}{' '}
                       <Text
                         style={{
                           textDecorationLine: 'underline',
@@ -2073,13 +1938,7 @@ const SignInScreen = ({route}) => {
                           fontSize: 12,
                           fontWeight: '700',
                         }}>
-                        {/* {'ଏଠାରେ ପଞ୍ଜିକରଣ କର'} */}
-                        {selectedLanguage === 'odia'
-                          ? 'ଏଠାରେ ପଞ୍ଜିକରଣ କର'
-                          : selectedLanguage === 'english'
-                          ? 'Register here'
-                          : 'Register here'}
-                        {/* : 'यहां रजिस्टर करें'} */}
+                        {'Register here'}
                       </Text>
                     </Text>
                   </TouchableOpacity>
@@ -2104,13 +1963,7 @@ const SignInScreen = ({route}) => {
                       fontSize: 11,
                       fontWeight: '600',
                     }}>
-                    {/* {'ପାସୱାର୍ଡ ଭୁଲି ଯାଇଛନ୍ତି କି ?'} */}
-                    {selectedLanguage === 'odia'
-                      ? 'ପାସୱାର୍ଡ ଭୁଲି ଯାଇଛନ୍ତି କି ?'
-                      : selectedLanguage === 'english'
-                      ? 'Forgot Password ?'
-                      : 'Forgot Password ?'}
-                    {/* // : 'पासवर्ड भूल गए?'} */}
+                    {'Forgot Password ?'}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -2123,64 +1976,6 @@ const SignInScreen = ({route}) => {
                   width: device_width * 0.94,
                   alignSelf: 'center',
                 }}>
-                {/* <TouchableOpacity
-                  style={{
-                    paddingLeft: 12,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    elevation: 5,
-                    marginVertical: 5,
-                    backgroundColor: '#ffde59',
-                    paddingVertical: 10,
-                    borderRadius: 7,
-                    // alignSelf: 'flex-end',
-                  }}
-                  onPress={() => setLangModal(true)}>
-                  <View
-                    style={{
-                      backgroundColor: 'green',
-                      borderRadius: 50,
-                      padding: 5,
-                    }}>
-                    <AntDesign
-                      name={'playcircleo'}
-                      style={{fontSize: 25, color: '#fff'}}
-                    />
-                  </View>
-                  <View style={{width: '85%', marginLeft: 5, borderWidth: 0}}>
-                    <Text
-                      style={{
-                        fontSize: 17,
-                        fontWeight: '700',
-                        // color: Colors.primary,
-                        color: '#333',
-                        paddingLeft: 10,
-                      }}>
-                      {/* {'ଟ୍ୟୁଟୋରିଆଲ୍ ଭିଡିଓ'} */}
-                      {/* {selectedLanguage === 'odia'
-                        ? 'ଟ୍ୟୁଟୋରିଆଲ୍ ଭିଡିଓ'
-                        : selectedLanguage === 'english'
-                        ? 'Tutorial Video'
-                        : 'Tutorial Video'} */}
-                      {/* : 'ट्यूटोरियल वीडियो'} */}
-                    {/* </Text>
-                    <Text
-                      style={{
-                        fontSize: 13,
-                        fontWeight: '600',
-                        // color: Colors.primary,
-                        color: '#333',
-                        paddingLeft: 10,
-                      }}>
-                      {selectedLanguage === 'odia'
-                        ? 'ଆପ୍ କିପରି ବ୍ୟବହାର କରାଯିବ ତାହାର ଗାଇଡ୍ ଭିଡିଓ'
-                        : selectedLanguage === 'english'
-                        ? 'Guide video of how to use the app'
-                        : 'Guide video of how to use the app'} */}
-                      {/* : 'एप्लिकेशन का उपयोग करने के तरीके के बारे में वीडियो गाइड करें'} */}
-                    {/* </Text>
-                  </View>
-                </TouchableOpacity> */}
                 <TouchableOpacity
                   style={{
                     paddingLeft: 12,
@@ -2231,14 +2026,7 @@ const SignInScreen = ({route}) => {
                         paddingLeft: 10,
                       }}>
                       {' '}
-                      {/* 'ଯଦି ଆପଣ ଆପ୍ ଲଗଇନ୍ କିମ୍ବା ଓଟିପି ପାଇବାରେ କୌଣସି ଅସୁବିଧାର ସମ୍ମୁଖୀନ ହେଉଛନ୍ତି, ଦୟାକରି ଏହି ସମସ୍ତ ନମ୍ବର ସହିତ ଯୋଗାଯୋଗ କରନ୍ତୁ :- 8018990558, 8249375247, 7008699927' */}
-                      {selectedLanguage === 'odia'
-                        ? 'ଯଦି ଆପଣ ଆପ୍ ଲଗଇନ୍ କିମ୍ବା ଓଟିପି ପାଇବାରେ କୌଣସି ଅସୁବିଧାର ସମ୍ମୁଖୀନ ହେଉଛନ୍ତି, ଦୟାକରି ଏହି ସମସ୍ତ ନମ୍ବର ସହିତ ଯୋଗାଯୋଗ କରନ୍ତୁ :- 9861302757,7008699927,9337052091'
-                        : selectedLanguage === 'english'
-                        ? 'We kindly request you to reach out to our dedicated support team if you  encounter any issues with app login or OTP . Please contact on. 9861302757,7008699927'
-                        : 'We kindly request you to reach out to our dedicated support team if you  encounter any issues with app login or OTP . Please contact on. 9861302757,7008699927'}
-                      {/* // : 'यदि आपको ऐप लॉगिन या ओटीपी के साथ कोई समस्या आती है तो हम कृपया हमारी समर्पित सहायता टीम से संपर्क करें। कृपया संपर्क करें। 8018990558, 8249375247, 7008699927'} */}
-                      {/* {trans('Contact our customer care')} */}
+                      {'We kindly request you to reach out to our dedicated support team if you  encounter any issues with app login or OTP . Please contact on. 9861302757,7008699927'}
                     </Text>
                   </View>
                 </TouchableOpacity>
@@ -2324,13 +2112,7 @@ const SignInScreen = ({route}) => {
                       marginLeft: 10,
                       fontWeight: '900',
                     }}>
-                    {/* {'କ୍ଷମା କରନ୍ତୁ !'} */}
-                    {selectedLanguage === 'odia'
-                      ? 'କ୍ଷମା କରନ୍ତୁ !'
-                      : selectedLanguage === 'english'
-                      ? 'Sorry !'
-                      : 'Sorry !'}
-                    {/* : 'क्षमा करें !'} */}
+                    {'Sorry !'}
                   </Text>
                   <Text
                     style={{
@@ -2342,13 +2124,7 @@ const SignInScreen = ({route}) => {
                       // marginLeft: 5,
                       fontWeight: '700',
                     }}>
-                    {/* {'ଆପଣଙ୍କର ଖାତା ବର୍ତ୍ତମାନ ନିଷ୍କ୍ରିୟ ଅଟେ'} */}
-                    {selectedLanguage === 'odia'
-                      ? 'ଆପଣଙ୍କର ଖାତା ବର୍ତ୍ତମାନ ନିଷ୍କ୍ରିୟ ଅଟେ'
-                      : selectedLanguage === 'english'
-                      ? 'Your account is currently inactive'
-                      : 'Your account is currently inactive'}
-                    {/* // : 'आपका खाता वर्तमान में निष्क्रिय है'} */}
+                    {'Your account is currently inactive'}
                   </Text>
                   <Text
                     style={{
@@ -2360,13 +2136,7 @@ const SignInScreen = ({route}) => {
                       // marginLeft: 5,
                       fontWeight: '500',
                     }}>
-                    {/* {'ଆମେ ଆପଣଙ୍କୁ ଶୀଘ୍ର ଅପଡେଟ୍ କରିବୁ'} */}
-                    {selectedLanguage === 'odia'
-                      ? 'ଆମେ ଆପଣଙ୍କୁ ଶୀଘ୍ର ଅପଡେଟ୍ କରିବୁ'
-                      : selectedLanguage === 'english'
-                      ? 'We will update you shortly'
-                      : 'We will update you shortly'}
-                    {/* // : 'हम आपको जल्द ही अपडेट करेंगे'} */}
+                    {'We will update you shortly'}
                   </Text>
                 </View>
                 <View
@@ -2403,13 +2173,7 @@ const SignInScreen = ({route}) => {
                         textAlign: 'center',
                         alignItems: 'center',
                       }}>
-                      {/* {'ଠିକ ଅଛି'} */}
-                      {selectedLanguage === 'odia'
-                        ? 'ଠିକ ଅଛି'
-                        : selectedLanguage === 'english'
-                        ? 'OK'
-                        : 'OK'}
-                      {/* // : 'ठीक है'} */}
+                      {'OK'}
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -2423,13 +2187,7 @@ const SignInScreen = ({route}) => {
                     // marginLeft: 5,
                     fontWeight: '500',
                   }}>
-                  {/* {'ବି. ଦ୍ର-'} */}
-                  {selectedLanguage === 'odia'
-                    ? 'ବି. ଦ୍ର-'
-                    : selectedLanguage === 'english'
-                    ? 'Note:'
-                    : 'Note:'}
-                  {/* : 'नोट :'} */}
+                  {'Note:'}
                 </Text>
                 <Text
                   style={{
@@ -2441,17 +2199,7 @@ const SignInScreen = ({route}) => {
                     // marginLeft: 5,
                     fontWeight: '500',
                   }}>
-                  {/* 'ଆପ୍ଲିକେସନ୍ ରେ ଆପଣଙ୍କ ପୂର୍ବ ବ୍ୟବହୃତ ସମସ୍ତ ତଥ୍ୟ ୯୦ ଦିନ ପାଇଁ ଉପଲବ୍ଧ ରହିଛି l ଆପଣ ଚାହିଁଲେ ପୁନର୍ବାର ବ୍ୟବହାର କରି ପାରିବେ' */}
-                  {/* {language === 'odia'
-                  ? 'ବି. ଦ୍ର-  '
-                  : 'Note:  '} */}
-                  {selectedLanguage === 'odia'
-                    ? 'ଆପ୍ଲିକେସନ୍ ରେ ଆପଣଙ୍କ ପୂର୍ବ ବ୍ୟବହୃତ ସମସ୍ତ ତଥ୍ୟ ୯୦ ଦିନ ପାଇଁ ଉପଲବ୍ଧ ରହିଛି l ଆପଣ ଚାହିଁଲେ ପୁନର୍ବାର ବ୍ୟବହାର କରି ପାରିବେ'
-                    : selectedLanguage === 'english'
-                    ? 'Your data will be stored with us for the next 90 days. However you can retrieve your used data in this period.'
-                    : 'Your data will be stored with us for the next 90 days. However you can retrieve your used data in this period.'}
-
-                  {/* // : 'आपका डेटा अगले 90 दिनों के लिए हमारे साथ संग्रहीत किया जाएगा। हालाँकि, आप इस अवधि में अपने उपयोग किए गए डेटा को पुनर्प्राप्त कर सकते हैं।'} */}
+                  {'Your data will be stored with us for the next 90 days. However you can retrieve your used data in this period.'}
                 </Text>
               </View>
             </ImageBackground>
