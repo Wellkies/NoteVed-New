@@ -100,6 +100,7 @@ import {
   selectPremiumPurchaseStatus,
 } from '../../redux/reducers/GetPremiumPurchaseReducer.ts';
 import {CreateFcmTokenAPI} from '../../redux/actions/CreateFCMtokenAPI.ts';
+import {RefreshControl} from 'react-native-gesture-handler';
 
 const Tab = createBottomTabNavigator();
 
@@ -206,6 +207,10 @@ const SubjectLevel = ({route}) => {
     language = '',
     // coordinates='',
   } = userInfo;
+
+  const wait = (timeout: any) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  };
   useEffect(() => {
     navigation.addListener('focus', () => {
       // const data = {
@@ -377,6 +382,28 @@ const SubjectLevel = ({route}) => {
       rewardedad.show();
     }
   };
+
+  const [refreshing, setRefreshing] = React.useState(false);
+  const asydat = async () => {
+    console.log('refreshing');
+    //const token = await Storage.getObject('@auth_Token');
+    //const user = await Storage.getObject('@user');
+    // const childid = user.childid;
+    const data = {
+      //courseid: courseid,
+      childid: childid,
+    };
+    dispatch(getChildProgressDetailAPI(data));
+    // const {name = ''} = childInfo;
+    // _retrieveFcmToken(childid, name);
+  };
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    asydat();
+    wait(1000).then(() => setRefreshing(false));
+  }, []);
+
   useEffect(() => {
     navigation.addListener('focus', () => {
       BackHandler.addEventListener('hardwareBackPress', () => {
@@ -387,7 +414,10 @@ const SubjectLevel = ({route}) => {
   }, []);
   return (
     <SafeAreaView style={{flex: 1}}>
-      <ScrollView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
         <ImageBackground
           style={{
             width: device_width,
@@ -490,7 +520,7 @@ const SubjectLevel = ({route}) => {
                       } = item;
                       //
                       const progress = topics.filter(
-                        item => item.studenttopic != ''
+                        item => item.studenttopic != '',
                       ).length;
                       const totalTopic = topics.length;
                       const proData = progress / totalTopic;
