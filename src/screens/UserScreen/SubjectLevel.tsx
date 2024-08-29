@@ -520,7 +520,7 @@ const SubjectLevel = ({route}) => {
                       } = item;
                       //
                       const progress = topics.filter(
-                        item => item.studenttopic != '',
+                        item => item.studenttopic != ''
                       ).length;
                       const totalTopic = topics.length;
                       const proData = progress / totalTopic;
