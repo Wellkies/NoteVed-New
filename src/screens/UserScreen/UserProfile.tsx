@@ -200,19 +200,19 @@ const UserProfile = ({}) => {
   // 
   const [loading, setLoading] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(1);
-  const myCustomShare = async () => {
-    const shareOption = {
-      message:
-        'NoteVed Academy helps students for OAV(Odisha Adarsha Vidyalaya) and Navodaya competitive examination preparation!',
-      // url: 'https://play.google.com/store/apps/details?id=com.wellkies_user&pli=1',
-      url: 'https://play.google.com/store/apps/details?id=com.notevook',
-    };
-    try {
-      const shareResponse = await Share.open(shareOption);
-    } catch (error) {
-      // 
-    }
-  };
+  // const myCustomShare = async () => {
+  //   const shareOption = {
+  //     message:
+  //       'NoteVed Academy helps students for OAV(Odisha Adarsha Vidyalaya) and Navodaya competitive examination preparation!',
+  //     // url: 'https://play.google.com/store/apps/details?id=com.wellkies_user&pli=1',
+  //     url: 'https://play.google.com/store/apps/details?id=com.notevook',
+  //   };
+  //   try {
+  //     const shareResponse = await Share.open(shareOption);
+  //   } catch (error) {
+  //     // 
+  //   }
+  // };
 
   const deleteCallBack = () => {
     //   dispatch(
@@ -589,31 +589,31 @@ const UserProfile = ({}) => {
                 <Iconz name="chevron-small-right" size={20} color={'#f1a722'} />
               </View>
             </TouchableOpacity> */}
-            <TouchableOpacity
+            {/* <TouchableOpacity
               // style={styles.middleOptions}
               onPress={() => {
                 myCustomShare();
               }}>
               <View style={styles.middleOptions}>
-                <View style={styles.options}>
-                  <View
+                <View style={styles.options}> */}
+                  {/* <View
                     style={{
                       flexDirection: 'row',
                       alignItems: 'center',
                       width: '100%',
                       // borderWidth:1
-                    }}>
-                    <MaterialIcons
+                    }}> */}
+                    {/* <MaterialIcons
                       name="person-add-alt-1"
                       color={'#f1a722'}
                       size={32}
                       style={styles.iconStyle}
-                    />
+                    /> */}
                     {/* <FastImage
                         source={require('../../../assets/add-user.png')}
                         style={[styles.iconStyle, {height: 30, width: 30}]}
                       /> */}
-                    <Text style={[styles.middleOptionsText, {marginLeft: 15}]}>
+                    {/* <Text style={[styles.middleOptionsText, {marginLeft: 15}]}>
                       {trans('Invite a Friend')}
                     </Text>
                   </View>
@@ -624,7 +624,7 @@ const UserProfile = ({}) => {
                   />
                 </View>
               </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity
               style={styles.middleOptions}
               onPress={() => {

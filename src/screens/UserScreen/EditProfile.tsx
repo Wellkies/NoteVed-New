@@ -668,6 +668,21 @@ const EditProfile = ({route}) => {
     label: state.statename,
     value: state.stateid,
   }));
+  useEffect(() => {
+    // tokenCheck();
+    navigation.addListener('focus', () => {
+      BackHandler.addEventListener('hardwareBackPress', () => {
+        navigation.navigate('SubjectLevel');
+        return true;
+      });
+    });
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', () => {
+        navigation.navigate('SubjectLevel');
+        return true;
+      });
+    };
+  }, []);
   return (
     <View style={styles.container}>
       {/* <StatusBar backgroundColor={'#263d2d'} barStyle="light-content" /> */}
