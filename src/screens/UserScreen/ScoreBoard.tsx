@@ -116,7 +116,8 @@ import {
 } from '../../redux/reducers/GetAdsStatusReducer.ts';
 import {REWARDEDAD} from '../../../constants/ApiPaths.ts';
 import {handleExamTimeTaken} from '../../redux/reducers/ExamTimeTakenReducer.ts';
-import { getChildProgressDetailAPI } from '../../redux/reducers/GetChildProgressDetailReducer.ts';
+import {getChildProgressDetailAPI} from '../../redux/reducers/GetChildProgressDetailReducer.ts';
+import LevelCompleted from './LevelCompleted.tsx';
 // import PaymentReminderModal from './CommonScreens/PaymentReminderModal.js';
 
 const ScoreBoard = ({route}) => {
@@ -131,8 +132,7 @@ const ScoreBoard = ({route}) => {
   const PremiumPurchaseLoad = useAppSelector(selectPremiumPurchaseStatus);
   const AdsStatus = useAppSelector(selectAdsStatus);
   const AdLoadStatuss = useAppSelector(selectAdsStatuss);
-  const childContentReducer = useAppSelector(selectContentsingleChild)
-  
+  const childContentReducer = useAppSelector(selectContentsingleChild);
 
   useEffect(() => {
     initRewardedad();
@@ -210,9 +210,8 @@ const ScoreBoard = ({route}) => {
     islastexercise = false,
     QuestionsList = [],
     bQuiz = [],
-    subjectimage="",
+    subjectimage = '',
   } = route.params;
-  
 
   const [loading, setLoading] = useState(false);
   const [ansloading, setAnsLoading] = useState(false);
@@ -279,13 +278,12 @@ const ScoreBoard = ({route}) => {
   //
 
   useEffect(() => {
-    const childContent ={
+    const childContent = {
       contentid,
-      childid
-    }
-    
-    
-      dispatch(getChildContentDetailsAPI(childContent))
+      childid,
+    };
+
+    dispatch(getChildContentDetailsAPI(childContent));
     dispatch(handleSetTopicIdForRevision(topicid));
     if (ExamName == 'SubjectRevision') {
       const selectedTopic = TopicList.find(rec => rec.topicid == TopicId);
@@ -463,7 +461,7 @@ const ScoreBoard = ({route}) => {
           rec => rec.contentid == contentid,
         );
       }
-      if ( childid != '') {
+      if (childid != '') {
         if (
           ContentIndex != -1 &&
           ContentIndex == selectedTopic.reviewquestionsets.length - 1 &&
@@ -501,8 +499,7 @@ const ScoreBoard = ({route}) => {
             //courseid: courseid,
             childid: childid,
           };
-          
-          
+
           dispatch(getChildProgressDetailAPI(data));
 
           navigation.navigate('SubjectsDetails', {
@@ -1190,9 +1187,11 @@ const ScoreBoard = ({route}) => {
             }}>
             <TouchableOpacity
               onPress={() => {
-                console.log(percentage,"%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-                
-                
+                console.log(
+                  percentage,
+                  '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%',
+                );
+
                 if (percentage < 90) {
                   const bodydata = {
                     subjectid: subjectId,
@@ -1217,16 +1216,19 @@ const ScoreBoard = ({route}) => {
                     topicid: topicid,
                     //topic: topic,
                     islastexercise: islastexercise,
-                    subjectimage: subjectimage
+                    subjectimage: subjectimage,
                   });
-                } else if (!islastexercise) { 
-                  console.log(islastexercise,"++++++++++++++++++++++++++++++++++++++++++++++++++");
-                      
-          const datas = {
-            //courseid: courseid,
-            childid: childid,
-          };
-          dispatch(getChildProgressDetailAPI(data));
+                } else if (!islastexercise) {
+                  console.log(
+                    islastexercise,
+                    "islastexercise"
+                  );
+
+                  const datas = {
+                    //courseid: courseid,
+                    childid: childid,
+                  };
+                  dispatch(getChildProgressDetailAPI(data));
                   const bodydata = {
                     subjectid: subjectId,
                     childid: childid,
@@ -1243,24 +1245,28 @@ const ScoreBoard = ({route}) => {
                     topicname: chapterName,
                     percentage: percentage,
                     topicid: topicid,
-                    subjectimage: subjectimage
+                    subjectimage: subjectimage,
                   });
                 } else {
+                  console.log(
+                    islastexercise,
+                    "islastexercise"
+                  );
                   const datas = {
                     //courseid: courseid,
                     childid: childid,
                   };
                   dispatch(getChildProgressDetailAPI(datas));
-                          const bodydata = {
-                            subjectid: subjectId,
-                            childid: childid,
-                          };
-                          dispatch(getTopicBySubIdAPI(bodydata));
+                  const bodydata = {
+                    subjectid: subjectId,
+                    childid: childid,
+                  };
+                  dispatch(getTopicBySubIdAPI(bodydata));
                   navigation.navigate('TopicDetails', {
                     coursename: coursename,
                     subjectname: subjectName,
                     subjectid: subjectId,
-                    subjectimage: subjectimage
+                    subjectimage: subjectimage,
                   });
                 }
               }}
@@ -1400,509 +1406,8 @@ const ScoreBoard = ({route}) => {
               />
             </TouchableOpacity>
           </View>
+          {percentage >= 90 && islastexercise && <LevelCompleted />}
         </ScrollView>
-        {/* <View>
-            <ViewShot
-              ref={ref}
-              options={{fileName: 'Test_Result', format: 'png', quality: 0.9}}
-              style={{
-                //flex:1,
-                // backgroundColor: 'rgba(0,255,0, 0.1)',
-                //backgroundColor: '#272727',
-                height: device_height * 0.7,
-                // width: device_width,
-                // alignItems:'center',
-                // justifyContent:'center',
-                alignSelf: 'center',
-                // paddingVertical: 15,
-                // paddingHorizontal: 10,
-                // marginHorizontal: 10,
-              }}>
-              <View
-                style={{
-                  // width: device_width * 0.9,
-                  // height: device_height * 0.28,
-                  marginHorizontal: 10,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  // backgroundColor: 'rgba(0,255,0, 0.1)',
-                  //backgroundColor: '#2C7DB5',
-                  //borderWidth: 2,
-                  height: '43%',
-                  // borderColor: '#FFB901',
-                  //borderColor: '#aaa',
-                  //borderRadius: 20,
-                  // marginTop:10
-                }}>
-                <View
-                  style={{
-                    width: device_width * 0.25,
-                    height: device_width * 0.25,
-                    backgroundColor: Colors.primary,
-                    marginVertical: 10,
-                    borderRadius: 100,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Avatar.Image
-                    source={
-                      image != '' && image != null
-                        ? {uri: image}
-                        : gender == 'Male'
-                        ? require('../../../assets/boy.png')
-                        : gender == 'Female'
-                        ? require('../../../assets/girl.png')
-                        : {
-                            uri: 'https://wkresources.s3.ap-south-1.amazonaws.com/userrr.png',
-                          }
-                    }
-                    size={device_width * 0.25}
-                    style={{backgroundColor: Colors.primary}}
-                  />
-                </View>
-                <View style={{flexDirection: 'row'}}>
-                  {fname !== '' ? (
-                    <Text
-                      style={{
-                        fontSize: 20,
-                        //color: '#FFB901',
-                        color: '#FFFFFF',
-                        fontWeight: 'bold',
-                        textTransform: 'uppercase',
-                      }}>
-                      {fname} {lname}
-                    </Text>
-                  ) : (
-                    <Text
-                      style={{
-                        fontSize: 20,
-                        color: '#FFFFFF',
-                        fontWeight: 'bold',
-                        textTransform: 'uppercase',
-                      }}>
-                      {name}
-                    </Text>
-                  )}
-                </View>
-
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    // borderWidth: 1,
-                    width: '95%',
-                    alignSelf: 'center',
-                    justifyContent: 'center',
-                    paddingHorizontal: 10,
-                  }}>
-                  <Text
-                    style={{
-                      fontSize: 15,
-                      color: '#FFFFFF',
-                      fontWeight: 'bold',
-                      textTransform: 'capitalize',
-                      textAlign: 'center',
-                      width: '100%',
-                      marginBottom: 10,
-                      // borderWidth:1
-                    }}>
-                    {scholarshipName != '' && scholarshipName != null ? (
-                      <Text style={{}}>{scholarshipName.trim()}, </Text>
-                    ) : (
-                      <></>
-                    )}
-                    {boardofeducation != '' && boardofeducation != null ? (
-                      <Text style={{textTransform: 'uppercase'}}>
-                        {boardofeducation.trim()},{' '}
-                      </Text>
-                    ) : (
-                      <></>
-                    )}
-                    {subjectName == '' ? <></> : `${subjectName.trim()}, `}
-                    {ExamName == 'PreviousYear' ? (
-                      year != '' && year != null ? (
-                        <Text style={{textTransform: 'uppercase'}}>
-                          {year.trim()}{' '}
-                        </Text>
-                      ) : (
-                        <></>
-                      )
-                    ) : (
-                      <></>
-                    )}
-                    {chapterName != '' && chapterName != null ? (
-                      <Text style={{textTransform: 'uppercase'}}>
-                        {chapterName.trim()},{' '}
-                      </Text>
-                    ) : (
-                      <></>
-                    )}{' '}
-                    {examSet != '' && examSet != null ? (
-                      <Text style={{textTransform: 'uppercase'}}>
-                        {examSet.trim()}{' '}
-                      </Text>
-                    ) : (
-                      <></>
-                    )}
-                  </Text>
-                </View>
-              </View> */}
-
-        {/* <Text
-                style={{
-                  color: '#FFFFFF',
-                  fontWeight: '500',
-                  fontSize: 15,
-                  marginTop: 20,
-                  marginBottom: 8,
-                  marginLeft: 4,
-                }}>
-                RESULT
-              </Text>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  backgroundColor: '#116505',
-                  paddingVertical: 18,
-                  paddingHorizontal: 16,
-                  borderRadius: 10,
-                  borderColor: '#FFFFFF',
-                  borderWidth: 0.6,
-                  justifyContent: 'space-between',
-                }}>
-                <View
-                  style={{
-                    alignItems: 'center',
-                  }}>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      gap: 8,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}>
-                    <Ionicons
-                      name="speedometer-outline"
-                      size={30}
-                      style={{color: '#FFFFFF'}}
-                    />
-                    <Text style={{color: '#FFFFFF', fontSize: 11}}>
-                      Point Scored
-                    </Text>
-                  </View>
-                  <Text
-                    style={{
-                      color: '#FFFFFF',
-                      fontSize: 13,
-                    }}>
-                    {correctanswer + '/ ' + totalmark}
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    height: '100%',
-                    width: 1,
-                    backgroundColor: '#FFFFFF',
-                    marginHorizontal: 10,
-                  }}
-                />
-                <View
-                  style={{
-                    alignItems: 'center',
-                  }}>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      gap: 8,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}>
-                    <Octicons
-                      name="stopwatch"
-                      size={30}
-                      style={{color: '#FFFFFF'}}
-                    />
-                    <Text style={{color: '#FFFFFF', fontSize: 11}}>
-                      Time Spent
-                    </Text>
-                  </View>
-                  <Text
-                    style={{
-                      color: '#FFFFFF',
-                      fontSize: 13,
-                    }}>
-                    {'Time'}
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    height: '100%',
-                    width: 1,
-                    backgroundColor: '#FFFFFF',
-                    marginHorizontal: 10,
-                  }}
-                />
-                <View
-                  style={{
-                    alignItems: 'center',
-                  }}>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      gap: 8,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}>
-                    <MaterialCommunityIcons
-                      name="medal"
-                      size={30}
-                      style={{color: '#FFFFFF'}}
-                    />
-                    <Text style={{color: '#FFFFFF', fontSize: 11}}>
-                      Rank Secured
-                    </Text>
-                  </View>
-                  <Text
-                    style={{
-                      color: '#FFFFFF',
-                      fontSize: 13,
-                    }}>
-                    {'44/83'}
-                  </Text>
-                </View>
-              </View> */}
-
-        {/* <Text
-                style={{
-                  fontSize: 17,
-                  fontWeight: '700',
-                  color: '#fff',
-                  marginLeft: 10,
-                  marginTop: 10,
-                }}>
-                {trans('Quiz Statistics')}
-              </Text> */}
-        {/* <View
-                style={{
-                  justifyContent: 'space-between',
-                  alignSelf: 'center',
-                  alignItems: 'center',
-                  flexDirection: 'row',
-                  borderWidth: 1.5,
-                  backgroundColor: '#116505',
-                  borderColor: '#fff',
-                  borderRadius: 10,
-                  marginVertical: 5,
-                  paddingHorizontal: 15,
-                  width: '98%',
-                  height: 70,
-                }}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: '31%',
-                  }}>
-                  <View
-                    style={{
-                      height: 27,
-                      width: 27,
-                      backgroundColor: 'lime',
-                      marginRight: 10,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      borderRadius: 3,
-                    }}>
-                    <Text
-                      style={{
-                        fontSize: 15,
-                        fontWeight: '700',
-                        color: '#fff',
-                      }}>
-                      {`${correctanswer}`}
-                    </Text>
-                  </View>
-                  <Text
-                    style={{
-                      fontSize: 15,
-                      fontWeight: '700',
-                      color: '#fff',
-                      width: '75%',
-                    }}>
-                    {trans('Correct')}
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: '30%',
-                    // borderWidth:1
-                  }}>
-                  <View
-                    style={{
-                      height: 27,
-                      width: 27,
-                      backgroundColor: 'crimson',
-                      marginRight: 10,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      borderRadius: 3,
-                    }}>
-                    <Text
-                      style={{
-                        fontSize: 15,
-                        fontWeight: '700',
-                        color: '#fff',
-                      }}>
-                      {`${Wronganswer}`}
-                    </Text>
-                  </View>
-                  <Text
-                    style={{
-                      fontSize: 15,
-                      fontWeight: '700',
-                      color: '#fff',
-                      width: '75%',
-                    }}>
-                    {trans('Wrong')}
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    // borderWidth:1,
-                    width: '35%',
-                  }}>
-                  <View
-                    style={{
-                      height: 27,
-                      width: 27,
-                      backgroundColor: 'white',
-                      marginRight: 10,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      borderRadius: 3,
-                    }}>
-                    <Text
-                      style={{
-                        fontSize: 15,
-                        fontWeight: '700',
-                        color: 'green',
-                      }}>
-                      {`${Skipped}`}
-                    </Text>
-                  </View>
-                  <Text
-                    style={{
-                      fontSize: 15,
-                      fontWeight: '700',
-                      color: '#fff',
-                      width: '75%',
-                    }}>
-                    {trans('Skipped')}
-                  </Text>
-                </View>
-              </View> */}
-        {/* <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  alignSelf: 'center',
-                  borderRadius: 15,
-                  justifyContent: 'space-around',
-                  height: device_width * 0.3,
-                  marginHorizontal: 10,
-                  width: '110%',
-                  backgroundColor: '#263d2d',
-                  marginTop: 10,
-                  paddingVertical: 20,
-                  paddingHorizontal: 16,
-                }}>
-                <View>
-                  <Text
-                    style={{
-                      color: '#fff',
-                      fontWeight: 'bold',
-                      fontSize: 15,
-                    }}>
-                    {trans('Percentage : ')}
-                    {percentage} {'%'}
-                  </Text>
-                  <Text
-                    style={{
-                      color: '#fff',
-                      fontWeight: 'bold',
-                      fontSize: 15,
-                    }}>
-                    {trans('Total Mark : ')}
-                    {totalmark}
-                  </Text>
-                </View>
-                <PieChart
-                  // doughnut={true}
-                  coverRadius={0.45}
-                  widthAndHeight={device_width * 0.25}
-                  series={series}
-                  sliceColor={sliceColor}
-                  coverFill={'#263d2d'}
-                />
-              </View> */}
-        {/* </ViewShot> */}
-
-        {/* </View> */}
-
-        {/* <View
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            // borderWidth: 2,
-            height: device_height * 0.25,
-            width: device_width,
-            zIndex: -1,
-            justifyContent: 'flex-start',
-          }}> */}
-        {/* <ImageBackground
-            style={{
-              height: device_height * 0.25,
-              width: device_width,
-              position: 'absolute',
-              bottom: 0,
-              // top: -60,
-              // borderWidth:1
-            }}
-            source={require('../../../assets/jungle.png')}
-            resizeMode="contain"></ImageBackground> */}
-        {/* </View> */}
-        {/* {reminderModal && (
-          <PaymentReminderModal
-            reminderModal={reminderModal}
-            navigation={() => {
-              navigation.navigate('PremiumAccess', {
-                screenName: screenName,
-                subjectId: subjectId,
-                subjectName: subjectName,
-                topicid: contentid,
-                topicName: topicName,
-                ExamQuestionsets: ExamQuestionsets,
-                isScoreBoardFlag: false,
-                is2ndAvailable: is2ndAvailable,
-                index: '',
-                quizList: '',
-                showFeedback: '',
-              });
-              // setReminderModal(false);
-
-              handleCloseFunction();
-            }}
-            // closeFunction={() => setReminderModal(false)}
-            closeFunction={() => handleCloseFunction()}
-          />
-        )} */}
         {modalStatus && ExamName == 'PreviousYear' && TopStudent.length > 0 && (
           <Modal transparent={true} visible={modalStatus}>
             <SafeAreaView
