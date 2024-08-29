@@ -1022,10 +1022,10 @@ const baseQuiz = ContentQuiz[0] ? ContentQuiz[0] : [];
             <BannerAd
               unitId={adUnitId}
               size={BannerAdSize.BANNER}
-              // onAdFailedToLoad={error =>
-              //   // 
-              // }
-              // onAdLoaded={() => }
+              onAdFailedToLoad={error =>
+                console.error('Ad failed to load: ', error)
+              }
+              onAdLoaded={() => console.log('Ad loaded')}
             />
           </View>
         </ImageBackground>

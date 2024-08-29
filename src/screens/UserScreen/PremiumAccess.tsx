@@ -163,7 +163,7 @@ const PremiumAccess = ({route}) => {
   // ];
   const PremiumPurchase = useAppSelector(selectPremiumPurchase);
 
-  const PremiumDetails = PremiumPurchase?.filter(r => r.membershipid);
+  const PremiumDetails = PremiumPurchase?.filter(r => r.licenseid);
 
   const PremiumLoading = useAppSelector(selectPremiumPurchaseStatus);
   //
@@ -177,44 +177,7 @@ const PremiumAccess = ({route}) => {
   );
 
   const PremiumAccessLoad = useAppSelector(selectPremiumAccessStatus);
-  //
-  //const FreeScholarship = useAppSelector(selectFreeScholarshipData);
-  //
-  // const Scholarshipdata1 = FreeScholarship?.filter(
-  //   r => r.licenseid == '1717060263931',
-  // );
-  // const Scholarshipdata2 = FreeScholarship?.filter(
-  //   r => r.licenseid == '1716448147785' || r.licenseid == '1716448133885',
-  // );
-  // console.log(
-  //   Scholarshipdata1,
-  //   'Scholarshipdata1',
-  //   Scholarshipdata2,
-  //   'Scholarshipdata2',
-  // );
-  //
-  //const [freeScholar, setFreeScholar] = useState();
-  // useEffect(() => {
-  //   if (FreeScholarship.length > 0 && stateid == '') {
-  //     setFreeScholar(FreeScholarship);
-  //   } else if (
-  //     FreeScholarship.length > 0 &&
-  //     stateid.length > 0 &&
-  //     stateid == 'Odisha1712675266782'
-  //   ) {
-  //     setFreeScholar(Scholarshipdata2);
-  //   } else if (
-  //     FreeScholarship.length > 0 &&
-  //     stateid.length > 0 &&
-  //     stateid != 'Odisha1712675266782'
-  //   ) {
-  //     setFreeScholar(Scholarshipdata1);
-  //   } else {
-  //     setFreeScholar([]);
-  //   }
-  // }, [FreeScholarship]);
-
-  const AvailableCoupon = useAppSelector(selectCouponData);
+    const AvailableCoupon = useAppSelector(selectCouponData);
   //
   useEffect(() => {
     const freeScholar = {stageid, boardid};
@@ -968,8 +931,8 @@ const PremiumAccess = ({route}) => {
                   //     : true
                   // }
                   disabled={
-                    PremiumDetails[0]?.membershipid ==
-                    premiumLicense[0]?.membershipid
+                    PremiumDetails[0]?.licenseid ==
+                    premiumLicense[0]?.licenseid
                       ? true
                       : scholarID == ''
                       ? true
@@ -986,8 +949,8 @@ const PremiumAccess = ({route}) => {
                     //     ? '#FFB901'
                     //     : '#a9a9a9',
                     backgroundColor:
-                      PremiumDetails[0]?.membershipid ==
-                      premiumLicense[0]?.membershipid
+                      PremiumDetails[0]?.licenseid ==
+                      premiumLicense[0]?.licenseid
                         ? '#a9a9a9'
                         : scholarID == ''
                         ? '#a9a9a9'
@@ -1001,8 +964,9 @@ const PremiumAccess = ({route}) => {
                   onPress={() => {
                     {
                       console.log(
-                        selectedScholarshipData,
-                        'selectedScholarshipData.................))))))))',
+                        PremiumDetails[0]?.licenseid ==
+                        premiumLicense[0]?.licenseid,
+                        "@Membership"
                       );
                     }
                     setScholarID('');

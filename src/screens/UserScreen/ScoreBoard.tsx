@@ -154,10 +154,6 @@ const ScoreBoard = ({route}) => {
       setIsRewardedAddCalled(true);
     }
   }, [isLoaded, PremiumPurchaseLoad, AdLoadStatuss]);
-  // useEffect(() => {
-  //   rewardedadd();
-  //   setIsRewardedAddCalled(true);
-  // }, [isLoaded]);
   const initRewardedad = () => {
     const rewarded = RewardedAd.createForAdRequest(adUnitId3, {
       keywords: ['fashion', 'clothing'],
