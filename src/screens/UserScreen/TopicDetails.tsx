@@ -144,8 +144,6 @@ const TopicDetails = ({route}) => {
                   childid: childid,
                 };
                 dispatch(getChildProgressDetailAPI(data));
-                
-                // Navigate back
                 navigation.goBack();
               }}
             style={{
