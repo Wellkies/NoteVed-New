@@ -52,7 +52,7 @@ const ContentDetails = ({route}) => {
     subjectimage = '',
     //percentage = '',
   } = route.params;
-  console.log(route.params, '@contentParams');
+  
   const {authToken, status, userInfo} = useAppSelector(selectUserInfo);
   interface ChildInfo {
     _id: string;
@@ -128,7 +128,7 @@ const ContentDetails = ({route}) => {
 
   const SubjectByCourse = useAppSelector(selectAllSubjectsInfo);
   const SubLoading = useAppSelector(selectAllSubjectsStatus);
-  //console.log(SubjectByCourse, '########################$$$$SubjectByCourse');
+  //
 
   const ContentByTopicId = useAppSelector(selectContentDetailsInfo);
   const {
@@ -140,36 +140,42 @@ const ContentDetails = ({route}) => {
     topicid = '',
   } = ContentByTopicId[0] ? ContentByTopicId[0] : [];
 
-  console.log(ContentByTopicId, '@review');
+  
 
   const [allIndexesContain90Percent, setAllIndexesContain90Percent] =
     useState(false);
 
-  const percentageComplete = async () => {
-    if (reviewquestionsets[0].studentdata.length === 0) {
-      console.log('@1');
-      return false;
-    }
-    for (const questionSet of reviewquestionsets) {
-      console.log(questionSet, '==========questionSet');
-      if (questionSet.studentdata.length === 0) {
-        console.log('@2');
+    const percentageComplete = async () => {
+      if (reviewquestionsets.length === 0 || reviewquestionsets[0].studentdata.length === 0) {
+        
         return false;
       }
-      for (const student of questionSet.studentdata) {
-        if (student.percentage < 90) {
-          console.log('@3');
+    
+      for (let i = 0; i < reviewquestionsets.length; i++) {
+        const questionSet = reviewquestionsets[i];
+        
+        const isLastQuestionSet = i === reviewquestionsets.length - 1;
+        if (isLastQuestionSet) {
+          continue;
+        }
+        if (questionSet.studentdata.length === 0) {
+          
           return false;
         }
+        for (const student of questionSet.studentdata) {
+          if (student.percentage < 90) {
+            
+            return false;
+          }
+        }
       }
-    }
-    return true;
-  };
+      return true;
+    };
   useEffect(() => {
     const checkPercentages = async () => {
       const result = await percentageComplete();
       setAllIndexesContain90Percent(result);
-      console.log(result, '====result');
+      
     };
     if (reviewquestionsets.length > 0) {
       checkPercentages();
@@ -177,7 +183,7 @@ const ContentDetails = ({route}) => {
       setAllIndexesContain90Percent(false);
     }
   }, [reviewquestionsets]);
-  //console.log(reviewquestionsets, '=====reviewquestionsets');
+  //
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: Colors.secondary}}>
@@ -330,7 +336,7 @@ const ContentDetails = ({route}) => {
                         reviewquestionsets[index - 1].studentdata.length > 0 &&
                         reviewquestionsets[index - 1].studentdata[0]
                           .percentage >= 90);
-                    console.log(isExamAvailable, '@isExamAvailable');
+                    
                     return (
                       <View
                         key={index}
@@ -632,7 +638,7 @@ const ContentDetails = ({route}) => {
                           <TouchableOpacity
                             disabled={!isExamAvailable}
                             onPress={async () => {
-                              console.log(studentdata, 'studentdataContent');
+                              
                               navigation.navigate('MockTests', {
                                 screenName: 'ExamSets',
                                 subjectName: subjectname,

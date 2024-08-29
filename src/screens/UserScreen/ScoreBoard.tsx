@@ -1190,6 +1190,9 @@ const ScoreBoard = ({route}) => {
             }}>
             <TouchableOpacity
               onPress={() => {
+                console.log(percentage,"%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+                
+                
                 if (percentage < 90) {
                   const bodydata = {
                     subjectid: subjectId,
@@ -1216,28 +1219,23 @@ const ScoreBoard = ({route}) => {
                     islastexercise: islastexercise,
                     subjectimage: subjectimage
                   });
-                } else if (!islastexercise) {
-                  
-                  
+                } else if (!islastexercise) { 
+                  console.log(islastexercise,"++++++++++++++++++++++++++++++++++++++++++++++++++");
+                      
           const datas = {
             //courseid: courseid,
             childid: childid,
           };
-          
-          
           dispatch(getChildProgressDetailAPI(data));
                   const bodydata = {
                     subjectid: subjectId,
                     childid: childid,
                   };
-                  
-                  
                   dispatch(getTopicBySubIdAPI(bodydata));
                   const data = {
                     topicid: topicid,
                     childid: childid,
                   };
-                  
                   dispatch(getContentByTopicIdAPI(data));
                   navigation.navigate('ContentDetails', {
                     coursename: coursename,
@@ -1252,15 +1250,11 @@ const ScoreBoard = ({route}) => {
                     //courseid: courseid,
                     childid: childid,
                   };
-                  
-                  
                   dispatch(getChildProgressDetailAPI(datas));
                           const bodydata = {
                             subjectid: subjectId,
                             childid: childid,
                           };
-                          
-                          
                           dispatch(getTopicBySubIdAPI(bodydata));
                   navigation.navigate('TopicDetails', {
                     coursename: coursename,
