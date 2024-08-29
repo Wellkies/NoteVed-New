@@ -122,22 +122,22 @@ const ProductList = () => {
     // coordinates='',
   } = childInfo;
 
-  useEffect(() => {
-    navigation.addListener('focus', () => {
-      dispatch(getUserAllAddressAPI(childid));
-      dispatch(getCartItemAPI(childid));
-      BackHandler.addEventListener('hardwareBackPress', () => {
-        navigation.navigate('UserHome');
-        return true;
-      });
-    });
-    return () => {
-      BackHandler.removeEventListener('hardwareBackPress', () => {
-        navigation.navigate('UserHome');
-        return true;
-      });
-    };
-  }, []);
+  // useEffect(() => {
+  //   navigation.addListener('focus', () => {
+  //     dispatch(getUserAllAddressAPI(childid));
+  //     dispatch(getCartItemAPI(childid));
+  //     BackHandler.addEventListener('hardwareBackPress', () => {
+  //       navigation.navigate('UserHome');
+  //       return true;
+  //     });
+  //   });
+  //   return () => {
+  //     BackHandler.removeEventListener('hardwareBackPress', () => {
+  //       navigation.navigate('UserHome');
+  //       return true;
+  //     });
+  //   };
+  // }, []);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#f4f4f4' }}>

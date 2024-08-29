@@ -31,6 +31,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../../assets/Colors';
 import CommonMessage from '../../../constants/CommonMessage';
 import {
+  ageRegex,
   emailRegex,
   handlePhoneNumber,
   name_reg,
@@ -303,10 +304,11 @@ const SignUpScreen5 = ({route}) => {
       }
     } else if (inputName == 'st_age') {
       console.log(inputValue, '@AGEinputValue');
-      if (inputValue == '' || inputValue == '0' || inputValue.includes('.')) {
-        setAgeError(true);
-      } else {
+
+      if (ageRegex.test(inputValue)) {
         setAgeError(false);
+      } else {
+        setAgeError(true);
       }
     } else if (inputName == 'stateData') {
       console.log(inputValue.value, 'inputValue.value');
@@ -852,6 +854,7 @@ const SignUpScreen5 = ({route}) => {
                                 : ageError == true
                                 ? Colors.red
                                 : '#fff',
+                                pointerEvents: 'auto',
                           }}>
                           <MaterialCommunityIcons
                             name="face-recognition"
@@ -860,11 +863,18 @@ const SignUpScreen5 = ({route}) => {
                           />
                           <TextInput
                             placeholder="Select your age"
+                            placeholderTextColor="#333"
                             value={st_age}
+                            keyboardType="numeric"
                             onChangeText={val =>
-                              handleInputChange('st_age', val)
+                              handleInputChange('st_age', val.toString())
                             }
                             onFocus={() => setAge(agevalue)}
+                            style={{
+                              color:'#000',
+                              flex: 1,
+                              marginLeft: 10
+                            }}
                           />
                         </View>
                         {st_age == '' ? (
@@ -880,8 +890,7 @@ const SignUpScreen5 = ({route}) => {
                           <Animatable.View
                             animation="fadeInLeft"
                             duration={500}>
-                            <Text
-                              style={{color: Colors.red, marginBottom: 10}}>
+                            <Text style={{color: Colors.red, marginBottom: 10}}>
                               {"Please Enter Valid Student's Age"}
                             </Text>
                           </Animatable.View>

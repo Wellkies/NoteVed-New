@@ -138,10 +138,19 @@ const TopicDetails = ({route}) => {
           resizeMode="cover"
           source={require('../../../assets/0.png')}>
           <TouchableOpacity
-            onPress={() => navigation.goBack()}
+              onPress={() => {
+                const data = {
+                  //courseid: courseid,
+                  childid: childid,
+                };
+                dispatch(getChildProgressDetailAPI(data));
+                
+                // Navigate back
+                navigation.goBack();
+              }}
             style={{
               position: 'absolute',
-              top: 30,
+              top: 20,
               left: 20,
             }}>
             <MaterialIcons
