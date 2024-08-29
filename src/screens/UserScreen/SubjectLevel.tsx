@@ -208,6 +208,12 @@ const SubjectLevel = ({route}) => {
     // coordinates='',
   } = userInfo;
 
+  const PremiumPurchase = useAppSelector(selectPremiumPurchase);
+  const PremiumPurchaseLoad = useAppSelector(selectPremiumPurchaseStatus);
+
+  const AdsStatus = useAppSelector(selectAdsStatus);
+  const AdLoadStatuss = useAppSelector(selectAdsStatuss);
+
   const wait = (timeout: any) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
   };
@@ -329,11 +335,6 @@ const SubjectLevel = ({route}) => {
   //
   const [isRewardedAddCalled, setIsRewardedAddCalled] = useState(false);
 
-  const PremiumPurchase = useAppSelector(selectPremiumPurchase);
-  const PremiumPurchaseLoad = useAppSelector(selectPremiumPurchaseStatus);
-
-  const AdsStatus = useAppSelector(selectAdsStatus);
-  const AdLoadStatuss = useAppSelector(selectAdsStatuss);
   const adUnitId3 = __DEV__
     ? TestIds.REWARDED
     : 'ca-app-pub-1582661677692525~7964330200';
