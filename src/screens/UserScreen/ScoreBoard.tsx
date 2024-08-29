@@ -1254,7 +1254,7 @@ const ScoreBoard = ({route}) => {
                   };
                   
                   
-                  dispatch(getChildProgressDetailAPI(data));
+                  dispatch(getChildProgressDetailAPI(datas));
                           const bodydata = {
                             subjectid: subjectId,
                             childid: childid,
