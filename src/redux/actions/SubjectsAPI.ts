@@ -7,6 +7,7 @@ import {
   CREATE_CHILD_BELOW_90_PERCENTAGE_OTHER_URL,
   EDZ_ANSWER_SUBMIT_URL,
   GET_ANSWER_BY_SUBMIT_URL,
+  GET_CHILD_CONTENT_DETAILS_URL,
   GET_CHILD_REVISION_DETAILS_URL,
   GET_CONTENT_QUIZ_URL,
   GET_REATTEMPT_ANSWER_BY_SUBMIT_URL,
@@ -124,6 +125,40 @@ export const getChildRevisionDetailsActionAPI = async (data = {}) => {
     data.scholarshipid +
     '/' +
     data.childId;
+  const token = await AsyncStorage.getObject('@auth_Token');
+  console.log(url, 'GET_CHILD_REVISION_DETAILS_URL=======================');
+  const requestOptions = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    //   body: JSON.stringify(phone),
+  };
+
+  try {
+    const response = await fetch(url, requestOptions);
+    console.log(response, 'v.....................................');
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const Data = await response.json();
+    // console.log(Data, "GET_CHILD_REVISION_DETAILS_URL_response................");
+    return {data: Data.data};
+  } catch (error) {
+    console.log(error, 'GET_CHILD_REVISION_DETAILS_URL_error.......');
+
+    throw error;
+  }
+};
+
+export const getChildContentDetailsActionAPI = async (data = {}) => {
+  const url =
+  GET_CHILD_CONTENT_DETAILS_URL +
+    '/' +
+    data.contentid +
+    '/' +
+    data.childid;
   const token = await AsyncStorage.getObject('@auth_Token');
   console.log(url, 'GET_CHILD_REVISION_DETAILS_URL=======================');
   const requestOptions = {

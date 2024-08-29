@@ -75,6 +75,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import {createContactApi} from '../../redux/actions/createContactApi';
 import CommonMessage from '../../../constants/CommonMessage';
 import { BANNERAD } from '../../../constants/ApiPaths';
+import { getChildContentDetailsAPI, selectContentsingleChild } from '../../redux/reducers/GetChildRevisionReducer';
 
 const MockTests = ({route}) => {
   const dispatch = useDispatch<any>();
@@ -105,7 +106,7 @@ const MockTests = ({route}) => {
     isReattempt = "",
     subjectimage ="",
   } = route.params;
-  console.log(studentdata,'@studentdataExam')
+  
 
 // let baseQuiz = ContentQuiz[0] ? ContentQuiz[0] : [];
   const ContentQuiz = useAppSelector(selectContentQuiz);
@@ -182,6 +183,9 @@ const baseQuiz = ContentQuiz[0] ? ContentQuiz[0] : [];
   } = userInfo;
   //
   const TopicList = useAppSelector(selectTopicDetails);
+  const childContentReducer = useAppSelector(selectContentsingleChild)
+  console.log(childContentReducer,"]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]");
+  
   //
   const TopicId = useAppSelector(selectTopicId);
   //
@@ -258,7 +262,7 @@ const baseQuiz = ContentQuiz[0] ? ContentQuiz[0] : [];
   const adUnitId =BANNERAD;
 
   const handleNavigation = () => {
-    console.log(studentdata,'@studentdataMock')
+    
     navigation.navigate('ScoreBoard', {
       screenName: screenName,
       contentid: contentid,
@@ -308,11 +312,11 @@ const baseQuiz = ContentQuiz[0] ? ContentQuiz[0] : [];
       totalmark = 0,
       percentage = 0,
     } = markCalculation(Questionlist);
-// console.log( studentdata[0],'studentdata[0]_id')
+// 
     setQuitModalStatus(false);
     if (isReattempt) {
       let bodyReattemptAnswerData = {
-        id: studentdata[0]._id,
+        id: childContentReducer._id,
         securmark: correctanswer,
         quiz: Questionlist,
         percentage: percentage,
@@ -440,16 +444,13 @@ const baseQuiz = ContentQuiz[0] ? ContentQuiz[0] : [];
   };
 
   useEffect(() => {
-  //   const TopicDetails = {
-  //     Class: stageid,
-  //     subjectId,
-  //     boardid,
-  //     scholarshipid,
-  //     topicid,
-  //     childId: childid,
-  //   };
-  //   dispatch(getTopicDetailsAPI(TopicDetails));
-  //   dispatch(handleSetTopicIdForRevision(topicid));
+const childContent ={
+  contentid,
+  childid
+}
+console.log(childContent,"chil%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+
+  dispatch(getChildContentDetailsAPI(childContent))
 
     const contentData = {
       contentid,
