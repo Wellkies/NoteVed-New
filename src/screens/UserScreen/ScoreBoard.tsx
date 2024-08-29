@@ -61,7 +61,9 @@ import {
   selectPremiumPurchaseStatus,
 } from '../../redux/reducers/GetPremiumPurchaseReducer';
 import {
+  getChildContentDetailsAPI,
   getChildRevisionDetailsAPI,
+  selectContentsingleChild,
   selectRevisionChild,
 } from '../../redux/reducers/GetChildRevisionReducer';
 import {
@@ -114,6 +116,7 @@ import {
 } from '../../redux/reducers/GetAdsStatusReducer.ts';
 import {REWARDEDAD} from '../../../constants/ApiPaths.ts';
 import {handleExamTimeTaken} from '../../redux/reducers/ExamTimeTakenReducer.ts';
+import { getChildProgressDetailAPI } from '../../redux/reducers/GetChildProgressDetailReducer.ts';
 // import PaymentReminderModal from './CommonScreens/PaymentReminderModal.js';
 
 const ScoreBoard = ({route}) => {
@@ -128,6 +131,8 @@ const ScoreBoard = ({route}) => {
   const PremiumPurchaseLoad = useAppSelector(selectPremiumPurchaseStatus);
   const AdsStatus = useAppSelector(selectAdsStatus);
   const AdLoadStatuss = useAppSelector(selectAdsStatuss);
+  const childContentReducer = useAppSelector(selectContentsingleChild)
+  
 
   useEffect(() => {
     initRewardedad();
@@ -207,7 +212,7 @@ const ScoreBoard = ({route}) => {
     bQuiz = [],
     subjectimage="",
   } = route.params;
-  console.log(studentdata[0],'@studentdataParam')
+  
 
   const [loading, setLoading] = useState(false);
   const [ansloading, setAnsLoading] = useState(false);
@@ -274,6 +279,13 @@ const ScoreBoard = ({route}) => {
   //
 
   useEffect(() => {
+    const childContent ={
+      contentid,
+      childid
+    }
+    
+    
+      dispatch(getChildContentDetailsAPI(childContent))
     dispatch(handleSetTopicIdForRevision(topicid));
     if (ExamName == 'SubjectRevision') {
       const selectedTopic = TopicList.find(rec => rec.topicid == TopicId);
@@ -451,7 +463,7 @@ const ScoreBoard = ({route}) => {
           rec => rec.contentid == contentid,
         );
       }
-      if (stageid != '' && boardid != '' && childid != '') {
+      if ( childid != '') {
         if (
           ContentIndex != -1 &&
           ContentIndex == selectedTopic.reviewquestionsets.length - 1 &&
@@ -484,6 +496,14 @@ const ScoreBoard = ({route}) => {
           };
           // storeSubjectAsyncData();
           dispatch(getChildRevisionDetailsAPI(RevData));
+          dispatch(getTopicBySubClassAPI(TopicData));
+          const data = {
+            //courseid: courseid,
+            childid: childid,
+          };
+          
+          
+          dispatch(getChildProgressDetailAPI(data));
 
           navigation.navigate('SubjectsDetails', {
             subjectid: subjectId,
@@ -506,7 +526,6 @@ const ScoreBoard = ({route}) => {
             topicid,
             childId: childid,
           };
-          dispatch(getTopicBySubClassAPI(TopicData));
         } else {
           const TopicData = {
             Class: stageid,
@@ -1198,11 +1217,27 @@ const ScoreBoard = ({route}) => {
                     subjectimage: subjectimage
                   });
                 } else if (!islastexercise) {
+                  
+                  
+          const datas = {
+            //courseid: courseid,
+            childid: childid,
+          };
+          
+          
+          dispatch(getChildProgressDetailAPI(data));
+                  const bodydata = {
+                    subjectid: subjectId,
+                    childid: childid,
+                  };
+                  
+                  
+                  dispatch(getTopicBySubIdAPI(bodydata));
                   const data = {
                     topicid: topicid,
                     childid: childid,
                   };
-
+                  
                   dispatch(getContentByTopicIdAPI(data));
                   navigation.navigate('ContentDetails', {
                     coursename: coursename,
@@ -1213,11 +1248,20 @@ const ScoreBoard = ({route}) => {
                     subjectimage: subjectimage
                   });
                 } else {
-                  const bodydata = {
-                    subjectid: subjectId,
+                  const datas = {
+                    //courseid: courseid,
                     childid: childid,
                   };
-                  dispatch(getTopicBySubIdAPI(bodydata));
+                  
+                  
+                  dispatch(getChildProgressDetailAPI(data));
+                          const bodydata = {
+                            subjectid: subjectId,
+                            childid: childid,
+                          };
+                          
+                          
+                          dispatch(getTopicBySubIdAPI(bodydata));
                   navigation.navigate('TopicDetails', {
                     coursename: coursename,
                     subjectname: subjectName,
