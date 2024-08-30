@@ -890,8 +890,8 @@ const ContactUs = ({ }) => {
                     marginTop: -30,
                     marginBottom: -15,
                   }}
-                  source={require('../../../assets/resting1.png')}
-                  resizeMode="contain"
+                  //source={require('../../../assets/resting1.png')}
+                  //resizeMode="contain"
                 />
                 <FastImage
                   style={{
@@ -902,8 +902,8 @@ const ContactUs = ({ }) => {
                     // position:'absolute', bottom:-23
                     // marginTop:-8
                   }}
-                  source={require('../../../assets/grass.png')}
-                  resizeMode="contain"
+                  //source={require('../../../assets/grass.png')}
+                  //resizeMode="contain"
                 />
               </View>
             </View>
