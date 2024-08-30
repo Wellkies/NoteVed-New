@@ -6,6 +6,7 @@ import {
   Image,
   ScrollView,
   ImageBackground,
+  BackHandler,
 } from 'react-native';
 import React, {useEffect} from 'react';
 import {device_width, device_height} from '../style';
@@ -123,6 +124,15 @@ const TopicDetails = ({route}) => {
     };
     dispatch(getChildProgressDetailAPI(bodydata));
     return () => {};
+  }, []);
+
+  useEffect(() => {
+    navigation.addListener('focus', () => {
+      BackHandler.addEventListener('hardwareBackPress', () => {
+        navigation.goBack();
+        return true;
+      });
+    });
   }, []);
 
   return (

@@ -87,14 +87,14 @@ const Thanks = () => {
   useEffect(() => {
     navigation.addListener('focus', () => {
       BackHandler.addEventListener('hardwareBackPress', () => {
-        navigation.navigate('ProductList');
+        navigation.navigate('SubjectLevel');
         // navigation.goBack();
         return true;
       });
     });
     return () => {
       BackHandler.removeEventListener('hardwareBackPress', () => {
-        navigation.navigate('ProductList');
+        navigation.navigate('SubjectLevel');
         // navigation.goBack();
         return true;
       });

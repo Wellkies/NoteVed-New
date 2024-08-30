@@ -278,7 +278,7 @@ const ContactUs = ({ }) => {
   };
 
   const goBackFunc = () => {
-    navigation.popToTop()
+    //navigation.popToTop()
     navigation.goBack();
   }
 

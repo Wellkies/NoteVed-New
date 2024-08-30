@@ -473,44 +473,6 @@ const PremiumPurchase = ({route}) => {
   };
   const closeModalFunc = () => {
     setModalStatus(false);
-    if (screenName === 'ExamSets') {
-      navigation.navigate('ExamSets', {
-        index: index,
-        subjectName: subjectName,
-        topicName: topicName,
-        ExamQuestionsets: ExamQuestionsets,
-        Class: standard,
-        subjectId: subjectId,
-        boardid: boardid,
-        scholarshipid: scholarshipid,
-        childId: childid,
-        isScoreBoardFlag: isScoreBoardFlag,
-        scholarshipName: scholarshipName,
-        is2ndAvailable: is2ndAvailable,
-        topicid: topicid,
-      });
-    } else if (screenName === 'PrevYearQues') {
-      navigation.navigate('PrevYearQues', {
-        scholarshipId: scholarshipid,
-        scholarshipName: scholarshipName,
-        quizList: quizList,
-        showFeedback: showFeedback,
-      });
-    } else if (screenName === 'ProbQuestion') {
-      navigation.navigate('ProbQuestion', {
-        scholarshipName: scholarshipName,
-        quizList: quizList,
-        showFeedback: showFeedback,
-      });
-    }
-
-    // else if(screenName=='LiveclassList'){
-    // dispatch(getScholarshipPremiumAPI(undefined, childid, stageid, boardid));
-    //   navigation.navigate('Profile', {
-    //   // scholarshipId: scholarshipid,
-    // });
-    // }
-    else
       navigation.navigate('UserProfile', {
         screenName: '',
         subjectId: '',
@@ -524,7 +486,7 @@ const PremiumPurchase = ({route}) => {
         quizList: '',
         showFeedback: '',
       });
-  };
+    };
   return (
     <View style={{flex: 1}}>
       {/* <StatusBar backgroundColor={'#def'} barStyle="dark-content" /> */}

@@ -731,6 +731,24 @@ const ScoreBoard = ({route}) => {
     }
   };
 
+  useEffect(() => {
+    navigation.addListener('focus', () => {
+      BackHandler.addEventListener('hardwareBackPress', () => {
+        navigation.navigate('SubjectLevel');
+        // navigation.goBack();
+        return true;
+      });
+    });
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', () => {
+        navigation.navigate('SubjectLevel');
+        // navigation.goBack();
+        return true;
+      });
+    };
+  }, []);
+
+
   return (
     <SafeAreaView style={{flex: 1}}>
       <StatusBar backgroundColor={'#263d2d'} barStyle="light-content" />

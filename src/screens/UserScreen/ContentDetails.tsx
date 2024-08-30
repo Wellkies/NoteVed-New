@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   ImageBackground,
+  BackHandler,
 } from 'react-native';
 import React, {useEffect, useState, useRef} from 'react';
 import {useNavigation} from '@react-navigation/native';
@@ -24,7 +25,10 @@ import {
   selectContentDetailsInfo,
   selectContentDetailsStatus,
 } from '../../redux/reducers/GetContentDetailsReducer';
-import {getTopicBySubIdAPI, selectTopicDetailsInfo} from '../../redux/reducers/GetTopicDetailsReducer';
+import {
+  getTopicBySubIdAPI,
+  selectTopicDetailsInfo,
+} from '../../redux/reducers/GetTopicDetailsReducer';
 import {selectTopicDetailsStatus} from '../../redux/reducers/GetTopicDetailsFormTopicIdReducer';
 import {selectUserInfo} from '../../redux/reducers/loginReducer';
 import LevelCompleted from '../UserScreen/LevelCompleted';
@@ -52,7 +56,7 @@ const ContentDetails = ({route}) => {
     subjectimage = '',
     //percentage = '',
   } = route.params;
-  
+
   const {authToken, status, userInfo} = useAppSelector(selectUserInfo);
   interface ChildInfo {
     _id: string;
@@ -133,49 +137,46 @@ const ContentDetails = ({route}) => {
   const ContentByTopicId = useAppSelector(selectContentDetailsInfo);
   const {
     reviewquestionsets = [],
-    subquestions =[],
+    subquestions = [],
     subjectid = '',
     //subjectname = '',
     topic = '',
     topicid = '',
   } = ContentByTopicId[0] ? ContentByTopicId[0] : [];
 
-  
-
   const [allIndexesContain90Percent, setAllIndexesContain90Percent] =
     useState(false);
 
-    const percentageComplete = async () => {
-      if (reviewquestionsets.length === 0 || reviewquestionsets[0].studentdata.length === 0) {
-        
+  const percentageComplete = async () => {
+    if (
+      reviewquestionsets.length === 0 ||
+      reviewquestionsets[0].studentdata.length === 0
+    ) {
+      return false;
+    }
+
+    for (let i = 0; i < reviewquestionsets.length; i++) {
+      const questionSet = reviewquestionsets[i];
+
+      const isLastQuestionSet = i === reviewquestionsets.length - 1;
+      if (isLastQuestionSet) {
+        continue;
+      }
+      if (questionSet.studentdata.length === 0) {
         return false;
       }
-    
-      for (let i = 0; i < reviewquestionsets.length; i++) {
-        const questionSet = reviewquestionsets[i];
-        
-        const isLastQuestionSet = i === reviewquestionsets.length - 1;
-        if (isLastQuestionSet) {
-          continue;
-        }
-        if (questionSet.studentdata.length === 0) {
-          
+      for (const student of questionSet.studentdata) {
+        if (student.percentage < 90) {
           return false;
         }
-        for (const student of questionSet.studentdata) {
-          if (student.percentage < 90) {
-            
-            return false;
-          }
-        }
       }
-      return true;
-    };
+    }
+    return true;
+  };
   useEffect(() => {
     const checkPercentages = async () => {
       const result = await percentageComplete();
       setAllIndexesContain90Percent(result);
-      
     };
     if (reviewquestionsets.length > 0) {
       checkPercentages();
@@ -184,7 +185,14 @@ const ContentDetails = ({route}) => {
     }
   }, [reviewquestionsets]);
   //
-
+  useEffect(() => {
+    navigation.addListener('focus', () => {
+      BackHandler.addEventListener('hardwareBackPress', () => {
+        navigation.goBack();
+        return true;
+      });
+    });
+  }, []);
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: Colors.secondary}}>
       {contentLoad == 'loading' ? (
@@ -336,7 +344,7 @@ const ContentDetails = ({route}) => {
                         reviewquestionsets[index - 1].studentdata.length > 0 &&
                         reviewquestionsets[index - 1].studentdata[0]
                           .percentage >= 90);
-                    
+
                     return (
                       <View
                         key={index}
@@ -638,7 +646,6 @@ const ContentDetails = ({route}) => {
                           <TouchableOpacity
                             disabled={!isExamAvailable}
                             onPress={async () => {
-                              
                               navigation.navigate('MockTests', {
                                 screenName: 'ExamSets',
                                 subjectName: subjectname,
@@ -655,7 +662,7 @@ const ContentDetails = ({route}) => {
                                 topicid: topicid,
                                 topic: topic,
                                 islastexercise: allIndexesContain90Percent,
-                                subjectimage:subjectimage,
+                                subjectimage: subjectimage,
                               });
                             }}>
                             <View

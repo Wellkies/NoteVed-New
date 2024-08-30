@@ -669,19 +669,12 @@ const EditProfile = ({route}) => {
     value: state.stateid,
   }));
   useEffect(() => {
-    // tokenCheck();
     navigation.addListener('focus', () => {
       BackHandler.addEventListener('hardwareBackPress', () => {
-        navigation.navigate('SubjectLevel');
+        navigation.goBack();
         return true;
       });
     });
-    return () => {
-      BackHandler.removeEventListener('hardwareBackPress', () => {
-        navigation.navigate('SubjectLevel');
-        return true;
-      });
-    };
   }, []);
   return (
     <View style={styles.container}>
