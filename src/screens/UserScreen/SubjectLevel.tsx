@@ -312,21 +312,21 @@ const SubjectLevel = ({route}) => {
         alignContent: 'center',
         justifyContent: 'center',
         alignItems: 'center',
-        marginLeft: 10,
+        marginLeft: 12,
         // borderWidth: 0.9,
         // borderColor: '#f1a722',
         borderRadius: 20,
-        width: device_width * 0.96,
-        height: device_height * 0.19,
+        width: device_width * 0.95,
+        height: device_height * 0.26,
       }}>
       <FastImage
         style={{
-          borderRadius: 20,
-          width: device_width * 0.96,
-          height: device_height * 0.19,
+          borderRadius: 18,
+          width: device_width * 0.95,
+          height: device_height * 0.28,
         }}
         source={item}
-        resizeMode={'stretch'}
+        resizeMode={'contain'}
       />
     </View>
   );
