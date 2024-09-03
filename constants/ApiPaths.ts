@@ -6,26 +6,23 @@ import {
   RewardedAd,
   AdEventType,
   RewardedAdEventType,
-} from "react-native-google-mobile-ads";
+} from 'react-native-google-mobile-ads';
 
 // Test AD
-export const BANNERAD = TestIds.BANNER //Test
-export const INTERSTITIALAD = TestIds.INTERSTITIAL //Test
-export const REWARDEDAD = TestIds.REWARDED //Test
+export const BANNERAD = TestIds.BANNER; //Test
+export const INTERSTITIALAD = TestIds.INTERSTITIAL; //Test
+export const REWARDEDAD = TestIds.REWARDED; //Test
 //Production AD
-// export const BANNERAD = "ca-app-pub-1582661677692525/5073831578" 
-// export const INTERSTITIALAD = "ca-app-pub-1582661677692525/8821504899" 
+// export const BANNERAD = "ca-app-pub-1582661677692525/5073831578"
+// export const INTERSTITIALAD = "ca-app-pub-1582661677692525/8821504899"
 // export const REWARDEDAD = "ca-app-pub-1582661677692525/7268750077"
-
 
 // export const API_URL = "https://wellkie.in/demoApi/";
 //export const API_URL = 'https://wellkie.org/demoApi/'; // Test url
-export const API_URL = 'https://wellkies.com/demoApi/'; // Test url
-
+//export const API_URL = 'https://wellkies.com/demoApi/'; // Test url
 
 // export const API_URL = 'https://wellkies.org/demoApi/'; // production url
-// export const API_URL = 'https://notevook.com/demoApi/'; // productsion url
-
+export const API_URL = 'https://notevook.com/demoApi/'; // productsion url
 
 export const LOGIN_SEND_OTP_URL = API_URL + 'loginotp';
 export const VERIFY_LOGIN_OTP_URL = API_URL + 'parentlogin';
@@ -183,8 +180,7 @@ export const GET_SCHOLARSHIP_PREMIUM_URL =
 
 // export const CREATE_SCHOLARSHIP_MEMBERSHIP_URL =
 //   API_URL + 'addedchildmembership';
-  export const CREATE_SCHOLARSHIP_MEMBERSHIP_URL =
-  API_URL + 'edzaddMembership';
+export const CREATE_SCHOLARSHIP_MEMBERSHIP_URL = API_URL + 'edzaddMembership';
 
 export const REGISTER_NEW_CHILD_URL = API_URL + 'registerChild';
 export const LOGIN_CHILD_OTP_VERIFY_URL = API_URL + 'childotplogin';
@@ -234,7 +230,7 @@ export const GET_ORDER_DETAILS_URL = API_URL + 'getedchildOrdersbyorderid/';
 export const DELETE_USER_URL = API_URL + 'createeddeleteAccount';
 export const GET_CHILD_REVISION_DETAILS_URL =
   API_URL + 'gettopicompletewithchild';
-  export const GET_CHILD_CONTENT_DETAILS_URL =
+export const GET_CHILD_CONTENT_DETAILS_URL =
   API_URL + 'edzgetcontentdatawithchildid';
 export const ADD_CHILD_REVISION_URL = API_URL + 'edzaddchildrevisiondetails';
 
@@ -252,3 +248,11 @@ export const GET_DAILY_MESSAGE_BY_DATE_URL =
 export const GET_CHECK_TOKEN_URL = API_URL + 'checkToken';
 export const GET_ALL_LICENSE_DETAILS = API_URL + 'alledzlicense';
 export const GET_AD_STATUS = API_URL + 'getadzstatus';
+
+/////////////////////////****LIVE-QUIZ APIs****/////////////////////////////
+
+export const GET_ALL_LIVE_QUIZ = API_URL + 'getedzlivequizbydate/';
+export const ANSWER_SUBMIT_LIVE_QUIZ = API_URL + 'createedzlivequiz';
+export const GET_LIVE_QUIZ_TOP_STUDENT_URL = API_URL + 'getedzChildLiveQuizLeaderboard';
+export const GET_ALL_PAST_LIVE_QUIZ = API_URL + 'getedzlivequizbypastdate/';
+export const GET_HOMESCREEN_LIVE_QUIZ_TOP_STUDENT_URL = API_URL + 'getedzChildLiveQuizLeaderboardnew';

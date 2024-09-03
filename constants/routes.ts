@@ -65,7 +65,13 @@ const ROUTES = {
   TOPICDETAILS:'TopicDetails',
   CONTENTDETAILS:'ContentDetails',
   LEVELCOMPLETED: 'LevelCompleted',
-  CIRCULARPROGRESSBAR: 'CircularProgressBar'
+  CIRCULARPROGRESSBAR: 'CircularProgressBar',
+  LIVEQUIZDETAILS: 'LiveQuizDetails',
+  LIVEQUIZINFO: 'LiveQuizInfo',
+  LIVEQUIZ:'LiveQuiz',
+  LIVEQUIZSCOREBOARD:'LiveQuizScoreBoard',
+  LIVEQUIZANSWERSHEET:"LiveQuizAnswerSheet",
+  LIVEQUIZLEADERBOARDLIST:'LiveQuizLeaderBoardList',
 };
 
 export default ROUTES;

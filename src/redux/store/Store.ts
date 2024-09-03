@@ -51,6 +51,10 @@ import StudentStateData from '../reducers/GetAllStateReducer';
 import AllLicenseData from '../reducers/GetAllLicenseReducer';
 import AdsStatusData from '../reducers/GetAdsStatusReducer';
 import ExamTimeData from "../reducers/ExamTimeTakenReducer";
+import selectPastLiveQuizData from "../reducers/GetPastLiveQuizReducer";
+import selectLiveQuizData from "../reducers/LiveQuizReducer";
+import LiveQuizTopStudentData from "../reducers/GetLiveQuizTopStudentReducer";
+import  UserhomeTopStudentData from "../reducers/GetHomeLeaderBoardReducer";
 
 export const store = configureStore({
   reducer: {
@@ -107,6 +111,10 @@ export const store = configureStore({
     AllLicensedetails: AllLicenseData,
     AdsStates: AdsStatusData,
     ExamTime: ExamTimeData,
+    LiveQuizList: selectLiveQuizData,
+    LivequizStudentList:LiveQuizTopStudentData,
+    PastLiveQuizList: selectPastLiveQuizData,
+    HomeTopStudentList:UserhomeTopStudentData,
   },
 });
 
