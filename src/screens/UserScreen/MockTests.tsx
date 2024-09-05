@@ -783,6 +783,26 @@ console.log(childContent,"chil%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                 </View>
               </View>
             </ScrollView>
+            {Questionlist[currentIndex]?.questiontype == 'image' && (
+                <View
+                  style={{justifyContent: 'flex-start', flexDirection: 'row',}}>
+                  <MaterialIcons
+                    name="report"
+                    size={20}
+                    // backgroundColor={Colors.secondary}
+                    color={'#fff'}
+                    // onPress={() => navigation.goBack()}
+                  />
+                  <Text
+                    style={{
+                      color: '#fff',
+                      fontSize: 12,
+                      // textDecorationLine: 'underline',
+                    }}>
+                    {trans('Scroll to see the question')}
+                  </Text>
+                </View>
+              )}
             <View
               style={{
                 marginVertical: 10,
