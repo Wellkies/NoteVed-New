@@ -83,6 +83,7 @@ import {
       fathername: string;
       mothername: string;
       scholarship: object[];
+      // board: string;
       subscriptionStartDate: string;
       subscriptionEndDate: string;
       isPremium: boolean;
@@ -94,26 +95,25 @@ import {
       schoolname: string;
       language: string;
       email: string;
-      stageid: string;
-      boardid: string;
       classname: string;
     }
     const {
       _id: id = '',
+      childid = '',
       name = '',
       fname = '',
       lname = '',
       stage = '',
       gender = '',
-      stageid = '',
-      boardid = '',
-      childid = '',
+      // stageid = '',
+      // boardid = '',
       age = '',
       image = '',
-      boardname: boardofeducation = '',
+      // boardname: boardofeducation = '',
     } = childInfo;
     const PremiumPurchase = useAppSelector(selectPremiumPurchase);
     const PremiumPurchaseLoad = useAppSelector(selectPremiumPurchaseStatus);
+  console.log(childid,'@childid');
   
     /////////////////////AD/////////////////////
   
@@ -182,16 +182,17 @@ import {
       const quizDate = new Date(item.starttime).toISOString().split('T')[0];
       return quizDate === todayDateString;
     });
+    console.log(todayliveQuiz[0],'@todayliveQuiz');
+    
     const ContentLoading = useAppSelector(selectLiveQuizStatus);
     const Livequiz = {
-      boardid,
-      childid,
+      childid: childid,
     };
     useEffect(() => {
       dispatch(getAdsStatus())
       dispatch(getLiveQuizAPI(Livequiz));
       navigation.addListener('focus', () => {
-        const Predata = {childid, stageid, boardid};
+        const Predata = {childid};
         dispatch(getScholarshipPremiumAPI(Predata));
         dispatch(getLiveQuizAPI(Livequiz));
         BackHandler.addEventListener('hardwareBackPress', () => {
@@ -503,7 +504,7 @@ import {
                               marginTop: 15,
                             }}
                             onPress={() => {
-                              dispatch(getLiveQuizAPI(boardid));
+                              dispatch(getLiveQuizAPI(childid));
                               navigation.navigate('LiveQuiz');
                             }}>
                             <Text

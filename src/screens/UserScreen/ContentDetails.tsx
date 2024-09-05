@@ -264,15 +264,27 @@ const ContentDetails = ({route}) => {
                     marginHorizontal: 20,
                     gap: 4,
                   }}>
-                  <Image
-                    source={{uri: subjectimage}}
-                    style={{
-                      height: device_height * 0.06,
-                      width: device_width * 0.11,
-                      resizeMode: 'contain',
-                      tintColor: '#FFFFFF',
-                    }}
-                  />
+                  {subjectimage != '' ? (
+                    <Image
+                      source={{uri: subjectimage}}
+                      style={{
+                        height: device_height * 0.06,
+                        width: device_width * 0.11,
+                        resizeMode: 'contain',
+                        tintColor: '#FFFFFF',
+                      }}
+                    />
+                  ) : (
+                    <Image
+                      source={require('../../../assets/people.png')}
+                      style={{
+                        height: device_height * 0.07,
+                        width: device_width * 0.15,
+                        resizeMode: 'contain',
+                        tintColor: '#FFFFFF',
+                      }}
+                    />
+                  )}
                   <Text
                     style={{
                       fontWeight: '400',

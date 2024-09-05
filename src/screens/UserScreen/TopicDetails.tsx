@@ -148,14 +148,14 @@ const TopicDetails = ({route}) => {
           resizeMode="cover"
           source={require('../../../assets/0.png')}>
           <TouchableOpacity
-              onPress={() => {
-                const data = {
-                  //courseid: courseid,
-                  childid: childid,
-                };
-                dispatch(getChildProgressDetailAPI(data));
-                navigation.goBack();
-              }}
+            onPress={() => {
+              const data = {
+                //courseid: courseid,
+                childid: childid,
+              };
+              dispatch(getChildProgressDetailAPI(data));
+              navigation.goBack();
+            }}
             style={{
               position: 'absolute',
               top: 20,
@@ -178,24 +178,33 @@ const TopicDetails = ({route}) => {
               marginHorizontal: 20,
               gap: 10,
             }}>
-            <Image
-               source={{ uri: subjectimage }}
-              style={{
-                height: device_height * 0.060,
-                width: device_width * 0.11,
-                resizeMode: 'contain',
-                tintColor: '#FFFFFF',
-              }}
-            />
+            {subjectimage != '' ? (
+              <Image
+                source={{uri: subjectimage}}
+                style={{
+                  height: device_height * 0.06,
+                  width: device_width * 0.11,
+                  resizeMode: 'contain',
+                  tintColor: '#FFFFFF',
+                }}
+              />
+            ) : (
+              <Image
+                source={require('../../../assets/people.png')}
+                style={{
+                  height: device_height * 0.09,
+                  width: device_width * 0.15,
+                  resizeMode: 'contain',
+                  tintColor: '#FFFFFF',
+                }}
+              />
+            )}
             <Text
               style={{
                 fontWeight: '400',
                 fontSize: 20,
                 color: '#FFFFFF',
               }}>
-              {/* {coursename !== 'Mind Melters' && coursename !== 'Vidyalaya Vista'
-                ? trans(coursename + ' ' + subjectname)
-                : trans(subjectname)} */}
               {trans(subjectname)}
             </Text>
           </View>
@@ -286,7 +295,7 @@ const TopicDetails = ({route}) => {
                                   subjectname: subjectname,
                                   topicname: topicname,
                                   topicid: topicid,
-                                  subjectimage:subjectimage,
+                                  subjectimage: subjectimage,
                                 });
                               }
                             }}

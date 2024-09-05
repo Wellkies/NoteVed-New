@@ -181,11 +181,11 @@ import {
   
     const handleBackButtonClick = () => {
       const Livequiz = {
-        boardid,
+        //boardid,
         childid,
       };
    dispatch(getLiveQuizAPI(Livequiz));
-      navigation.navigate('UserHome');
+      navigation.navigate('SubjectLevel');
     };
   
     const {
@@ -228,7 +228,7 @@ import {
       const Predata = {childid, stageid, boardid};
       dispatch(getScholarshipPremiumAPI(Predata));
       const Livequiz = {
-        boardid,
+       // boardid,
         childid,
       };
    dispatch(getLiveQuizAPI(Livequiz));

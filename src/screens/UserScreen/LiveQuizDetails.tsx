@@ -196,7 +196,7 @@ import {
     // };
   
     const pastquizId = {
-      boardid,
+      childid,
     };
     useEffect(() => {
       // if(Pastquiz[0]?.quizid.length!=0){
@@ -212,14 +212,14 @@ import {
   
         dispatch(getLiveQuizAPI(Livequiz));
         BackHandler.addEventListener('hardwareBackPress', () => {
-          navigation.navigate('UserHome');
+          navigation.navigate('SubjectLevel');
           return true;
         });
       });
       return () => {
         BackHandler.removeEventListener('hardwareBackPress', () => {
           // handleBackButtonClick();
-          navigation.navigate('UserHome');
+          navigation.navigate('SubjectLevel');
           return true;
         });
       };
@@ -431,20 +431,6 @@ import {
     let total_sec =
       DaysLeft * 24 * 60 * 60 + hoursLeft * 60 * 60 + minsLeft * 60 + secsLeft;
   
-    // console.log(
-    //   total_sec,
-    //   'total_sec###################3',
-    //   DaysLeft,
-    //   hoursLeft,
-    //   minsLeft,
-    //   secsLeft,
-    // );
-    // console.log(todayliveQuiz != undefined ,
-    //   todayliveQuiz.length != 0,
-    //   ExamtimeEndDetails == true,
-    //   liveQuizLeaderBoard.length > 0,
-    //   todayliveQuizStudentData[0] != undefined,
-    //   todayliveQuizStudentData[0]?.length != '',"DETAILS")
     return (
       <SafeAreaView style={{flex: 1}}>
         <StatusBar backgroundColor={'#263d2d'} barStyle="light-content" />

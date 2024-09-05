@@ -175,15 +175,18 @@ const LiveQuiz = ({route}) => {
   const {
     _id: id = '',
     childid = '',
-    name: childName = '',
-    boardname = '',
-    boardid = '',
     stage = '',
-    stageid = '',
-    image: c_image = '',
-    age: C_age = '',
+    scholarship = [],
+    name: userName = '',
+    fname = '',
+    gender = '',
+    lname = '',
+    email = '',
     phone = '',
-    name = '',
+    image = '',
+    age = '',
+    address = '',
+    language = '',
   } = childInfo;
 
   const handleselectAnswer = (answerid: string, index: number) => {
@@ -290,10 +293,10 @@ const LiveQuiz = ({route}) => {
     const bodyAnswerData = {
       quizid: todayliveQuiz[0].quizid,
       childid: childid,
-      stage: stage,
-      stageid: stageid,
-      boardname: boardname,
-      boardid: boardid,
+      // stage: stage,
+      // stageid: stageid,
+      //boardname: boardname,
+      //boardid: boardid,
       totalmark: Questionlist.length,
       securemark: correctanswer,
       skipmark: Skipped,
@@ -336,7 +339,6 @@ const LiveQuiz = ({route}) => {
     }
   }, []);
   const Livequiz = {
-    boardid,
     childid,
   };
   useEffect(() => {

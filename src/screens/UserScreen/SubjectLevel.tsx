@@ -394,6 +394,7 @@ const SubjectLevel = ({route}) => {
   const daysLeft = destinationDate?.diff(todayDateData, 'days');
 
   const todayliveQuizStudentData = todayliveQuiz?.map(r => r.childlivequiz);
+  //console.log(todayliveQuizStudentData,'@todayliveQuizStudentData')
 
   const [currentTimeState, setCurrentTimeState] = useState(
     moment().format('h:mma'),
@@ -431,6 +432,8 @@ const SubjectLevel = ({route}) => {
   //////////////////////CHECKEND///////////////////
   const EndtimeDetails = moment(todayliveQuiz[0]?.endtime);
   const ExamtimeEndDetails = current_Time.isSameOrAfter(EndtimeDetails);
+  //console.log(ExamtimeEndDetails,'@ExamtimeEndDetails');
+  
   /////////////////////////EXAM EXCEEDTIME////////////////
 
   // Get the current time
