@@ -11,6 +11,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import {Avatar, Modal} from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import i18n from 'i18next';
@@ -433,7 +434,7 @@ const SubjectLevel = ({route}) => {
   const EndtimeDetails = moment(todayliveQuiz[0]?.endtime);
   const ExamtimeEndDetails = current_Time.isSameOrAfter(EndtimeDetails);
   //console.log(ExamtimeEndDetails,'@ExamtimeEndDetails');
-  
+
   /////////////////////////EXAM EXCEEDTIME////////////////
 
   // Get the current time
@@ -1567,7 +1568,7 @@ const SubjectLevel = ({route}) => {
                                           ? '#fff'
                                           : 'darkgreen',
                                       }}>
-                                      {trans('NoteVed Live Quiz')}
+                                      {trans('NoteVed-IQ Live Quiz')}
                                     </Text>
                                     <Text
                                       style={{
@@ -1864,6 +1865,516 @@ const SubjectLevel = ({route}) => {
             </>
           )}
         </ScrollView>
+        {livequizmodalStatus && (
+          <Modal transparent={true} visible={livequizmodalStatus}>
+            <View
+              style={{
+                borderRadius: 14,
+                borderColor: '#fff',
+                backgroundColor: '#fff',
+                minHeight: device_height * 0.3,
+                minWidth: device_width * 0.9,
+                alignSelf: 'center',
+              }}>
+              <View
+                style={{
+                  borderRadius: 15,
+                  borderWidth: 1,
+                  minHeight: device_height * 0.3,
+                  minWidth: device_width * 0.8,
+                  borderColor: '#fff',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    width: device_width * 0.7,
+                    fontSize: 18,
+                    color: '#333',
+                    marginTop: 5,
+                    fontWeight: '600',
+                  }}>
+                  {trans(
+                    'This button will be enabled when the live quiz starts at the time shown above.',
+                  )}
+                </Text>
+                <View
+                  style={{
+                    paddingVertical: 15,
+                    alignItems: 'center',
+                    marginTop: 10,
+                    marginLeft: 10,
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    padding: 10,
+                  }}>
+                  <TouchableOpacity
+                    style={{
+                      borderRadius: 10,
+                      width: '40%',
+                      marginVertical: 5,
+                      marginRight: 25,
+                      borderColor: 'white',
+                      backgroundColor: 'green',
+                      paddingVertical: 15,
+                      justifyContent: 'center',
+                    }}
+                    onPress={() => setLivequizModalStatus(false)}>
+                    <Text
+                      style={{
+                        color: 'white',
+                        fontSize: 18,
+                        fontWeight: 'bold',
+                        textAlign: 'center',
+                        alignItems: 'center',
+                      }}>
+                      {trans('OK')}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          </Modal>
+        )}
+        {livequizexceedStatus && (
+          <Modal transparent={true} visible={livequizexceedStatus}>
+            <View
+              style={{
+                borderRadius: 14,
+                borderColor: '#fff',
+                backgroundColor: '#fff',
+                minHeight: device_height * 0.3,
+                minWidth: device_width * 0.9,
+                alignSelf: 'center',
+              }}>
+              <View
+                style={{
+                  borderRadius: 15,
+                  borderWidth: 1,
+                  minHeight: device_height * 0.3,
+                  minWidth: device_width * 0.8,
+                  borderColor: '#fff',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    width: device_width * 0.7,
+                    fontSize: 18,
+                    color: '#333',
+                    marginTop: 5,
+                    fontWeight: '600',
+                    textTransform: 'capitalize',
+                  }}>
+                  {trans(
+                    'Quiz time has exceeded; you can no longer join the quiz',
+                  )}
+                </Text>
+                <View
+                  style={{
+                    paddingVertical: 15,
+                    alignItems: 'center',
+                    marginTop: 10,
+                    marginLeft: 10,
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    padding: 10,
+                  }}>
+                  <TouchableOpacity
+                    style={{
+                      borderRadius: 10,
+                      width: '40%',
+                      marginVertical: 5,
+                      marginRight: 25,
+                      borderColor: 'white',
+                      backgroundColor: 'green',
+                      paddingVertical: 15,
+                      justifyContent: 'center',
+                    }}
+                    onPress={() => setLivequizexceedStatus(false)}>
+                    <Text
+                      style={{
+                        color: 'white',
+                        fontSize: 18,
+                        fontWeight: 'bold',
+                        textAlign: 'center',
+                        alignItems: 'center',
+                      }}>
+                      {trans('OK')}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          </Modal>
+        )}
+        {leaderBoardStatus && liveQuizLeaderBoard.length >= 0 && (
+          <Modal transparent={true} visible={leaderBoardStatus}>
+            <SafeAreaView
+              style={{
+                borderRadius: 15,
+                backgroundColor: 'mistyrose',
+                height: device_height * 0.85,
+                width: device_width * 0.95,
+                alignSelf: 'center',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <FastImage
+                style={{
+                  height: 60,
+                  width: 120,
+                }}
+                resizeMode="contain"
+                source={require('../../../assets/crown.png')}
+              />
+              <AntDesign
+                name="closecircleo"
+                style={{
+                  fontSize: 35,
+                  color: '#fff',
+                  position: 'absolute',
+                  top: -15,
+                  right: -5,
+                  marginTop: 10,
+                  backgroundColor: 'crimson',
+                  borderRadius: 50,
+                }}
+                onPress={() => {
+                  setLeaderBoardtatus(false);
+                }}
+              />
+
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  alignSelf: 'center',
+                }}>
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    width: '100%',
+                    fontSize: 27,
+                    color: 'darkorange',
+                    fontWeight: '900',
+                  }}>
+                  {trans('Leaderboard')}
+                </Text>
+              </View>
+              {leaderboardLoading == 'loading' ? (
+                <View
+                  style={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    height: '90%',
+                    width: '90%',
+                    alignSelf: 'center',
+                    flex: 1,
+                  }}>
+                  <ActivityIndicator
+                    size="large"
+                    color={'green'}
+                    style={{alignSelf: 'center'}}
+                  />
+                  <Text
+                    style={{
+                      color: 'green',
+                      fontWeight: '600',
+                      fontSize: 12,
+                    }}>
+                    {trans('Loading... Please Wait')}
+                  </Text>
+                </View>
+              ) : (
+                <>
+                  <ScrollView
+                    showsVerticalScrollIndicator={true}
+                    persistentScrollbar={true}
+                    style={{flexGrow: 1}}>
+                    <View
+                      style={{
+                        width: '100%',
+                        alignSelf: 'center',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginTop: 50,
+                        marginBottom: 50,
+                      }}>
+                      {topstudentData[0]?.length > 0 && (
+                        <>
+                          {topstudentData[0]?.map((item, index) => {
+                            const {
+                              fname: name = '',
+                              fathername = '',
+                              schoolname = '',
+                              answerdetails = [],
+                              quiz = [],
+                              lastexamtotalsecurmark = '',
+                              timetaken: lastexamtimetaken = '',
+                              percentage = '',
+                              score: securemark = '',
+                              image: studentimage = '',
+                              gender = '',
+                            } = item;
+
+                            const hours = Math.floor(lastexamtimetaken / 3600);
+                            const minutes = Math.floor(
+                              (lastexamtimetaken % 3600) / 60,
+                            );
+                            const remainingSeconds = lastexamtimetaken % 60;
+
+                            const formattedHours =
+                              hours < 10 ? `0${hours}` : hours;
+                            const formattedMinutes =
+                              minutes < 10 ? `0${minutes}` : minutes;
+                            const formattedSeconds =
+                              remainingSeconds < 10
+                                ? `0${remainingSeconds}`
+                                : remainingSeconds;
+
+                            const toOrdinalSuffix = index => {
+                              const int = parseInt(index),
+                                digits = [int % 10, int % 100],
+                                ordinals = ['st', 'nd', 'rd', 'th'],
+                                oPattern = [1, 2, 3, 4],
+                                tPattern = [11, 12, 13, 14, 15, 16, 17, 18, 19];
+                              return oPattern.includes(digits[0]) &&
+                                !tPattern.includes(digits[1])
+                                ? int + ordinals[digits[0] - 1]
+                                : int + ordinals[3];
+                            };
+                            return (
+                              <View
+                                key={index}
+                                style={{
+                                  flexDirection: 'row',
+                                  alignItems: 'center',
+                                  borderWidth: 4,
+                                  borderColor: 'mediumpurple',
+                                  width: '98%',
+                                  borderRadius: 10,
+                                  height: device_height * 0.18,
+                                  marginVertical: 3,
+                                  padding: 3,
+                                  backgroundColor:
+                                    ListColor[index % ListColor.length],
+                                  elevation: 5,
+                                }}>
+                                {toOrdinalSuffix(index + 1) == '1st' ||
+                                toOrdinalSuffix(index + 1) == '2nd' ||
+                                toOrdinalSuffix(index + 1) == '3rd' ? (
+                                  <View
+                                    style={{
+                                      borderRadius: 50,
+                                      height: 50,
+                                      width: 50,
+                                      alignItems: 'center',
+                                      justifyContent: 'center',
+                                      borderWidth: 3,
+                                      borderColor: 'darkorange',
+                                      elevation: 5,
+                                    }}>
+                                    <Avatar.Image
+                                      source={
+                                        toOrdinalSuffix(index + 1) == '1st'
+                                          ? require('../../../assets/first.png')
+                                          : toOrdinalSuffix(index + 1) == '2nd'
+                                          ? require('../../../assets/second.png')
+                                          : toOrdinalSuffix(index + 1) == '3rd'
+                                          ? require('../../../assets/third.jpg')
+                                          : null
+                                      }
+                                      size={50}
+                                    />
+                                  </View>
+                                ) : (
+                                  <View
+                                    style={{
+                                      borderRadius: 50,
+                                      flexGrow: 1,
+                                      width: 50,
+                                      alignItems: 'center',
+                                      justifyContent: 'center',
+                                    }}></View>
+                                )}
+                                <View
+                                  style={{
+                                    width: '65%',
+                                    justifyContent: 'center',
+                                    paddingVertical: 5,
+                                    paddingHorizontal: 15,
+                                    alignSelf: 'stretch',
+                                    flexGrow: 1,
+                                  }}>
+                                  <Text
+                                    style={{
+                                      fontSize: 18,
+                                      fontWeight: '800',
+                                      color: Colors.primary,
+                                    }}>
+                                    {name}
+                                  </Text>
+                                  <Text
+                                    style={{
+                                      fontSize: 14,
+                                      fontWeight: '700',
+                                      color: '#333',
+                                    }}>
+                                    {trans("Guardian's Name")} -{' '}
+                                    <Text
+                                      style={{
+                                        fontWeight: '800',
+                                        color: Colors.primary,
+                                      }}>
+                                      {fathername}
+                                    </Text>
+                                  </Text>
+                                  {schoolname != undefined &&
+                                    schoolname != '' && (
+                                      <Text
+                                        style={{
+                                          fontSize: 14,
+                                          fontWeight: '700',
+                                          color: '#333',
+                                        }}>
+                                        {trans('School')} -{' '}
+                                        <Text
+                                          style={{
+                                            fontWeight: '800',
+                                            color: Colors.primary,
+                                          }}>
+                                          {schoolname}
+                                        </Text>
+                                      </Text>
+                                    )}
+                                  {securemark != undefined &&
+                                    securemark != '' && (
+                                      <Text
+                                        style={{
+                                          fontSize: 14,
+                                          fontWeight: '700',
+                                          color: '#333',
+                                        }}>
+                                        {trans('Secure Mark')} -{' '}
+                                        <Text
+                                          style={{
+                                            fontWeight: '800',
+                                            color: Colors.primary,
+                                          }}>
+                                          {securemark}
+                                        </Text>
+                                      </Text>
+                                    )}
+                                  {lastexamtimetaken.length != 0 && (
+                                    <Text
+                                      style={{
+                                        fontSize: 14,
+                                        fontWeight: '700',
+                                        color: '#333',
+                                      }}>
+                                      {trans('Time Taken')} -{' '}
+                                      <Text
+                                        style={{
+                                          fontSize: 13,
+                                          fontWeight: '700',
+                                          color: 'green',
+                                        }}>
+                                        {`${formattedHours}:${formattedMinutes}:${formattedSeconds}`}
+                                      </Text>
+                                    </Text>
+                                  )}
+                                </View>
+                                <View
+                                  style={{
+                                    width: '23%',
+                                    height: 70,
+                                    marginBottom: 5,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                  }}>
+                                  <FastImage
+                                    style={{
+                                      height: '110%',
+                                      width: 60,
+                                      borderRadius: 5,
+                                    }}
+                                    resizeMode="contain"
+                                    source={
+                                      studentimage != '' && studentimage != null
+                                        ? {uri: studentimage}
+                                        : gender == 'Male'
+                                        ? require('../../../assets/boy.png')
+                                        : gender == 'Female'
+                                        ? require('../../../assets/girl.png')
+                                        : {
+                                            uri: 'https://wkresources.s3.ap-south-1.amazonaws.com/userrr.png',
+                                          }
+                                    }
+                                  />
+                                </View>
+                              </View>
+                            );
+                          })}
+                        </>
+                      )}
+                      {liveQuizLeaderBoard.length == 0 && (
+                        <>
+                          <Text
+                            style={{
+                              fontSize: 15,
+                              fontWeight: '700',
+                              color: '#000',
+                            }}>
+                            {trans('No Top student Available')}
+                          </Text>
+                        </>
+                      )}
+                    </View>
+                  </ScrollView>
+                  <View
+                    style={{
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '100%',
+                      alignSelf: 'center',
+                      marginVertical: 15,
+                    }}>
+                    <TouchableOpacity
+                      style={{
+                        borderRadius: 10,
+                        width: 150,
+                        alignSelf: 'center',
+                        alignItems: 'center',
+                        backgroundColor: 'green',
+                        paddingVertical: 10,
+                        justifyContent: 'center',
+                      }}
+                      onPress={() => {
+                        setLeaderBoardtatus(false);
+                      }}>
+                      <Text
+                        style={{
+                          color: 'white',
+                          fontSize: 18,
+                          fontWeight: 'bold',
+                          textAlign: 'center',
+                          alignItems: 'center',
+                        }}>
+                        {trans('OK')}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </>
+              )}
+            </SafeAreaView>
+          </Modal>
+        )}
       </ImageBackground>
     </SafeAreaView>
   );
