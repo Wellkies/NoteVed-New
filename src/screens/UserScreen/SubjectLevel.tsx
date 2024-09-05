@@ -251,7 +251,7 @@ const SubjectLevel = ({route}) => {
 
     dispatch(getLiveQuizAPI(data));
     dispatch(getHomeTopStudentAPI());
-    dispatch(getPastLiveQuizAPI(data));
+    dispatch(getPastLiveQuizAPI());
 
     const {name = ''} = childInfo;
     _retrieveFcmToken(childid, name);
@@ -507,7 +507,7 @@ const SubjectLevel = ({route}) => {
 
     dispatch(getLiveQuizAPI(data));
     dispatch(getHomeTopStudentAPI());
-    dispatch(getPastLiveQuizAPI(data));
+  dispatch(getPastLiveQuizAPI());
     // const {name = ''} = childInfo;
     // _retrieveFcmToken(childid, name);
   };
@@ -1518,7 +1518,7 @@ const SubjectLevel = ({route}) => {
                                 const pastquizId = {
                                   childid,
                                 };
-                                dispatch(getPastLiveQuizAPI(pastquizId));
+                                dispatch(getPastLiveQuizAPI());
                                 navigation.navigate('LiveQuizDetails', {});
                               }}
                               style={{
@@ -1640,7 +1640,7 @@ const SubjectLevel = ({route}) => {
                                           childid,
                                         };
                                         dispatch(
-                                          getPastLiveQuizAPI(pastquizId),
+                                          getPastLiveQuizAPI(),
                                         );
                                         navigation.navigate(
                                           'LiveQuizDetails',

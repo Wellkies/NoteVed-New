@@ -85,8 +85,8 @@ import {
     }
   };
   
-  export const getPastLiveQuizAPIAction = async (data = {}) => {
-    const url = GET_ALL_PAST_LIVE_QUIZ + data.childid ;
+  export const getPastLiveQuizAPIAction = async () => {
+    const url = GET_ALL_PAST_LIVE_QUIZ;
   
     console.log(url, "$$$$$$$$$$$$$$$$GET_ALL_PAST_LIVE_QUIZ=======================");
     const token = await AsyncStorage.getObject("@auth_Token");

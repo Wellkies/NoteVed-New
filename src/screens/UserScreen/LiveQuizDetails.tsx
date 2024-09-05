@@ -204,11 +204,11 @@ import {
       // }
       dispatch(getHomeTopStudentAPI());
       dispatch(getLiveQuizAPI(Livequiz));
-      dispatch(getPastLiveQuizAPI(pastquizId));
+      dispatch(getPastLiveQuizAPI());
       navigation.addListener('focus', () => {
         dispatch(getHomeTopStudentAPI());
         // dispatch(getLiveQuizTopStudentAPI(TopstudentData));
-        dispatch(getPastLiveQuizAPI(pastquizId));
+        dispatch(getPastLiveQuizAPI());
   
         dispatch(getLiveQuizAPI(Livequiz));
         BackHandler.addEventListener('hardwareBackPress', () => {

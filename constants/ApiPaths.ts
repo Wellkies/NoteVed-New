@@ -254,5 +254,5 @@ export const GET_AD_STATUS = API_URL + 'getadzstatus';
 export const GET_ALL_LIVE_QUIZ = API_URL + 'getedzlivequizbydate/';
 export const ANSWER_SUBMIT_LIVE_QUIZ = API_URL + 'createedzlivequiz';
 export const GET_LIVE_QUIZ_TOP_STUDENT_URL = API_URL + 'getedzChildLiveQuizLeaderboard';
-export const GET_ALL_PAST_LIVE_QUIZ = API_URL + 'getedzlivequizbypastdate/';
+export const GET_ALL_PAST_LIVE_QUIZ = API_URL + 'getedzlivequizbypastdate';
 export const GET_HOMESCREEN_LIVE_QUIZ_TOP_STUDENT_URL = API_URL + 'getedzChildLiveQuizLeaderboardnew';

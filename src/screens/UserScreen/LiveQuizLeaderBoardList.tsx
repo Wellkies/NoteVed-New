@@ -127,9 +127,9 @@ import {
       boardid,
     };
     useEffect(() => {
-      dispatch(getPastLiveQuizAPI(pastquizId));
+      dispatch(getPastLiveQuizAPI());
       navigation.addListener('focus', () => {
-        dispatch(getPastLiveQuizAPI(pastquizId));
+        dispatch(getPastLiveQuizAPI());
         BackHandler.addEventListener('hardwareBackPress', () => {
           navigation.goBack();
           return true;
