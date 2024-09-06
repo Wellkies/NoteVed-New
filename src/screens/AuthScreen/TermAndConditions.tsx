@@ -126,72 +126,79 @@ const TermAndConditions = () => {
 
   const agreement = [
     {
-      title: `Overview of the NoteVed App`,
-      content: `The NoteVed App is revolutionizing the way kids study and practice their course material. With its user-friendly interface and comprehensive mock tests, this app aims to make learning a fun and interactive experience for students. Gone are the days of mindlessly flipping through textbooks or attending boring lectures; NoteVed brings education to life by allowing children to test their knowledge in an engaging and convenient manner.One of the key features of the NoteVed App is its course-wise mock tests. These tests cover all the important topics and concepts from each subject, ensuring that students have a thorough understanding before moving on to the next chapter. The app provides detailed feedback after every test, highlighting areas where improvement is needed. This personalized approach allows kids to identify their weak areas and work on them effectively.In addition to helping students practice for exams, NoteVed also offers helpful resources such as video tutorials, study guides, and practice exercises. It caters to different types of learners by providing multiple methods of instruction – visual, auditory, and kinesthetic – so that every child can find a learning style that suits them best. With regular updates and added features planned in the future, NoteVed is quickly becoming an essential tool for students striving for academic success.`,
+      title: `Introduction`,
+      content: `Welcome to Noteved-IQ . We are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, and protect your data when you use our app, Noteved-IQ, available on the Play Store.`,
     },
     {
-      title: `Terms and Conditions for NoteVed App`,
-      content: `One of the key terms and conditions for using the NoteVed App is that it is solely intended for educational purposes. This means that users should not misuse or take advantage of the app in any way. The app has been designed to provide kids with a platform to practice course-wise mock tests, helping them improve their knowledge and skills in different subjects.Another important term and condition to be aware of is that while using the NoteVed App, users should not engage in any illegal activities or violate any copyright laws. All content available on the app, including study materials, questions, and answers, are properly licensed or owned by NoteVed. Any unauthorized use or distribution of this content can result in legal consequences.It is also noteworthy that by accepting these terms and conditions, users agree to be responsible for maintaining the confidentiality of their account information and password. They should not share their login credentials with others or allow anyone else to access their account without authorization. By doing so, they can ensure the security and privacy of their personal data and progress within the app's framework.`,
+      title: `Information We Collect`,
+      content: `**1.1 Personal Information**  
+We may collect personal information that you voluntarily provide to us, such as your name, email address, age, and any other information you provide during the registration process.
+
+**1.2 Non-Personal Information**  
+We also collect non-personal information that does not directly identify you. This may include data on your device, app usage, interactions with ads, and other aggregated data to improve our services.
+`,
     },
     {
-      title: `User Responsibilities and Limitations`,
-      content: `When using an app like NoteVed, it is important for users, especially the young ones, to understand their responsibilities and limitations. While the app provides a platform for kids to practice course-wise mock tests and enhance their knowledge, they must use it responsibly.Firstly, users are responsible for maintaining the security of their account credentials. It is vital to create a strong password and refrain from sharing it with anyone. Users should also be cautious while accessing the app on public networks or devices, as these can potentially compromise their personal information.Secondly, users should note that NoteVed is a tool meant to supplement learning efforts rather than replace traditional educational methods entirely. It is crucial for kids to understand that active participation in classrooms and studying offline materials are equally significant in achieving academic success.Lastly, while using NoteVed can be entertaining and engaging, there must be self-discipline when it comes to screen time. Users should not become reliant solely on this app but instead strike a balance with other activities such as physical exercise and social interactions.By recognizing these responsibilities and limitations associated with utilizing an educational app like NoteVed appropriately, users can maximize its benefits without compromising their safety or overall learning experience.`,
+      title: `How We Use Your Information`,
+      content: `**2.1 Personal Information**  
+The personal information you provide is used to:
+- Create and manage your account.
+- Provide personalized content and services.
+- Communicate with you regarding updates, promotions, and other relevant information.
+- Improve our app based on your feedback and usage patterns.
+
+**2.2 Non-Personal Information**  
+Non-personal information is used to:
+- Analyze app usage to enhance user experience.
+- Serve relevant ads based on your interactions within the app.
+- Monitor app performance and troubleshoot any issues.
+`,
     },
     {
-      title: `Privacy Policy and Data Collection`,
-      content: `Parents and guardians can rest assured knowing that NoteVed takes privacy seriously. The app follows strict guidelines when it comes to collecting personal information from its young users. It ensures that only the necessary data is collected for providing a seamless learning experience, and this information is never shared with third parties without proper consent.Data collection on NoteVed also plays a significant role in improving the overall user experience. By analyzing how children interact with the app and their learning patterns, developers can make necessary adjustments to cater better to individual needs. This means that as kids practice mock tests using NoteVed, they not only sharpen their skills but also indirectly contribute to the development of a more effective learning platform.In conclusion, Privacy Policy and Data Collection are paramount concerns when it comes to an educational app like NoteVed. The stringent measures taken by the app ensure that children's personal information remains secure while still allowing for valuable insights to enhance their learning experience. By prioritizing privacy alongside academic growth, NoteVed proves itself as a trusted platform for young learners seeking practice through course-wise mock tests.`,
+      title: `Data Sharing and Disclosure`,
+      content: `**3.1 Third-Party Service Providers**  
+We may share your information with third-party service providers who assist us in operating our app, conducting business, or servicing you, as long as those parties agree to keep this information confidential.
+
+**3.2 Advertising Partners**  
+To support the free nature of our app, we work with third-party advertisers. These partners may collect non-personal information about your interactions with ads to serve relevant advertisements.
+
+**3.3 Legal Requirements**  
+We may disclose your information if required to do so by law or in response to valid requests by public authorities (e.g., a court or government agency).
+`,
     },
     {
-      title: `Privacy Policy`,
-      content: `Data Collection: NoteVed app ensures that only essential data required for providing its services is collected. This includes user preferences, learning progress, and feedback. No personally identifiable information is gathered without explicit consent.`,
+      title: `Data Security`,
+      content: `We implement appropriate security measures to protect your personal information from unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet or electronic storage is 100% secure, and we cannot guarantee absolute security.`,
     },
     {
-      content: `Usage Information: NoteVed may collect usage information such as the duration of app usage, frequency of accessing certain features, and device information to improve user experience and optimize the app’s performance.`,
+      title:`Children's Privacy`,
+      content: `Our app is intended for users aged 7 and above. We do not knowingly collect personal information from children under the age of 7. If we become aware that we have inadvertently collected such information, we will take steps to delete it as soon as possible`,
     },
     {
-      content: `Data Storage: User data is securely stored on NoteVed’s servers using industry-standard security measures to prevent unauthorized access or data breaches. We do not store sensitive information such as credit card details.`,
+      title:`Your Rights`,
+      content: `You have the right to:
+- Access the personal information we hold about you.
+- Request the correction of any inaccurate information.
+- Request the deletion of your personal information.
+- Opt-out of receiving promotional communications.
+
+To exercise these rights, please contact us at [Insert Contact Information].
+`,
     },
 
     {
-      content: `Third-Party Services: NoteVed may utilize third-party services for analytics, advertising, or payment processing. These services adhere to strict privacy policies, and user data is only shared with them when necessary for providing the service.`,
+      title:`Changes to This Privacy Policy`,
+      content: `We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Effective Date" at the top of this policy. We encourage you to review this Privacy Policy periodically for any changes.`,
     },
     {
-      content: `Data Sharing: User data is never shared with third parties for marketing or advertising purposes without explicit consent. NoteVed values user privacy and ensures that personal information remains confidential.`,
-    },
-    {
-      content: `Parental Controls: NoteVed offers parental controls to ensure the safety and privacy of children using the app. Parents can monitor their child’s activity and manage privacy settings accordingly.`,
-    },
-    {
-      content: `Data Encryption: All data transmission between the app and servers is encrypted to safeguard user privacy. This encryption ensures that sensitive information remains protected from unauthorized access.`,
-    },
-    {
-      content: `Opt-Out Options: Users have the option to opt-out of certain data collection practices within the app settings. NoteVed respects user preferences regarding data privacy and provides easy-to-use controls for managing data sharing.`,
-    },
-    {
-      content: `Data Retention: NoteVed retains user data only for as long as necessary to fulfill the purposes outlined in this privacy policy or as required by law. Once data is no longer needed, it is securely deleted from our servers.`,
-    },
-    {
-      content: `Policy Updates: NoteVed reserves the right to update its privacy policy to reflect changes in data handling practices or legal requirements. Users will be notified of any significant changes, and their continued use of the app will constitute acceptance of the updated policy.`,
-    },
-    {
-      title: ` Refund Policy`,
-      content: `1- Once a purchase is made using the “Pay Online” mode, cancellation is not permitted.No refunds will be issued as you have accessed all premium features of our study materials.`,
-    },
-    {
-      content: `2- If an online payment was made in error, please contact our support center via the “Contact Us” page listed on our website.`,
-    },
-    {
-      content: `3- Refunds will be processed within 7-10 business days upon approval.`,
-    },
-    {
-      content: `4- We do not offer refunds for products or services that have been accessed or used.`,
-    },
-    {
-      title: `Contact Us`,
-      content: `If you have any questions or concerns regarding our refund policy, please feel free to reach out to our support team through the “Contact Us” page on our website.`,
-    },
-    {
-      content: `Noteved Academy reserves the right to update or modify this refund policy at any time without prior notice. Please check this page periodically for any changes.`,
+      title:`Contact Us`,
+      content: `If you have any questions or concerns about this Privacy Policy, please contact us at:
+
+NoteVed Academy
+Email: srikant@noteved.com
+Address: B6-1628, Sector-10, CDA, Cuttack
+Phone: +91 70086 99927
+`,
     },
   ];
 
