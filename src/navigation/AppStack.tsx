@@ -45,6 +45,12 @@ import TopicDetails from '../screens/UserScreen/TopicDetails';
 import ContentDetails from '../screens/UserScreen/ContentDetails';
 import LevelCompleted from '../screens/UserScreen/LevelCompleted';
 import CircularProgressBar from '../screens/UserScreen/CircularProgressBar';
+import LiveQuiz from '../screens/UserScreen/LiveQuiz';
+import LiveQuizScoreBoard from '../screens/UserScreen/LiveQuizScoreBoard';
+import LiveQuizInfo from '../screens/UserScreen/LiveQuizInfo';
+import LiveQuizAnswerSheet from '../screens/UserScreen/LiveQuizAnswerSheet';
+import LiveQuizDetails from '../screens/UserScreen/LiveQuizDetails';
+import LiveQuizLeaderBoardList from '../screens/UserScreen/LiveQuizLeaderBoardList';
 
 export type RootStackParamList = {
   AppStack: NavigatorScreenParams<AppStackParamList>;
@@ -80,6 +86,8 @@ const AppStack = props => {
             'PrevMockTest' ||
           navigation.getState().routes[navigation.getState().index].name ==
             'VideoScreen' ||
+            navigation.getState().routes[navigation.getState().index].name ==
+            'LiveQuiz' ||
           navigation.getState().routes[navigation.getState().index].name ==
             'NotificationMockTest' ||
           navigation.getState().routes[navigation.getState().index].name ==
@@ -158,6 +166,18 @@ const AppStack = props => {
                 'ScoreBoard' ||
               navigation.getState().routes[navigation.getState().index].name ==
                 'SolutionScreen' ||
+                navigation.getState().routes[navigation.getState().index].name ==
+                'LiveQuizScoreBoard' ||
+                navigation.getState().routes[navigation.getState().index].name ==
+                'LiveQuizLeaderBoardList' ||
+                navigation.getState().routes[navigation.getState().index].name ==
+                'LiveQuizInfo' ||
+              navigation.getState().routes[navigation.getState().index].name ==
+                'LiveQuizDetails' ||
+              navigation.getState().routes[navigation.getState().index].name ==
+                'LiveQuiz' ||
+              navigation.getState().routes[navigation.getState().index].name ==
+                'LiveQuizAnswerSheet' ||
               navigation.getState().routes[navigation.getState().index].name ==
                 'PremiumAccess' ||
               navigation.getState().routes[navigation.getState().index].name ==
@@ -251,6 +271,106 @@ const AppStack = props => {
           // name={ROUTES.HOME}
           // component={Home}
         />
+         <Stack.Screen
+          name={ROUTES.LIVEQUIZDETAILS}
+          component={LiveQuizDetails}
+          options={({navigation}) => ({
+            title: trans('Live Quiz Details'),
+            headerLeft: () => (
+              <MaterialIcons.Button
+                name="keyboard-arrow-left"
+                size={30}
+                backgroundColor={Colors.primary}
+                color={Colors.secondary}
+                onPress={() => navigation.goBack()}
+              />
+            ),
+          })}
+        />
+
+        <Stack.Screen
+          name={ROUTES.LIVEQUIZINFO}
+          component={LiveQuizInfo}
+          options={({navigation}) => ({
+            title: trans('Live Quiz'),
+            // headerLeft: () => (
+            //   <MaterialIcons.Button
+            //     name="keyboard-arrow-left"
+            //     size={30}
+            //     backgroundColor={Colors.primary}
+            //     color={Colors.secondary}
+            //     onPress={() => navigation.goBack()}
+            //   />
+            // ),
+          })}
+        />
+        <Stack.Screen
+          name={ROUTES.LIVEQUIZ}
+          component={LiveQuiz}
+          options={({navigation}) => ({
+            title: trans('Live Quiz'),
+            // headerLeft: () => (
+            //   <MaterialIcons.Button
+            //     name="keyboard-arrow-left"
+            //     size={30}
+            //     backgroundColor={Colors.primary}
+            //     color={Colors.secondary}
+            //     onPress={() => navigation.goBack()}
+            //   />
+            // ),
+          })}
+        />
+
+        <Stack.Screen
+          name={ROUTES.LIVEQUIZSCOREBOARD}
+          component={LiveQuizScoreBoard}
+          options={({navigation}) => ({
+            // title: "Scoreboard",
+            // headerLeft: () => (
+            //   <MaterialIcons.Button
+            //     name="keyboard-arrow-left"
+            //     size={30}
+            //     backgroundColor={Colors.primary}
+            //     color={Colors.secondary}
+            //     onPress={() => navigation.goBack()}
+            //   />
+            // ),
+          })}
+        />
+
+        <Stack.Screen
+          name={ROUTES.LIVEQUIZANSWERSHEET}
+          component={LiveQuizAnswerSheet}
+          options={({navigation}) => ({
+            // title: trans('Edit Profile'),
+            headerLeft: () => (
+              <MaterialIcons.Button
+                name="keyboard-arrow-left"
+                size={30}
+                backgroundColor={Colors.primary}
+                color={Colors.secondary}
+                onPress={() => navigation.goBack()}
+              />
+            ),
+          })}
+        />
+         <Stack.Screen
+          name={ROUTES.LIVEQUIZLEADERBOARDLIST}
+          component={LiveQuizLeaderBoardList}
+          options={({navigation}) => ({
+            // title: "Scoreboard",
+            headerLeft: () => (
+              <MaterialIcons.Button
+                name="keyboard-arrow-left"
+                size={30}
+                backgroundColor={Colors.primary}
+                color={Colors.secondary}
+                onPress={() => navigation.goBack()}
+              />
+            ),
+          })}
+        />
+
 
         <Stack.Screen
           name={ROUTES.ANSWERSHEET}

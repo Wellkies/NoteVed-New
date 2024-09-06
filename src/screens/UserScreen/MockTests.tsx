@@ -74,8 +74,11 @@ import {Modal} from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {createContactApi} from '../../redux/actions/createContactApi';
 import CommonMessage from '../../../constants/CommonMessage';
-import { BANNERAD } from '../../../constants/ApiPaths';
-import { getChildContentDetailsAPI, selectContentsingleChild } from '../../redux/reducers/GetChildRevisionReducer';
+import {BANNERAD} from '../../../constants/ApiPaths';
+import {
+  getChildContentDetailsAPI,
+  selectContentsingleChild,
+} from '../../redux/reducers/GetChildRevisionReducer';
 
 const MockTests = ({route}) => {
   const dispatch = useDispatch<any>();
@@ -100,15 +103,14 @@ const MockTests = ({route}) => {
     is2ndAvailable = '',
     topicid = '',
     topic = '',
-    bQuiz= [],
-    ExamQuestionsets:  [],
+    bQuiz = [],
+    ExamQuestionsets: [],
     islastexercise = false,
-    isReattempt = "",
-    subjectimage ="",
+    isReattempt = '',
+    subjectimage = '',
   } = route.params;
-  
 
-// let baseQuiz = ContentQuiz[0] ? ContentQuiz[0] : [];
+  // let baseQuiz = ContentQuiz[0] ? ContentQuiz[0] : [];
   const ContentQuiz = useAppSelector(selectContentQuiz);
   const ContentLoading = useAppSelector(selectContentDetailsStatus);
 
@@ -116,7 +118,7 @@ const MockTests = ({route}) => {
   // const quizz = ContentQuiz.map(rec => rec.quiz);
   let quiz = ContentQuiz[0]?.quiz ? ContentQuiz[0].quiz : [];
 
-const baseQuiz = ContentQuiz[0] ? ContentQuiz[0] : [];
+  const baseQuiz = ContentQuiz[0] ? ContentQuiz[0] : [];
   const sortedQuestionList = ContentQuiz.slice().sort(
     (a, b) => a.questionno - b.questionno,
   );
@@ -183,9 +185,9 @@ const baseQuiz = ContentQuiz[0] ? ContentQuiz[0] : [];
   } = userInfo;
   //
   const TopicList = useAppSelector(selectTopicDetails);
-  const childContentReducer = useAppSelector(selectContentsingleChild)
-  console.log(childContentReducer,"]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]");
-  
+  const childContentReducer = useAppSelector(selectContentsingleChild);
+  console.log(childContentReducer, ']]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]');
+
   //
   const TopicId = useAppSelector(selectTopicId);
   //
@@ -259,10 +261,9 @@ const baseQuiz = ContentQuiz[0] ? ContentQuiz[0] : [];
     setCurrentIndex(currentIndex - 1);
     handlePreviousPress();
   };
-  const adUnitId =BANNERAD;
+  const adUnitId = BANNERAD;
 
   const handleNavigation = () => {
-    
     navigation.navigate('ScoreBoard', {
       screenName: screenName,
       contentid: contentid,
@@ -283,8 +284,8 @@ const baseQuiz = ContentQuiz[0] ? ContentQuiz[0] : [];
       topicid: topicid,
       timeDuration: timeDuration,
       islastexercise: islastexercise,
-      bQuiz:baseQuiz,
-      subjectimage:subjectimage,
+      bQuiz: baseQuiz,
+      subjectimage: subjectimage,
     });
   };
   const handleCallback = async () => {
@@ -312,7 +313,7 @@ const baseQuiz = ContentQuiz[0] ? ContentQuiz[0] : [];
       totalmark = 0,
       percentage = 0,
     } = markCalculation(Questionlist);
-// 
+    //
     setQuitModalStatus(false);
     if (isReattempt) {
       let bodyReattemptAnswerData = {
@@ -321,7 +322,7 @@ const baseQuiz = ContentQuiz[0] ? ContentQuiz[0] : [];
         quiz: Questionlist,
         percentage: percentage,
       };
-      
+
       //   const below90Body = {
       //     phone: phone,
       //     userName: name,
@@ -335,7 +336,7 @@ const baseQuiz = ContentQuiz[0] ? ContentQuiz[0] : [];
       //     skippedquestion: Skipped,
       //     percentagescored: percentage,
       //   };
-      //   
+      //
       //   if (boardid == 1 && percentage >= 90) {
       //     createabove90PercentageBSEApi(above90Body, undefined);
       //   } else if (boardid !== 1 && percentage >= 90) {
@@ -444,13 +445,16 @@ const baseQuiz = ContentQuiz[0] ? ContentQuiz[0] : [];
   };
 
   useEffect(() => {
-const childContent ={
-  contentid,
-  childid
-}
-console.log(childContent,"chil%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+    const childContent = {
+      contentid,
+      childid,
+    };
+    console.log(
+      childContent,
+      'chil%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%',
+    );
 
-  dispatch(getChildContentDetailsAPI(childContent))
+    dispatch(getChildContentDetailsAPI(childContent));
 
     const contentData = {
       contentid,
@@ -506,7 +510,6 @@ console.log(childContent,"chil%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     setConfirmReport(true);
   };
   const reportSubmitForm = async (question: any) => {
-    
     console.log(
       subjectName,
       stageid,
@@ -563,7 +566,7 @@ console.log(childContent,"chil%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
       question,
       apptype: 'Skill Development',
     };
-    
+
     createContactApi(bodyData, reporthandleCallback);
     CommonMessage('Your query has been successfully sent.');
   };
@@ -642,6 +645,16 @@ console.log(childContent,"chil%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                 </Text>
               </TouchableOpacity>
             </View>
+          </View>
+          <View style={{alignItems: 'center', marginVertical: 5}}>
+            <BannerAd
+              unitId={adUnitId}
+              size={BannerAdSize.BANNER}
+              onAdFailedToLoad={error =>
+                console.error('Ad failed to load: ', error)
+              }
+              onAdLoaded={() => console.log('Ad loaded')}
+            />
           </View>
           <View
             style={{
@@ -783,6 +796,26 @@ console.log(childContent,"chil%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                 </View>
               </View>
             </ScrollView>
+            {Questionlist[currentIndex]?.questiontype == 'image' && (
+              <View
+                style={{justifyContent: 'flex-start', flexDirection: 'row'}}>
+                <MaterialIcons
+                  name="report"
+                  size={20}
+                  // backgroundColor={Colors.secondary}
+                  color={'#fff'}
+                  // onPress={() => navigation.goBack()}
+                />
+                <Text
+                  style={{
+                    color: '#fff',
+                    fontSize: 12,
+                    // textDecorationLine: 'underline',
+                  }}>
+                  {trans('Scroll to see the question')}
+                </Text>
+              </View>
+            )}
             <View
               style={{
                 marginVertical: 10,
@@ -848,7 +881,6 @@ console.log(childContent,"chil%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
               })}
             </View>
           </View>
-
           <View
             style={{
               flexDirection: 'row',
