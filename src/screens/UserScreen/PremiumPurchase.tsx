@@ -437,7 +437,8 @@ const PremiumPurchase = ({route}) => {
       currency: 'INR',
       // key: 'rzp_test_PioX2Xi5hjQ6Om', //test api key
       // key: 'rzp_live_rBFsxA1CJU1sJU', //Live Api key
-       key:'rzp_test_AzAWvJ1AuuO42Z',
+      //  key:'rzp_test_AzAWvJ1AuuO42Z',
+      key:"rzp_live_RVPKXDqNlyFMke",  //new prod
       amount: data.data.data.amount.toString(),
       // amount: '1000',
       name: 'NoteVed Academy',

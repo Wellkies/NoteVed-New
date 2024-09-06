@@ -91,6 +91,14 @@ android {
             keyPassword 'android'
         }
     }
+    signingConfigs {
+        release {
+            storeFile file('my-upload-key.keystore')
+            storePassword 'Notevook1234'
+            keyAlias 'my-key-alias'
+            keyPassword 'Notevook1234'
+        }
+    }
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
@@ -98,7 +106,7 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
@@ -114,7 +122,8 @@ dependencies {
     } else {
         implementation jscFlavor
     }
-    implementation 'com.google.android.play:core:1.8.0'
+    implementation 'com.google.android.play:asset-delivery:2.2.2'
+implementation 'com.google.android.gms:play-services-tasks:18.2.0'
     implementation 'com.android.support:design:27.1.1'
 }
 

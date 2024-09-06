@@ -172,11 +172,11 @@ const TopicDetails = ({route}) => {
           <View
             style={{
               flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginVertical: 12,
-              marginHorizontal: 20,
-              gap: 10,
+              // alignItems: 'center',
+              // justifyContent: 'center',
+              marginVertical: 16,
+              marginHorizontal: 50,
+              gap: 20,
             }}>
             <Image
                source={{ uri: subjectimage }}
