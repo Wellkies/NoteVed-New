@@ -51,6 +51,7 @@ import {
     selectPastLiveQuizStatus,
   } from '../../redux/reducers/GetPastLiveQuizReducer';
   import Header from '../CommonScreens/Header';
+import { selectUserInfo } from '../../redux/reducers/loginReducer';
   
   const LiveQuizLeaderBoardList = ({route}) => {
     const dispatch = useDispatch<any>();
@@ -77,6 +78,7 @@ import {
   
     // const {childInfo = {}} = useSelector(state => state.ChildDetailsReducer);
     const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
+    const {authToken, status, userInfo} = useAppSelector(selectUserInfo);
     interface ChildInfo {
       _id: string;
       age: string;
@@ -87,7 +89,7 @@ import {
       lname: string;
       phone: string;
       name: string;
-      boardname: string;
+      //boardname: string;
       fathername: string;
       mothername: string;
       scholarship: object[];
@@ -119,7 +121,7 @@ import {
       age = '',
       image = '',
       boardname: boardofeducation = '',
-    } = childInfo;
+    } = userInfo;
   
     const Pastquiz = useAppSelector(selectPastLiveQuizData);
     const PastquizLoading = useAppSelector(selectPastLiveQuizStatus);

@@ -47,6 +47,7 @@ import {
   import { getScholarshipPremiumAPI, selectPremiumPurchase, selectPremiumPurchaseStatus } from '../../redux/reducers/GetPremiumPurchaseReducer';
   import { getAdsStatus, selectAdsStatus, selectAdsStatuss } from '../../redux/reducers/GetAdsStatusReducer';
   import { REWARDEDAD } from '../../../constants/ApiPaths';
+import { selectUserInfo } from '../../redux/reducers/loginReducer';
   
   const LiveQuizScoreBoard = ({route}) => {
     const dispatch = useDispatch<any>();
@@ -133,6 +134,7 @@ import {
   
     // const {childInfo = {}} = useSelector(state => state.ChildDetailsReducer);
     const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
+    const {authToken, status, userInfo} = useAppSelector(selectUserInfo);
     interface ChildInfo {
       _id: string;
       age: string;
@@ -175,7 +177,7 @@ import {
       age = '',
       image = '',
       boardname: boardofeducation = '',
-    } = childInfo;
+    } = userInfo;
   
     const ExamName = useAppSelector(selectExamName);
   

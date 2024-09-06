@@ -13,20 +13,18 @@ import {
 // export const INTERSTITIALAD = TestIds.INTERSTITIAL //Test
 // export const REWARDEDAD = TestIds.REWARDED //Test
 //Production AD
-export const BANNERAD = "ca-app-pub-1582661677692525/5073831578" 
-export const INTERSTITIALAD = "ca-app-pub-1582661677692525/8821504899" 
-export const REWARDEDAD = "ca-app-pub-1582661677692525/7268750077"
-export const NATIVEAD = "ca-app-pub-1582661677692525/3435936958"
-export const APPOPENAD = "ca-app-pub-1582661677692525/4198354283"
+export const BANNERAD = 'ca-app-pub-1582661677692525/5073831578';
+export const INTERSTITIALAD = 'ca-app-pub-1582661677692525/8821504899';
+export const REWARDEDAD = 'ca-app-pub-1582661677692525/7268750077';
+export const NATIVEAD = 'ca-app-pub-1582661677692525/3435936958';
+export const APPOPENAD = 'ca-app-pub-1582661677692525/4198354283';
 
 // export const API_URL = "https://wellkie.in/demoApi/";
 //export const API_URL = 'https://wellkie.org/demoApi/'; // Test url
 // export const API_URL = 'https://wellkies.com/demoApi/'; // Test url
 
-
 // export const API_URL = 'https://wellkies.org/demoApi/'; // production url
 export const API_URL = 'https://notevook.com/demoApi/'; // productsion url
-
 
 export const LOGIN_SEND_OTP_URL = API_URL + 'loginotp';
 export const VERIFY_LOGIN_OTP_URL = API_URL + 'parentlogin';
@@ -256,7 +254,9 @@ export const GET_AD_STATUS = API_URL + 'getadzstatus';
 /////////////////////////****LIVE-QUIZ APIs****/////////////////////////////
 
 export const GET_ALL_LIVE_QUIZ = API_URL + 'getedzlivequizbydate/';
-export const ANSWER_SUBMIT_LIVE_QUIZ = API_URL + 'createedzlivequiz';
-export const GET_LIVE_QUIZ_TOP_STUDENT_URL = API_URL + 'getedzChildLiveQuizLeaderboard';
+export const ANSWER_SUBMIT_LIVE_QUIZ = API_URL + 'createedzchildlivequiz';
+export const GET_LIVE_QUIZ_TOP_STUDENT_URL =
+  API_URL + 'getedzChildLiveQuizLeaderboard';
 export const GET_ALL_PAST_LIVE_QUIZ = API_URL + 'getedzlivequizbypastdate';
-export const GET_HOMESCREEN_LIVE_QUIZ_TOP_STUDENT_URL = API_URL + 'getedzChildLiveQuizLeaderboardnew';
+export const GET_HOMESCREEN_LIVE_QUIZ_TOP_STUDENT_URL =
+  API_URL + 'getedzChildLiveQuizLeaderboardnew';
