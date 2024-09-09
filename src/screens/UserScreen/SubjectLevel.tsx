@@ -263,7 +263,7 @@ const SubjectLevel = ({route}) => {
   //const SubByCourseID = useAppSelector(selectAllSubByCourseIdInfo);
   //const SubLoading = useAppSelector(selectAllSubByCourseIdStatus);
   const data = [
-    require('../../../assets/prepare.png'),
+    // require('../../../assets/prepare.png'),
     require('../../../assets/practice.png'),
     require('../../../assets/aquestion.png'),
     //require('../../../assets/skillfact4.jpg'),
