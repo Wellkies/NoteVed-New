@@ -58,6 +58,7 @@ import {
     selectHomeTopStudentData,
     selectHomeTopStudentStatus,
   } from '../../redux/reducers/GetHomeLeaderBoardReducer';
+import { selectUserInfo } from '../../redux/reducers/loginReducer';
   const LiveQuizDetails = ({route}) => {
     const dispatch = useDispatch<any>();
     const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
@@ -88,6 +89,7 @@ import {
     const PastquizLoading = useAppSelector(selectPastLiveQuizStatus);
     
     const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
+    const {authToken, status, userInfo} = useAppSelector(selectUserInfo);
     interface ChildInfo {
       _id: string;
       age: string;
@@ -130,7 +132,7 @@ import {
       age = '',
       image = '',
       boardname: boardofeducation = '',
-    } = childInfo;
+    } = userInfo;
   
     const ListColor = ['#fee2a3', '#f6c4b9', '#c3ccf5', '#76f0c7'];
   

@@ -68,6 +68,7 @@ import {
   selectLiveQuizStatus,
 } from '../../redux/reducers/LiveQuizReducer';
 import {LiveQuizAnswerSubmitApi} from '../../redux/actions/LiveQuizAPI';
+import { selectUserInfo } from '../../redux/reducers/loginReducer';
 
 const LiveQuiz = ({route}) => {
   const dispatch = useDispatch<any>();
@@ -142,6 +143,7 @@ const LiveQuiz = ({route}) => {
   const [wrongAnswer, setWrongAnswer] = useState(false);
 
   const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
+  const {authToken, status, userInfo} = useAppSelector(selectUserInfo);
   interface ChildInfo {
     _id: string;
     age: string;
@@ -156,6 +158,7 @@ const LiveQuiz = ({route}) => {
     fathername: string;
     mothername: string;
     scholarship: object[];
+    // board: string;
     subscriptionStartDate: string;
     subscriptionEndDate: string;
     isPremium: boolean;
@@ -167,8 +170,6 @@ const LiveQuiz = ({route}) => {
     schoolname: string;
     language: string;
     email: string;
-    stageid: string;
-    boardid: string;
     classname: string;
   }
 
@@ -187,7 +188,7 @@ const LiveQuiz = ({route}) => {
     age = '',
     address = '',
     language = '',
-  } = childInfo;
+  } = userInfo;
 
   const handleselectAnswer = (answerid: string, index: number) => {
     let questions = [...Questionlist];
@@ -291,12 +292,25 @@ const LiveQuiz = ({route}) => {
     const questionLength = Questionlist.length;
 
     const bodyAnswerData = {
-      quizid: todayliveQuiz[0].quizid,
-      childid: childid,
+      // quizid: todayliveQuiz[0].quizid,
+      // childid: childid,
       // stage: stage,
       // stageid: stageid,
       //boardname: boardname,
       //boardid: boardid,
+      // totalmark: Questionlist.length,
+      // securemark: correctanswer,
+      // skipmark: Skipped,
+      // wrongmark: Wronganswer,
+      // quiz: questions,
+      // attemptDate: '',
+      // quizimage: '',
+      // ispremium: false,
+      // starttime: todayliveQuiz[0]?.starttime,
+      // endtime: todayliveQuiz[0]?.endtime,
+      // timetaken: lastExamTimeTaken > 0 ? lastExamTimeTaken : 0,
+      childid: childid,
+      quizid: todayliveQuiz[0].quizid,
       totalmark: Questionlist.length,
       securemark: correctanswer,
       skipmark: Skipped,
@@ -309,6 +323,7 @@ const LiveQuiz = ({route}) => {
       endtime: todayliveQuiz[0]?.endtime,
       timetaken: lastExamTimeTaken > 0 ? lastExamTimeTaken : 0,
     };
+    console.log(bodyAnswerData, childid, '@bodyAnswerData');
 
     LiveQuizAnswerSubmitApi(
       bodyAnswerData,

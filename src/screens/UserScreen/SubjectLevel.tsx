@@ -364,6 +364,7 @@ const SubjectLevel = ({route}) => {
   }, []);
   const [leaderBoardStatus, setLeaderBoardtatus] = useState(false);
   const ContentQuiz = useAppSelector(selectLiveQuizData);
+  //console.log(ContentQuiz, '@ContentQuiz');
   const ContentQuizLoading = useAppSelector(selectLiveQuizStatus);
 
   const liveQuizLeaderBoard = useAppSelector(selectHomeTopStudentData);
@@ -395,7 +396,6 @@ const SubjectLevel = ({route}) => {
   const daysLeft = destinationDate?.diff(todayDateData, 'days');
 
   const todayliveQuizStudentData = todayliveQuiz?.map(r => r.childlivequiz);
-  //console.log(todayliveQuizStudentData,'@todayliveQuizStudentData')
 
   const [currentTimeState, setCurrentTimeState] = useState(
     moment().format('h:mma'),
@@ -507,7 +507,7 @@ const SubjectLevel = ({route}) => {
 
     dispatch(getLiveQuizAPI(data));
     dispatch(getHomeTopStudentAPI());
-  dispatch(getPastLiveQuizAPI());
+    dispatch(getPastLiveQuizAPI());
     // const {name = ''} = childInfo;
     // _retrieveFcmToken(childid, name);
   };
@@ -933,123 +933,168 @@ const SubjectLevel = ({route}) => {
                   </View>
                 )}
             </View>
+            {ContentQuiz.length != '' && (
+              <View
+                style={{
+                  flex: 1,
+                  backgroundColor: 'rgba(255,255,255, 0.05)',
+                  borderRadius: 10,
+                  borderWidth: 1,
+                  borderColor: '#0f6f25',
+                  padding: 8,
+                  marginBottom: 20,
+                }}>
+                {/* {ContentQuiz.length != '' && (
+                <> */}
+                <Text
+                  style={{
+                    color: '#f1a722',
+                    fontWeight: '800',
+                    marginLeft: 10,
+                    fontSize: 16,
+                    marginVertical: 10,
+                  }}>
+                  {trans(`Available Live Quiz:`)}
+                </Text>
 
-            <View
-              style={{
-                flex: 1,
-                backgroundColor: 'rgba(255,255,255, 0.05)',
-                borderRadius: 10,
-                borderWidth: 1,
-                borderColor: '#0f6f25',
-                padding: 8,
-                marginBottom: 20,
-              }}>
-              {ContentQuiz.length != '' && (
-                <>
-                  <Text
-                    style={{
-                      color: '#f1a722',
-                      fontWeight: '800',
-                      marginLeft: 10,
-                      fontSize: 16,
-                      marginVertical: 10,
-                    }}>
-                    {trans(`Available Live Quiz:`)}
-                  </Text>
-
-                  <View>
-                    {leaderboardLoading == 'loading' ||
-                    ContentQuizLoading == 'loading' ? (
+                <View>
+                  {leaderboardLoading == 'loading' ||
+                  ContentQuizLoading == 'loading' ? (
+                    <View
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        borderWidth: 1,
+                        borderRadius: 10,
+                        paddingVertical: 15,
+                        paddingHorizontal: 5,
+                        marginVertical: 5,
+                        backgroundColor: 'rgba(0,255,0, 0.05)',
+                        borderColor: '#0f6f25',
+                        alignItems: 'center',
+                      }}>
                       <View
                         style={{
-                          display: 'flex',
-                          flexDirection: 'row',
-                          justifyContent: 'center',
-                          borderWidth: 1,
-                          borderRadius: 10,
-                          paddingVertical: 15,
+                          width: '98%',
+                          alignSelf: 'center',
+                          marginTop: 10,
+                          borderRadius: 12,
+                          backgroundColor: 'rgba(0,255,0,0.1)',
                           paddingHorizontal: 5,
-                          marginVertical: 5,
-                          backgroundColor: 'rgba(0,255,0, 0.05)',
-                          borderColor: '#0f6f25',
-                          alignItems: 'center',
+                          paddingVertical: 10,
+                          flexDirection: 'row',
                         }}>
-                        <View
+                        <ShimmerPlaceholder
                           style={{
-                            width: '98%',
-                            alignSelf: 'center',
-                            marginTop: 10,
-                            borderRadius: 12,
-                            backgroundColor: 'rgba(0,255,0,0.1)',
-                            paddingHorizontal: 5,
-                            paddingVertical: 10,
-                            flexDirection: 'row',
-                          }}>
+                            width: 50,
+                            height: 50,
+                            borderRadius: 50,
+                            marginHorizontal: 10,
+                            backgroundColor: '#9e9e9e',
+                            opacity: 0.2,
+                          }}></ShimmerPlaceholder>
+                        <View>
                           <ShimmerPlaceholder
                             style={{
-                              width: 50,
-                              height: 50,
-                              borderRadius: 50,
-                              marginHorizontal: 10,
+                              width: '100%',
+                              height: 15,
+                              marginVertical: 5,
                               backgroundColor: '#9e9e9e',
                               opacity: 0.2,
                             }}></ShimmerPlaceholder>
-                          <View>
-                            <ShimmerPlaceholder
-                              style={{
-                                width: '100%',
-                                height: 15,
-                                marginVertical: 5,
-                                backgroundColor: '#9e9e9e',
-                                opacity: 0.2,
-                              }}></ShimmerPlaceholder>
-                            <ShimmerPlaceholder
-                              style={{
-                                width: '80%',
-                                height: 15,
-                                marginVertical: 5,
-                                backgroundColor: '#9e9e9e',
-                                opacity: 0.2,
-                              }}></ShimmerPlaceholder>
-                          </View>
+                          <ShimmerPlaceholder
+                            style={{
+                              width: '80%',
+                              height: 15,
+                              marginVertical: 5,
+                              backgroundColor: '#9e9e9e',
+                              opacity: 0.2,
+                            }}></ShimmerPlaceholder>
                         </View>
                       </View>
-                    ) : (
-                      <>
-                        {liveQuizLeaderBoard.length == 0 && (
+                    </View>
+                  ) : (
+                    <>
+                      {liveQuizLeaderBoard.length == 0 && (
+                        <View
+                          style={{
+                            marginTop: 10,
+                            padding: 20,
+                            paddingVertical: 20,
+                            width: '94%',
+                            height: device_height * 0.39,
+                            backgroundColor: 'rgba(0,255,0,0.1)',
+                            borderRadius: 20,
+                            alignItems: 'flex-start',
+                            justifyContent: 'center',
+                            alignSelf: 'center',
+                          }}>
+                          <Text
+                            style={{
+                              fontSize: 24,
+                              color: 'gold',
+                              fontWeight: '900',
+                              textAlign: 'left',
+                              paddingLeft: 5,
+                            }}>
+                            {todayliveQuiz != undefined &&
+                            todayliveQuiz.length == 0 &&
+                            upcomingLiveQuiz != undefined &&
+                            upcomingLiveQuiz.length !== 0 ? (
+                              upcomingLiveQuiz[0].quizname
+                            ) : (
+                              <></>
+                            )}
+                            {todayliveQuiz != undefined &&
+                            todayliveQuizStudentData[0] != undefined &&
+                            todayliveQuizStudentData[0]?.length == 0 ? (
+                              todayliveQuiz[0].quizname
+                            ) : (
+                              <></>
+                            )}
+                            {todayliveQuizStudentData[0] != undefined &&
+                            todayliveQuizStudentData[0]?.length !== 0 &&
+                            upcomingLiveQuiz[0] != undefined &&
+                            upcomingLiveQuiz[0]?.length !== '' &&
+                            upcomingLiveQuiz[0]?.starttime ? (
+                              upcomingLiveQuiz[0].quizname
+                            ) : (
+                              <></>
+                            )}
+                          </Text>
+                          <Text
+                            style={{
+                              fontSize: 20,
+                              color: '#fff',
+                              fontWeight: '700',
+                              textAlign: 'left',
+                              paddingLeft: 5,
+                              marginVertical: 3,
+                            }}>
+                            {trans('Upcoming Quiz')}
+                          </Text>
                           <View
                             style={{
-                              marginTop: 10,
-                              padding: 20,
-                              paddingVertical: 20,
-                              width: '94%',
-                              height: device_height * 0.39,
-                              backgroundColor: 'rgba(0,255,0,0.1)',
-                              borderRadius: 20,
-                              alignItems: 'flex-start',
+                              width: '100%',
+                              borderColor: '#999',
+                              alignItems: 'left',
                               justifyContent: 'center',
-                              alignSelf: 'center',
+                              paddingHorizontal: 5,
                             }}>
                             <Text
                               style={{
-                                fontSize: 24,
-                                color: 'gold',
-                                fontWeight: '900',
+                                fontSize: 14,
+                                color: '#fff',
+                                fontWeight: '500',
                                 textAlign: 'left',
-                                paddingLeft: 5,
+                                marginVertical: 3,
                               }}>
-                              {todayliveQuiz != undefined &&
-                              todayliveQuiz.length == 0 &&
-                              upcomingLiveQuiz != undefined &&
-                              upcomingLiveQuiz.length !== 0 ? (
-                                upcomingLiveQuiz[0].quizname
-                              ) : (
-                                <></>
-                              )}
-                              {todayliveQuiz != undefined &&
-                              todayliveQuizStudentData[0] != undefined &&
+                              {todayliveQuizStudentData[0] != undefined &&
                               todayliveQuizStudentData[0]?.length == 0 ? (
-                                todayliveQuiz[0].quizname
+                                `${trans('Quiz Start Date')}${' : '}${moment(
+                                  todayliveQuiz.starttime,
+                                ).format('DD-MMM-YYYY')}`
                               ) : (
                                 <></>
                               )}
@@ -1058,626 +1103,579 @@ const SubjectLevel = ({route}) => {
                               upcomingLiveQuiz[0] != undefined &&
                               upcomingLiveQuiz[0]?.length !== '' &&
                               upcomingLiveQuiz[0]?.starttime ? (
-                                upcomingLiveQuiz[0].quizname
+                                `${moment(upcomingLiveQuiz[0].starttime).format(
+                                  'DD-MMM-YYYY',
+                                )}${'  '}${'('}${
+                                  daysLeft != undefined && daysLeft != 0 ? (
+                                    daysLeft
+                                  ) : (
+                                    <></>
+                                  )
+                                }${' Days Left'}${')'}`
+                              ) : (
+                                <></>
+                              )}
+
+                              {ContentQuiz?.length < 0 ? (
+                                trans(
+                                  'Currently no upcoming live quiz is available',
+                                )
+                              ) : (
+                                <></>
+                              )}
+
+                              {todayliveQuiz != undefined &&
+                              todayliveQuiz.length != 0 &&
+                              todayliveQuizStudentData[0] != undefined &&
+                              todayliveQuizStudentData[0]?.length != 0 &&
+                              upcomingLiveQuiz != undefined &&
+                              upcomingLiveQuiz.length === 0 ? (
+                                trans(
+                                  'Currently no upcoming live quiz is available',
+                                )
+                              ) : (
+                                <></>
+                              )}
+
+                              {todayliveQuiz != undefined &&
+                              todayliveQuiz.length == 0 &&
+                              upcomingLiveQuiz != undefined &&
+                              upcomingLiveQuiz.length !== 0 ? (
+                                `${moment(upcomingLiveQuiz[0].starttime).format(
+                                  'DD-MMM-YYYY',
+                                )}${'  '}${'('}${
+                                  daysLeft != undefined && daysLeft != 0 ? (
+                                    daysLeft
+                                  ) : (
+                                    <></>
+                                  )
+                                }${' Days Left'}${')'}`
                               ) : (
                                 <></>
                               )}
                             </Text>
                             <Text
                               style={{
-                                fontSize: 20,
+                                fontSize: 14,
                                 color: '#fff',
-                                fontWeight: '700',
+                                fontWeight: '500',
                                 textAlign: 'left',
-                                paddingLeft: 5,
                                 marginVertical: 3,
                               }}>
-                              {trans('Upcoming Quiz')}
-                            </Text>
-                            <View
-                              style={{
-                                width: '100%',
-                                borderColor: '#999',
-                                alignItems: 'left',
-                                justifyContent: 'center',
-                                paddingHorizontal: 5,
-                              }}>
-                              <Text
-                                style={{
-                                  fontSize: 14,
-                                  color: '#fff',
-                                  fontWeight: '500',
-                                  textAlign: 'left',
-                                  marginVertical: 3,
-                                }}>
-                                {todayliveQuizStudentData[0] != undefined &&
-                                todayliveQuizStudentData[0]?.length == 0 ? (
-                                  `${trans('Quiz Start Date')}${' : '}${moment(
-                                    todayliveQuiz.starttime,
-                                  ).format('DD-MMM-YYYY')}`
-                                ) : (
-                                  <></>
-                                )}
-                                {todayliveQuizStudentData[0] != undefined &&
+                              {todayliveQuizStudentData[0] != undefined &&
+                                todayliveQuizStudentData[0]?.length == 0 &&
+                                `${trans('Quiz Start Time')}${' : '}${moment(
+                                  todayliveQuiz[0]?.starttime,
+                                ).format('HH:mm:A')}`}
+
+                              {todayliveQuizStudentData[0] != undefined &&
                                 todayliveQuizStudentData[0]?.length !== 0 &&
                                 upcomingLiveQuiz[0] != undefined &&
                                 upcomingLiveQuiz[0]?.length !== '' &&
-                                upcomingLiveQuiz[0]?.starttime ? (
-                                  `${moment(
-                                    upcomingLiveQuiz[0].starttime,
-                                  ).format('DD-MMM-YYYY')}${'  '}${'('}${
-                                    daysLeft != undefined && daysLeft != 0 ? (
-                                      daysLeft
-                                    ) : (
-                                      <></>
-                                    )
-                                  }${' Days Left'}${')'}`
-                                ) : (
-                                  <></>
-                                )}
+                                upcomingLiveQuiz[0]?.starttime &&
+                                `${trans('Quiz Start Time')}${' : '}${moment(
+                                  upcomingLiveQuiz[0]?.starttime,
+                                ).format('HH:mm:A')}`}
 
-                                {ContentQuiz?.length < 0 ? (
-                                  trans(
-                                    'Currently no upcoming live quiz is available',
-                                  )
-                                ) : (
-                                  <></>
-                                )}
-
-                                {todayliveQuiz != undefined &&
-                                todayliveQuiz.length != 0 &&
-                                todayliveQuizStudentData[0] != undefined &&
-                                todayliveQuizStudentData[0]?.length != 0 &&
-                                upcomingLiveQuiz != undefined &&
-                                upcomingLiveQuiz.length === 0 ? (
-                                  trans(
-                                    'Currently no upcoming live quiz is available',
-                                  )
-                                ) : (
-                                  <></>
-                                )}
-
-                                {todayliveQuiz != undefined &&
-                                todayliveQuiz.length == 0 &&
-                                upcomingLiveQuiz != undefined &&
-                                upcomingLiveQuiz.length !== 0 ? (
-                                  `${moment(
-                                    upcomingLiveQuiz[0].starttime,
-                                  ).format('DD-MMM-YYYY')}${'  '}${'('}${
-                                    daysLeft != undefined && daysLeft != 0 ? (
-                                      daysLeft
-                                    ) : (
-                                      <></>
-                                    )
-                                  }${' Days Left'}${')'}`
-                                ) : (
-                                  <></>
-                                )}
-                              </Text>
-                              <Text
-                                style={{
-                                  fontSize: 14,
-                                  color: '#fff',
-                                  fontWeight: '500',
-                                  textAlign: 'left',
-                                  marginVertical: 3,
-                                }}>
-                                {todayliveQuizStudentData[0] != undefined &&
-                                  todayliveQuizStudentData[0]?.length == 0 &&
-                                  `${trans('Quiz Start Time')}${' : '}${moment(
-                                    todayliveQuiz[0]?.starttime,
-                                  ).format('HH:mm:A')}`}
-
-                                {todayliveQuizStudentData[0] != undefined &&
-                                  todayliveQuizStudentData[0]?.length !== 0 &&
-                                  upcomingLiveQuiz[0] != undefined &&
-                                  upcomingLiveQuiz[0]?.length !== '' &&
-                                  upcomingLiveQuiz[0]?.starttime &&
-                                  `${trans('Quiz Start Time')}${' : '}${moment(
-                                    upcomingLiveQuiz[0]?.starttime,
-                                  ).format('HH:mm:A')}`}
-
-                                {todayliveQuiz != undefined &&
-                                todayliveQuiz.length == 0 &&
-                                upcomingLiveQuiz != undefined &&
-                                upcomingLiveQuiz.length !== 0 ? (
-                                  `${trans('Quiz Start Time')}${' : '}${moment(
-                                    upcomingLiveQuiz[0].starttime,
-                                  ).format('HH:mm:A')}`
-                                ) : (
-                                  <></>
-                                )}
-                              </Text>
-                              <Text
-                                style={{
-                                  fontSize: 14,
-                                  color: '#fff',
-                                  fontWeight: '500',
-                                  textAlign: 'left',
-                                  marginVertical: 3,
-                                }}>
-                                {todayliveQuizStudentData[0] != undefined &&
-                                  todayliveQuizStudentData[0]?.length == 0 &&
-                                  `${trans('Quiz End Time')}${' : '}${moment(
-                                    todayliveQuiz[0]?.endtime,
-                                  ).format('HH:mm:A')}`}
-                                {todayliveQuizStudentData[0] != undefined &&
-                                  todayliveQuizStudentData[0]?.length !== 0 &&
-                                  upcomingLiveQuiz[0] != undefined &&
-                                  upcomingLiveQuiz[0]?.length !== '' &&
-                                  upcomingLiveQuiz[0]?.starttime &&
-                                  `${trans('Quiz End Time')}${' : '}${moment(
-                                    upcomingLiveQuiz[0].endtime,
-                                  ).format('HH:mm:A')}`}
-
-                                {todayliveQuiz != undefined &&
-                                todayliveQuiz.length == 0 &&
-                                upcomingLiveQuiz != undefined &&
-                                upcomingLiveQuiz.length !== 0 ? (
-                                  `${trans('Quiz End Time')}${' : '}${moment(
-                                    upcomingLiveQuiz[0].endtime,
-                                  ).format('HH:mm:A')}`
-                                ) : (
-                                  <></>
-                                )}
-                              </Text>
-                              {timeLeft < 0 ||
-                              timeLeft == undefined ||
-                              timeLeft == 0 ? (
-                                <></>
+                              {todayliveQuiz != undefined &&
+                              todayliveQuiz.length == 0 &&
+                              upcomingLiveQuiz != undefined &&
+                              upcomingLiveQuiz.length !== 0 ? (
+                                `${trans('Quiz Start Time')}${' : '}${moment(
+                                  upcomingLiveQuiz[0].starttime,
+                                ).format('HH:mm:A')}`
                               ) : (
-                                <>
-                                  {todayliveQuizStudentData[0] != undefined &&
-                                    todayliveQuizStudentData[0]?.length ==
-                                      0 && (
+                                <></>
+                              )}
+                            </Text>
+                            <Text
+                              style={{
+                                fontSize: 14,
+                                color: '#fff',
+                                fontWeight: '500',
+                                textAlign: 'left',
+                                marginVertical: 3,
+                              }}>
+                              {todayliveQuizStudentData[0] != undefined &&
+                                todayliveQuizStudentData[0]?.length == 0 &&
+                                `${trans('Quiz End Time')}${' : '}${moment(
+                                  todayliveQuiz[0]?.endtime,
+                                ).format('HH:mm:A')}`}
+                              {todayliveQuizStudentData[0] != undefined &&
+                                todayliveQuizStudentData[0]?.length !== 0 &&
+                                upcomingLiveQuiz[0] != undefined &&
+                                upcomingLiveQuiz[0]?.length !== '' &&
+                                upcomingLiveQuiz[0]?.starttime &&
+                                `${trans('Quiz End Time')}${' : '}${moment(
+                                  upcomingLiveQuiz[0].endtime,
+                                ).format('HH:mm:A')}`}
+
+                              {todayliveQuiz != undefined &&
+                              todayliveQuiz.length == 0 &&
+                              upcomingLiveQuiz != undefined &&
+                              upcomingLiveQuiz.length !== 0 ? (
+                                `${trans('Quiz End Time')}${' : '}${moment(
+                                  upcomingLiveQuiz[0].endtime,
+                                ).format('HH:mm:A')}`
+                              ) : (
+                                <></>
+                              )}
+                            </Text>
+                            {timeLeft < 0 ||
+                            timeLeft == undefined ||
+                            timeLeft == 0 ? (
+                              <></>
+                            ) : (
+                              <>
+                                {todayliveQuizStudentData[0] != undefined &&
+                                  todayliveQuizStudentData[0]?.length == 0 && (
+                                    <View
+                                      style={{
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                      }}>
                                       <View
                                         style={{
+                                          borderColor: '#FFB901',
+                                          padding: 5,
                                           flexDirection: 'row',
                                           alignItems: 'center',
+                                          marginHorizontal: 5,
                                         }}>
-                                        <View
-                                          style={{
-                                            borderColor: '#FFB901',
-                                            padding: 5,
-                                            flexDirection: 'row',
-                                            alignItems: 'center',
-                                            marginHorizontal: 5,
-                                          }}>
-                                          <Text
-                                            style={{
-                                              fontWeight: '900',
-                                              color: '#FFB901',
-                                              fontSize: 19,
-                                            }}>
-                                            {DaysLeft > 0 ? DaysLeft : 0}
-                                            {`D`}
-                                          </Text>
-                                        </View>
                                         <Text
                                           style={{
                                             fontWeight: '900',
                                             color: '#FFB901',
                                             fontSize: 19,
                                           }}>
-                                          :
+                                          {DaysLeft > 0 ? DaysLeft : 0}
+                                          {`D`}
                                         </Text>
-                                        <View
-                                          style={{
-                                            borderColor: '#FFB901',
-                                            padding: 5,
-                                            flexDirection: 'row',
-                                            alignItems: 'center',
-                                            marginHorizontal: 5,
-                                          }}>
-                                          <Text
-                                            style={{
-                                              fontWeight: '900',
-                                              color: '#FFB901',
-                                              fontSize: 19,
-                                            }}>
-                                            {hoursLeft > 0 ? hoursLeft : 0}
-                                            {`H`}
-                                          </Text>
-                                        </View>
-                                        <Text
-                                          style={{
-                                            fontWeight: '900',
-                                            color: '#FFB901',
-                                            fontSize: 19,
-                                          }}>
-                                          :
-                                        </Text>
-                                        <View
-                                          style={{
-                                            borderColor: '#FFB901',
-                                            padding: 5,
-                                            flexDirection: 'row',
-                                            alignItems: 'center',
-                                            marginHorizontal: 5,
-                                          }}>
-                                          <Text
-                                            style={{
-                                              fontWeight: '900',
-                                              color: '#FFB901',
-                                              fontSize: 19,
-                                            }}>
-                                            {minsLeft > 0 ? minsLeft : 0}
-                                            {`M`}
-                                          </Text>
-                                        </View>
-                                        <Text
-                                          style={{
-                                            fontWeight: '900',
-                                            color: '#FFB901',
-                                            fontSize: 19,
-                                          }}>
-                                          :
-                                        </Text>
-                                        <View
-                                          style={{
-                                            borderColor: '#FFB901',
-                                            padding: 5,
-                                            flexDirection: 'row',
-                                            alignItems: 'center',
-                                            marginHorizontal: 5,
-                                          }}>
-                                          <Text
-                                            style={{
-                                              fontWeight: '900',
-                                              color: '#FFB901',
-                                              fontSize: 19,
-                                            }}>
-                                            {secsLeft > 0 ? secsLeft : 0}
-                                            {`S`}
-                                          </Text>
-                                        </View>
                                       </View>
-                                    )}
-                                </>
-                              )}
+                                      <Text
+                                        style={{
+                                          fontWeight: '900',
+                                          color: '#FFB901',
+                                          fontSize: 19,
+                                        }}>
+                                        :
+                                      </Text>
+                                      <View
+                                        style={{
+                                          borderColor: '#FFB901',
+                                          padding: 5,
+                                          flexDirection: 'row',
+                                          alignItems: 'center',
+                                          marginHorizontal: 5,
+                                        }}>
+                                        <Text
+                                          style={{
+                                            fontWeight: '900',
+                                            color: '#FFB901',
+                                            fontSize: 19,
+                                          }}>
+                                          {hoursLeft > 0 ? hoursLeft : 0}
+                                          {`H`}
+                                        </Text>
+                                      </View>
+                                      <Text
+                                        style={{
+                                          fontWeight: '900',
+                                          color: '#FFB901',
+                                          fontSize: 19,
+                                        }}>
+                                        :
+                                      </Text>
+                                      <View
+                                        style={{
+                                          borderColor: '#FFB901',
+                                          padding: 5,
+                                          flexDirection: 'row',
+                                          alignItems: 'center',
+                                          marginHorizontal: 5,
+                                        }}>
+                                        <Text
+                                          style={{
+                                            fontWeight: '900',
+                                            color: '#FFB901',
+                                            fontSize: 19,
+                                          }}>
+                                          {minsLeft > 0 ? minsLeft : 0}
+                                          {`M`}
+                                        </Text>
+                                      </View>
+                                      <Text
+                                        style={{
+                                          fontWeight: '900',
+                                          color: '#FFB901',
+                                          fontSize: 19,
+                                        }}>
+                                        :
+                                      </Text>
+                                      <View
+                                        style={{
+                                          borderColor: '#FFB901',
+                                          padding: 5,
+                                          flexDirection: 'row',
+                                          alignItems: 'center',
+                                          marginHorizontal: 5,
+                                        }}>
+                                        <Text
+                                          style={{
+                                            fontWeight: '900',
+                                            color: '#FFB901',
+                                            fontSize: 19,
+                                          }}>
+                                          {secsLeft > 0 ? secsLeft : 0}
+                                          {`S`}
+                                        </Text>
+                                      </View>
+                                    </View>
+                                  )}
+                              </>
+                            )}
 
-                              {todayliveQuiz?.length != '' &&
-                                todayliveQuizStudentData[0]?.length == '' && (
-                                  <TouchableOpacity
-                                    onPress={() => {
-                                      start_to_Join == false
-                                        ? setLivequizModalStatus(true)
-                                        : start_to_Join == true &&
-                                          examExceedTime == true
-                                        ? setLivequizexceedStatus(true)
-                                        : navigation.navigate('LiveQuizInfo');
-                                    }}
-                                    disabled={
-                                      ExamtimeEndDetails == true ? true : false
-                                    }
+                            {todayliveQuiz?.length != '' &&
+                              todayliveQuizStudentData[0]?.length == '' && (
+                                <TouchableOpacity
+                                  onPress={() => {
+                                    start_to_Join == false
+                                      ? setLivequizModalStatus(true)
+                                      : start_to_Join == true &&
+                                        examExceedTime == true
+                                      ? setLivequizexceedStatus(true)
+                                      : navigation.navigate('LiveQuizInfo');
+                                  }}
+                                  disabled={
+                                    ExamtimeEndDetails == true ? true : false
+                                  }
+                                  style={{
+                                    paddingVertical: 8,
+                                    borderRadius: 10,
+                                    width: '65%',
+                                    alignSelf: 'center',
+                                    marginVertical: 10,
+                                    marginHorizontal: 15,
+                                    borderColor: '#FFB901',
+                                    backgroundColor:
+                                      start_to_Join == false ||
+                                      ExamtimeEndDetails == true ||
+                                      examExceedTime == true
+                                        ? '#aaa'
+                                        : '#fff',
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                  }}>
+                                  <Text
                                     style={{
-                                      paddingVertical: 8,
-                                      borderRadius: 10,
-                                      width: '65%',
-                                      alignSelf: 'center',
-                                      marginVertical: 10,
-                                      marginHorizontal: 15,
-                                      borderColor: '#FFB901',
-                                      backgroundColor:
+                                      color:
                                         start_to_Join == false ||
                                         ExamtimeEndDetails == true ||
                                         examExceedTime == true
-                                          ? '#aaa'
-                                          : '#fff',
-                                      flexDirection: 'row',
-                                      alignItems: 'center',
-                                      justifyContent: 'center',
+                                          ? 'gray'
+                                          : '#000',
+                                      fontWeight: '700',
+                                      textAlign: 'center',
                                     }}>
-                                    <Text
-                                      style={{
-                                        color:
-                                          start_to_Join == false ||
-                                          ExamtimeEndDetails == true ||
-                                          examExceedTime == true
-                                            ? 'gray'
-                                            : '#000',
-                                        fontWeight: '700',
-                                        textAlign: 'center',
-                                      }}>
-                                      {trans('Start The Quiz')}
-                                    </Text>
-                                  </TouchableOpacity>
-                                )}
+                                    {trans('Start The Quiz')}
+                                  </Text>
+                                </TouchableOpacity>
+                              )}
 
-                              {todayliveQuizStudentData[0] != undefined &&
-                                todayliveQuizStudentData[0]?.length !== 0 &&
-                                upcomingLiveQuiz[0] != undefined &&
-                                upcomingLiveQuiz[0]?.length !== '' &&
-                                upcomingLiveQuiz[0]?.starttime && (
-                                  <TouchableOpacity
-                                    onPress={() => {}}
-                                    disabled={true}
-                                    style={{
-                                      paddingVertical: 8,
-                                      borderRadius: 10,
-                                      width: '65%',
-                                      alignSelf: 'center',
-                                      marginVertical: 10,
-                                      marginHorizontal: 15,
-                                      borderColor: '#FFB901',
-                                      backgroundColor: '#aaa',
-                                      flexDirection: 'row',
-                                      alignItems: 'center',
-                                      justifyContent: 'center',
-                                    }}>
-                                    <Text
-                                      style={{
-                                        color: 'gray',
-                                        fontWeight: '700',
-                                        textAlign: 'center',
-                                      }}>
-                                      {trans('Start The Quiz')}
-                                    </Text>
-                                  </TouchableOpacity>
-                                )}
-
-                              {todayliveQuiz != undefined &&
-                                todayliveQuiz.length == 0 &&
-                                upcomingLiveQuiz != undefined &&
-                                upcomingLiveQuiz.length !== 0 && (
-                                  <TouchableOpacity
-                                    onPress={() => {}}
-                                    disabled={true}
-                                    style={{
-                                      paddingVertical: 8,
-                                      borderRadius: 10,
-                                      width: '65%',
-                                      alignSelf: 'center',
-                                      marginVertical: 10,
-                                      marginHorizontal: 15,
-                                      borderColor: '#FFB901',
-                                      backgroundColor: '#aaa',
-                                      flexDirection: 'row',
-                                      alignItems: 'center',
-                                      justifyContent: 'center',
-                                    }}>
-                                    <Text
-                                      style={{
-                                        color: 'gray',
-                                        fontWeight: '700',
-                                        textAlign: 'center',
-                                      }}>
-                                      {trans('Start The Quiz')}
-                                    </Text>
-                                  </TouchableOpacity>
-                                )}
-                              {todayliveQuiz?.length != '' &&
-                                todayliveQuizStudentData[0]?.length == '' && (
+                            {todayliveQuizStudentData[0] != undefined &&
+                              todayliveQuizStudentData[0]?.length !== 0 &&
+                              upcomingLiveQuiz[0] != undefined &&
+                              upcomingLiveQuiz[0]?.length !== '' &&
+                              upcomingLiveQuiz[0]?.starttime && (
+                                <TouchableOpacity
+                                  onPress={() => {}}
+                                  disabled={true}
+                                  style={{
+                                    paddingVertical: 8,
+                                    borderRadius: 10,
+                                    width: '65%',
+                                    alignSelf: 'center',
+                                    marginVertical: 10,
+                                    marginHorizontal: 15,
+                                    borderColor: '#FFB901',
+                                    backgroundColor: '#aaa',
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                  }}>
                                   <Text
                                     style={{
-                                      fontSize: 13,
-                                      color: '#FDDA0D',
-                                      fontWeight: '500',
-                                      marginVertical: 3,
-                                      width: '100%',
-                                      fontStyle: 'italic',
+                                      color: 'gray',
+                                      fontWeight: '700',
+                                      textAlign: 'center',
                                     }}>
-                                    {ExamtimeEndDetails == true
-                                      ? `${trans(
-                                          'Note:-You are late for exam . The button is disabled as the exam has already ended. Join at exam start time from next time onwards.',
-                                        )}`
-                                      : examExceedTime == false
-                                      ? `${trans(
-                                          'Note:-This button will be enabled when the live quiz starts at the time shown above.',
-                                        )}`
-                                      : `${trans(
-                                          'Note:-You are late for exam . The button is disabled as the exam has started. Join at exam start time from next time onwards.',
-                                        )}`}
+                                    {trans('Start The Quiz')}
                                   </Text>
-                                )}
-                              {todayliveQuiz != undefined &&
-                                todayliveQuiz.length == 0 &&
-                                upcomingLiveQuiz != undefined &&
-                                upcomingLiveQuiz.length !== 0 && (
-                                  <Text
-                                    style={{
-                                      fontSize: 13,
-                                      color: '#FDDA0D',
-                                      fontWeight: '500',
-                                      marginVertical: 3,
-                                      width: '100%',
-                                      fontStyle: 'italic',
-                                    }}>
-                                    {trans(
-                                      'Note:-This button will be enabled when the live quiz starts at the time shown above.',
-                                    )}
-                                  </Text>
-                                )}
+                                </TouchableOpacity>
+                              )}
 
-                              {todayliveQuizStudentData[0] != undefined &&
-                                todayliveQuizStudentData[0]?.length !== 0 &&
-                                upcomingLiveQuiz[0] != undefined &&
-                                upcomingLiveQuiz[0]?.length !== '' &&
-                                upcomingLiveQuiz[0]?.starttime && (
+                            {todayliveQuiz != undefined &&
+                              todayliveQuiz.length == 0 &&
+                              upcomingLiveQuiz != undefined &&
+                              upcomingLiveQuiz.length !== 0 && (
+                                <TouchableOpacity
+                                  onPress={() => {}}
+                                  disabled={true}
+                                  style={{
+                                    paddingVertical: 8,
+                                    borderRadius: 10,
+                                    width: '65%',
+                                    alignSelf: 'center',
+                                    marginVertical: 10,
+                                    marginHorizontal: 15,
+                                    borderColor: '#FFB901',
+                                    backgroundColor: '#aaa',
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                  }}>
                                   <Text
                                     style={{
-                                      fontSize: 13,
-                                      color: '#FDDA0D',
-                                      fontWeight: '500',
-                                      marginVertical: 3,
-                                      width: '100%',
-                                      fontStyle: 'italic',
+                                      color: 'gray',
+                                      fontWeight: '700',
+                                      textAlign: 'center',
                                     }}>
-                                    {trans(
-                                      'Note:-This button will be enabled when the live quiz starts at the time shown above.',
-                                    )}
+                                    {trans('Start The Quiz')}
                                   </Text>
-                                )}
-                            </View>
+                                </TouchableOpacity>
+                              )}
+                            {todayliveQuiz?.length != '' &&
+                              todayliveQuizStudentData[0]?.length == '' && (
+                                <Text
+                                  style={{
+                                    fontSize: 13,
+                                    color: '#FDDA0D',
+                                    fontWeight: '500',
+                                    marginVertical: 3,
+                                    width: '100%',
+                                    fontStyle: 'italic',
+                                  }}>
+                                  {ExamtimeEndDetails == true
+                                    ? `${trans(
+                                        'Note:-You are late for exam . The button is disabled as the exam has already ended. Join at exam start time from next time onwards.',
+                                      )}`
+                                    : examExceedTime == false
+                                    ? `${trans(
+                                        'Note:-This button will be enabled when the live quiz starts at the time shown above.',
+                                      )}`
+                                    : `${trans(
+                                        'Note:-You are late for exam . The button is disabled as the exam has started. Join at exam start time from next time onwards.',
+                                      )}`}
+                                </Text>
+                              )}
+                            {todayliveQuiz != undefined &&
+                              todayliveQuiz.length == 0 &&
+                              upcomingLiveQuiz != undefined &&
+                              upcomingLiveQuiz.length !== 0 && (
+                                <Text
+                                  style={{
+                                    fontSize: 13,
+                                    color: '#FDDA0D',
+                                    fontWeight: '500',
+                                    marginVertical: 3,
+                                    width: '100%',
+                                    fontStyle: 'italic',
+                                  }}>
+                                  {trans(
+                                    'Note:-This button will be enabled when the live quiz starts at the time shown above.',
+                                  )}
+                                </Text>
+                              )}
+
+                            {todayliveQuizStudentData[0] != undefined &&
+                              todayliveQuizStudentData[0]?.length !== 0 &&
+                              upcomingLiveQuiz[0] != undefined &&
+                              upcomingLiveQuiz[0]?.length !== '' &&
+                              upcomingLiveQuiz[0]?.starttime && (
+                                <Text
+                                  style={{
+                                    fontSize: 13,
+                                    color: '#FDDA0D',
+                                    fontWeight: '500',
+                                    marginVertical: 3,
+                                    width: '100%',
+                                    fontStyle: 'italic',
+                                  }}>
+                                  {trans(
+                                    'Note:-This button will be enabled when the live quiz starts at the time shown above.',
+                                  )}
+                                </Text>
+                              )}
                           </View>
-                        )}
-                        {liveQuizLeaderBoard.length != 0 && (
-                          <>
-                            <TouchableOpacity
-                              onPress={() => {
-                                const pastquizId = {
-                                  childid,
-                                };
-                                dispatch(getPastLiveQuizAPI());
-                                navigation.navigate('LiveQuizDetails', {});
-                              }}
+                        </View>
+                      )}
+                      {liveQuizLeaderBoard.length != 0 && (
+                        <>
+                          <TouchableOpacity
+                            onPress={() => {
+                              const pastquizId = {
+                                childid,
+                              };
+                              dispatch(getPastLiveQuizAPI());
+                              navigation.navigate('LiveQuizDetails', {});
+                            }}
+                            style={{
+                              width: device_width * 0.96,
+                              height: device_height * 0.12,
+                              borderWidth: 0.5,
+                              borderRadius: 10,
+                              marginVertical: 10,
+                              borderColor: userQuizBlink
+                                ? 'gold'
+                                : 'lightgreen',
+                              backgroundColor: userQuizBlink
+                                ? 'rgba(0,255,0, 0.1)'
+                                : '#f1a722',
+                            }}>
+                            <View
                               style={{
-                                width: device_width * 0.96,
-                                height: device_height * 0.12,
-                                borderWidth: 0.5,
-                                borderRadius: 10,
-                                marginVertical: 10,
-                                borderColor: userQuizBlink
-                                  ? 'gold'
-                                  : 'lightgreen',
-                                backgroundColor: userQuizBlink
-                                  ? 'rgba(0,255,0, 0.1)'
-                                  : '#f1a722',
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                width: '100%',
+                                height: '100%',
+                                paddingHorizontal: 5,
                               }}>
                               <View
                                 style={{
-                                  flexDirection: 'row',
-                                  justifyContent: 'space-between',
-                                  alignItems: 'center',
-                                  width: '100%',
+                                  width: device_width * 0.8,
                                   height: '100%',
-                                  paddingHorizontal: 5,
+                                  flexDirection: 'row',
+                                  alignItems: 'center',
+                                  paddingHorizontal: 10,
                                 }}>
+                                <FastImage
+                                  source={require('../../../assets/test.png')}
+                                  style={{height: 60, width: 60}}
+                                />
                                 <View
                                   style={{
-                                    width: device_width * 0.8,
-                                    height: '100%',
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    paddingHorizontal: 10,
+                                    marginHorizontal: 10,
+                                    width: '75%',
                                   }}>
-                                  <FastImage
-                                    source={require('../../../assets/test.png')}
-                                    style={{height: 60, width: 60}}
-                                  />
-                                  <View
+                                  <Text
                                     style={{
-                                      marginHorizontal: 10,
-                                      width: '75%',
+                                      fontSize: 16,
+                                      fontWeight: '800',
+                                      color: userQuizBlink
+                                        ? '#fff'
+                                        : 'darkgreen',
+                                    }}>
+                                    {trans('NoteVed-IQ Live Quiz')}
+                                  </Text>
+                                  <Text
+                                    style={{
+                                      fontSize: 12,
+                                      fontWeight: '600',
+                                      color: userQuizBlink
+                                        ? '#fff'
+                                        : 'darkgreen',
+                                    }}>
+                                    {todayliveQuiz != undefined &&
+                                    todayliveQuiz[0]?.length != 0 &&
+                                    ExamtimeEndDetails == false ? (
+                                      `${moment(
+                                        todayliveQuiz[0]?.starttime,
+                                      ).format('DD-MMM-YYYY')}`
+                                    ) : (
+                                      <></>
+                                    )}
+
+                                    {todayliveQuiz != undefined &&
+                                    todayliveQuiz[0]?.length != 0 &&
+                                    ExamtimeEndDetails == true &&
+                                    upcomingLiveQuiz[0] != undefined &&
+                                    upcomingLiveQuiz[0]?.length !== '' &&
+                                    upcomingLiveQuiz[0]?.starttime ? (
+                                      `${moment(
+                                        upcomingLiveQuiz[0]?.starttime,
+                                      ).format('DD-MMM-YYYY')}${'  '}${'('}${
+                                        daysLeft != undefined &&
+                                        daysLeft != 0 ? (
+                                          daysLeft
+                                        ) : (
+                                          <></>
+                                        )
+                                      }${' Days Left'}${')'}`
+                                    ) : (
+                                      <></>
+                                    )}
+
+                                    {todayliveQuiz != undefined &&
+                                    todayliveQuiz[0]?.length == 0 &&
+                                    upcomingLiveQuiz[0] != undefined &&
+                                    upcomingLiveQuiz[0]?.length !== '' &&
+                                    upcomingLiveQuiz[0]?.starttime ? (
+                                      `${moment(
+                                        upcomingLiveQuiz[0]?.starttime,
+                                      ).format('DD-MMM-YYYY')}${'  '}${'('}${
+                                        daysLeft != undefined &&
+                                        daysLeft != 0 ? (
+                                          daysLeft
+                                        ) : (
+                                          <></>
+                                        )
+                                      }${' Days Left'}${')'}`
+                                    ) : (
+                                      <></>
+                                    )}
+                                  </Text>
+                                  <TouchableOpacity
+                                    style={{
+                                      width: '100%',
+                                      height: 30,
+                                      justifyContent: 'center',
+                                      alignItems: 'center',
+                                      paddingVertical: 5,
+                                    }}
+                                    onPress={() => {
+                                      const pastquizId = {
+                                        childid,
+                                      };
+                                      dispatch(getPastLiveQuizAPI());
+                                      navigation.navigate(
+                                        'LiveQuizDetails',
+                                        {},
+                                      );
                                     }}>
                                     <Text
                                       style={{
-                                        fontSize: 16,
-                                        fontWeight: '800',
                                         color: userQuizBlink
                                           ? '#fff'
                                           : 'darkgreen',
-                                      }}>
-                                      {trans('NoteVed-IQ Live Quiz')}
-                                    </Text>
-                                    <Text
-                                      style={{
-                                        fontSize: 12,
-                                        fontWeight: '600',
-                                        color: userQuizBlink
-                                          ? '#fff'
-                                          : 'darkgreen',
-                                      }}>
-                                      {todayliveQuiz != undefined &&
-                                      todayliveQuiz[0]?.length != 0 &&
-                                      ExamtimeEndDetails == false ? (
-                                        `${moment(
-                                          todayliveQuiz[0]?.starttime,
-                                        ).format('DD-MMM-YYYY')}`
-                                      ) : (
-                                        <></>
-                                      )}
-
-                                      {todayliveQuiz != undefined &&
-                                      todayliveQuiz[0]?.length != 0 &&
-                                      ExamtimeEndDetails == true &&
-                                      upcomingLiveQuiz[0] != undefined &&
-                                      upcomingLiveQuiz[0]?.length !== '' &&
-                                      upcomingLiveQuiz[0]?.starttime ? (
-                                        `${moment(
-                                          upcomingLiveQuiz[0]?.starttime,
-                                        ).format('DD-MMM-YYYY')}${'  '}${'('}${
-                                          daysLeft != undefined &&
-                                          daysLeft != 0 ? (
-                                            daysLeft
-                                          ) : (
-                                            <></>
-                                          )
-                                        }${' Days Left'}${')'}`
-                                      ) : (
-                                        <></>
-                                      )}
-
-                                      {todayliveQuiz != undefined &&
-                                      todayliveQuiz[0]?.length == 0 &&
-                                      upcomingLiveQuiz[0] != undefined &&
-                                      upcomingLiveQuiz[0]?.length !== '' &&
-                                      upcomingLiveQuiz[0]?.starttime ? (
-                                        `${moment(
-                                          upcomingLiveQuiz[0]?.starttime,
-                                        ).format('DD-MMM-YYYY')}${'  '}${'('}${
-                                          daysLeft != undefined &&
-                                          daysLeft != 0 ? (
-                                            daysLeft
-                                          ) : (
-                                            <></>
-                                          )
-                                        }${' Days Left'}${')'}`
-                                      ) : (
-                                        <></>
-                                      )}
-                                    </Text>
-                                    <TouchableOpacity
-                                      style={{
+                                        fontSize: 15,
                                         width: '100%',
-                                        height: 30,
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        paddingVertical: 5,
-                                      }}
-                                      onPress={() => {
-                                        const pastquizId = {
-                                          childid,
-                                        };
-                                        dispatch(
-                                          getPastLiveQuizAPI(),
-                                        );
-                                        navigation.navigate(
-                                          'LiveQuizDetails',
-                                          {},
-                                        );
+                                        fontWeight: '700',
+                                        textDecorationLine: 'underline',
                                       }}>
-                                      <Text
-                                        style={{
-                                          color: userQuizBlink
-                                            ? '#fff'
-                                            : 'darkgreen',
-                                          fontSize: 15,
-                                          width: '100%',
-                                          fontWeight: '700',
-                                          textDecorationLine: 'underline',
-                                        }}>
-                                        {trans('Quiz Details')}
-                                      </Text>
-                                    </TouchableOpacity>
-                                  </View>
+                                      {trans('Quiz Details')}
+                                    </Text>
+                                  </TouchableOpacity>
                                 </View>
-                                <MaterialIcons
-                                  name="keyboard-arrow-right"
-                                  size={30}
-                                  color={userQuizBlink ? '#fff' : 'darkgreen'}
-                                  style={{marginRight: 10}}
-                                />
                               </View>
-                            </TouchableOpacity>
-                          </>
-                        )}
-                      </>
-                    )}
-                  </View>
-                </>
-              )}
-            </View>
+                              <MaterialIcons
+                                name="keyboard-arrow-right"
+                                size={30}
+                                color={userQuizBlink ? '#fff' : 'darkgreen'}
+                                style={{marginRight: 10}}
+                              />
+                            </View>
+                          </TouchableOpacity>
+                        </>
+                      )}
+                    </>
+                  )}
+                </View>
+                {/* </>
+              )} */}
+              </View>
+            )}
           </View>
           {SubLoading == 'loading' ? (
             <View
