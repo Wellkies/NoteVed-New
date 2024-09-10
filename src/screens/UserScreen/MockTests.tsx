@@ -646,7 +646,7 @@ const MockTests = ({route}) => {
               </TouchableOpacity>
             </View>
           </View>
-          <View style={{alignItems: 'center', marginVertical: 5}}>
+          {/* <View style={{alignItems: 'center', marginVertical: 5}}>
             <BannerAd
               unitId={adUnitId}
               size={BannerAdSize.BANNER}
@@ -655,7 +655,7 @@ const MockTests = ({route}) => {
               }
               onAdLoaded={() => console.log('Ad loaded')}
             />
-          </View>
+          </View> */}
           <View
             style={{
               paddingHorizontal: 25,

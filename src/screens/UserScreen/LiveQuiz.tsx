@@ -115,12 +115,12 @@ const LiveQuiz = ({route}) => {
   const [timerHeight, setTimerHeight] = useState('100%');
 
   useEffect(() => {
-    if (timeDurationValue > 0 && timeTaken == timeDurationValue) {
-      handleClearAndSkipQuestion(currentIndex);
-    } else if (timeDurationValue == 0) {
-      setTimerHeight(`${0}`);
-    } else {
-    }
+    // if (timeDurationValue > 0 && timeTaken == timeDurationValue) {
+    //   handleClearAndSkipQuestion(currentIndex);
+    // } else if (timeDurationValue == 0) {
+    //   setTimerHeight(`${0}`);
+    // } else {
+    // }
     const interval = setInterval(() => {
       setTimeTaken(prevTimeTaken => prevTimeTaken + 1);
       setTimerHeight(`${(timeTaken / timeDurationValue) * 100}%`);
