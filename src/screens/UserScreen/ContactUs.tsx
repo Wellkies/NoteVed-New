@@ -345,8 +345,8 @@ const ContactUs = ({ }) => {
                 alignSelf: 'center',
               }}>
               <FastImage
-                style={{ height: 90, width: '100%' }}
-                source={require('../../../assets/NOTEVOOK.jpeg')}
+                style={{ height: 100, width: '120%' }}
+                source={require('../../../assets/IQlogo.png')}
                 resizeMode="contain"
               />
             </View>
@@ -634,7 +634,7 @@ const ContactUs = ({ }) => {
                     paddingLeft: 10,
                   }}>
                   {trans(
-                    'If you encounter any issues on our Noteved Academy digital platform, please contact our support team and provide all relevant details using the provided numbers :- 9861302757,7008699927,9337052091',
+                    'If you encounter any issues on our Noteved IQ digital platform, please contact our support team and provide all relevant details using the provided numbers :- 9861302757,7008699927,9337052091',
                   )}
                   {/* {trans('Contact our customer care')} */}
                 </Text>
@@ -950,7 +950,7 @@ const ContactUs = ({ }) => {
                           }}>
                           <FastImage
                             style={{ height: 40, width: 40 }}
-                            source={require('../../../assets/NOTEVOOK.jpeg')}
+                            source={require('../../../assets/IQlogo.png')}
                             resizeMode="contain"
                           />
                         </View>
@@ -966,7 +966,7 @@ const ContactUs = ({ }) => {
                             fontWeight: '900',
                           }}>
                           {trans(
-                            'Thanks for contacting with NoteVed Academy Support',
+                            'Thanks for contacting with NoteVed IQ Support',
                           )}
                         </Text>
                         <Text

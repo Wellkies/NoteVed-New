@@ -284,7 +284,7 @@ const Notification = () => {
                                         ? {
                                           uri: fcmimage,
                                         }
-                                        : require('../../../assets/NOTEVOOK2.jpeg')
+                                        : require('../../../assets/IQ.jpg')
                                     }
                                   />
                                 </View>

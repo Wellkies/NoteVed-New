@@ -98,7 +98,7 @@ const UpdateModal = ({
                     // padding: 5,
                   }}>
                   <Avatar.Image
-                    source={require('../../../assets/NOTEVOOK2.jpeg')}
+                    source={require('../../../assets/IQ.jpg')}
                     // source={{
                     //   uri: "https://wkresources.s3.ap-south-1.amazonaws.com/clinic-icon.png",
                     // }}
