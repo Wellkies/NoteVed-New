@@ -1,4 +1,4 @@
-package com.notevedpro
+package com.notevediq
 
 import android.app.Application
 import com.facebook.react.PackageList

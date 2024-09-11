@@ -1,4 +1,4 @@
-package com.notevedpro
+package com.notevediq
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
