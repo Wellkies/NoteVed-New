@@ -147,67 +147,71 @@ const TopicDetails = ({route}) => {
           }}
           resizeMode="cover"
           source={require('../../../assets/0.png')}>
-          <TouchableOpacity
-            onPress={() => {
-              const data = {
-                //courseid: courseid,
-                childid: childid,
-              };
-              dispatch(getChildProgressDetailAPI(data));
-              navigation.goBack();
-            }}
-            style={{
-              position: 'absolute',
-              top: 20,
-              left: 20,
-            }}>
-            <MaterialIcons
-              name="arrow-back"
-              size={35}
-              style={{
-                color: '#FFFFFF',
-              }}
-            />
-          </TouchableOpacity>
           <View
             style={{
               flexDirection: 'row',
-              // alignItems: 'center',
-              // justifyContent: 'center',
-              marginVertical: 16,
-              marginHorizontal: 50,
-              gap: 20,
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginVertical: 10,
+              marginHorizontal: 20,
             }}>
-            {subjectimage != '' ? (
-              <Image
-                source={{uri: subjectimage}}
-                style={{
-                  height: device_height * 0.06,
-                  width: device_width * 0.11,
-                  resizeMode: 'contain',
-                  tintColor: '#FFFFFF',
-                }}
-              />
-            ) : (
-              <Image
-                source={require('../../../assets/people.png')}
-                style={{
-                  height: device_height * 0.09,
-                  width: device_width * 0.15,
-                  resizeMode: 'contain',
-                  tintColor: '#FFFFFF',
-                }}
-              />
-            )}
-            <Text
-              style={{
-                fontWeight: '400',
-                fontSize: 20,
-                color: '#FFFFFF',
+            <TouchableOpacity
+              onPress={() => {
+                const data = {
+                  childid: childid,
+                };
+                dispatch(getChildProgressDetailAPI(data));
+                navigation.goBack();
               }}>
-              {trans(subjectname)}
-            </Text>
+              <MaterialIcons
+                name="arrow-back"
+                size={35}
+                style={{
+                  color: '#FFFFFF',
+                }}
+              />
+            </TouchableOpacity>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flex: 1,
+              }}>
+              {subjectimage != '' ? (
+                <Image
+                  source={{uri: subjectimage}}
+                  style={{
+                    height: device_height * 0.06,
+                    width: device_width * 0.11,
+                    resizeMode: 'contain',
+                    tintColor: '#FFFFFF',
+                    marginRight: 10,
+                  }}
+                />
+              ) : (
+                <Image
+                  source={require('../../../assets/people.png')}
+                  style={{
+                    height: device_height * 0.07,
+                    width: device_width * 0.14,
+                    resizeMode: 'contain',
+                    tintColor: '#FFFFFF',
+                    marginRight: 10,
+                  }}
+                />
+              )}
+              <Text
+                style={{
+                  fontWeight: '400',
+                  fontSize: 20,
+                  color: '#FFFFFF',
+                }}>
+                {trans(subjectname)}
+              </Text>
+            </View>
           </View>
+
           {TopicLoad == 'loading' ? (
             <LoadingScreen flag={TopicLoad == 'loading'} />
           ) : (

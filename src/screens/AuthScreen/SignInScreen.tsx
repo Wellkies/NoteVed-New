@@ -1042,7 +1042,7 @@ const SignInScreen = ({route}) => {
                 <ImageBackground
                   style={{
                     width: device_width * 1.25,
-                    height: device_height * 0.63,
+                   // height: device_height * 0.63,
                     paddingTop: 30,
                     alignSelf: 'center',
                     justifyContent: 'center',
@@ -1616,7 +1616,7 @@ const SignInScreen = ({route}) => {
                   // borderRadius: 50,
                   // borderWidth: 1,
                   width: device_width * 1.28,
-                  height: device_height * 0.7,
+                   height: device_height * 0.5,
                   // marginTop:-50,
                   // paddingTop: 20,
                   // borderRadius: 25,
@@ -2076,7 +2076,7 @@ const SignInScreen = ({route}) => {
                     //left: 10,
                   }}
                   resizeMode="contain"
-                  source={require('../../../assets/NOTEVOOK.jpeg')}
+                  source={require('../../../assets/IQlogo.png')}
                 />
                 <AntDesign
                   name="closecircleo"
