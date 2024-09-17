@@ -453,7 +453,7 @@ const MyCart = () => {
 
       amount: data.data.data.amount.toString(),
       // amount: '1000',
-      name: 'NoteVed IQ',
+      name: 'NoteVed CCA',
       order_id: data.data.data.id,
       prefill: {
         name: name,

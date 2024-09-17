@@ -634,7 +634,7 @@ const ContactUs = ({ }) => {
                     paddingLeft: 10,
                   }}>
                   {trans(
-                    'If you encounter any issues on our Noteved IQ digital platform, please contact our support team and provide all relevant details using the provided numbers :- 9861302757,7008699927,9337052091',
+                    'If you encounter any issues on our Noteved CCA digital platform, please contact our support team and provide all relevant details using the provided numbers :- 9861302757,7008699927,9337052091',
                   )}
                   {/* {trans('Contact our customer care')} */}
                 </Text>
@@ -966,7 +966,7 @@ const ContactUs = ({ }) => {
                             fontWeight: '900',
                           }}>
                           {trans(
-                            'Thanks for contacting with NoteVed IQ Support',
+                            'Thanks for contacting with NoteVed CCA Support',
                           )}
                         </Text>
                         <Text

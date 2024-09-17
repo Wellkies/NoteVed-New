@@ -80,10 +80,10 @@ const SplashScreen = () => {
     }
   }, [language]);
   const data = [
-    // require('../../../assets/skill1.jpg'),
+    require('../../../assets/skill1.jpg'),
     require('../../../assets/skill2.jpg'),
     require('../../../assets/skill3.jpg'),
-    // require('../../../assets/skill4.jpg'),
+    require('../../../assets/skill4.jpg'),
   ];
   const [activeSlide, setActiveSlide] = useState(0);
   const carouselRef = useRef(null);

@@ -716,7 +716,7 @@ const ScoreBoard = ({route}) => {
 
   const myCustomShare = async () => {
     const shareOption = {
-      message: 'NoteVed IQ',
+      message: 'NoteVed CCA',
       title: 'Result',
       url: imageUri,
       // 'NoteVed Academy helps students for OAV(Odisha Adarsha Vidyalaya) and Navodaya competitive examination preparation!',
