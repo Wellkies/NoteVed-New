@@ -854,7 +854,7 @@ const SignUpScreen5 = ({route}) => {
                                 : ageError == true
                                 ? Colors.red
                                 : '#fff',
-                                pointerEvents: 'auto',
+                            pointerEvents: 'auto',
                           }}>
                           <MaterialCommunityIcons
                             name="face-recognition"
@@ -871,9 +871,9 @@ const SignUpScreen5 = ({route}) => {
                             }
                             onFocus={() => setAge(agevalue)}
                             style={{
-                              color:'#000',
+                              color: '#000',
                               flex: 1,
-                              marginLeft: 10
+                              marginLeft: 10,
                             }}
                           />
                         </View>
@@ -891,7 +891,8 @@ const SignUpScreen5 = ({route}) => {
                             animation="fadeInLeft"
                             duration={500}>
                             <Text style={{color: Colors.red, marginBottom: 10}}>
-                              {"Please Enter Valid Student's Age"}
+                              {/* {"Please Enter Valid Student's Age"} */}
+                              {"Please Enter Valid Student's Age. Age must be 13 or older."}
                             </Text>
                           </Animatable.View>
                         ) : (
@@ -958,7 +959,7 @@ const SignUpScreen5 = ({route}) => {
                             duration={500}>
                             <Text
                               style={{color: 'darkorange', marginBottom: 10}}>
-                              {trans("Please Enter Student's State Name")}
+                              {trans("Please Enter State Name")}
                             </Text>
                           </Animatable.View>
                         ) : stateError ? (
@@ -967,7 +968,7 @@ const SignUpScreen5 = ({route}) => {
                             duration={500}>
                             <Text
                               style={{color: 'darkorange', marginBottom: 10}}>
-                              {trans("Please Enter Student's State Name")}
+                              {trans("Please Enter State Name")}
                             </Text>
                           </Animatable.View>
                         ) : (
@@ -987,7 +988,7 @@ const SignUpScreen5 = ({route}) => {
                       }}>
                       <TouchableOpacity
                         disabled={
-                          st_age != '' && st_age !== null
+                          st_age != '' && st_age !== null && !ageError
                             ? // acdmy_year != '' &&
                               // acdmy_year !== null
                               false
@@ -998,7 +999,7 @@ const SignUpScreen5 = ({route}) => {
                           width: '50%',
                           marginVertical: 5,
                           backgroundColor:
-                            st_age != '' && st_age !== null && st_age != '0'
+                            st_age != '' && st_age !== null && st_age != '0' && !ageError
                               ? '#a3b448'
                               : '#ccc',
                           marginHorizontal: 20,
@@ -1013,7 +1014,7 @@ const SignUpScreen5 = ({route}) => {
                         <Text
                           style={{
                             color:
-                              st_age != '' && st_age !== null
+                              st_age != '' && st_age !== null && !ageError
                                 ? // acdmy_year != '' &&
                                   // acdmy_year !== null
                                   '#333'

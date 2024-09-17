@@ -30,7 +30,8 @@ export const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
 export const name_reg = /^[A-Za-z . ']{2,}$/;
 
 export const zip_regex = /^\d{6}(?:[-\s]\d{4})?$/;
-export const ageRegex = /^(?:[1-9][0-9]?|100)$/;
+//export const ageRegex = /^(?:[1-9][0-9]?|100)$/;
+export const ageRegex = /^(?:1[3-9]|[2-9][0-9]|100)$/;
 
 export const IsTabScreen = DeviceInfo.isTablet() ? true : false;
 export const IsMobileScreen = DeviceInfo.isTablet() == false ? true : false;
