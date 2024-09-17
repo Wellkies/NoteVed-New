@@ -966,7 +966,7 @@ const PremiumPurchase = ({route}) => {
                 // position: 'absolute',
                 //left: 10,
               }}
-              source={require('../../../assets/IQlogo.png')}
+              source={require('../../../assets/CCA.png')}
               resizeMode="contain"
             />
             <AntDesign

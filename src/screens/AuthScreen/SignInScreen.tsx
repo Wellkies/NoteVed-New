@@ -2076,7 +2076,7 @@ const SignInScreen = ({route}) => {
                     //left: 10,
                   }}
                   resizeMode="contain"
-                  source={require('../../../assets/IQlogo.png')}
+                  source={require('../../../assets/CCA.png')}
                 />
                 <AntDesign
                   name="closecircleo"

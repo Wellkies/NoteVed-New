@@ -614,7 +614,7 @@ const SubjectLevel = ({route}) => {
                           color: '#f1a722',
                           letterSpacing: 1,
                         }}>
-                        {trans('NOTEVED-IQ LIVE QUIZ RESULT')}
+                        {trans('NOTEVED CCA LIVE QUIZ RESULT')}
                       </Text>
                     </View>
 
@@ -790,7 +790,7 @@ const SubjectLevel = ({route}) => {
                           color: '#f1a722',
                           letterSpacing: 1,
                         }}>
-                        {trans('NOTEVED-IQ LIVE QUIZ RESULT')}
+                        {trans('NOTEVED CCA LIVE QUIZ RESULT')}
                       </Text>
                     </View>
 
@@ -1567,7 +1567,7 @@ const SubjectLevel = ({route}) => {
                                         ? '#fff'
                                         : 'darkgreen',
                                     }}>
-                                    {trans('NoteVed-IQ Live Quiz')}
+                                    {trans('NoteVed CCA Live Quiz')}
                                   </Text>
                                   <Text
                                     style={{

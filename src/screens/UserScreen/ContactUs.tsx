@@ -346,7 +346,7 @@ const ContactUs = ({ }) => {
               }}>
               <FastImage
                 style={{ height: 100, width: '120%' }}
-                source={require('../../../assets/IQlogo.png')}
+                source={require('../../../assets/CCA.png')}
                 resizeMode="contain"
               />
             </View>
@@ -950,7 +950,7 @@ const ContactUs = ({ }) => {
                           }}>
                           <FastImage
                             style={{ height: 40, width: 40 }}
-                            source={require('../../../assets/IQlogo.png')}
+                            source={require('../../../assets/CCA.png')}
                             resizeMode="contain"
                           />
                         </View>
