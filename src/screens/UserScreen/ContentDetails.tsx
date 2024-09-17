@@ -692,22 +692,22 @@ const ContentDetails = ({route}) => {
                               <View
                                 style={{
                                   paddingHorizontal: 10,
-                                  marginRight: 8,
+                                  marginRight: 5,
                                   bottom: -10,
-                                  right: -15,
+                                  //right: -8,
                                 }}>
                                 {isReattempt && (
                                   <>
                                     <MaterialCommunityIcons
                                       name="refresh"
                                       color={'#f1a722'}
-                                      size={40}
+                                      size={35}
                                     />
                                     <Text
                                       style={{
                                         color: '#f1a722',
                                         fontWeight: '600',
-                                        fontSize: 14,
+                                        fontSize: 12,
                                         letterSpacing: 0.5,
                                       }}>
                                       {trans('Reattempt')}
