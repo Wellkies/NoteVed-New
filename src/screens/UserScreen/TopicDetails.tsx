@@ -277,7 +277,7 @@ const TopicDetails = ({route}) => {
                         const previousAveragePercentage =
                           previousTotalPercentage /
                           (previousContents.length || 1);
-                        isLock = previousAveragePercentage < 90;
+                        isLock = previousAveragePercentage < 90&& childid!='NVED1725037191939';
                       }
 
                       return (

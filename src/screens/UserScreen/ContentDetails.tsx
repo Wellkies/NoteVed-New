@@ -351,6 +351,7 @@ const ContentDetails = ({route}) => {
                       videos = [],
                       studentdata = [],
                     } = item;
+                    const isLastItem = index === reviewquestionsets.length - 1;
                     const studentId = _id;
                     const {
                       percentage = '',
@@ -366,7 +367,7 @@ const ContentDetails = ({route}) => {
                       (index !== 0 &&
                         reviewquestionsets[index - 1].studentdata.length > 0 &&
                         reviewquestionsets[index - 1].studentdata[0]
-                          .percentage >= 90);
+                          .percentage >= 90)|| childid=='NVED1725037191939';
 
                     return (
                         <View
@@ -684,7 +685,7 @@ const ContentDetails = ({route}) => {
                                   is2ndAvailable: index,
                                   topicid: topicid,
                                   topic: topic,
-                                  islastexercise: allIndexesContain90Percent,
+                                  islastexercise: allIndexesContain90Percent&&isLastItem ?true:false,
                                   subjectimage: subjectimage,
                                 });
                               }}>
@@ -781,7 +782,7 @@ const ContentDetails = ({route}) => {
               )}
               </ScrollView>
             </View>
-            {allIndexesContain90Percent && <LevelCompleted />}
+            {/* {allIndexesContain90Percent && <LevelCompleted />} */}
           {/* </ScrollView> */}
         </ImageBackground>
       )}

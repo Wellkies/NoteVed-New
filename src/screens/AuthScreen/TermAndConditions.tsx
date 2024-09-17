@@ -170,10 +170,10 @@ We may disclose your information if required to do so by law or in response to v
       title: `Data Security`,
       content: `We implement appropriate security measures to protect your personal information from unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet or electronic storage is 100% secure, and we cannot guarantee absolute security.`,
     },
-    {
-      title:`Children's Privacy`,
-      content: `Our app is intended for users aged 7 and above. We do not knowingly collect personal information from children under the age of 7. If we become aware that we have inadvertently collected such information, we will take steps to delete it as soon as possible`,
-    },
+    // {
+    //   title:`Children's Privacy`,
+    //   content: `Our app is intended for users aged 7 and above. We do not knowingly collect personal information from children under the age of 7. If we become aware that we have inadvertently collected such information, we will take steps to delete it as soon as possible`,
+    // },
     {
       title:`Your Rights`,
       content: `You have the right to:
