@@ -9,6 +9,7 @@ import {
   ScrollView,
   TouchableOpacity,
   ImageBackground,
+  Image,
 } from 'react-native';
 import React, {useEffect, useState, useRef} from 'react';
 import Colors from '../../../assets/Colors';
@@ -186,7 +187,7 @@ const MockTests = ({route}) => {
   //
   const TopicList = useAppSelector(selectTopicDetails);
   const childContentReducer = useAppSelector(selectContentsingleChild);
-  console.log(childContentReducer, ']]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]');
+  //console.log(childContentReducer, ']]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]');
 
   //
   const TopicId = useAppSelector(selectTopicId);
@@ -449,10 +450,10 @@ const MockTests = ({route}) => {
       contentid,
       childid,
     };
-    console.log(
-      childContent,
-      'chil%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%',
-    );
+    // console.log(
+    //   childContent,
+    //   'chil%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%',
+    // );
 
     dispatch(getChildContentDetailsAPI(childContent));
 
@@ -825,10 +826,24 @@ const MockTests = ({route}) => {
                 justifyContent: 'space-between',
               }}>
               {Questionlist[currentIndex]?.option?.map((item, indx) => {
-                const {label = '', value = '', contenttype = ''} = item;
+                const {
+                  label = '',
+                  imagurl = '',
+                  value = '',
+                  contenttype = '',
+                } = item;
                 const {selectedAns = ''} = Questionlist[currentIndex];
                 const selectedItem = label == selectedAns;
-
+                let imageUrl;
+                if (contenttype === 'image') {
+                  console.log(value, '@value');
+                  const htmlString = imagurl.replace(/\\"/g, '"');
+                  const imageUrlMatch = htmlString.match(/<img.*?src="(.*?)"/);
+                  imageUrl =
+                    imageUrlMatch && imageUrlMatch[1]
+                      ? imageUrlMatch[1].replace(/&amp;/g, '&')
+                      : '';
+                }
                 return (
                   <View
                     key={indx}
@@ -855,26 +870,66 @@ const MockTests = ({route}) => {
                         borderColor: '#fff',
                         borderRadius: 15,
                         marginVertical: 5,
+                        padding: 5,
                         backgroundColor: selectedItem ? '#f1a722' : '#F0F0F0',
                       }}>
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          padding: 10,
-                          // borderWidth:1,
-                          borderRadius: 10,
-                          alignItems: 'center',
-                        }}>
-                        <Text
+                      {contenttype === 'image' ? (
+                        <View
                           style={{
-                            fontSize: 15,
-                            fontWeight: '700',
-                            marginLeft: 15,
-                            color: selectedItem ? 'darkgreen' : '#333',
+                            flexDirection: 'row',
+                            borderRadius: 10,
+                            alignItems: 'center',
                           }}>
-                          {`(${label}) ${value}`}
-                        </Text>
-                      </View>
+                          <View
+                            style={{
+                              width: 80,
+                              height: 80,
+                              borderRadius: 10,
+                              overflow: 'hidden',
+                            }}>
+                            <Image
+                              source={{uri: imageUrl}}
+                              style={{
+                                width: '100%',
+                                height: '100%',
+                                resizeMode: 'cover',
+                              }}
+                            />
+                          </View>
+                          <View
+                            style={{
+                              flex: 1,
+                              marginLeft: 10,
+                            }}>
+                            <Text
+                              style={{
+                                fontSize: 15,
+                                fontWeight: '700',
+                                color: selectedItem ? 'darkgreen' : '#333',
+                              }}>
+                              {`(${label}) ${value}`}
+                            </Text>
+                          </View>
+                        </View>
+                      ) : (
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            padding: 10,
+                            borderRadius: 10,
+                            alignItems: 'center',
+                          }}>
+                          <Text
+                            style={{
+                              fontSize: 15,
+                              fontWeight: '700',
+                              marginLeft: 15,
+                              color: selectedItem ? 'darkgreen' : '#333',
+                            }}>
+                            {`(${label}) ${value}`}
+                          </Text>
+                        </View>
+                      )}
                     </TouchableOpacity>
                   </View>
                 );
