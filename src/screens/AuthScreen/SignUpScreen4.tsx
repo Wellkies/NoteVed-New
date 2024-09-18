@@ -338,10 +338,10 @@ const SignUpScreen4 = ({ route }) => {
           alignSelf: 'center',
           // justifyContent: 'center',
           // alignItems: 'center',
-          backgroundColor: '#272727'
+          // backgroundColor: '#272727'
         }}
-        // resizeMode="cover"
-        // source={require('../../../assets/0.png')}
+        resizeMode="cover"
+        source={require('../../../assets/0.png')}
         >
         <View
           style={{

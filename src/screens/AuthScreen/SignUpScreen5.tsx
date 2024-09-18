@@ -675,10 +675,10 @@ const SignUpScreen5 = ({route}) => {
           height: device_height,
           flex: 1,
           alignSelf: 'center',
-          backgroundColor: '#272727',
+          //backgroundColor: '#272727',
         }}
-        // resizeMode="cover"
-        // source={require('../../../assets/0.png')}
+        resizeMode="cover"
+        source={require('../../../assets/0.png')}
       >
         <View
           style={{
@@ -830,7 +830,7 @@ const SignUpScreen5 = ({route}) => {
                             {'Complete Your Registration '}
                             <Text style={{fontWeight: '900', fontSize: 16}}>
                               {/* {trans('5/5')} */}
-                              {'5/5'}
+                              {'4/4'}
                             </Text>
                           </Text>
                         </View>
@@ -862,7 +862,7 @@ const SignUpScreen5 = ({route}) => {
                             size={20}
                           />
                           <TextInput
-                            placeholder="Select your age"
+                            placeholder="Enter your age"
                             placeholderTextColor="#333"
                             value={st_age}
                             keyboardType="numeric"
