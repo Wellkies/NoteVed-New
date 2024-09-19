@@ -9,15 +9,15 @@ import {
 } from 'react-native-google-mobile-ads';
 
 // Test AD
-export const BANNERAD = TestIds.BANNER //Test
-export const INTERSTITIALAD = TestIds.INTERSTITIAL //Test
-export const REWARDEDAD = TestIds.REWARDED //Test
+// export const BANNERAD = TestIds.BANNER //Test
+// export const INTERSTITIALAD = TestIds.INTERSTITIAL //Test
+// export const REWARDEDAD = TestIds.REWARDED //Test
 //Production AD
-// export const BANNERAD = 'ca-app-pub-1582661677692525/5073831578';
-// export const INTERSTITIALAD = 'ca-app-pub-1582661677692525/8821504899';
-// export const REWARDEDAD = 'ca-app-pub-1582661677692525/7268750077';
-// export const NATIVEAD = 'ca-app-pub-1582661677692525/3435936958';
-// export const APPOPENAD = 'ca-app-pub-1582661677692525/4198354283';
+export const BANNERAD = 'ca-app-pub-1582661677692525/5073831578';
+export const INTERSTITIALAD = 'ca-app-pub-1582661677692525/8821504899';
+export const REWARDEDAD = 'ca-app-pub-1582661677692525/7268750077';
+export const NATIVEAD = 'ca-app-pub-1582661677692525/3435936958';
+export const APPOPENAD = 'ca-app-pub-1582661677692525/4198354283';
 
 // export const API_URL = "https://wellkie.in/demoApi/";
 //export const API_URL = 'https://wellkie.org/demoApi/'; // Test url

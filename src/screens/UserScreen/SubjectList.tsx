@@ -8,6 +8,7 @@ import {
   ScrollView,
   BackHandler,
   ImageBackground,
+  NativeModules,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -63,6 +64,7 @@ import {
 import {selectUserInfo} from '../../redux/reducers/loginReducer';
 
 const SubjectList = ({route}) => {
+  const InAppUpdate = NativeModules.InAppUpdate;
   const navigation = useNavigation();
   const dispatch = useDispatch<any>();
   const {t: trans, i18n} = useTranslation();
@@ -72,6 +74,7 @@ const SubjectList = ({route}) => {
   // const SchlrshipId = 'NVOOKADA1690811843420';
   // const ScholarshipName = 'Adarsha';
   useEffect(() => {
+    const inappupdated = InAppUpdate.checkUpdate();
     // const data = {
     //   stageid,
     //   boardid,

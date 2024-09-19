@@ -127,7 +127,7 @@ const TermAndConditions = () => {
   const agreement = [
     {
       title: `Introduction`,
-      content: `Welcome to Noteved-IQ . We are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, and protect your data when you use our app, Noteved-IQ, available on the Play Store.`,
+      content: `Welcome to Noteved CCA . We are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, and protect your data when you use our app, Noteved CCA, available on the Play Store.`,
     },
     {
       title: `Information We Collect`,
@@ -182,7 +182,7 @@ We may disclose your information if required to do so by law or in response to v
 - Request the deletion of your personal information.
 - Opt-out of receiving promotional communications.
 
-To exercise these rights, please contact us at [Insert Contact Information].
+To exercise these rights, please contact us at smbarik@gmail.com.
 `,
     },
 
@@ -195,7 +195,7 @@ To exercise these rights, please contact us at [Insert Contact Information].
       content: `If you have any questions or concerns about this Privacy Policy, please contact us at:
 
 NoteVed Academy
-Email: srikant@noteved.com
+Email: smbarik@gmail.com
 Address: B6-1628, Sector-10, CDA, Cuttack
 Phone: +91 70086 99927
 `,
