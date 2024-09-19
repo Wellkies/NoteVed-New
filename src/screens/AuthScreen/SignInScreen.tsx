@@ -39,6 +39,7 @@ import {
   // LOGIN_URL,
   LOGIN_USING_EMAIL_URL,
   LOGIN_WITH_PASSWORD_URL,
+  REGISTER_USING_EMAIL_URL,
   REWARDEDAD,
   VERIFY_LOGIN_OTP_URL,
 } from '../../../constants/ApiPaths';
@@ -663,7 +664,7 @@ const SignInScreen = ({route}) => {
               setOtpError(false);
             } else if (user.length == 0) {
               {
-                CommonMessage('Please create an account to continue !')
+                CommonMessage('Please create an account to continue !');
               }
               setPaused(true);
               navigation.navigate('SignUpScreen1', {
@@ -700,102 +701,174 @@ const SignInScreen = ({route}) => {
     navigation.navigate('SplashScreen');
   };
 
+  // const googleLogin = async () => {
+  //   try {
+  //     await GoogleSignin.hasPlayServices();
+  //     const userInfo = await GoogleSignin.signIn();
+  //     // setState({ userInfo });
+  //     const {email = ''} = userInfo.user;
+
+  //     const bodydata = {
+  //       email: email,
+  //     };
+
+  //     await axios
+  //       .post(LOGIN_USING_EMAIL_URL, bodydata)
+  //       .then(function (response) {
+  //         const {
+  //           authtoken = '',
+  //           message = '',
+  //           status,
+  //           user = [],
+  //           newUser = false,
+  //         } = response.data;
+  //         const obj = user[0];
+  //         console.log(
+  //           LOGIN_USING_EMAIL_URL,
+  //           '==============LOGIN_USING_EMAIL_URL====',
+  //           response.data,
+  //           '=======LOGIN_USING_EMAIL_URL_response====',
+  //           bodydata,
+  //           '==============LOGIN_USING_EMAIL_URL_bodydata====',
+  //           status,
+  //           '======LOGIN_USING_EMAIL_URL_status..............',
+  //         );
+  //         if (user.length > 0) {
+  //           if (obj?.hasOwnProperty('status')) {
+  //             if (user.length > 0 && user[0].status == 'active') {
+  //               //
+
+  //               signIn(user, authtoken);
+  //               const childData = JSON.stringify(user);
+  //               AsyncStorage.setItem('userInfo', childData);
+  //               // signIn(user, user[0].childid);
+  //             } else if (user.length > 0 && user[0].status == 'inactive') {
+  //               setModalStatus(true);
+  //             } else if (user.length == 0) {
+  //               {
+  //                 selectedLanguage == 'english'
+  //                   ? CommonMessage('Please create an account to continue !')
+  //                   : CommonMessage(
+  //                       'ଜାରି ରଖିବାକୁ ଦୟାକରି ଏକ ଖାତା ସୃଷ୍ଟି କରନ୍ତୁ!',
+  //                     );
+  //               }
+  //               setPaused(true);
+  //               navigation.navigate('SignUpScreen1', {
+  //                 phone: '',
+  //                 email: email,
+  //                 otplogin: false,
+  //                 emailLogin: true,
+  //                 pswdLogin: true,
+  //               });
+  //               handleReset();
+  //               AsyncStorage.setItem('newUser', String(user.length == 0));
+  //             } else {
+  //             }
+  //           } else {
+  //             setModalStatus(true);
+  //           }
+  //         } else {
+  //           {
+  //             selectedLanguage == 'english'
+  //               ? CommonMessage('Please create an account to continue !')
+  //               : CommonMessage('ଜାରି ରଖିବାକୁ ଦୟାକରି ଏକ ଖାତା ସୃଷ୍ଟି କରନ୍ତୁ!');
+  //           }
+  //           setPaused(true);
+  //           navigation.navigate('SignUpScreen1', {
+  //             phone: '',
+  //             email: email,
+  //             otplogin: false,
+  //             emailLogin: true,
+  //             pswdLogin: true,
+  //           });
+  //           handleReset();
+  //           AsyncStorage.setItem('newUser', String(user.length == 0));
+  //         }
+
+  //         // if (setLoading) setLoading(false);
+  //       });
+  //   } catch (error) {
+  //     console.log(error.message,"error");
+  //     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+  //       console.log("1")
+  //       // user cancelled the login flow
+  //     } else if (error.code === statusCodes.IN_PROGRESS) {
+  //       console.log("2")
+  //       // operation (e.g. sign in) is in progress already
+  //     } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+  //       console.log("3")
+  //       // play services not available or outdated
+  //     } else {
+  //       // some other error happened
+  //     }
+  //   }
+  // };
+
   const googleLogin = async () => {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      // setState({ userInfo });
-
       const {email = ''} = userInfo.user;
 
-      const bodydata = {
-        email: email,
+      const bodydata = {email: email};
+
+      const loginUrl = LOGIN_USING_EMAIL_URL + email;
+      const token = await AsyncStorage.getObject('@auth_Token');
+
+      const requestOptions = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
       };
 
-      await axios
-        .post(LOGIN_USING_EMAIL_URL, bodydata)
-        .then(function (response) {
-          const {
-            authtoken = '',
-            message = '',
-            status,
-            user = [],
-            newUser = false,
-          } = response.data;
-          const obj = user[0];
-          console.log(
-            LOGIN_USING_EMAIL_URL,
-            '==============LOGIN_USING_EMAIL_URL====',
-            response.data,
-            '=======LOGIN_USING_EMAIL_URL_response====',
-            bodydata,
-            '==============LOGIN_USING_EMAIL_URL_bodydata====',
-            status,
-            '======LOGIN_USING_EMAIL_URL_status..............',
-          );
-          if (user.length > 0) {
-            if (obj?.hasOwnProperty('status')) {
-              if (user.length > 0 && user[0].status == 'active') {
-                //
+      const response = await fetch(loginUrl, requestOptions);
+      const responseData = await response.json();
 
-                signIn(user, authtoken);
-                const childData = JSON.stringify(user);
-                AsyncStorage.setItem('userInfo', childData);
-                // signIn(user, user[0].childid);
-              } else if (user.length > 0 && user[0].status == 'inactive') {
-                setModalStatus(true);
-              } else if (user.length == 0) {
-                {
-                  selectedLanguage == 'english'
-                    ? CommonMessage('Please create an account to continue !')
-                    : CommonMessage(
-                        'ଜାରି ରଖିବାକୁ ଦୟାକରି ଏକ ଖାତା ସୃଷ୍ଟି କରନ୍ତୁ!',
-                      );
-                }
-                setPaused(true);
-                // navigation.navigate('SignUpScreen1', {
-                //   phone: '',
-                //   email: email,
-                //   otplogin: false,
-                //   emailLogin: true,
-                //   pswdLogin: true,
-                // });
-                handleReset();
-                AsyncStorage.setItem('newUser', String(user.length == 0));
-              } else {
-              }
+      if (responseData.user && responseData.user.length > 0) {
+        const user = responseData.user[0];
+        if (user.status === 'active') {
+          signIn(responseData.user, responseData.authtoken);
+          AsyncStorage.setItem('userInfo', JSON.stringify(responseData.user));
+          navigation.navigate('SubjectLevel');
+        } else {
+          setModalStatus(true);
+        }
+      } else {
+        await axios
+          .post(REGISTER_USING_EMAIL_URL, bodydata)
+          .then(registerResponse => {
+            const newUser = registerResponse.data.user;
+            if (newUser && newUser.status === 'active') {
+              signIn(newUser, registerResponse.data.authtoken);
+              AsyncStorage.setItem('userInfo', JSON.stringify(newUser));
+              navigation.navigate('SignUpScreen1');
             } else {
               setModalStatus(true);
             }
-          } else {
-            {
-              selectedLanguage == 'english'
-                ? CommonMessage('Please create an account to continue !')
-                : CommonMessage('ଜାରି ରଖିବାକୁ ଦୟାକରି ଏକ ଖାତା ସୃଷ୍ଟି କରନ୍ତୁ!');
-            }
-            setPaused(true);
-            // navigation.navigate('SignUpScreen1', {
-            //   phone: '',
-            //   email: email,
-            //   otplogin: false,
-            //   emailLogin: true,
-            //   pswdLogin: true,
-            // });
-            handleReset();
-            AsyncStorage.setItem('newUser', String(user.length == 0));
-          }
-
-          // if (setLoading) setLoading(false);
-        });
+          })
+          .catch(error => {
+            console.error('Error registering user:', error);
+          });
+      }
     } catch (error) {
+      console.error('Google sign-in error:', error.message);
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        // user cancelled the login flow
+        // User cancelled the login flow
+        console.log('Sign-in was cancelled by the user.');
       } else if (error.code === statusCodes.IN_PROGRESS) {
-        // operation (e.g. sign in) is in progress already
+        // Operation (e.g. sign in) is in progress already
+        console.log('Sign-in is already in progress.');
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        // play services not available or outdated
+        // Play services not available or outdated
+        console.log('Google Play Services are not available or outdated.');
       } else {
-        // some other error happened
+        // Some other error happened
+        console.log(
+          'An unknown error occurred during Google sign-in:',
+          error.message,
+        );
       }
     }
   };
@@ -833,8 +906,7 @@ const SignInScreen = ({route}) => {
           alignSelf: 'center',
         }}
         resizeMode="cover"
-        source={require('../../../assets/0.png')}
-        >
+        source={require('../../../assets/0.png')}>
         <StatusBar backgroundColor={'#263d2d'} barStyle="light-content" />
         <View
           style={{
@@ -888,7 +960,7 @@ const SignInScreen = ({route}) => {
                   }}
                   // resizeMode="cover"
                   // source={require('../../../assets/01.png')}
-                  >
+                >
                   <Text
                     style={{
                       color: '#FFFFFF',
@@ -1042,7 +1114,7 @@ const SignInScreen = ({route}) => {
                 <ImageBackground
                   style={{
                     width: device_width * 1.25,
-                   // height: device_height * 0.63,
+                    // height: device_height * 0.63,
                     paddingTop: 30,
                     alignSelf: 'center',
                     justifyContent: 'center',
@@ -1050,7 +1122,7 @@ const SignInScreen = ({route}) => {
                   }}
                   // resizeMode="cover"
                   // source={require('../../../assets/01.png')}
-                  >
+                >
                   <Text
                     style={{
                       fontSize: 15,
@@ -1590,7 +1662,9 @@ const SignInScreen = ({route}) => {
                         paddingLeft: 10,
                       }}>
                       {/* 'ଯଦି ଆପଣ ଆପ୍ ଲଗଇନ୍ କିମ୍ବା ଓଟିପି ପାଇବାରେ କୌଣସି ଅସୁବିଧାର ସମ୍ମୁଖୀନ ହେଉଛନ୍ତି, ଦୟାକରି ଏହି ସମସ୍ତ ନମ୍ବର ସହିତ ଯୋଗାଯୋଗ କରନ୍ତୁ :- 8018990558, 8249375247, 7008699927' */}
-                      {'We kindly request you to reach out to our dedicated support team if you  encounter any issues with app login or OTP . Please contact on. 9861302757,7008699927'}
+                      {
+                        'We kindly request you to reach out to our dedicated support team if you  encounter any issues with app login or OTP . Please contact on. 9861302757,7008699927'
+                      }
                     </Text>
                   </View>
                 </TouchableOpacity>
@@ -1616,7 +1690,7 @@ const SignInScreen = ({route}) => {
                   // borderRadius: 50,
                   // borderWidth: 1,
                   width: device_width * 1.28,
-                   height: device_height * 0.5,
+                  height: device_height * 0.5,
                   // marginTop:-50,
                   // paddingTop: 20,
                   // borderRadius: 25,
@@ -1627,7 +1701,7 @@ const SignInScreen = ({route}) => {
                 }}
                 //resizeMode="cover"
                 // source={require('../../../assets/01.png')}
-                >
+              >
                 <Text
                   style={{
                     color: '#FFFFFF',
@@ -1686,7 +1760,7 @@ const SignInScreen = ({route}) => {
                         marginTop: -5,
                         fontSize: 12,
                       }}>
-                     {'** Please enter valid phone number'}
+                      {'** Please enter valid phone number'}
                     </Text>
                   </Animatable.View>
                 )}
@@ -1703,9 +1777,7 @@ const SignInScreen = ({route}) => {
                   }}>
                   {/* <FontAwesome name="user-o" color={'#333'} size={20} /> */}
                   <TextInput
-                    placeholder={
-                     ' Enter Password *'
-                    }
+                    placeholder={' Enter Password *'}
                     placeholderTextColor="#888"
                     secureTextEntry={true}
                     style={{
@@ -1817,29 +1889,22 @@ const SignInScreen = ({route}) => {
                   alignSelf: 'center',
                   alignItems: 'center',
                   justifyContent: 'space-around',
-                  flexDirection: 'row',
+                  flexDirection: 'row', // Keep items in a row
                   top: -25,
-                  // backgroundColor:'rgba(225,225,225,0.5)',
                   borderRadius: 15,
                   marginTop: 10,
-                  // elevation:15
-                  // borderWidth:1
                 }}>
+                {/* Sign-in with OTP Option */}
                 <TouchableOpacity
-                  // disabled={showprog == true ? true : false}
                   onPress={() => setShowOTPContent(true)}
                   style={{
-                    // flexDirection: 'row',
                     alignItems: 'center',
                     justifyContent: 'space-evenly',
-                    // backgroundColor: Colors.secondary,
-                    width: device_width * 0.4,
+                    width: device_width * 0.4, // Ensure equal width for both buttons
                     height: 70,
-                    // borderWidth: 1,
                   }}>
                   <View
                     style={{
-                      // width: '100%',
                       height: 51,
                       width: 51,
                       alignItems: 'center',
@@ -1857,15 +1922,48 @@ const SignInScreen = ({route}) => {
                   <Text
                     style={{
                       fontWeight: '800',
-                      // letterSpacing: 1,
                       color: '#fff',
-                      // color:'#000',
                       textAlign: 'center',
                       textDecorationLine: 'underline',
                       fontSize: 13,
                       alignSelf: 'center',
                     }}>
                     {'Sign-in with OTP'}
+                  </Text>
+                </TouchableOpacity>
+
+                {/* Sign-in with Google Option */}
+                <TouchableOpacity
+                  onPress={() => googleLogin()}
+                  style={{
+                    alignItems: 'center',
+                    justifyContent: 'space-evenly',
+                    width: device_width * 0.4, // Ensure equal width for both buttons
+                    height: 70,
+                  }}>
+                  <View
+                    style={{
+                      height: 51,
+                      width: 51,
+                      alignItems: 'center',
+                      borderRadius: 50,
+                    }}>
+                    <Avatar.Image
+                      source={require('../../../assets/google.jpg')}
+                      size={50}
+                      style={{backgroundColor: '#fff'}}
+                    />
+                  </View>
+                  <Text
+                    style={{
+                      fontWeight: '800',
+                      color: '#fff',
+                      textAlign: 'center',
+                      textDecorationLine: 'underline',
+                      fontSize: 13,
+                      alignSelf: 'center',
+                    }}>
+                    {'Sign-in with Google'}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -2026,7 +2124,9 @@ const SignInScreen = ({route}) => {
                         paddingLeft: 10,
                       }}>
                       {' '}
-                      {'We kindly request you to reach out to our dedicated support team if you  encounter any issues with app login or OTP . Please contact on. 9861302757,7008699927'}
+                      {
+                        'We kindly request you to reach out to our dedicated support team if you  encounter any issues with app login or OTP . Please contact on. 9861302757,7008699927'
+                      }
                     </Text>
                   </View>
                 </TouchableOpacity>
@@ -2199,7 +2299,9 @@ const SignInScreen = ({route}) => {
                     // marginLeft: 5,
                     fontWeight: '500',
                   }}>
-                  {'Your data will be stored with us for the next 90 days. However you can retrieve your used data in this period.'}
+                  {
+                    'Your data will be stored with us for the next 90 days. However you can retrieve your used data in this period.'
+                  }
                 </Text>
               </View>
             </ImageBackground>
@@ -2475,7 +2577,7 @@ const SignInScreen = ({route}) => {
                   height: 100,
                   width: '100%',
                 }}> */}
-                {/* <FastImage
+              {/* <FastImage
                   style={{
                     height: 100,
                     width: '100%',
@@ -2486,7 +2588,7 @@ const SignInScreen = ({route}) => {
                   source={require('../../../assets/resting1.png')}
                   resizeMode="contain"
                 /> */}
-                {/* <FastImage
+              {/* <FastImage
                   style={{
                     height: 30,
                     width: device_width * 0.97,
@@ -2495,7 +2597,7 @@ const SignInScreen = ({route}) => {
                   source={require('../../../assets/grass.png')}
                   resizeMode="contain"
                 /> */}
-               {/* </View> */}
+              {/* </View> */}
             </View>
           </ImageBackground>
         </Modal>

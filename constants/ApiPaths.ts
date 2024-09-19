@@ -9,9 +9,9 @@ import {
 } from 'react-native-google-mobile-ads';
 
 // Test AD
-export const BANNERAD = TestIds.BANNER //Test
-export const INTERSTITIALAD = TestIds.INTERSTITIAL //Test
-export const REWARDEDAD = TestIds.REWARDED //Test
+export const BANNERAD = TestIds.BANNER; //Test
+export const INTERSTITIALAD = TestIds.INTERSTITIAL; //Test
+export const REWARDEDAD = TestIds.REWARDED; //Test
 //Production AD
 // export const BANNERAD = 'ca-app-pub-1582661677692525/5073831578';
 // export const INTERSTITIALAD = 'ca-app-pub-1582661677692525/8821504899';
@@ -28,7 +28,10 @@ export const API_URL = 'https://notevook.com/demoApi/'; // productsion url
 
 export const LOGIN_SEND_OTP_URL = API_URL + 'loginotp';
 export const VERIFY_LOGIN_OTP_URL = API_URL + 'parentlogin';
-export const LOGIN_USING_EMAIL_URL = API_URL + 'childloginusingemail';
+//export const LOGIN_USING_EMAIL_URL = API_URL + 'edzchildlogiusingemail';
+export const REGISTER_USING_EMAIL_URL = API_URL + 'edzchildlogiusingemail';
+export const LOGIN_USING_EMAIL_URL =
+  API_URL + 'edzchildlogiusingemailedzchildlogiusingemail/';
 
 export const GET_PARENT_INFO_URL = API_URL + 'getParentbyid/';
 export const REGISTER_PARENT_URL = API_URL + 'registerParent';
