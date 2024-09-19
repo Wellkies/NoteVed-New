@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -25,8 +25,8 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Iconz from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 // import { useTheme } from "react-native-paper";
-import { useNavigation, useTheme } from '@react-navigation/native';
-import { Modal, RadioButton } from 'react-native-paper';
+import {useNavigation, useTheme} from '@react-navigation/native';
+import {Modal, RadioButton} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 // import {LOGIN_URL} from '../../../constants/ApiPaths';
 // import axios from "axios";
@@ -40,14 +40,14 @@ import {
   phoneRegex,
   phoneRegexWithout91,
 } from '../../../constants/Constants';
-import { device_height, device_width } from '../style';
-import { Avatar, Chip } from 'react-native-paper';
-import { useDispatch, useSelector } from 'react-redux';
+import {device_height, device_width} from '../style';
+import {Avatar, Chip} from 'react-native-paper';
+import {useDispatch, useSelector} from 'react-redux';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { AuthContext } from '../../../context';
+import {AuthContext} from '../../../context';
 // import {setLanguage} from '../../redux/actions/Action';
 import i18n from 'i18next';
-import { Dropdown } from 'react-native-element-dropdown';
+import {Dropdown} from 'react-native-element-dropdown';
 import {
   GoogleSignin,
   GoogleSigninButton,
@@ -55,14 +55,17 @@ import {
 } from '@react-native-google-signin/google-signin';
 // import CommonModalUser from '../UserScreens/CommonModalUser';
 import FastImage from 'react-native-fast-image';
-import { useAppSelector } from '../../redux/store/reducerHook';
+import {useAppSelector} from '../../redux/store/reducerHook';
 // import { selectStudentLanguage } from '../../redux/reducers/languageReducer';
 // import { getStandard, selectStudentStandard } from '../../redux/reducers/StandardReducer';
 // import { getBoard, selectStudentBoard } from '../../redux/reducers/BoardReducer';
-import { childPhoneVerifyAPI, selectVerifyPhInfo } from '../../redux/reducers/VerifyPhoneReducer';
-const { t: trans } = i18n;
+import {
+  childPhoneVerifyAPI,
+  selectVerifyPhInfo,
+} from '../../redux/reducers/VerifyPhoneReducer';
+const {t: trans} = i18n;
 
-const SignUpScreen2 = ({ route }) => {
+const SignUpScreen2 = ({route}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch<any>();
   const {
@@ -109,11 +112,11 @@ const SignUpScreen2 = ({ route }) => {
 
   const handleRadioChange = value => {
     if (value == 'Male') {
-      setInfo({ ...info, gender: 'Male' });
+      setInfo({...info, gender: 'Male'});
     } else if (value == 'Female') {
-      setInfo({ ...info, gender: 'Female' });
+      setInfo({...info, gender: 'Female'});
     } else {
-      setInfo({ ...info, gender: 'others' });
+      setInfo({...info, gender: 'others'});
     }
     setGenderError(false);
     setGender(value);
@@ -295,8 +298,7 @@ const SignUpScreen2 = ({ route }) => {
       } else {
         setEmailError(false);
       }
-    }
-    else if (inputName == 'alt_phone') {
+    } else if (inputName == 'alt_phone') {
       if (inputValue != '') {
         if (phoneRegexWithout91.test(inputValue)) {
           setAltPhoneError(false);
@@ -307,8 +309,8 @@ const SignUpScreen2 = ({ route }) => {
         setAltPhoneError(false);
       }
     }
-    let infodata = { ...info };
-    setInfo({ ...infodata, [inputName]: inputValue });
+    let infodata = {...info};
+    setInfo({...infodata, [inputName]: inputValue});
   };
 
   const email_regex_validate = emailRegex.test(st_email);
@@ -328,13 +330,12 @@ const SignUpScreen2 = ({ route }) => {
           // borderRadius: 25,
           flex: 1,
           alignSelf: 'center',
-          backgroundColor: '#272727'
+          // backgroundColor: '#272727'
           // justifyContent: 'center',
           // alignItems: 'center',
         }}
-        // resizeMode="cover"
-        // source={require('../../../assets/0.png')}
-        >
+        resizeMode="cover"
+        source={require('../../../assets/0.png')}>
         <View
           style={{
             flexDirection: 'row',
@@ -344,7 +345,7 @@ const SignUpScreen2 = ({ route }) => {
           }}>
           <TouchableOpacity
             onPress={() => goBackFunction()}
-            style={{ paddingLeft: 10, position: 'absolute', left: 0 }}>
+            style={{paddingLeft: 10, position: 'absolute', left: 0}}>
             <MaterialIcons
               name="keyboard-arrow-left"
               size={30}
@@ -406,7 +407,7 @@ const SignUpScreen2 = ({ route }) => {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+              <View style={{alignItems: 'center', justifyContent: 'center'}}>
                 <View
                   style={{
                     borderRadius: 15,
@@ -456,7 +457,7 @@ const SignUpScreen2 = ({ route }) => {
                             }}>
                             {/* {trans('Complete Your Registration ')} */}
                             {'Complete Your Registration '}
-                            <Text style={{ fontWeight: '900', fontSize: 16 }}>
+                            <Text style={{fontWeight: '900', fontSize: 16}}>
                               {/* {trans('2/5')} */}
                               {'2/4'}
                             </Text>
@@ -484,8 +485,8 @@ const SignUpScreen2 = ({ route }) => {
                             size={22}
                           />
                           {emailLogin == true &&
-                            st_email != '' &&
-                            email_regex_validate ? (
+                          st_email != '' &&
+                          email_regex_validate ? (
                             <Text
                               style={{
                                 color: '#bbb',
@@ -554,8 +555,8 @@ const SignUpScreen2 = ({ route }) => {
                               gender == ''
                                 ? 'darkorange'
                                 : genderError == true
-                                  ? 'darkorange'
-                                  : '#fff',
+                                ? 'darkorange'
+                                : '#fff',
                           }}>
                           <MaterialCommunityIcons
                             name="human-male-female"
@@ -577,7 +578,7 @@ const SignUpScreen2 = ({ route }) => {
                               }
                               selectedColor="#3A7AB0"
                               color={'#263d2d'}
-                              style={{ alignaItems: 'center', color: '#000' }}
+                              style={{alignaItems: 'center', color: '#000'}}
                             />
                             <View
                               style={{
@@ -613,7 +614,7 @@ const SignUpScreen2 = ({ route }) => {
                               onPress={() => handleRadioChange('Female')}
                               selectedColor="#3A7AB"
                               color={'#263d2d'}
-                              style={{ paddingHorizontal: 10, color: '#000' }}
+                              style={{paddingHorizontal: 10, color: '#000'}}
                             />
                             <View
                               style={{
@@ -671,7 +672,7 @@ const SignUpScreen2 = ({ route }) => {
                             animation="fadeInLeft"
                             duration={500}>
                             <Text
-                              style={{ color: 'darkorange', marginBottom: 10 }}>
+                              style={{color: 'darkorange', marginBottom: 10}}>
                               {/* {trans('Please select your gender')} */}
                               {'Please select your gender'}
                             </Text>
@@ -681,7 +682,7 @@ const SignUpScreen2 = ({ route }) => {
                             animation="fadeInLeft"
                             duration={500}>
                             <Text
-                              style={{ color: 'darkorange', marginBottom: 10 }}>
+                              style={{color: 'darkorange', marginBottom: 10}}>
                               {/* {trans('Please select your gender')} */}
                               {'Please select your gender'}
                             </Text>
@@ -703,13 +704,17 @@ const SignUpScreen2 = ({ route }) => {
                             paddingLeft: 20,
                             alignItems: 'center',
                             borderWidth:
-                              alt_phone == '' ? 1 : altPhoneError == true ? 1 : 0,
+                              alt_phone == ''
+                                ? 1
+                                : altPhoneError == true
+                                ? 1
+                                : 0,
                             borderColor:
                               alt_phone == ''
                                 ? 'darkorange'
                                 : phoneerror == true
-                                  ? 'darkorange'
-                                  : '#fff',
+                                ? 'darkorange'
+                                : '#fff',
                           }}>
                           <FontAwesome5
                             name="phone-alt"
@@ -904,13 +909,12 @@ const SignUpScreen2 = ({ route }) => {
                         marginTop: 10,
                       }}>
                       <TouchableOpacity
-                        disabled={ gender != '' ? false : true}
+                        disabled={gender != '' ? false : true}
                         style={{
                           borderRadius: 10,
                           width: '30%',
                           marginVertical: 5,
-                          backgroundColor:
-                             gender != '' ? '#a3b448' : '#ccc',
+                          backgroundColor: gender != '' ? '#a3b448' : '#ccc',
                           paddingVertical: 10,
                           justifyContent: 'center',
                         }}
@@ -934,8 +938,7 @@ const SignUpScreen2 = ({ route }) => {
                         }}>
                         <Text
                           style={{
-                            color:
-                               gender != '' ? '#333' : '#666',
+                            color: gender != '' ? '#333' : '#666',
                             fontSize: 13,
                             fontWeight: '600',
                             textAlign: 'center',
@@ -1014,7 +1017,7 @@ const SignUpScreen2 = ({ route }) => {
               // marginRight:5,
               // borderWidth: 1,
               zIndex: 1,
-              marginTop: -100
+              marginTop: -100,
               // alignSelf: 'flex-end',
               // alignItems: 'flex-end',
               // justifyContent: 'flex-end',
