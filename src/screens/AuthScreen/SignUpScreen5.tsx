@@ -59,7 +59,10 @@ import {
   setLanguage,
 } from '../../redux/reducers/languageReducer';
 import {useAppSelector} from '../../redux/store/reducerHook';
-import {RegisterNewChild} from '../../redux/actions/RegisterAPI';
+import {
+  RegisterNewChild,
+  RegisterNewGmailChild,
+} from '../../redux/actions/RegisterAPI';
 import {login} from '../../redux/reducers/loginReducer';
 import AsyncStorage from '../../utils/AsyncStorage';
 import {
@@ -88,6 +91,8 @@ const SignUpScreen5 = ({route}) => {
     otplogin = false,
     emailLogin = '',
     pswdLogin = false,
+    isFromGoogleSignIn = false,
+    Googleemail = '',
   } = route.params;
 
   console.log(route.params, '==================route.params');
@@ -559,20 +564,17 @@ const SignUpScreen5 = ({route}) => {
       let confirmVal = handlePhoneNumber(st_phone);
       // console.log(confirmVal, 'SignIn phone Screen', phone_validate);
       phone_validate = phoneRegex.test(confirmVal);
-      if (phone_validate) {
+      if (phone_validate || isFromGoogleSignIn) {
         setshowprog(true);
         const bodydata = {
           fname: fname,
           lname: lname,
-          email: st_email,
+          email: isFromGoogleSignIn ? Googleemail : st_email,
           phone: confirmVal,
           alterphone: alt_phone,
-          // age: st_age.value,
           age: st_age,
           statename: stateData.label,
           stateid: stateData.value,
-          //stateid:stateID,
-          //academicyear: acdmy_year.value,
           password: password,
           gender: gender,
           image: '',
@@ -582,13 +584,34 @@ const SignUpScreen5 = ({route}) => {
           isPremium: false,
           subscriptionStartDate: '',
           subscriptionEndDate: '',
-          // boardid: schoolBoardName != undefined ? schoolBoardName.boardid : '',
         };
-        //   let uuu = await Apiconnect.postData_noauth('postdata/usersignup', inf);
         console.log(bodydata, '============RegisterNewChild bodydata');
-
         RegisterNewChild(bodydata, handleCallBack);
       }
+    }
+    if (isFromGoogleSignIn) {
+      const bodydata = {
+        fname: fname,
+        lname: lname,
+        email: isFromGoogleSignIn ? Googleemail : st_email,
+        phone: '',
+        alterphone: alt_phone,
+        age: st_age,
+        statename: stateData.label,
+        stateid: stateData.value,
+        password: password,
+        gender: gender,
+        image: '',
+        imagename: '',
+        name: fname + ' ' + lname,
+        status: '',
+        isPremium: false,
+        subscriptionStartDate: '',
+        subscriptionEndDate: '',
+      };
+      console.log(bodydata, '============RegisterNewChild bodydata');
+
+      RegisterNewGmailChild(bodydata, handleCallBack);
     }
   };
   const handleCallBack = (
@@ -678,8 +701,7 @@ const SignUpScreen5 = ({route}) => {
           //backgroundColor: '#272727',
         }}
         resizeMode="cover"
-        source={require('../../../assets/0.png')}
-      >
+        source={require('../../../assets/0.png')}>
         <View
           style={{
             flexDirection: 'row',
@@ -892,7 +914,9 @@ const SignUpScreen5 = ({route}) => {
                             duration={500}>
                             <Text style={{color: Colors.red, marginBottom: 10}}>
                               {/* {"Please Enter Valid Student's Age"} */}
-                              {"Please Enter Valid Student's Age. Age must be 13 or older."}
+                              {
+                                "Please Enter Valid Student's Age. Age must be 13 or older."
+                              }
                             </Text>
                           </Animatable.View>
                         ) : (
@@ -959,7 +983,7 @@ const SignUpScreen5 = ({route}) => {
                             duration={500}>
                             <Text
                               style={{color: 'darkorange', marginBottom: 10}}>
-                              {trans("Please Enter State Name")}
+                              {trans('Please Enter State Name')}
                             </Text>
                           </Animatable.View>
                         ) : stateError ? (
@@ -968,7 +992,7 @@ const SignUpScreen5 = ({route}) => {
                             duration={500}>
                             <Text
                               style={{color: 'darkorange', marginBottom: 10}}>
-                              {trans("Please Enter State Name")}
+                              {trans('Please Enter State Name')}
                             </Text>
                           </Animatable.View>
                         ) : (
@@ -999,7 +1023,10 @@ const SignUpScreen5 = ({route}) => {
                           width: '50%',
                           marginVertical: 5,
                           backgroundColor:
-                            st_age != '' && st_age !== null && st_age != '0' && !ageError
+                            st_age != '' &&
+                            st_age !== null &&
+                            st_age != '0' &&
+                            !ageError
                               ? '#a3b448'
                               : '#ccc',
                           marginHorizontal: 20,

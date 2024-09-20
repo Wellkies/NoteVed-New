@@ -703,6 +703,7 @@ const SignInScreen = ({route}) => {
 
   const googleLogin = async () => {
     try {
+      const isFromGoogleSignIn = true;
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
       const {email = ''} = userInfo.user;
@@ -710,7 +711,7 @@ const SignInScreen = ({route}) => {
       const bodydata = {email: email};
 
       const loginUrl = LOGIN_USING_EMAIL_URL + email;
-      const token = await AsyncStorage.getObject('@auth_Token');
+      const token = await Storage.getObject('@auth_Token');
 
       const requestOptions = {
         method: 'GET',
@@ -722,35 +723,21 @@ const SignInScreen = ({route}) => {
 
       const response = await fetch(loginUrl, requestOptions);
       const responseData = await response.json();
+      //console.log(loginUrl, '@loginUrl');
+      if (responseData && responseData.user && responseData.user.length > 0) {
+        const userData = responseData.user[0];
+        dispatch(login(responseData));
+        signIn(responseData);
 
-      if (responseData.user && responseData.user.length > 0) {
-        const user = responseData.user[0];
-        if (user.status === 'active') {
-          signIn(responseData.user, responseData.authtoken);
-          AsyncStorage.setItem('userInfo', JSON.stringify(responseData.user));
-          navigation.navigate('SubjectLevel');
-        } else {
-          setModalStatus(true);
-        }
+        //AsyncStorage.setItem('userInfo', JSON.stringify(userData));
       } else {
-        await axios
-          .post(REGISTER_USING_EMAIL_URL, bodydata)
-          .then(registerResponse => {
-            const newUser = registerResponse.data.user;
-            if (newUser && newUser.status === 'active') {
-              signIn(newUser, registerResponse.data.authtoken);
-              AsyncStorage.setItem('userInfo', JSON.stringify(newUser));
-              navigation.navigate('SignUpScreen1');
-            } else {
-              setModalStatus(true);
-            }
-          })
-          .catch(error => {
-            console.error('Error registering user:', error);
-          });
+        navigation.navigate('SignUpScreen1', {
+          isFromGoogleSignIn: isFromGoogleSignIn,
+          Googleemail: email,
+        });
       }
     } catch (error) {
-      console.error('Google sign-in error:', error.message);
+      console.error('Google login error:', error.message);
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // User cancelled the login flow
         console.log('Sign-in was cancelled by the user.');
@@ -763,7 +750,7 @@ const SignInScreen = ({route}) => {
       } else {
         // Some other error happened
         console.log(
-          'An unknown error occurred during Google sign-in:',
+          'An unknown error occurred during Google login:',
           error.message,
         );
       }
@@ -828,29 +815,27 @@ const SignInScreen = ({route}) => {
           {showOTPContent ? (
             <Animatable.View
               animation="fadeInUpBig"
-              style={
-                {
-                  // flex: 3,
-                  // backgroundColor: '#fff',
-                  // borderTopLeftRadius: 30,
-                  // borderTopRightRadius: 30,
-                  // paddingHorizontal: 20,
-                  // paddingVertical: 10,
-                  // backgroundColor: Colors.secondary,
-                  // borderWidth:1
-                  // flex: 3,
-                  // backgroundColor: '#fff',
-                  // borderTopLeftRadius: 30,
-                  // borderTopRightRadius: 30,
-                  // paddingHorizontal: 20,
-                  // paddingVertical: 30,
-                }
-              }>
+              style={{
+                // flex: 3,
+                // backgroundColor: '#fff',
+                // borderTopLeftRadius: 30,
+                // borderTopRightRadius: 30,
+                // paddingHorizontal: 20,
+                // paddingVertical: 10,
+                // backgroundColor: Colors.secondary,
+                // borderWidth:1
+                // flex: 3,
+                // backgroundColor: '#fff',
+                // borderTopLeftRadius: 30,
+                // borderTopRightRadius: 30,
+                // paddingHorizontal: 20,
+                paddingVertical: 30,
+              }}>
               {showprog == false && (
                 <ImageBackground
                   style={{
                     width: device_width * 1.28,
-                    height: device_height * 0.7,
+                    height: device_height * 0.6,
                     alignSelf: 'center',
                     justifyContent: 'center',
                     alignItems: 'center',
@@ -1432,7 +1417,8 @@ const SignInScreen = ({route}) => {
                       color: '#f1a722',
                       marginLeft: 15,
                       fontSize: 13,
-                      margin: 10,
+                      marginBottom: 10,
+                      top: -35,
                     }}>
                     {'Try other ways to login'}
                   </Text>
@@ -1443,7 +1429,7 @@ const SignInScreen = ({route}) => {
                       alignItems: 'center',
                       justifyContent: 'space-around',
                       flexDirection: 'row',
-                      marginTop: 10,
+                      //marginTop: 10,
                     }}>
                     <TouchableOpacity
                       disabled={showprog ? true : false}
@@ -1452,7 +1438,7 @@ const SignInScreen = ({route}) => {
                         alignItems: 'center',
                         justifyContent: 'space-evenly',
                         width: device_width * 0.4,
-                        height: 70,
+                        height: 60,
                       }}>
                       <View
                         style={{

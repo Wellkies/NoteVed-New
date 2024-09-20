@@ -29,9 +29,9 @@ export const API_URL = 'https://wellkies.com/demoApi/'; // Test url
 export const LOGIN_SEND_OTP_URL = API_URL + 'loginotp';
 export const VERIFY_LOGIN_OTP_URL = API_URL + 'parentlogin';
 //export const LOGIN_USING_EMAIL_URL = API_URL + 'edzchildlogiusingemail';
-export const REGISTER_USING_EMAIL_URL = API_URL + 'edzchildlogiusingemail';
+export const REGISTER_USING_EMAIL_URL = API_URL + 'edzcreateChildwithemail';
 export const LOGIN_USING_EMAIL_URL =
-  API_URL + 'edzchildlogiusingemailedzchildlogiusingemail/';
+  API_URL + 'edzchildlogiusingemail/';
 
 export const GET_PARENT_INFO_URL = API_URL + 'getParentbyid/';
 export const REGISTER_PARENT_URL = API_URL + 'registerParent';

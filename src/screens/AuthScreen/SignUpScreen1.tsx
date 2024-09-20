@@ -90,6 +90,8 @@ const SignUpScreen1 = ({route}) => {
     otplogin = false,
     emailLogin = '',
     pswdLogin = false,
+    isFromGoogleSignIn = false,
+    Googleemail =''
   } = route.params;
   //console.log(route.params, '==================route.params');
 
@@ -504,7 +506,7 @@ const SignUpScreen1 = ({route}) => {
             } = response.data;
             console.log(
               response.data,
-              '==============EDZ_LOGIN_CHILD_OTP_VERIFY_URL response'
+              '==============EDZ_LOGIN_CHILD_OTP_VERIFY_URL response',
             );
             if (user.length > 0 && user[0].status == 'active') {
               signIn(response.data);
@@ -532,7 +534,9 @@ const SignUpScreen1 = ({route}) => {
               {
                 setOtpVerified(true);
                 //selectedLanguage == 'english'
-                CommonMessage('Mobile phone number has been verified successfully !');
+                CommonMessage(
+                  'Mobile phone number has been verified successfully !',
+                );
               }
               handleReset();
               Storage.storeObject('newUser', String(user.length == 0));
@@ -1051,14 +1055,17 @@ const SignUpScreen1 = ({route}) => {
                       }}>
                       <TouchableOpacity
                         disabled={
-                          st_phone != '' &&
-                          otpVerified &&
-                          fname != '' &&
-                          phoneerror == false &&
-                          VerifyPhone != undefined &&
-                          Object.keys(VerifyPhone).length > 0 &&
-                          VerifyPhone.message === 'User not registered' &&
-                          fnameError == false
+                          (isFromGoogleSignIn &&
+                            fname != '' &&
+                            fnameError == false) ||
+                          (st_phone != '' &&
+                            otpVerified &&
+                            fname != '' &&
+                            phoneerror == false &&
+                            VerifyPhone != undefined &&
+                            Object.keys(VerifyPhone).length > 0 &&
+                            VerifyPhone.message === 'User not registered' &&
+                            fnameError == false)
                             ? false
                             : true
                         }
@@ -1067,14 +1074,17 @@ const SignUpScreen1 = ({route}) => {
                           width: '30%',
                           marginVertical: 5,
                           backgroundColor:
-                            st_phone != '' &&
-                            otpVerified &&
-                            fname != '' &&
-                            phoneerror == false &&
-                            VerifyPhone != undefined &&
-                            Object.keys(VerifyPhone).length > 0 &&
-                            VerifyPhone.message === 'User not registered' &&
-                            fnameError == false
+                            (isFromGoogleSignIn &&
+                              fname != '' &&
+                              fnameError == false) ||
+                            (st_phone != '' &&
+                              otpVerified &&
+                              fname != '' &&
+                              phoneerror == false &&
+                              VerifyPhone != undefined &&
+                              Object.keys(VerifyPhone).length > 0 &&
+                              VerifyPhone.message === 'User not registered' &&
+                              fnameError == false)
                               ? '#a3b448'
                               : '#ccc',
                           paddingVertical: 10,
@@ -1090,6 +1100,8 @@ const SignUpScreen1 = ({route}) => {
                             otplogin: otplogin,
                             emailLogin: emailLogin,
                             pswdLogin: pswdLogin,
+                            isFromGoogleSignIn: isFromGoogleSignIn,
+                            Googleemail: Googleemail
                           });
                           // setInputModal1(false);
                           // setInputModal2(true);
@@ -1097,14 +1109,17 @@ const SignUpScreen1 = ({route}) => {
                         <Text
                           style={{
                             color:
-                              st_phone != '' &&
-                              otpVerified &&
-                              fname != '' &&
-                              phoneerror == false &&
-                              VerifyPhone != undefined &&
-                              Object.keys(VerifyPhone).length > 0 &&
-                              VerifyPhone.message === 'User not registered' &&
-                              fnameError == false
+                              (isFromGoogleSignIn &&
+                                fname != '' &&
+                                fnameError == false) ||
+                              (st_phone != '' &&
+                                otpVerified &&
+                                fname != '' &&
+                                phoneerror == false &&
+                                VerifyPhone != undefined &&
+                                Object.keys(VerifyPhone).length > 0 &&
+                                VerifyPhone.message === 'User not registered' &&
+                                fnameError == false)
                                 ? 'white'
                                 : '#666',
                             fontSize: 13,

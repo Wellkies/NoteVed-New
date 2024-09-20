@@ -81,6 +81,8 @@ const SignUpScreen4 = ({ route }) => {
     otplogin = false,
     emailLogin = '',
     pswdLogin = false,
+    isFromGoogleSignIn = false,
+    Googleemail='',
   } = route.params;
 
   console.log(route.params, '==================route.params');
@@ -761,6 +763,8 @@ const SignUpScreen4 = ({ route }) => {
                               otplogin: otplogin,
                               emailLogin: emailLogin,
                               pswdLogin: pswdLogin,
+                              isFromGoogleSignIn: isFromGoogleSignIn,
+                              Googleemail: Googleemail
                             });
                           }}>
                           <Text
@@ -824,7 +828,9 @@ const SignUpScreen4 = ({ route }) => {
                             st_phone: st_phone,
                             // st_age: st_age,
                             gender: gender,
-                            st_email: st_email,
+                            st_email: isFromGoogleSignIn
+                              ? Googleemail
+                              : st_email,
                             alt_phone: alt_phone,
                             // father_name: father_name,
                             // parents_phone: parents_phone,
@@ -835,6 +841,8 @@ const SignUpScreen4 = ({ route }) => {
                             otplogin: otplogin,
                             emailLogin: emailLogin,
                             pswdLogin: pswdLogin,
+                            isFromGoogleSignIn: isFromGoogleSignIn,
+                            Googleemail:Googleemail
                           });
                         }}>
                         <Text

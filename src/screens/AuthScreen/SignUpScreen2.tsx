@@ -77,6 +77,8 @@ const SignUpScreen2 = ({route}) => {
     otplogin = false,
     emailLogin = '',
     pswdLogin = false,
+    isFromGoogleSignIn = false,
+    Googleemail = '',
   } = route.params;
   console.log(route.params, '==================route.params');
 
@@ -484,18 +486,16 @@ const SignUpScreen2 = ({route}) => {
                             color={'#263d2d'}
                             size={22}
                           />
-                          {emailLogin == true &&
-                          st_email != '' &&
-                          email_regex_validate ? (
+                          {isFromGoogleSignIn == true ? (
                             <Text
                               style={{
-                                color: '#bbb',
+                                color: '#333',
                                 flex: 1,
                                 paddingLeft: 10,
                                 fontSize: 13,
                                 fontWeight: '600',
                               }}>
-                              {st_email}
+                              {Googleemail}
                             </Text>
                           ) : (
                             <TextInput
@@ -925,13 +925,17 @@ const SignUpScreen2 = ({route}) => {
                             st_phone: st_phone,
                             // st_age: st_age,
                             gender: gender,
-                            st_email: st_email,
+                            st_email: isFromGoogleSignIn
+                              ? Googleemail
+                              : st_email,
                             phone: phone,
                             alt_phone: alt_phone,
                             email: email,
                             otplogin: otplogin,
                             emailLogin: emailLogin,
                             pswdLogin: pswdLogin,
+                            isFromGoogleSignIn: isFromGoogleSignIn,
+                            Googleemail: Googleemail,
                           });
                           //   setInputModal2(false);
                           //   setInputModal3(true);
