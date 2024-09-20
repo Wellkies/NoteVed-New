@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "86911243114",
-    "project_id": "notevedcca",
-    "storage_bucket": "notevedcca.appspot.com"
+    "project_number": "1010202872856",
+    "project_id": "sk-lzup",
+    "storage_bucket": "sk-lzup.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:86911243114:android:b5055a6046b8ed629e4b13",
+        "mobilesdk_app_id": "1:1010202872856:android:1be8e336b2f2394c4dc76d",
         "android_client_info": {
           "package_name": "com.notevedcca"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyC2bU37czSM0g12iP7yr1bkezZgjxEq8fI"
+          "current_key": "AIzaSyDh4WhHVOYJ9W-z2xeF2EYbqA-9e_3At7A"
         }
       ],
       "services": {

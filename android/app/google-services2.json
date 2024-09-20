@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1010202872856",
+    "project_id": "sk-lzup",
+    "storage_bucket": "sk-lzup.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1010202872856:android:1be8e336b2f2394c4dc76d",
+        "android_client_info": {
+          "package_name": "com.notevedpro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1010202872856-cl4bsp2o4fd2hh5eh2vfkkv155va02gf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.notevedpro",
+            "certificate_hash": "11a7982141136a078667b69cb0b850ce06c7cc4c"
+          }
+        },
+        {
+          "client_id": "1010202872856-f99b6fdj7bs97i4d7gr39fvmq5jbbmns.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDh4WhHVOYJ9W-z2xeF2EYbqA-9e_3At7A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1010202872856-f99b6fdj7bs97i4d7gr39fvmq5jbbmns.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
