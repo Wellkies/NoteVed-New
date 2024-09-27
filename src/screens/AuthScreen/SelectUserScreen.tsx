@@ -24,12 +24,12 @@ import AsyncStorage from '../../utils/AsyncStorage';
 import {useNavigation} from '@react-navigation/native';
 import Header from '../CommonScreens/Header';
 import Colors from '../../../assets/Colors';
-import {
-  TestIds,
-  RewardedAd,
-  RewardedAdEventType,
-} from 'react-native-google-mobile-ads';
-import {REWARDEDAD} from '../../../constants/ApiPaths';
+// import {
+//   TestIds,
+//   RewardedAd,
+//   RewardedAdEventType,
+// } from 'react-native-google-mobile-ads';
+// import {REWARDEDAD} from '../../../constants/ApiPaths';
 // import Header from '../CommonScreens/Header';
 
 const SelectUserScreen = ({route}) => {
@@ -41,41 +41,41 @@ const SelectUserScreen = ({route}) => {
 
   /////////////////////AD/////////////////////
 
-  const [rewardedad, setRewardedad] = useState(null);
+  // const [rewardedad, setRewardedad] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [isRewardedAddCalled, setIsRewardedAddCalled] = useState(false);
-  const adUnitId3 = REWARDEDAD;
+  // const [isRewardedAddCalled, setIsRewardedAddCalled] = useState(false);
+  // const adUnitId3 = REWARDEDAD;
 
   useEffect(() => {
-    initRewardedad();
+    // initRewardedad();
   }, []);
 
   useEffect(() => {
-    if (isLoaded && !isRewardedAddCalled) {
-      rewardedadd();
-      setIsRewardedAddCalled(true);
-    }
+    // if (isLoaded && !isRewardedAddCalled) {
+    //   rewardedadd();
+    //   setIsRewardedAddCalled(true);
+    // }
   }, [isLoaded]);
-  const initRewardedad = () => {
-    const rewarded = RewardedAd.createForAdRequest(adUnitId3, {
-      keywords: ['fashion', 'clothing'],
-    });
-    rewarded.addAdEventListener(RewardedAdEventType.LOADED, () => {
-      setRewardedad(rewarded);
-      setIsLoaded(true);
-      console.log('Rewardedad ad loaded!!###############');
-    });
-    rewarded.addAdEventListener(RewardedAdEventType.EARNED_REWARD, () => {
-      initRewardedad();
-      console.log('Rewardedad ad Closed!!');
-    });
-    rewarded.load();
-  };
-  const rewardedadd = () => {
-    if (rewardedad) {
-      rewardedad.show();
-    }
-  };
+  // const initRewardedad = () => {
+  //   const rewarded = RewardedAd.createForAdRequest(adUnitId3, {
+  //     keywords: ['fashion', 'clothing'],
+  //   });
+  //   rewarded.addAdEventListener(RewardedAdEventType.LOADED, () => {
+  //     setRewardedad(rewarded);
+  //     setIsLoaded(true);
+  //     console.log('Rewardedad ad loaded!!###############');
+  //   });
+  //   rewarded.addAdEventListener(RewardedAdEventType.EARNED_REWARD, () => {
+  //     initRewardedad();
+  //     console.log('Rewardedad ad Closed!!');
+  //   });
+  //   rewarded.load();
+  // };
+  // const rewardedadd = () => {
+  //   if (rewardedad) {
+  //     rewardedad.show();
+  //   }
+  // };
   useEffect(() => {
     navigation.addListener('focus', () => {
       BackHandler.addEventListener('hardwareBackPress', () => {

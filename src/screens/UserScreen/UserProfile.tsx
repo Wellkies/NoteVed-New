@@ -9,6 +9,11 @@ import {
   ImageBackground,
   TextInput,
 } from 'react-native';
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
 import React, {useContext, useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Iconz from 'react-native-vector-icons/Entypo';
@@ -110,6 +115,7 @@ const UserProfile = ({}) => {
   const Logout = async () => {
     
     dispatch(logout());
+    googleSignOut()
     const authValue = await Storage.removeValue('@auth_Token');
     const User = await Storage.removeValue('@user');
     // const navigation = useNavigation();
@@ -265,10 +271,21 @@ const UserProfile = ({}) => {
     setDeleteModalStatus(false);
     setSelectReason(false);
   };
+
+  const googleSignOut = async () => {
+    try {
+      await GoogleSignin.configure();
+      await GoogleSignin.signOut();
+      // setState({ user: null }); // Remember to remove the user from your app's state as well
+    } catch (error) {
+      console.error(error);
+    }
+  }
   const closeModal = () => {
     setsucessDeleteStatus(false);
     // signOut();
     Logout();
+    googleSignOut()
   };
   return (
     <SafeAreaView style={{flex: 1}}>

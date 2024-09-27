@@ -80,8 +80,8 @@ android {
         applicationId "com.notevedcca"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1"
+        versionCode 4
+        versionName "1.3"
     }
     signingConfigs {
         debug {

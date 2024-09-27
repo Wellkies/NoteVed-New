@@ -12,6 +12,7 @@ import {
   BackHandler,
   ImageBackground,
   Platform,
+  NativeModules,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -48,6 +49,7 @@ const SubjectsDetails = ({ route }) => {
   const navigation = useNavigation()
   const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
   const dispatch = useDispatch<any>();
+  const InAppUpdate = NativeModules.InAppUpdate;
   // const scholarshipid = 'Navodaya1690353664697';
   const {
     subjectid='',
@@ -268,6 +270,7 @@ const SubjectsDetails = ({ route }) => {
 
   useEffect(() => {
     dispatch(getUnlockChildAPI());
+    const inappupdated = InAppUpdate.checkUpdate();
 
     const Revdata = {
       Class,

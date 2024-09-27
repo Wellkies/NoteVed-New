@@ -62,20 +62,20 @@ import {
   selectContentQuiz,
 } from '../../redux/reducers/GetContentDetailsReducer';
 import {selectUserInfo} from '../../redux/reducers/loginReducer';
-import {
-  BannerAd,
-  BannerAdSize,
-  InterstitialAd,
-  TestIds,
-  RewardedAd,
-  AdEventType,
-  RewardedAdEventType,
-} from 'react-native-google-mobile-ads';
+// import {
+//   BannerAd,
+//   BannerAdSize,
+//   InterstitialAd,
+//   TestIds,
+//   RewardedAd,
+//   AdEventType,
+//   RewardedAdEventType,
+// } from 'react-native-google-mobile-ads';
 import {Modal} from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {createContactApi} from '../../redux/actions/createContactApi';
 import CommonMessage from '../../../constants/CommonMessage';
-import {BANNERAD} from '../../../constants/ApiPaths';
+// import {BANNERAD} from '../../../constants/ApiPaths';
 import {
   getChildContentDetailsAPI,
   selectContentsingleChild,
@@ -262,7 +262,7 @@ const MockTests = ({route}) => {
     setCurrentIndex(currentIndex - 1);
     handlePreviousPress();
   };
-  const adUnitId = BANNERAD;
+  // const adUnitId = BANNERAD;
 
   const handleNavigation = () => {
     navigation.navigate('ScoreBoard', {
@@ -1106,16 +1106,7 @@ const MockTests = ({route}) => {
               </View>
             )}
           </View>
-          <View style={{alignItems: 'center', marginVertical: 5}}>
-            <BannerAd
-              unitId={adUnitId}
-              size={BannerAdSize.BANNER}
-              onAdFailedToLoad={error =>
-                console.error('Ad failed to load: ', error)
-              }
-              onAdLoaded={() => console.log('Ad loaded')}
-            />
-          </View>
+        
         </ImageBackground>
       )}
       {modalStatus && (

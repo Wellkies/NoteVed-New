@@ -9,9 +9,9 @@ import {
 } from 'react-native-google-mobile-ads';
 
 // Test AD
-export const BANNERAD = TestIds.BANNER //Test
-export const INTERSTITIALAD = TestIds.INTERSTITIAL //Test
-export const REWARDEDAD = TestIds.REWARDED //Test
+// export const BANNERAD = TestIds.BANNER //Test
+// export const INTERSTITIALAD = TestIds.INTERSTITIAL //Test
+// export const REWARDEDAD = TestIds.REWARDED //Test
 //Production AD
 // export const BANNERAD = 'ca-app-pub-1582661677692525/5073831578';
 // export const INTERSTITIALAD = 'ca-app-pub-1582661677692525/8821504899';
@@ -21,10 +21,10 @@ export const REWARDEDAD = TestIds.REWARDED //Test
 
 // export const API_URL = "https://wellkie.in/demoApi/";
 //export const API_URL = 'https://wellkie.org/demoApi/'; // Test url
-export const API_URL = 'https://wellkies.com/demoApi/'; // Test url
+// export const API_URL = 'https://wellkies.com/demoApi/'; // Test url
 
 // export const API_URL = 'https://wellkies.org/demoApi/'; // production url
-// export const API_URL = 'https://notevook.com/demoApi/'; // productsion url
+export const API_URL = 'https://notevook.com/demoApi/'; // productsion url
 
 export const LOGIN_SEND_OTP_URL = API_URL + 'loginotp';
 export const VERIFY_LOGIN_OTP_URL = API_URL + 'parentlogin';

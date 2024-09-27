@@ -86,11 +86,11 @@ import {
 import * as Progress from 'react-native-progress';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import {IsTabScreen} from '../../../constants/Constants';
-import {
-  TestIds,
-  RewardedAd,
-  RewardedAdEventType,
-} from 'react-native-google-mobile-ads';
+// import {
+//   TestIds,
+//   RewardedAd,
+//   RewardedAdEventType,
+// } from 'react-native-google-mobile-ads';
 import {
   getAdsStatus,
   selectAdsStatus,
@@ -294,59 +294,59 @@ const SubjectLevel = ({route}) => {
       />
     </View>
   );
-  const [rewardedad, setRewardedad] = useState(null);
+  // const [rewardedad, setRewardedad] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   //
-  const [isRewardedAddCalled, setIsRewardedAddCalled] = useState(false);
+  // const [isRewardedAddCalled, setIsRewardedAddCalled] = useState(false);
 
-  const adUnitId3 = __DEV__
-    ? TestIds.REWARDED
-    : 'ca-app-pub-1582661677692525~7964330200';
+  // const adUnitId3 = __DEV__
+  //   ? TestIds.REWARDED
+  //   : 'ca-app-pub-1582661677692525~7964330200';
 
   useEffect(() => {
-    initRewardedad();
+    // initRewardedad();
   }, []);
   useEffect(() => {
-    if (
-      isLoaded &&
-      !isRewardedAddCalled &&
-      PremiumPurchase.length === 0 &&
-      PremiumPurchaseLoad === 'idle'
-    ) {
-      rewardedadd();
-      setIsRewardedAddCalled(true);
-    }
-    if (
-      isLoaded &&
-      !isRewardedAddCalled &&
-      PremiumPurchase.length != 0 &&
-      AdsStatus?.adstatus == true &&
-      PremiumPurchaseLoad === 'idle' &&
-      AdLoadStatuss === 'idle'
-    ) {
-      rewardedadd();
-      setIsRewardedAddCalled(true);
-    }
+    // if (
+    //   isLoaded &&
+    //   !isRewardedAddCalled &&
+    //   PremiumPurchase.length === 0 &&
+    //   PremiumPurchaseLoad === 'idle'
+    // ) {
+    //   rewardedadd();
+    //   setIsRewardedAddCalled(true);
+    // }
+    // if (
+    //   isLoaded &&
+    //   !isRewardedAddCalled &&
+    //   PremiumPurchase.length != 0 &&
+    //   AdsStatus?.adstatus == true &&
+    //   PremiumPurchaseLoad === 'idle' &&
+    //   AdLoadStatuss === 'idle'
+    // ) {
+    //   rewardedadd();
+    //   setIsRewardedAddCalled(true);
+    // }
   }, [isLoaded, PremiumPurchaseLoad, AdLoadStatuss]);
 
-  const initRewardedad = () => {
-    const rewarded = RewardedAd.createForAdRequest(adUnitId3, {
-      keywords: ['fashion', 'clothing'],
-    });
-    rewarded.addAdEventListener(RewardedAdEventType.LOADED, () => {
-      setRewardedad(rewarded);
-      setIsLoaded(true);
-    });
-    rewarded.addAdEventListener(RewardedAdEventType.EARNED_REWARD, () => {
-      initRewardedad();
-    });
-    rewarded.load();
-  };
-  const rewardedadd = () => {
-    if (rewardedad) {
-      rewardedad.show();
-    }
-  };
+  // const initRewardedad = () => {
+  //   const rewarded = RewardedAd.createForAdRequest(adUnitId3, {
+  //     keywords: ['fashion', 'clothing'],
+  //   });
+  //   rewarded.addAdEventListener(RewardedAdEventType.LOADED, () => {
+  //     setRewardedad(rewarded);
+  //     setIsLoaded(true);
+  //   });
+  //   rewarded.addAdEventListener(RewardedAdEventType.EARNED_REWARD, () => {
+  //     initRewardedad();
+  //   });
+  //   rewarded.load();
+  // };
+  // const rewardedadd = () => {
+  //   if (rewardedad) {
+  //     rewardedad.show();
+  //   }
+  // };
   const [userQuizBlink, setQuizUserBlink] = useState(true);
   useEffect(() => {
     const interval = setInterval(() => {

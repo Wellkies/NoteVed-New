@@ -44,11 +44,11 @@ import {
   selectLiveQuizStatus,
 } from '../../redux/reducers/LiveQuizReducer';
 import LoadingScreen from '../CommonScreens/LoadingScreen';
-import {
-  TestIds,
-  RewardedAd,
-  RewardedAdEventType,
-} from 'react-native-google-mobile-ads';
+// import {
+//   TestIds,
+//   RewardedAd,
+//   RewardedAdEventType,
+// } from 'react-native-google-mobile-ads';
 import {
   getScholarshipPremiumAPI,
   selectPremiumPurchase,
@@ -59,7 +59,7 @@ import {
   selectAdsStatus,
   selectAdsStatuss,
 } from '../../redux/reducers/GetAdsStatusReducer';
-import {REWARDEDAD} from '../../../constants/ApiPaths';
+// import {REWARDEDAD} from '../../../constants/ApiPaths';
 import {selectUserInfo} from '../../redux/reducers/loginReducer';
 
 const LiveQuizInfo = ({route}) => {
@@ -126,56 +126,56 @@ const LiveQuizInfo = ({route}) => {
 
   /////////////////////AD/////////////////////
 
-  const [rewardedad, setRewardedad] = useState(null);
+  // const [rewardedad, setRewardedad] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isRewardedAddCalled, setIsRewardedAddCalled] = useState(false);
-  const adUnitId3 = REWARDEDAD;
+  // const adUnitId3 = REWARDEDAD;
 
   useEffect(() => {
-    initRewardedad();
+    // initRewardedad();
   }, []);
   const AdsStatus = useAppSelector(selectAdsStatus);
   const AdLoadStatuss = useAppSelector(selectAdsStatuss);
   useEffect(() => {
-    if (
-      isLoaded &&
-      !isRewardedAddCalled &&
-      PremiumPurchase.length === 0 &&
-      PremiumPurchaseLoad === 'idle'
-    ) {
-      rewardedadd();
-      setIsRewardedAddCalled(true);
-    }
-    if (
-      isLoaded &&
-      !isRewardedAddCalled &&
-      PremiumPurchase.length != 0 &&
-      AdsStatus?.adstatus == true &&
-      PremiumPurchaseLoad === 'idle' &&
-      AdLoadStatuss === 'idle'
-    ) {
-      rewardedadd();
-      setIsRewardedAddCalled(true);
-    }
+    // if (
+    //   isLoaded &&
+    //   !isRewardedAddCalled &&
+    //   PremiumPurchase.length === 0 &&
+    //   PremiumPurchaseLoad === 'idle'
+    // ) {
+    //   rewardedadd();
+    //   setIsRewardedAddCalled(true);
+    // }
+    // if (
+    //   isLoaded &&
+    //   !isRewardedAddCalled &&
+    //   PremiumPurchase.length != 0 &&
+    //   AdsStatus?.adstatus == true &&
+    //   PremiumPurchaseLoad === 'idle' &&
+    //   AdLoadStatuss === 'idle'
+    // ) {
+    //   rewardedadd();
+    //   setIsRewardedAddCalled(true);
+    // }
   }, [isLoaded, PremiumPurchaseLoad, AdLoadStatuss]);
-  const initRewardedad = () => {
-    const rewarded = RewardedAd.createForAdRequest(adUnitId3, {
-      keywords: ['fashion', 'clothing'],
-    });
-    rewarded.addAdEventListener(RewardedAdEventType.LOADED, () => {
-      setRewardedad(rewarded);
-      setIsLoaded(true);
-    });
-    rewarded.addAdEventListener(RewardedAdEventType.EARNED_REWARD, () => {
-      initRewardedad();
-    });
-    rewarded.load();
-  };
-  const rewardedadd = () => {
-    if (rewardedad) {
-      rewardedad.show();
-    }
-  };
+  // const initRewardedad = () => {
+  //   const rewarded = RewardedAd.createForAdRequest(adUnitId3, {
+  //     keywords: ['fashion', 'clothing'],
+  //   });
+  //   rewarded.addAdEventListener(RewardedAdEventType.LOADED, () => {
+  //     setRewardedad(rewarded);
+  //     setIsLoaded(true);
+  //   });
+  //   rewarded.addAdEventListener(RewardedAdEventType.EARNED_REWARD, () => {
+  //     initRewardedad();
+  //   });
+  //   rewarded.load();
+  // };
+  // const rewardedadd = () => {
+  //   if (rewardedad) {
+  //     rewardedad.show();
+  //   }
+  // };
   //
   const ListColor = ['#fee2a3', '#f6c4b9', '#c3ccf5', '#76f0c7'];
 

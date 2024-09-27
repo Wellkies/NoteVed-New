@@ -68,11 +68,11 @@ import {
 import {createShimmerPlaceholder} from 'react-native-shimmer-placeholder';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import {IsTabScreen} from '../../../constants/Constants';
-import {
-  TestIds,
-  RewardedAd,
-  RewardedAdEventType,
-} from 'react-native-google-mobile-ads';
+// import {
+//   TestIds,
+//   RewardedAd,
+//   RewardedAdEventType,
+// } from 'react-native-google-mobile-ads';
 import {
   getAdsStatus,
   selectAdsStatus,
@@ -82,7 +82,7 @@ import {
   selectPremiumPurchase,
   selectPremiumPurchaseStatus,
 } from '../../redux/reducers/GetPremiumPurchaseReducer.ts';
-import { REWARDEDAD } from '../../../constants/ApiPaths.ts';
+// import { REWARDEDAD } from '../../../constants/ApiPaths.ts';
 
 const LandingScreen = ({}) => {
   interface ChildInfo {
@@ -119,65 +119,65 @@ const LandingScreen = ({}) => {
   }
   const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
   const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
-  const [rewardedad, setRewardedad] = useState(null);
+  // const [rewardedad, setRewardedad] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   //
-  const [isRewardedAddCalled, setIsRewardedAddCalled] = useState(false);
+  // const [isRewardedAddCalled, setIsRewardedAddCalled] = useState(false);
 
   const PremiumPurchase = useAppSelector(selectPremiumPurchase);
   const PremiumPurchaseLoad = useAppSelector(selectPremiumPurchaseStatus);
 
   const AdsStatus = useAppSelector(selectAdsStatus);
   const AdLoadStatuss = useAppSelector(selectAdsStatuss);
-  const adUnitId3 = REWARDEDAD;
+  // const adUnitId3 = REWARDEDAD;
 
   useEffect(() => {
-    initRewardedad();
+    // initRewardedad();
   }, []);
   useEffect(() => {
-    if (
-      isLoaded &&
-      !isRewardedAddCalled &&
-      PremiumPurchase.length === 0 &&
-      PremiumPurchaseLoad === 'idle'
-    ) {
-      rewardedadd();
-      setIsRewardedAddCalled(true);
-    }
-    if (
-      isLoaded &&
-      !isRewardedAddCalled &&
-      PremiumPurchase.length != 0 &&
-      AdsStatus?.adstatus == true &&
-      PremiumPurchaseLoad === 'idle' &&
-      AdLoadStatuss === 'idle'
-    ) {
-      rewardedadd();
-      setIsRewardedAddCalled(true);
-    }
+    // if (
+    //   isLoaded &&
+    //   !isRewardedAddCalled &&
+    //   PremiumPurchase.length === 0 &&
+    //   PremiumPurchaseLoad === 'idle'
+    // ) {
+    //   rewardedadd();
+    //   setIsRewardedAddCalled(true);
+    // }
+    // if (
+    //   isLoaded &&
+    //   !isRewardedAddCalled &&
+    //   PremiumPurchase.length != 0 &&
+    //   AdsStatus?.adstatus == true &&
+    //   PremiumPurchaseLoad === 'idle' &&
+    //   AdLoadStatuss === 'idle'
+    // ) {
+    //   rewardedadd();
+    //   setIsRewardedAddCalled(true);
+    // }
   }, [isLoaded, PremiumPurchaseLoad, AdLoadStatuss]);
   // useEffect(() => {
   //   rewardedadd();
   //   setIsRewardedAddCalled(true);
   // }, [isLoaded]);
-  const initRewardedad = () => {
-    const rewarded = RewardedAd.createForAdRequest(adUnitId3, {
-      keywords: ['fashion', 'clothing'],
-    });
-    rewarded.addAdEventListener(RewardedAdEventType.LOADED, () => {
-      setRewardedad(rewarded);
-      setIsLoaded(true);
-    });
-    rewarded.addAdEventListener(RewardedAdEventType.EARNED_REWARD, () => {
-      initRewardedad();
-    });
-    rewarded.load();
-  };
-  const rewardedadd = () => {
-    if (rewardedad) {
-      rewardedad.show();
-    }
-  };
+  // const initRewardedad = () => {
+  //   const rewarded = RewardedAd.createForAdRequest(adUnitId3, {
+  //     keywords: ['fashion', 'clothing'],
+  //   });
+  //   rewarded.addAdEventListener(RewardedAdEventType.LOADED, () => {
+  //     setRewardedad(rewarded);
+  //     setIsLoaded(true);
+  //   });
+  //   rewarded.addAdEventListener(RewardedAdEventType.EARNED_REWARD, () => {
+  //     initRewardedad();
+  //   });
+  //   rewarded.load();
+  // };
+  // const rewardedadd = () => {
+  //   if (rewardedad) {
+  //     // rewardedad.show();
+  //   }
+  // };
   const navigation = useNavigation();
   const dispatch = useDispatch<any>();
 
