@@ -564,7 +564,7 @@ const SignUpScreen5 = ({route}) => {
       let confirmVal = handlePhoneNumber(st_phone);
       // console.log(confirmVal, 'SignIn phone Screen', phone_validate);
       phone_validate = phoneRegex.test(confirmVal);
-      if (phone_validate || isFromGoogleSignIn) {
+      if (phone_validate) {
         setshowprog(true);
         const bodydata = {
           fname: fname,
