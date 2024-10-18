@@ -45,6 +45,7 @@ import {
   handlesubjectData,
   changeIsoDateToLocaldate,
   upgradetimeformat,
+  IsTabScreen,
 } from '../../../constants/Constants.ts';
 import PieChart from 'react-native-pie-chart';
 // import LoadingScreen from './LoadingScreen';
@@ -773,12 +774,12 @@ const ScoreBoard = ({route}) => {
             }}
             style={{
               backgroundColor: 'rgba(230,230,230, 0.1)',
-              height: '82%',
-              width: device_width,
+              height:  IsTabScreen ? '90%' : '82%',
+              width: IsTabScreen ? device_width * 0.9 :device_width,
               alignSelf: 'center',
-              paddingVertical: 5,
-              paddingBottom: 10,
-              paddingHorizontal: 10,
+              paddingVertical: IsTabScreen ? 10 : 5,
+              paddingBottom: IsTabScreen ? 15 : 10,
+              paddingHorizontal: IsTabScreen ? 15 : 10,
             }}>
             <View
               style={{
@@ -834,10 +835,12 @@ const ScoreBoard = ({route}) => {
               }}>
               <View
                 style={{
-                  width: device_width * 0.25,
-                  height: device_width * 0.25,
+                  // width: device_width * 0.25,
+                  // height: device_width * 0.25,
+                  width: IsTabScreen ? device_width * 0.2 : device_width * 0.25,
+                  height: IsTabScreen ? device_width * 0.2 : device_width * 0.25,
                   backgroundColor: Colors.primary,
-                  marginVertical: 10,
+                  marginVertical:  IsTabScreen ? 15 :10,
                   borderRadius: 100,
                   justifyContent: 'center',
                   alignItems: 'center',

@@ -20,6 +20,7 @@ import {useTranslation} from 'react-i18next';
 import * as Progress from 'react-native-progress';
 import {device_height, device_width} from '../style';
 import {
+  IsTabScreen,
   markCalculation,
   // remainingTimerdata,
 } from '../../../constants/Constants';
@@ -595,20 +596,9 @@ const MockTests = ({route}) => {
             style={{
               flexDirection: 'row',
               alignItems: 'center',
-              // backgroundColor: Colors.secondary,
               justifyContent: 'space-between',
               paddingBottom: 10,
-              // borderWidth:1
             }}>
-            {/* <Text
-          style={{
-            fontSize: 20,
-            color: Colors.primary,
-            marginLeft: 10,
-            textAlign: 'center',
-          }}>
-          {trans('Mock Test')}
-        </Text> */}
             <View style={{height: 40, marginHorizontal: 20}}>
               {timeDurationValue ? (
                 <CommonTimer
@@ -675,23 +665,28 @@ const MockTests = ({route}) => {
               style={{
                 justifyContent: 'center',
                 alignItems: 'center',
-                marginVertical: 20,
+                marginVertical: IsTabScreen ? 25 : 20,
                 // borderWidth:1,
               }}>
               <Progress.Bar
                 color={'#f1a722'}
                 progress={progressdata}
-                width={300}
-                height={7}
+                width={IsTabScreen ? 400 : 300}
+                height={IsTabScreen ? 10 : 7}
                 style={{marginTop: -5}}
               />
             </View>
             <TouchableOpacity
-              style={{justifyContent: 'flex-start', flexDirection: 'row'}}
+              style={{
+                justifyContent: 'flex-start',
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginVertical: IsTabScreen ? 12 : 10,
+              }}
               onPress={() => handleReport()}>
               <MaterialIcons
                 name="report"
-                size={20}
+                size={IsTabScreen ? 24 : 2020}
                 // backgroundColor={Colors.secondary}
                 color={'#fff'}
                 // onPress={() => navigation.goBack()}
@@ -699,7 +694,7 @@ const MockTests = ({route}) => {
               <Text
                 style={{
                   color: '#fff',
-                  fontSize: 12,
+                  fontSize: IsTabScreen ? 14 :12,
                   textDecorationLine: 'underline',
                 }}>
                 {trans('Report Wrong Question')}
@@ -713,6 +708,7 @@ const MockTests = ({route}) => {
                   color: '#fff',
                   alignSelf: 'flex-start',
                   marginTop: 10,
+                  fontSize: IsTabScreen ? 22 : 18,
                 },
               ]}>
               {`${trans('Qs.')} ( ${currentIndex + 1}/${
@@ -726,15 +722,11 @@ const MockTests = ({route}) => {
               ref={scrollRef}
               style={{
                 flex: 1,
-                // borderWidth:1
-                // minHeight: device_height * 0.3,
-                // minWidth: device_width * 0.8,
               }}
               persistentScrollbar={true}>
               <View style={{width: '100%'}}>
                 <View
                   style={{
-                    // borderWidth: 1,
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
@@ -756,8 +748,8 @@ const MockTests = ({route}) => {
                             borderColor: '#ccc',
                             borderRadius: 5,
                             // fontSize: '38',
-                            minHeight: device_height * 0.5,
-                            width: device_width,
+                            minHeight: IsTabScreen ? device_height * 0.4 :device_height * 0.5,
+                            width: IsTabScreen ? device_width * 0.7 :device_width,
                             alignItems: 'flex-start',
                             justifyContent: 'flex-start',
                             // backgroundColor:Colors.secondary,
@@ -767,8 +759,8 @@ const MockTests = ({route}) => {
                             style={{
                               flex: 1,
                               // marginLeft: -30,
-                              minHeight: device_height * 0.47,
-                              width: device_width * 0.77,
+                              minHeight: IsTabScreen ? device_height * 0.38 :device_height * 0.47,
+                              width: IsTabScreen ? device_width * 0.6 : device_width * 0.77,
                             }}
                             originWhitelist={['*']}
                             nestedScrollEnabled={true}
@@ -788,7 +780,13 @@ const MockTests = ({route}) => {
                       <Text
                         style={[
                           styles.question,
-                          {textAlign: 'center', color: '#fff'},
+                          {
+                            textAlign: 'center', 
+                            color: '#fff',
+                            fontSize: IsTabScreen ? 24 : 16,
+                            lineHeight: IsTabScreen ? 30 : 20, 
+                            padding: IsTabScreen ? 20 : 10,
+                          },
                         ]}>
                         {Questionlist[currentIndex]?.question}
                       </Text>
@@ -819,8 +817,8 @@ const MockTests = ({route}) => {
             )}
             <View
               style={{
-                marginVertical: 10,
-                paddingBottom: 5,
+                marginVertical: IsTabScreen ? 20 :10,
+                paddingBottom: IsTabScreen ? 10 :5,
                 flexDirection: 'row',
                 flexWrap: 'wrap',
                 justifyContent: 'space-between',
@@ -882,8 +880,8 @@ const MockTests = ({route}) => {
                           }}>
                           <View
                             style={{
-                              width: 80,
-                              height: 80,
+                              width: IsTabScreen ? 100 :80,
+                              height: IsTabScreen ? 100 :80,
                               borderRadius: 10,
                               overflow: 'hidden',
                             }}>
@@ -903,7 +901,7 @@ const MockTests = ({route}) => {
                             }}>
                             <Text
                               style={{
-                                fontSize: 15,
+                                fontSize:IsTabScreen ? 18 : 15,
                                 fontWeight: '700',
                                 color: selectedItem ? 'darkgreen' : '#333',
                               }}>
@@ -915,15 +913,15 @@ const MockTests = ({route}) => {
                         <View
                           style={{
                             flexDirection: 'row',
-                            padding: 10,
+                            padding: IsTabScreen ? 15 :10,
                             borderRadius: 10,
                             alignItems: 'center',
                           }}>
                           <Text
                             style={{
-                              fontSize: 15,
+                              fontSize: IsTabScreen ? 18 :15,
                               fontWeight: '700',
-                              marginLeft: 15,
+                              marginLeft: IsTabScreen ? 20 :15,
                               color: selectedItem ? 'darkgreen' : '#333',
                             }}>
                             {`(${label}) ${value}`}
@@ -943,11 +941,11 @@ const MockTests = ({route}) => {
               alignItems: 'center',
               justifyContent: 'space-between',
               // backgroundColor: '#FFF',
-              marginLeft: 7,
-              paddingHorizontal: 10,
+              marginLeft:IsTabScreen ? 20 : 7,
+              paddingHorizontal: IsTabScreen ? 20 :10,
             }}>
             <TouchableOpacity
-              style={{padding: 15}}
+              style={{padding:IsTabScreen ? 20 : 15}}
               disabled={currentIndex == 0}
               onPress={() => {
                 handlePrevious();
@@ -961,11 +959,11 @@ const MockTests = ({route}) => {
                 <FontAwesome
                   style={{color: currentIndex == 0 ? '#bbb' : '#f1a722'}}
                   name="chevron-left"
-                  size={18}
+                  size={IsTabScreen ? 24 :18}
                 />
                 <Text
                   style={{
-                    fontSize: 16,
+                    fontSize: IsTabScreen ? 20 :16,
                     fontWeight: '600',
                     color: currentIndex == 0 ? '#bbb' : '#f1a722',
                     marginLeft: 10,
@@ -1008,7 +1006,7 @@ const MockTests = ({route}) => {
                   }}>
                   <Text
                     style={{
-                      fontSize: 16,
+                      fontSize: IsTabScreen ? 20 :16,
                       fontWeight: '600',
                       color: '#333',
                       // currentIndex == Questionlist.length - 1 ? '#bbb' : '#333',
@@ -1047,7 +1045,7 @@ const MockTests = ({route}) => {
                   }}>
                   <Text
                     style={{
-                      fontSize: 16,
+                      fontSize:IsTabScreen ? 20 : 16,
                       fontWeight: '900',
                       color: 'green',
                     }}>
@@ -1062,7 +1060,7 @@ const MockTests = ({route}) => {
                   style={{
                     flexDirection: 'row',
                     alignItems: 'baseline',
-                    padding: 15,
+                    padding: IsTabScreen ? 20 :15,
                   }}
                   onPress={() => {
                     // scrollRef.current.scrollTo({
@@ -1082,7 +1080,7 @@ const MockTests = ({route}) => {
                   }}>
                   <Text
                     style={{
-                      fontSize: 18,
+                      fontSize: IsTabScreen ? 20 :18,
                       fontWeight: '600',
                       color:
                         currentIndex == Questionlist.length - 1
@@ -1100,13 +1098,12 @@ const MockTests = ({route}) => {
                           : '#f1a722',
                     }}
                     name="chevron-right"
-                    size={16}
+                    size={IsTabScreen ? 20 :16}
                   />
                 </TouchableOpacity>
               </View>
             )}
           </View>
-        
         </ImageBackground>
       )}
       {modalStatus && (
