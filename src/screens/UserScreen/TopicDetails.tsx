@@ -39,6 +39,7 @@ import {
   selectChildDetailData,
 } from '../../redux/reducers/GetChildProgressDetailReducer';
 import * as Progress from 'react-native-progress';
+import { IsTabScreen } from '../../../constants/Constants';
 
 const TopicDetails = ({route}) => {
   const navigation = useNavigation();
@@ -152,8 +153,8 @@ const TopicDetails = ({route}) => {
               flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'space-between',
-              marginVertical: 10,
-              marginHorizontal: 20,
+              marginVertical: IsTabScreen ? 15 : 10,
+              marginHorizontal: IsTabScreen ? 30 :20,
             }}>
             <TouchableOpacity
               onPress={() => {
@@ -165,7 +166,7 @@ const TopicDetails = ({route}) => {
               }}>
               <MaterialIcons
                 name="arrow-back"
-                size={35}
+                size={IsTabScreen ? 45 : 35}
                 style={{
                   color: '#FFFFFF',
                 }}
@@ -182,29 +183,29 @@ const TopicDetails = ({route}) => {
                 <Image
                   source={{uri: subjectimage}}
                   style={{
-                    height: device_height * 0.06,
-                    width: device_width * 0.11,
+                    height: IsTabScreen ? device_height * 0.08 : device_height * 0.06,
+                    width: IsTabScreen ? device_width * 0.13 :device_width * 0.11,
                     resizeMode: 'contain',
                     tintColor: '#FFFFFF',
-                    marginRight: 10,
+                    marginRight: IsTabScreen ? 15 :10,
                   }}
                 />
               ) : (
                 <Image
                   source={require('../../../assets/people.png')}
                   style={{
-                    height: device_height * 0.07,
-                    width: device_width * 0.14,
+                    height: IsTabScreen ? device_height * 0.09 :device_height * 0.07,
+                    width: IsTabScreen ? device_width * 0.16 :device_width * 0.14,
                     resizeMode: 'contain',
                     tintColor: '#FFFFFF',
-                    marginRight: 10,
+                    marginRight: IsTabScreen ? 15 :10,
                   }}
                 />
               )}
               <Text
                 style={{
                   fontWeight: '400',
-                  fontSize: 20,
+                  fontSize: IsTabScreen ? 24 :20,
                   color: '#FFFFFF',
                 }}>
                 {trans(subjectname)}
@@ -221,11 +222,11 @@ const TopicDetails = ({route}) => {
                   <View
                     style={{
                       flexDirection: 'column',
-                      marginHorizontal: -10,
-                      paddingHorizontal: 10,
-                      marginRight: 10,
-                      marginBottom: 16,
-                      marginTop: 20,
+                      marginHorizontal: IsTabScreen ? -5 : -10,
+                      paddingHorizontal: IsTabScreen ? 20 : 10,
+                      marginRight: IsTabScreen ? 20 : 10,
+                      marginBottom: IsTabScreen ? 20 : 16,
+                      marginTop: IsTabScreen ? 25 : 20,
                       justifyContent: 'center',
                     }}>
                     {TopicBySubjectId.map((item, index) => {
@@ -304,7 +305,7 @@ const TopicDetails = ({route}) => {
                               }
                             }}
                             style={{
-                              height: device_height * 0.09,
+                              height: IsTabScreen ? device_height * 0.12 : device_height * 0.09,
                               width: '100%',
                               backgroundColor: isLock
                                 ? 'rgba(220,220,220,0.1)'
@@ -313,7 +314,7 @@ const TopicDetails = ({route}) => {
                               borderColor: '#f1a722',
                               borderWidth: 0.9,
                               marginHorizontal: 10,
-                              marginVertical: 10,
+                              marginVertical: IsTabScreen ? 12 :10,
                               justifyContent: 'space-between',
                               alignItems: 'center',
                               flexDirection: 'row',
@@ -322,7 +323,7 @@ const TopicDetails = ({route}) => {
                             }}>
                             <Text
                               style={{
-                                fontSize: 19,
+                                fontSize: IsTabScreen ? 22 :19,
                                 color: '#f1a722',
                                 fontWeight: '600',
                               }}>
@@ -342,7 +343,7 @@ const TopicDetails = ({route}) => {
                                   style={{
                                     fontWeight: '600',
                                     color: '#def',
-                                    fontSize: 16,
+                                    fontSize: IsTabScreen ? 18 :16,
                                     marginRight: 10,
                                   }}>
                                   {`${averagePercentage.toFixed(2)}%`}
@@ -353,9 +354,9 @@ const TopicDetails = ({route}) => {
                                 </Text>
                                 <Progress.Circle
                                   progress={averagePercentage / 100}
-                                  size={35}
+                                  size={IsTabScreen ? 45 :35}
                                   indeterminate={false}
-                                  thickness={6}
+                                  thickness={IsTabScreen ? 8 :6}
                                   allowFontScaling={false}
                                   color={'#def'}
                                   borderWidth={2}
@@ -378,7 +379,7 @@ const TopicDetails = ({route}) => {
                                 <Fontisto
                                   style={{color: '#f1a722'}}
                                   name="locked"
-                                  size={28}
+                                  size={IsTabScreen ? 32 :28}
                                 />
                               </View>
                             )}

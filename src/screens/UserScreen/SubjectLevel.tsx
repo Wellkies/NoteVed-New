@@ -1731,10 +1731,14 @@ const SubjectLevel = ({route}) => {
                             style={{
                               flexDirection: 'row',
                               backgroundColor: 'rgba(0,255,0,0.1)',
-                              width: device_width * 0.95,
-                              height: device_height * 0.09,
-                              marginHorizontal: 10,
-                              paddingHorizontal: 10,
+                              width: IsTabScreen
+                                ? device_width * 0.8
+                                : device_width * 0.95,
+                              height: IsTabScreen
+                                ? device_height * 0.12
+                                : device_height * 0.09,
+                              marginHorizontal: IsTabScreen ? device_width * 0.05 :10,
+                              paddingHorizontal: IsTabScreen ? 20 :10,
                               borderRadius: 12,
                               borderWidth: 0.9,
                               borderColor: '#f1a722',
@@ -1750,8 +1754,8 @@ const SubjectLevel = ({route}) => {
                                 <Image
                                   source={{uri: subjectimage}}
                                   style={{
-                                    height: device_height * 0.2,
-                                    width: device_width * 0.12,
+                                    height: IsTabScreen ? device_height * 0.25:device_height * 0.2,
+                                    width: IsTabScreen ? device_width * 0.15 : device_width * 0.12,
                                     resizeMode: 'contain',
                                     tintColor: '#f1a722',
                                   }}
@@ -1760,8 +1764,8 @@ const SubjectLevel = ({route}) => {
                                 <Image
                                   source={require('../../../assets/people.png')}
                                   style={{
-                                    height: device_height * 0.21,
-                                    width: device_width * 0.15,
+                                    height: IsTabScreen ? device_height * 0.25 :device_height * 0.21,
+                                    width: IsTabScreen ? device_width * 0.18 :device_width * 0.15,
                                     resizeMode: 'contain',
                                     tintColor: '#f1a722',
                                   }}
@@ -1778,7 +1782,7 @@ const SubjectLevel = ({route}) => {
                                   style={{
                                     color: '#f1a722',
                                     fontWeight: '500',
-                                    fontSize: 18,
+                                    fontSize: IsTabScreen ? 22 :18,
                                   }}>
                                   {trans(subjectname)}
                                 </Text>
@@ -1789,22 +1793,22 @@ const SubjectLevel = ({route}) => {
                                 flexDirection: 'row',
                                 alignItems: 'center',
                                 position: 'absolute',
-                                right: 10,
-                                bottom: 15,
+                                right: IsTabScreen ? 20 : 10,
+                                bottom: IsTabScreen ? 20 : 15,
                               }}>
                               <Text
                                 style={{
                                   fontWeight: '600',
                                   color: '#def',
-                                  fontSize: 16,
-                                  marginRight: 10,
+                                  fontSize: IsTabScreen ? 18 :16,
+                                  marginRight: IsTabScreen ? 20 :10,
                                 }}>
                                 {parseFloat(`${proData * 100}% `).toFixed(2)}
                                 {'%'}
                               </Text>
                               <Progress.Circle
                                 progress={proData}
-                                size={35}
+                                size={IsTabScreen ? 50 :35}
                                 indeterminate={false}
                                 thickness={6}
                                 allowFontScaling={false}
