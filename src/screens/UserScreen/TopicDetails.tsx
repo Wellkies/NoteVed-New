@@ -138,7 +138,7 @@ const TopicDetails = ({route}) => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <ScrollView>
+      {/* <ScrollView> */}
         <ImageBackground
           style={{
             width: device_width,
@@ -153,7 +153,7 @@ const TopicDetails = ({route}) => {
               flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'space-between',
-              marginVertical: IsTabScreen ? 15 : 10,
+              marginVertical: IsTabScreen ? 18 : 10,
               marginHorizontal: IsTabScreen ? 30 :20,
             }}>
             <TouchableOpacity
@@ -183,8 +183,8 @@ const TopicDetails = ({route}) => {
                 <Image
                   source={{uri: subjectimage}}
                   style={{
-                    height: IsTabScreen ? device_height * 0.08 : device_height * 0.06,
-                    width: IsTabScreen ? device_width * 0.13 :device_width * 0.11,
+                    height: IsTabScreen ? device_height * 0.10 : device_height * 0.06,
+                    width: IsTabScreen ? device_width * 0.10 :device_width * 0.11,
                     resizeMode: 'contain',
                     tintColor: '#FFFFFF',
                     marginRight: IsTabScreen ? 15 :10,
@@ -194,8 +194,8 @@ const TopicDetails = ({route}) => {
                 <Image
                   source={require('../../../assets/people.png')}
                   style={{
-                    height: IsTabScreen ? device_height * 0.09 :device_height * 0.07,
-                    width: IsTabScreen ? device_width * 0.16 :device_width * 0.14,
+                    height: IsTabScreen ? device_height * 0.12 :device_height * 0.07,
+                    width: IsTabScreen ? device_width * 0.10 :device_width * 0.14,
                     resizeMode: 'contain',
                     tintColor: '#FFFFFF',
                     marginRight: IsTabScreen ? 15 :10,
@@ -219,14 +219,15 @@ const TopicDetails = ({route}) => {
             <>
               {TopicLoad.length > 0 ? (
                 <>
+                <ScrollView>
                   <View
                     style={{
                       flexDirection: 'column',
                       marginHorizontal: IsTabScreen ? -5 : -10,
                       paddingHorizontal: IsTabScreen ? 20 : 10,
                       marginRight: IsTabScreen ? 20 : 10,
-                      marginBottom: IsTabScreen ? 20 : 16,
-                      marginTop: IsTabScreen ? 25 : 20,
+                      marginBottom: IsTabScreen ? 35 : 16,
+                      marginTop: IsTabScreen ? 30 : 20,
                       justifyContent: 'center',
                     }}>
                     {TopicBySubjectId.map((item, index) => {
@@ -305,7 +306,7 @@ const TopicDetails = ({route}) => {
                               }
                             }}
                             style={{
-                              height: IsTabScreen ? device_height * 0.12 : device_height * 0.09,
+                              height: IsTabScreen ? device_height * 0.10 : device_height * 0.09,
                               width: '100%',
                               backgroundColor: isLock
                                 ? 'rgba(220,220,220,0.1)'
@@ -388,6 +389,7 @@ const TopicDetails = ({route}) => {
                       );
                     })}
                   </View>
+                  </ScrollView>
                 </>
               ) : (
                 <>
@@ -454,7 +456,7 @@ const TopicDetails = ({route}) => {
           />
         </View> */}
         </ImageBackground>
-      </ScrollView>
+      {/* </ScrollView> */}
     </SafeAreaView>
   );
 };

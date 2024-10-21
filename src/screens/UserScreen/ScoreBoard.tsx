@@ -749,7 +749,6 @@ const ScoreBoard = ({route}) => {
     };
   }, []);
 
-
   return (
     <SafeAreaView style={{flex: 1}}>
       <StatusBar backgroundColor={'#263d2d'} barStyle="light-content" />
@@ -764,7 +763,7 @@ const ScoreBoard = ({route}) => {
         resizeMode="cover">
         <ScrollView
           showsVerticalScrollIndicator={false}
-          style={{paddingHorizontal: 10}}>
+          style={{paddingHorizontal:10}}>
           <ViewShot
             ref={ref}
             options={{
@@ -774,8 +773,8 @@ const ScoreBoard = ({route}) => {
             }}
             style={{
               backgroundColor: 'rgba(230,230,230, 0.1)',
-              height:  IsTabScreen ? '90%' : '82%',
-              width: IsTabScreen ? device_width * 0.9 :device_width,
+              height: IsTabScreen ? '90%' : '82%',
+              width: IsTabScreen ? device_width * 1 : device_width,
               alignSelf: 'center',
               paddingVertical: IsTabScreen ? 10 : 5,
               paddingBottom: IsTabScreen ? 15 : 10,
@@ -786,9 +785,9 @@ const ScoreBoard = ({route}) => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                width: device_width * 0.94,
+                width:  IsTabScreen ?device_width*0.96:device_width * 0.94,
                 alignSelf: 'center',
-                paddingHorizontal: 10,
+                paddingHorizontal:  IsTabScreen ?15:10,
               }}>
               <View
                 style={{
@@ -803,24 +802,24 @@ const ScoreBoard = ({route}) => {
                 }}>
                 <FontAwesome
                   name="trophy"
-                  size={20}
+                  size={ IsTabScreen ?22:20}
                   color={'#fff'}
                   style={{marginRight: 10}}
                 />
                 <Text
                   style={{
                     color: '#fff',
-                    fontSize: 13,
+                    fontSize: IsTabScreen ?15: 13,
                     fontWeight: '700',
                   }}>
                   {trans('Quiz Result')}
                 </Text>
               </View>
               <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                <Text style={{fontWeight: '600', color: '#fff'}}>
+                <Text style={{fontWeight: '600', color: '#fff',fontSize: IsTabScreen ?16:14}}>
                   {trans('Quiz attempted on')}
                 </Text>
-                <Text style={{fontWeight: '600', color: '#fff'}}>
+                <Text style={{fontWeight: '600', color: '#fff',fontSize: IsTabScreen ?16:14}}>
                   {moment(todayDate).format('DD-MMM-YYYY')}
                 </Text>
               </View>
@@ -831,16 +830,18 @@ const ScoreBoard = ({route}) => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderRadius: 20,
-                height: '33%',
+                height: IsTabScreen ?'38%':'33%',
               }}>
               <View
                 style={{
                   // width: device_width * 0.25,
                   // height: device_width * 0.25,
                   width: IsTabScreen ? device_width * 0.2 : device_width * 0.25,
-                  height: IsTabScreen ? device_width * 0.2 : device_width * 0.25,
+                  height: IsTabScreen
+                    ? device_width * 0.2
+                    : device_width * 0.25,
                   backgroundColor: Colors.primary,
-                  marginVertical:  IsTabScreen ? 15 :10,
+                  marginVertical: IsTabScreen ? 15 : 10,
                   borderRadius: 100,
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -865,7 +866,7 @@ const ScoreBoard = ({route}) => {
                 {fname !== '' ? (
                   <Text
                     style={{
-                      fontSize: 20,
+                      fontSize: IsTabScreen ?25:20,
                       color: '#fff',
                       fontWeight: 'bold',
                       textTransform: 'uppercase',
@@ -875,7 +876,7 @@ const ScoreBoard = ({route}) => {
                 ) : (
                   <Text
                     style={{
-                      fontSize: 20,
+                      fontSize:IsTabScreen ?25: 20,
                       color: '#fff',
                       fontWeight: 'bold',
                       textTransform: 'uppercase',
@@ -897,7 +898,7 @@ const ScoreBoard = ({route}) => {
                 }}>
                 <Text
                   style={{
-                    fontSize: 15,
+                    fontSize: IsTabScreen ?18:15,
                     color: '#fff',
                     fontWeight: 'bold',
                     textTransform: 'capitalize',
@@ -953,7 +954,7 @@ const ScoreBoard = ({route}) => {
             </View>
             <Text
               style={{
-                fontSize: 17,
+                fontSize: IsTabScreen ?20:17,
                 fontWeight: '700',
                 color: '#fff',
                 marginLeft: 10,
@@ -973,7 +974,7 @@ const ScoreBoard = ({route}) => {
                 marginVertical: 5,
                 paddingHorizontal: 15,
                 width: '98%',
-                height: 70,
+                height:IsTabScreen ?80: 70,
               }}>
               <View
                 style={{
@@ -981,12 +982,12 @@ const ScoreBoard = ({route}) => {
                   width: '48%',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  height: 50,
+                  height: IsTabScreen ?55:50,
                 }}>
                 <Ionicons
                   name="speedometer-outline"
                   color={'gold'}
-                  size={40}
+                  size={IsTabScreen ?45:40}
                   style={{marginHorizontal: 10}}
                 />
                 <View
@@ -997,7 +998,7 @@ const ScoreBoard = ({route}) => {
                   }}>
                   <Text
                     style={{
-                      fontSize: 12,
+                      fontSize: IsTabScreen ?18:12,
                       fontWeight: '600',
                       color: 'gold',
                     }}>
@@ -1005,7 +1006,7 @@ const ScoreBoard = ({route}) => {
                   </Text>
                   <Text
                     style={{
-                      fontSize: 15,
+                      fontSize: IsTabScreen ?18:15,
                       fontWeight: '900',
                       color: '#fff',
                     }}>
@@ -1016,11 +1017,11 @@ const ScoreBoard = ({route}) => {
             </View>
             <Text
               style={{
-                fontSize: 17,
+                fontSize: IsTabScreen ?20:17,
                 fontWeight: '700',
                 color: '#fff',
-                marginLeft: 10,
-                marginTop: 10,
+                marginLeft: IsTabScreen ?15:10,
+                marginTop: IsTabScreen ?15:10,
               }}>
               {trans('Quiz Statistics')}
             </Text>
@@ -1037,7 +1038,7 @@ const ScoreBoard = ({route}) => {
                 marginVertical: 5,
                 paddingHorizontal: 15,
                 width: '98%',
-                height: 70,
+                height:IsTabScreen ?80: 70,
               }}>
               <View
                 style={{
@@ -1049,17 +1050,17 @@ const ScoreBoard = ({route}) => {
                 }}>
                 <View
                   style={{
-                    height: 27,
-                    width: 27,
+                    height:IsTabScreen ?30: 27,
+                    width: IsTabScreen ?30:27,
                     backgroundColor: 'lime',
-                    marginRight: 10,
+                    marginRight: IsTabScreen ?15:10,
                     alignItems: 'center',
                     justifyContent: 'center',
                     borderRadius: 3,
                   }}>
                   <Text
                     style={{
-                      fontSize: 15,
+                      fontSize: IsTabScreen ?18:15,
                       fontWeight: '700',
                       color: '#fff',
                     }}>
@@ -1068,7 +1069,7 @@ const ScoreBoard = ({route}) => {
                 </View>
                 <Text
                   style={{
-                    fontSize: 15,
+                    fontSize: IsTabScreen ?18:15,
                     fontWeight: '700',
                     color: '#fff',
                     width: '75%',
@@ -1086,17 +1087,17 @@ const ScoreBoard = ({route}) => {
                 }}>
                 <View
                   style={{
-                    height: 27,
-                    width: 27,
+                    height:IsTabScreen ?30: 27,
+                    width: IsTabScreen ?30:27,
                     backgroundColor: 'crimson',
-                    marginRight: 10,
+                    marginRight: IsTabScreen ?15:10,
                     alignItems: 'center',
                     justifyContent: 'center',
                     borderRadius: 3,
                   }}>
                   <Text
                     style={{
-                      fontSize: 15,
+                      fontSize: IsTabScreen ?18:15,
                       fontWeight: '700',
                       color: '#fff',
                     }}>
@@ -1105,7 +1106,7 @@ const ScoreBoard = ({route}) => {
                 </View>
                 <Text
                   style={{
-                    fontSize: 15,
+                    fontSize: IsTabScreen ?18:15,
                     fontWeight: '700',
                     color: '#fff',
                     width: '75%',
@@ -1123,17 +1124,17 @@ const ScoreBoard = ({route}) => {
                 }}>
                 <View
                   style={{
-                    height: 27,
-                    width: 27,
+                    height:IsTabScreen ?30: 27,
+                    width: IsTabScreen ?30:27,
                     backgroundColor: 'white',
-                    marginRight: 10,
+                    marginRight: IsTabScreen ?15:10,
                     alignItems: 'center',
                     justifyContent: 'center',
                     borderRadius: 3,
                   }}>
                   <Text
                     style={{
-                      fontSize: 15,
+                      fontSize: IsTabScreen ?18:15,
                       fontWeight: '700',
                       color: 'green',
                     }}>
@@ -1142,7 +1143,7 @@ const ScoreBoard = ({route}) => {
                 </View>
                 <Text
                   style={{
-                    fontSize: 15,
+                    fontSize: IsTabScreen ?18:15,
                     fontWeight: '700',
                     color: '#fff',
                     width: '75%',
@@ -1169,7 +1170,7 @@ const ScoreBoard = ({route}) => {
                   style={{
                     color: '#fff',
                     fontWeight: 'bold',
-                    fontSize: 15,
+                    fontSize: IsTabScreen ?18:15,
                   }}>
                   {trans('Percentage : ')}
                   {percentage} {'%'}
@@ -1178,7 +1179,7 @@ const ScoreBoard = ({route}) => {
                   style={{
                     color: '#fff',
                     fontWeight: 'bold',
-                    fontSize: 15,
+                    fontSize: IsTabScreen ?18:15,
                   }}>
                   {trans('Total Mark : ')}
                   {totalmark}
@@ -1199,10 +1200,10 @@ const ScoreBoard = ({route}) => {
               flexDirection: 'row',
               justifyContent: 'center',
               width: device_width,
-              height: '9%',
+              height:IsTabScreen ?'100%': '9%',
               paddingVertical: 10,
               alignSelf: 'center',
-              marginTop: 20,
+              marginTop: 10,
               flexWrap: 'wrap',
               gap: 12,
             }}>
@@ -1240,10 +1241,7 @@ const ScoreBoard = ({route}) => {
                     subjectimage: subjectimage,
                   });
                 } else if (!islastexercise) {
-                  console.log(
-                    islastexercise,
-                    "islastexercise"
-                  );
+                  console.log(islastexercise, 'islastexercise');
 
                   const datas = {
                     //courseid: courseid,
@@ -1269,10 +1267,7 @@ const ScoreBoard = ({route}) => {
                     subjectimage: subjectimage,
                   });
                 } else {
-                  console.log(
-                    islastexercise,
-                    "islastexercise"
-                  );
+                  console.log(islastexercise, 'islastexercise');
                   const datas = {
                     //courseid: courseid,
                     childid: childid,
@@ -1292,7 +1287,7 @@ const ScoreBoard = ({route}) => {
                 }
               }}
               style={{
-                paddingVertical: 10,
+                paddingVertical: IsTabScreen ? 15 : 10,
                 borderRadius: 10,
                 //width: '42%',
                 width: device_width * 0.44,
@@ -1306,7 +1301,7 @@ const ScoreBoard = ({route}) => {
               <Text
                 style={{
                   color: '#FEFEFE',
-                  fontSize: 15,
+                  fontSize:  IsTabScreen ? 18 :15,
                   fontWeight: '600',
                 }}>
                 {percentage >= 90 ? 'Next' : 'Re-attempt'}
@@ -1341,7 +1336,7 @@ const ScoreBoard = ({route}) => {
                 }, 1000);
               }}
               style={{
-                paddingVertical: 10,
+                paddingVertical:  IsTabScreen ? 15 :10,
                 borderRadius: 10,
                 //width: '42%',
                 width: device_width * 0.44,
@@ -1371,7 +1366,7 @@ const ScoreBoard = ({route}) => {
               <Text
                 style={{
                   color: '#fff',
-                  fontSize: 15,
+                  fontSize: IsTabScreen ? 18 :15,
                   fontWeight: '600',
                   textAlign: 'center',
                 }}>
@@ -1383,7 +1378,7 @@ const ScoreBoard = ({route}) => {
                 navigation.navigate('SubjectLevel');
               }}
               style={{
-                paddingVertical: 10,
+                paddingVertical:IsTabScreen ? 25 : 10,
                 borderRadius: 10,
                 // width: '42%',
                 width: device_width * 0.44,
@@ -1395,7 +1390,7 @@ const ScoreBoard = ({route}) => {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <Text style={{color: '#FEFEFE', fontSize: 15, fontWeight: '600'}}>
+              <Text style={{color: '#FEFEFE', fontSize: IsTabScreen ? 18 :15, fontWeight: '600'}}>
                 Home
               </Text>
             </TouchableOpacity>
@@ -1404,7 +1399,7 @@ const ScoreBoard = ({route}) => {
                 myCustomShare();
               }}
               style={{
-                paddingVertical: 10,
+                paddingVertical: IsTabScreen ? 15 :10,
                 borderRadius: 10,
                 // width: '42%',
                 width: device_width * 0.44,
@@ -1416,13 +1411,13 @@ const ScoreBoard = ({route}) => {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <Text style={{color: '#FEFEFE', fontSize: 15, fontWeight: '600'}}>
+              <Text style={{color: '#FEFEFE', fontSize:IsTabScreen?18: 15, fontWeight: '600'}}>
                 Share Report
               </Text>
               <MaterialIcons
                 name="share"
                 color={'#f1a722'}
-                size={22}
+                size={IsTabScreen?24:22}
                 // style={{height: 30, width: 30}}
               />
             </TouchableOpacity>

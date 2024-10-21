@@ -280,14 +280,14 @@ const SubjectLevel = ({route}) => {
         // borderWidth: 0.9,
         // borderColor: '#f1a722',
         borderRadius: 20,
-        width: device_width * 0.95,
-        height: device_height * 0.26,
+        width: IsTabScreen ? device_width * 0.99 : device_width * 0.95,
+        height: IsTabScreen ? device_height * 0.40 :device_height * 0.26,
       }}>
       <FastImage
         style={{
           borderRadius: 18,
-          width: device_width * 0.95,
-          height: device_height * 0.28,
+          width: IsTabScreen ? device_width * 0.99: device_width * 0.95,
+          height: IsTabScreen ? device_height * 0.40 :device_height * 0.28,
         }}
         source={item}
         resizeMode={'contain'}
@@ -1732,13 +1732,15 @@ const SubjectLevel = ({route}) => {
                               flexDirection: 'row',
                               backgroundColor: 'rgba(0,255,0,0.1)',
                               width: IsTabScreen
-                                ? device_width * 0.8
+                                ? device_width * 0.9
                                 : device_width * 0.95,
                               height: IsTabScreen
-                                ? device_height * 0.12
+                                ? device_height * 0.10
                                 : device_height * 0.09,
-                              marginHorizontal: IsTabScreen ? device_width * 0.05 :10,
-                              paddingHorizontal: IsTabScreen ? 20 :10,
+                              marginHorizontal: IsTabScreen
+                                ? device_width * 0.05
+                                : 10,
+                              paddingHorizontal: IsTabScreen ? 25 : 10,
                               borderRadius: 12,
                               borderWidth: 0.9,
                               borderColor: '#f1a722',
@@ -1754,8 +1756,12 @@ const SubjectLevel = ({route}) => {
                                 <Image
                                   source={{uri: subjectimage}}
                                   style={{
-                                    height: IsTabScreen ? device_height * 0.25:device_height * 0.2,
-                                    width: IsTabScreen ? device_width * 0.15 : device_width * 0.12,
+                                    height: IsTabScreen
+                                      ? device_height * 0.10
+                                      : device_height * 0.2,
+                                    width: IsTabScreen
+                                      ? device_width * 0.10
+                                      : device_width * 0.12,
                                     resizeMode: 'contain',
                                     tintColor: '#f1a722',
                                   }}
@@ -1764,8 +1770,12 @@ const SubjectLevel = ({route}) => {
                                 <Image
                                   source={require('../../../assets/people.png')}
                                   style={{
-                                    height: IsTabScreen ? device_height * 0.25 :device_height * 0.21,
-                                    width: IsTabScreen ? device_width * 0.18 :device_width * 0.15,
+                                    height: IsTabScreen
+                                      ? device_height * 0.12
+                                      : device_height * 0.21,
+                                    width: IsTabScreen
+                                      ? device_width * 0.10
+                                      : device_width * 0.15,
                                     resizeMode: 'contain',
                                     tintColor: '#f1a722',
                                   }}
@@ -1782,7 +1792,7 @@ const SubjectLevel = ({route}) => {
                                   style={{
                                     color: '#f1a722',
                                     fontWeight: '500',
-                                    fontSize: IsTabScreen ? 22 :18,
+                                    fontSize: IsTabScreen ? 22 : 18,
                                   }}>
                                   {trans(subjectname)}
                                 </Text>
@@ -1793,22 +1803,22 @@ const SubjectLevel = ({route}) => {
                                 flexDirection: 'row',
                                 alignItems: 'center',
                                 position: 'absolute',
-                                right: IsTabScreen ? 20 : 10,
-                                bottom: IsTabScreen ? 20 : 15,
+                                right: IsTabScreen ? 22 : 10,
+                                bottom: IsTabScreen ? 30 : 15,
                               }}>
                               <Text
                                 style={{
                                   fontWeight: '600',
                                   color: '#def',
-                                  fontSize: IsTabScreen ? 18 :16,
-                                  marginRight: IsTabScreen ? 20 :10,
+                                  fontSize: IsTabScreen ? 20 : 16,
+                                  marginRight: IsTabScreen ? 15 : 10,
                                 }}>
                                 {parseFloat(`${proData * 100}% `).toFixed(2)}
                                 {'%'}
                               </Text>
                               <Progress.Circle
                                 progress={proData}
-                                size={IsTabScreen ? 50 :35}
+                                size={IsTabScreen ? 50 : 35}
                                 indeterminate={false}
                                 thickness={6}
                                 allowFontScaling={false}
