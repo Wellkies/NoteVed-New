@@ -78,7 +78,7 @@ const PrevYearQues = ({ route }) => {
     scholarshipId = '',
     showFeedback = false,
   } = route.params;
-  console.log(route.params, '=============route.params');
+  
   const { t: trans, i18n } = useTranslation();
   // const {childInfo = {}} = useSelector(state => state.ChildDetailsReducer);
   interface ChildInfo {
@@ -116,18 +116,18 @@ const PrevYearQues = ({ route }) => {
   const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
   const count = useAppSelector(selectStudentStatus);
   const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
-  // console.log(childInfo, 'childInfo..........');
+  // 
   const quizListData = useAppSelector(selectPreviousYear);
   const UnlockChild = useAppSelector(selectUnlockStudent)
-  // console.log(quizListData,"&&&&&&&&&&&&quizListData.....")
-  // console.log(UnlockChild,"UnlockChild.....")
+  // 
+  // 
   const PremiumPurchase = useAppSelector(selectPremiumPurchase)
-  // console.log(PremiumPurchase, 'PremiumPurchase..........');
+  // 
   // const {PrevYearQuestion: quizListData = [], loading: prevLoading = false} =
   //   useSelector(state => state.GetPrevYearQuesReducer);
   // const [quizList, setQuizList] = useState(quizListData);
   const [quizList, setQuizList] = useState(quizListData);
-  // console.log(quizList, 'PrevYearQuestion####################........');
+  // 
 
   const {
     _id: child_id = '',
@@ -143,13 +143,13 @@ const PrevYearQues = ({ route }) => {
     isPremium = '',
     // coordinates='',`
   } = childInfo;
-  // console.log(id, '==================stage id................');
+  // 
   // const {UnlockChild = []} = useSelector(state => state.GetUnlockChildReducer);
   const unlockstudent = UnlockChild.filter(r =>
     r.childid == childid
   );
-  console.log(unlockstudent, 'unlockstudent..........');
-  // console.log(UnlockChild, 'UnlockChild//////////////////////////');
+  
+  // 
   const isReattempt = true;
   const [qusetionLoading, setQuestionLoading] = useState(true);
   const [show, setShow] = useState(false);
@@ -172,7 +172,7 @@ const PrevYearQues = ({ route }) => {
       scrollViewRef.current.scrollTo({ y: yOffset, animated: true });
     }
   };
-  // console.log(ansIndex, 'ansIndex============');
+  // 
 
   const handleFeedbackSubmit = () => {
     setFeedbackModalStatus(false);
@@ -218,7 +218,7 @@ const PrevYearQues = ({ route }) => {
       //   ),
       // );
       premiumdata();
-      // console.log('handleBackButtonClick------called');
+      // 
       BackHandler.addEventListener('hardwareBackPress', () => {
         navigation.goBack();
         return true;
@@ -227,7 +227,7 @@ const PrevYearQues = ({ route }) => {
         // dispatch(
         //   getScholarshipPremiumAPI(undefined, childid, stageid, boardid),
         // );
-        // console.log(childid, stageid, boardid, 'childid, stageid, boardid');
+        // 
       }
     });
     return () => {
@@ -267,12 +267,12 @@ const PrevYearQues = ({ route }) => {
       let premiumValue = '';
       await AsyncStorage.getItem('scholarArray').then(data => {
         premiumValue = data;
-        // console.log(premiumValue, 'premiumValue......................');
+        // 
         setasyncpremiumData(JSON.parse(premiumValue));
       });
 
       if (premiumValue !== null) {
-        // console.log(premiumValue);
+        // 
       }
     } catch (error) {
       // Error retrieving data
@@ -285,7 +285,7 @@ const PrevYearQues = ({ route }) => {
   const { paymentid = '', enddate = '' } = PremiumPurchase.length
     ? PremiumPurchase[0]
     : [];
-  // console.log(PremiumPurchase, 'PremiumPurchase............');
+  // 
 
   // const colorList = [
   //   ['#2775cf', '#e3eefa'],
@@ -333,7 +333,7 @@ const PrevYearQues = ({ route }) => {
           let totalMark = List[index - 1].studentdata[0].lastexamtotalmark;
           let secureMark =
             List[index - 1].studentdata[0].lastexamtotalsecurmark;
-          // console.log(totalMark, secureMark, 'secureMark============');
+          // 
           let percentage = ((secureMark / totalMark) * 100).toFixed(1);
           if (percentage >= 90) {
             passStudent = true;
@@ -352,7 +352,7 @@ const PrevYearQues = ({ route }) => {
       const lastindex = DataList.findLastIndex(object => {
         return object.isExamAvailable == true;
       });
-      // console.log(lastindex, '-----------------index');
+      // 
       setQuizList(DataList);
       if (lastindex != -1) {
         setHighlightedIndex(lastindex);
@@ -363,14 +363,14 @@ const PrevYearQues = ({ route }) => {
         // scrollToHighlightedRow(0);
         setTimeout(() => scrollToHighlightedRow(0), 400);
       }
-      // console.log(DataList[2], 'DataList-----------',"handleDisable ended");
+      // 
     });
     //   studentdata
     // quiz
   };
   useEffect(() => {
     if (quizListData.length) {
-      // console.log('handleDisable called');
+      // 
       handleDisable(quizListData);
     }
   }, [quizListData]);
@@ -464,7 +464,7 @@ const PrevYearQues = ({ route }) => {
                   subjects = [],
                 } = item;
                 {
-                  console.log(scholarshipid, "================item xyz------")
+                  
                 }
                 let premiumFlag = index < 0 ? true : false;
                 {

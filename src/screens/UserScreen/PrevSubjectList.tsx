@@ -85,7 +85,7 @@ const PrevSubjectList = ({route}) => {
     timeDuration = '',
   } = route.params;
 
-  console.log(scholarshipid, '$$$$$$$$$$$$$$scholarshipid...................');
+  
 
   let SubjectList = [];
   let allPrevQuiz = [];
@@ -129,9 +129,9 @@ const PrevSubjectList = ({route}) => {
   const PrevYearSet = useAppSelector(selectPreviousQuestionSet);
   const Prevloading = useAppSelector(selectPreviousQuestionSetStatus);
 
-  // console.log(PrevYearSet, 'PrevYearSet..........');
-  // console.log(count,"count...............%%%%%%%%%%%%%")
-  // console.log(quizList, '================quizList');
+  // 
+  // 
+  // 
   // const {PrevYearQuestion = [], loading: prevLoading = false} = useSelector(
   //   state => state.GetPrevYearQuesReducer,
   // );
@@ -142,13 +142,13 @@ const PrevSubjectList = ({route}) => {
   //   const {PrevYearSet = [], loading: prevLoading = false} = useSelector(
   //     state => state.GetPrevYearSetReducer,
   //   );
-  // console.log(PrevYearSet, 'PrevYearSet=============........');
+  // 
   // const prevYearId=PrevYearSet.map(rec=>rec.yearid)
   //   const [quizList, setQuizList] = useState(quizListData);
   //   const [SubjectList, setSubjectList] = useState(PrevYearSet);
-  // console.log(SubjectList, '=============SubjectList');
+  // 
   // const [quizList, setQuizList] = useState(quiz);
-  // console.log(prevYearId, 'prevYearId####################........');
+  // 
 
   const {
     _id: child_id = '',
@@ -164,13 +164,13 @@ const PrevSubjectList = ({route}) => {
     isPremium = '',
     // coordinates='',
   } = childInfo;
-  // console.log(id, '==================stage id................');
+  // 
   const isReattempt = true;
   const [subjectLoading, setSubjectLoading] = useState(true);
   const [show, setShow] = useState(false);
   const [asyncpremiumData, setasyncpremiumData] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
-  // console.log(selectedItems, ' selectedItems==================');
+  // 
   const [loading, setLoading] = useState(false);
   const [ansloading, setAnsLoading] = useState(false);
   const [ansIndex, setAnsIndex] = useState('');
@@ -188,7 +188,7 @@ const PrevSubjectList = ({route}) => {
       scrollViewRef.current.scrollTo({y: yOffset, animated: true});
     }
   };
-  // console.log(ansIndex, 'ansIndex============');
+  // 
   useEffect(() => {
     const qsSet = {
       stageid,
@@ -197,7 +197,7 @@ const PrevSubjectList = ({route}) => {
       yearid,
       childid,
     };
-    console.log(qsSet, 'qsSet................');
+    
     dispatch(getPreviousYearQuestionSetAPI(qsSet));
   }, []);
 
@@ -244,7 +244,7 @@ const PrevSubjectList = ({route}) => {
       //   dispatch(
       //     getScholarshipPremiumAPI(undefined, childid, stageid, boardid),
       //   );
-      //   // console.log(childid, stageid, boardid, 'childid, stageid, boardid');
+      //   // 
       // }
     });
     return () => {
@@ -291,16 +291,16 @@ const PrevSubjectList = ({route}) => {
 
   // const premiumdata = async () => {
   //   try {
-  //     // console.log('fcmToken2')
+  //     // 
   //     let premiumValue = '';
   //     await AsyncStorage.getItem('scholarArray').then(data => {
   //       premiumValue = data;
-  //       // console.log(premiumValue, 'premiumValue......................');
+  //       // 
   //       setasyncpremiumData(JSON.parse(premiumValue));
   //     });
 
   //     if (premiumValue !== null) {
-  //       console.log(premiumValue);
+  //       
   //     }
   //   } catch (error) {
   //     // Error retrieving data
@@ -310,7 +310,7 @@ const PrevSubjectList = ({route}) => {
   // const {PremiumPurchase = []} = useSelector(
   //   state => state.GetPremiumPurchaseReducer,
   // );
-  // console.log(PremiumPurchase, 'PremiumPurchase............');
+  // 
 
   // const colorList = [
   //   ['#2775cf', '#e3eefa'],
@@ -342,7 +342,7 @@ const PrevSubjectList = ({route}) => {
   if (PrevYearSet.length > 0) {
     const matchingYearid = PrevYearSet?.find(child => child.yearid === yearid);
     // const [subjectwiseList, setSubjectwiseList] = useState(matchingYearid.subjects);
-    // console.log(matchingYearid, '==================matchingYearid');
+    // 
 
     if (matchingYearid) {
       // If a matching child is found, console log its childId
@@ -371,7 +371,7 @@ const PrevSubjectList = ({route}) => {
   //   let List = [...quizList];
   //   let count = 0;
   //   let DataList = [];
-  //   console.log(quizList, '========================List');
+  //   
   //   // List = List.filter(rec => rec.quiz.length > 0);
   //   List = List.map((row, index) => {
   //     const {studentdata = [], quiz = []} = row;
@@ -381,7 +381,7 @@ const PrevSubjectList = ({route}) => {
   //         let totalMark = List[index - 1].studentdata[0].lastexamtotalmark;
   //         let secureMark =
   //           List[index - 1].studentdata[0].lastexamtotalsecurmark;
-  //         // console.log(totalMark, secureMark, 'secureMark============');
+  //         // 
   //         let percentage = ((secureMark / totalMark) * 100).toFixed(1);
   //         if (percentage >= 90) {
   //           passStudent = true;
@@ -399,7 +399,7 @@ const PrevSubjectList = ({route}) => {
   //     const lastindex = DataList.findLastIndex(object => {
   //       return object.isExamAvailable == true;
   //     });
-  //     console.log(lastindex, '-----------------index');
+  //     
   //     setQuizList(DataList);
   //     if (lastindex != -1) {
   //       setHighlightedIndex(lastindex);
@@ -410,7 +410,7 @@ const PrevSubjectList = ({route}) => {
   //       // scrollToHighlightedRow(0);
   //       setTimeout(() => scrollToHighlightedRow(0), 400);
   //     }
-  //     // console.log(DataList[2], 'DataList-----------',"handleDisable ended");
+  //     // 
   //   });
   //   //   studentdata
   //   // quiz
@@ -418,14 +418,14 @@ const PrevSubjectList = ({route}) => {
 
   // useEffect(() => {
   //   if (SubjectList.length) {
-  //     // console.log('handleDisable called');
+  //     // 
   //     handleDisable(SubjectList);
   //   }
   // }, [SubjectList]);
 
   // useEffect(() => {
   //   if (quizList.length) {
-  //     // console.log('handleDisable called');
+  //     // 
   //     handleDisable(quizList);
   //   }
   // }, [quizList]);
@@ -560,7 +560,7 @@ const PrevSubjectList = ({route}) => {
                   }
                 });
                 {
-                  /* console.log(subjectArray[0], 'subjectArray---------'); */
+                  /*  */
                 }
 
                 {
@@ -677,7 +677,7 @@ const PrevSubjectList = ({route}) => {
                             } = item;
 
                             // {
-                            //    console.log(numberofattempt, 'ITEM.............%%%%%%%%%%%%%',studentdata);
+                            //    
                             // }
 
                             const {
@@ -709,7 +709,7 @@ const PrevSubjectList = ({route}) => {
                               percentageSecure = 90;
                             }
                             {
-                              /* console.log(percentageSecure, 'percentageSecure%%%%%%%%%%%%%%%%%%-----'); */
+                              /*  */
                             }
 
                             return (
@@ -1488,7 +1488,7 @@ const PrevSubjectList = ({route}) => {
                           } = item;
 
                           // {
-                          //    console.log(numberofattempt, 'numberofattempt.............%%%%%%%%%%%%%prevYearStudentdata'); 
+                          //     
                           // }
 
                           const {
@@ -1529,7 +1529,7 @@ const PrevSubjectList = ({route}) => {
                             percentageSecure = 90;
                           }
                           {
-                            /* console.log(percentageSecure, 'percentageSecure%%%%%%%%%%%%%%%%%%-----'); */
+                            /*  */
                           }
 
                           return (

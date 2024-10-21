@@ -186,7 +186,7 @@ const LandingScreen = ({}) => {
   const {authToken, status, userInfo = {}} = useAppSelector(selectUserInfo);
   const [refreshing, setRefreshing] = React.useState(false);
 
-  // console.log(childInfo, 'in STUDENT PROFILE.............');
+  // 
 
   const {t: trans, i18n} = useTranslation();
 
@@ -221,7 +221,7 @@ const LandingScreen = ({}) => {
     password = '',
   } = childInfo || {};
   const ExamAvailable = useAppSelector(selectAllCoursesInfo);
-  // console.log(ExamAvailable, "==============ExamAvailable");
+  // 
 
   useEffect(() => {
     navigation.addListener('focus', () => {
@@ -528,7 +528,7 @@ const LandingScreen = ({}) => {
                   updatedon = '',
                 } = item;
 
-                //console.log(item, "================item");
+                //
                 return (
                   <TouchableOpacity
                     key={index}

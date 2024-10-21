@@ -67,9 +67,9 @@ const SubjectsDetails = ({ route }) => {
     topicimage='' ,
     topicname='' ,
   } = route.params;
-  //console.log(route.params, "=================route.params");
+  //
 
-  // console.log(childId, "childId................")
+  // 
   const [highlightedIndex, setHighlightedIndex] = useState(0);
   const [quizList, setQuizList] = useState();
   const [feedbackModalStatus, setFeedbackModalStatus] = useState(false);
@@ -121,7 +121,7 @@ const SubjectsDetails = ({ route }) => {
   // );
   const TopicList = useAppSelector(selectTopicInfo);
   const TopicListLoading = useAppSelector(selectTopicStatus);
-  //console.log(TopicList, "==========TopicList", TopicListLoading);
+  //
 
   // const {UnlockChild = []} = useSelector(state => state.GetUnlockChildReducer);
   const UnlockChild = useAppSelector(selectUnlockStudent)
@@ -132,9 +132,9 @@ const SubjectsDetails = ({ route }) => {
   const RevisionData = useAppSelector(selectRevisionChild)
   const RevisionLoading = useAppSelector(selectRevisionChildStatus)
 
-  // console.log(RevisionData,"RevisionData..................")
-  // console.log(unlockstudent, 'unlockstudent..........');
-  // console.log(UnlockChild, 'UnlockChild//////////////////////////');
+  // 
+  // 
+  // 
   // const {RevisionData = []} = useSelector(
   //   state => state.GetChildRevisionReducer,
   // );
@@ -147,7 +147,7 @@ const SubjectsDetails = ({ route }) => {
   const [TopicBySubClass, setTopicBySubClass] = useState(TopicList);
   const [revisionData, setrevisionData] = React.useState();
 
-  // console.log(revisionData,"///////////////////////////revisionData")
+  // 
   const [show, setShow] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -160,7 +160,7 @@ const SubjectsDetails = ({ route }) => {
   const { t: trans, i18n } = useTranslation();
 
   const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
-  // console.log(childInfo, 'childInfo..........');
+  // 
 
   interface ChildInfo {
     _id: string;
@@ -313,12 +313,12 @@ const SubjectsDetails = ({ route }) => {
     let previousTopicUnlocked = true;
 
     let topicdetails: any[] = [];
-    // console.log(RevisionData,"$$$$$$$$$$RevisionData.......................")
+    // 
     RevisionData.forEach((row, index) => {
       // RevisionData.map((row,index)=>{
       //   RevisionData.push({...row, isExamAvailable: false});
       // })
-      //console.log(index, '...............v..................');
+      //
 
       if (index < 1) {
         topicdetails.push({ ...row, isExamAvailable: true });
@@ -344,7 +344,7 @@ const SubjectsDetails = ({ route }) => {
         // let topicprePer = RevisionData.map(
         //   item => item.studenttopic,
         // );
-       // console.log(topiconePers.length, '________________________________');
+       // 
         if (topiconePers.length > 0) {
           topicdetails.push({ ...row, isExamAvailable: true });
         } else {
@@ -368,7 +368,7 @@ const SubjectsDetails = ({ route }) => {
       // }
     });
     setrevisionData(topicdetails);
-    // console.log(revisionData,"///////////////////////////revisionData")
+    // 
 
     /////////////Code for Heighlight
     const lastindex = topicdetails.findLastIndex(object => {
@@ -517,7 +517,7 @@ const SubjectsDetails = ({ route }) => {
                         studenttopic = [],
                       } = item;
                       {
-                        /* {console.log(item,"item",isExamAvailable,"isExamAvailable...................")} */
+                        /* {} */
                       }
                       {
                         /* let is2ndAvailable=false

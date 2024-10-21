@@ -67,7 +67,7 @@ const VideoScreen = ({ route}) => {
   };
 
   const onBuffer = ({isBuffering}) => {
-    // console.log(isBuffering, '=============isBuffering');
+    // 
     setOpacity(isBuffering ? 1 : 0);
   };
   const onError = meta => {

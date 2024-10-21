@@ -178,7 +178,7 @@ const ExamSets = ({route}) => {
   // const {ExamDetails = {}} = useSelector(state => state.ExamTestNameReducer);
   // const {ExamName = ''} = ExamDetails;
   //  ExamName == 'SubjectRevisionList'
-  // console.log(ExamName,"ExamName...............")
+  // 
   //
   // console.log(
   //   Class,
@@ -226,13 +226,13 @@ const ExamSets = ({route}) => {
   // const {reviewquestionsets=[]}=TopicList
   const TopicList = useAppSelector(selectTopicDetails);
   const TopicLoading = useAppSelector(selectTopicDetailsStatus);
-  console.log();
-  // console.log(TopicList, "==========TopicList");
+  
+  // 
 
   // const {ContentQuiz = []} = useSelector(state => state.GetContentQuizReducer);
   const ContentQuiz = useAppSelector(selectContentQuiz);
 
-  // console.log(ContentQuiz, "==========ContentQuiz");
+  // 
 
   const ExamQuestionset = TopicList.map(r => r.reviewquestionsets);
 
@@ -253,7 +253,7 @@ const ExamSets = ({route}) => {
   const [isVideoPaused, setIsVideoPaused] = useState('');
 
   const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
-  // console.log(childInfo, 'childInfo..........');
+  // 
 
   interface ChildInfo {
     _id: string;
@@ -631,7 +631,7 @@ const ExamSets = ({route}) => {
     ? PremiumPurchase[0]
     : [];
 
-  console.log(paymentid, 'paymentid,,,,,,,,,,,,,,', PremiumPurchase);
+  
 
   useEffect(() => {
     setLockStatus(RevisionData);
@@ -641,12 +641,12 @@ const ExamSets = ({route}) => {
     let previousTopicUnlocked = true;
 
     let topicdetails = [];
-    // console.log(RevisionData,"$$$$$$$$$$RevisionData.......................")
+    // 
     RevisionData.forEach((row, index) => {
       // RevisionData.map((row,index)=>{
       //   RevisionData.push({...row, isExamAvailable: false});
       // })
-      console.log(index, '...............v..................');
+      
 
       if (index < 1) {
         topicdetails.push({...row, isExamAvailable: true});
@@ -667,7 +667,7 @@ const ExamSets = ({route}) => {
         // let topicprePer = RevisionData.map(
         //   item => item.studenttopic,
         // );
-        console.log(topiconePers.length, '________________________________');
+        
         if (topiconePers.length > 0) {
           topicdetails.push({...row, isExamAvailable: true});
         } else {
@@ -676,14 +676,14 @@ const ExamSets = ({route}) => {
       }
     });
     setrevisionData(topicdetails);
-    // console.log(revisionData,"///////////////////////////revisionData")
+    // 
 
     /////////////Code for Heighlight
     const lastindexes = topicdetails.findLastIndex(object => {
       return object.isExamAvailable == true;
     });
     setCheckIndex(lastindexes);
-    console.log(lastindexes, '####################lastindex/////////////');
+    
   };
   const isReattempt = true;
 
@@ -837,12 +837,12 @@ const ExamSets = ({route}) => {
   // const { TopicId = '' } = useSelector(state => state.GetTopicIdReducer);
 
   const TopicId = useAppSelector(selectTopicId);
-  console.log(TopicId, '%%%%%%%%%%%%%%%%%%%%%%%TopicId%%%%%%%%');
+  
   // const {UnlockChild = []} = useSelector(state => state.GetUnlockChildReducer);
   const UnlockChild = useAppSelector(selectUnlockStudent);
   const unlockstudent = UnlockChild.filter(r => r.childid == childId);
-  // console.log(unlockstudent, 'unlockstudent..........');
-  // console.log(UnlockChild, 'UnlockChild//////////////////////////');
+  // 
+  // 
 
   const handleDisable = (ExamQuestionsets: any) => {
     let selectedTopic = undefined;
@@ -852,7 +852,7 @@ const ExamSets = ({route}) => {
     }
 
     const parentIndex = TopicList.findIndex(obj => obj.topicid == TopicId);
-    // console.log(parentIndex,"parentIndex.................")
+    // 
     let Data =
       selectedTopic != undefined
         ? selectedTopic.reviewquestionsets
@@ -917,7 +917,7 @@ const ExamSets = ({route}) => {
       //   return object.isExamAvailable == true;
       // });
 
-      // console.log(lastindex,"lastindex.......................")
+      // 
       // setQuizList(revisionList);
       // if (lastindex != -1) {
       //   setHighlightedIndex(lastindex);
@@ -930,7 +930,7 @@ const ExamSets = ({route}) => {
       // }
     });
   };
-  // console.log(QuestionList,"quizList")
+  // 
 
   const AllExamAttempted = QuestionList.find(
     rec => rec.isExamAvailable == false,
@@ -1000,7 +1000,7 @@ const ExamSets = ({route}) => {
 
   const questionlistIndex = QuestionList?.length;
 
-  // console.log(questionlistIndex,"questionlistIndex..............")
+  // 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: Colors.secondary}}>
       {TopicLoading == 'loading' ? (
@@ -1727,7 +1727,7 @@ const ExamSets = ({route}) => {
 
                       {
                         {
-                          /* console.log(index,"contentset.........") */
+                          /*  */
                         }
                       }
                       let isInfoFlag = false;
@@ -1741,7 +1741,7 @@ const ExamSets = ({route}) => {
                         obj => obj.topicid == TopicId,
                       );
                       {
-                        /* console.log(parentIndex,"parentIndex...............") */
+                        /*  */
                       }
                       if (
                         index > 0 &&
@@ -1782,7 +1782,7 @@ const ExamSets = ({route}) => {
                         {
                           /* if (isPremium == false && parentIndex >= 0) {
                           {
-                            console.log(isPremium, 'isPremium.........');
+                            
                           }
                           let resultArr = PremiumPurchase.filter(o1 =>
                             asyncpremiumData.some(
@@ -1823,7 +1823,7 @@ const ExamSets = ({route}) => {
                           }
 
                           {
-                            console.log(isPremium, 'isPremium...........');
+                            
                           }
                         }
                       }

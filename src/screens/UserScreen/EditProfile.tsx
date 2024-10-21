@@ -478,7 +478,7 @@ const EditProfile = ({route}) => {
       stateid: statename.value,
       statename: statename.label,
     };
-    console.log(updatebodyData, '@updatebodyData');
+    
     const {image: Child_imageUrl = '', imagename: child_imageName = ''} =
       imageData;
     let phone_validate = false;

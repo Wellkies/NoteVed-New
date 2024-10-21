@@ -34,7 +34,7 @@ const SolutionScreen = ({navigation, route}) => {
   }, []);
 
   const {width} = useWindowDimensions();
-  // console.log(solution, 'solution-------');
+  // 
   const solutionData = solution != '' ? JSON.parse(solution) : '';
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
