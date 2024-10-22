@@ -1735,7 +1735,7 @@ const SubjectLevel = ({route}) => {
                                 ? device_width * 0.9
                                 : device_width * 0.95,
                               height: IsTabScreen
-                                ? device_height * 0.10
+                                ? device_height * 0.13
                                 : device_height * 0.09,
                               marginHorizontal: IsTabScreen
                                 ? device_width * 0.05

@@ -755,14 +755,15 @@ const ScoreBoard = ({route}) => {
       <ImageBackground
         style={{
           width: device_width,
-          height: device_height,
+          //height: device_height,
           flex: 1,
-          alignSelf: 'center',
+          //alignSelf: 'center',
           backgroundColor: '#364D3D',
         }}
         resizeMode="cover">
         <ScrollView
-          showsVerticalScrollIndicator={false}
+          showsVerticalScrollIndicator={true}
+          contentContainerStyle={{paddingBottom: "30%"}}
           style={{paddingHorizontal:10}}>
           <ViewShot
             ref={ref}
@@ -841,7 +842,7 @@ const ScoreBoard = ({route}) => {
                     ? device_width * 0.2
                     : device_width * 0.25,
                   backgroundColor: Colors.primary,
-                  marginVertical: IsTabScreen ? 15 : 10,
+                  marginVertical: IsTabScreen ? 30 : 10,
                   borderRadius: 100,
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -1188,7 +1189,7 @@ const ScoreBoard = ({route}) => {
               <PieChart
                 // doughnut={true}
                 coverRadius={0.45}
-                widthAndHeight={device_width * 0.25}
+                widthAndHeight={IsTabScreen?device_width * 0.20:device_width * 0.25}
                 series={series}
                 sliceColor={sliceColor}
                 coverFill={'#263d2d'}
@@ -1200,7 +1201,7 @@ const ScoreBoard = ({route}) => {
               flexDirection: 'row',
               justifyContent: 'center',
               width: device_width,
-              height:IsTabScreen ?'100%': '9%',
+              //height:IsTabScreen ?'90%': '9%',
               paddingVertical: 10,
               alignSelf: 'center',
               marginTop: 10,
@@ -1378,17 +1379,16 @@ const ScoreBoard = ({route}) => {
                 navigation.navigate('SubjectLevel');
               }}
               style={{
-                paddingVertical:IsTabScreen ? 25 : 10,
+                paddingVertical: IsTabScreen ? 15 : 10,
                 borderRadius: 10,
-                // width: '42%',
-                width: device_width * 0.44,
+                width: IsTabScreen? device_width*0.44:device_width * 0.44,
                 marginHorizontal: 5,
                 borderWidth: 1,
                 borderColor: '#FFB901',
                 backgroundColor: 'rgba(250,250,250,0.1)',
-                flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'center',
+                //flexBasis: IsTabScreen ? '48%' : '44%',
               }}>
               <Text style={{color: '#FEFEFE', fontSize: IsTabScreen ? 18 :15, fontWeight: '600'}}>
                 Home
@@ -1399,17 +1399,17 @@ const ScoreBoard = ({route}) => {
                 myCustomShare();
               }}
               style={{
-                paddingVertical: IsTabScreen ? 15 :10,
+                paddingVertical: IsTabScreen ? 15 : 10,
                 borderRadius: 10,
-                // width: '42%',
-                width: device_width * 0.44,
+                width: IsTabScreen? device_width*0.44:device_width * 0.44,
                 marginHorizontal: 5,
                 borderWidth: 1,
                 borderColor: '#FFB901',
                 backgroundColor: 'rgba(250,250,250,0.1)',
-                flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'center',
+                //flexBasis: IsTabScreen ? '48%' : '44%',
+                flexDirection: 'row',
               }}>
               <Text style={{color: '#FEFEFE', fontSize:IsTabScreen?18: 15, fontWeight: '600'}}>
                 Share Report

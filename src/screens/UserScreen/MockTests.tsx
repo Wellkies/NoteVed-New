@@ -686,7 +686,7 @@ const MockTests = ({route}) => {
               onPress={() => handleReport()}>
               <MaterialIcons
                 name="report"
-                size={IsTabScreen ? 24 : 2020}
+                size={IsTabScreen ? 24 : 20}
                 // backgroundColor={Colors.secondary}
                 color={'#fff'}
                 // onPress={() => navigation.goBack()}

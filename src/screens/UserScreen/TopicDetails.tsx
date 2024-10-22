@@ -306,7 +306,7 @@ const TopicDetails = ({route}) => {
                               }
                             }}
                             style={{
-                              height: IsTabScreen ? device_height * 0.10 : device_height * 0.09,
+                              height: IsTabScreen ? device_height * 0.12 : device_height * 0.09,
                               width: '100%',
                               backgroundColor: isLock
                                 ? 'rgba(220,220,220,0.1)'
