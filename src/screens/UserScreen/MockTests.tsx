@@ -817,8 +817,8 @@ const MockTests = ({route}) => {
             )}
             <View
               style={{
-                marginVertical: IsTabScreen ? 20 :10,
-                paddingBottom: IsTabScreen ? 10 :5,
+                marginVertical: 10,
+                paddingBottom: 5,
                 flexDirection: 'row',
                 flexWrap: 'wrap',
                 justifyContent: 'space-between',
@@ -880,8 +880,8 @@ const MockTests = ({route}) => {
                           }}>
                           <View
                             style={{
-                              width: IsTabScreen ? 100 :80,
-                              height: IsTabScreen ? 100 :80,
+                              width: 80,
+                              height:80,
                               borderRadius: 10,
                               overflow: 'hidden',
                             }}>
