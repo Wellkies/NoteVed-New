@@ -665,14 +665,14 @@ const MockTests = ({route}) => {
               style={{
                 justifyContent: 'center',
                 alignItems: 'center',
-                marginVertical: IsTabScreen ? 25 : 20,
+                marginVertical:20,
                 // borderWidth:1,
               }}>
               <Progress.Bar
                 color={'#f1a722'}
                 progress={progressdata}
                 width={IsTabScreen ? 400 : 300}
-                height={IsTabScreen ? 10 : 7}
+                height={7}
                 style={{marginTop: -5}}
               />
             </View>
@@ -708,14 +708,14 @@ const MockTests = ({route}) => {
                   color: '#fff',
                   alignSelf: 'flex-start',
                   marginTop: 10,
-                  fontSize: IsTabScreen ? 22 : 18,
+                  fontSize: 18,
                 },
               ]}>
               {`${trans('Qs.')} ( ${currentIndex + 1}/${
                 Questionlist?.length
               } )`}
             </Text>
-            <ScrollView
+            {/* <ScrollView
               showsVerticalScrollIndicator={true}
               showsHorizontalScrollIndicator={true}
               indicatorStyle={'white'}
@@ -723,8 +723,8 @@ const MockTests = ({route}) => {
               style={{
                 flex: 1,
               }}
-              persistentScrollbar={true}>
-              <View style={{width: '100%'}}>
+              persistentScrollbar={true}> */}
+              <View style={{width:'100%',flex:1}}>
                 <View
                   style={{
                     justifyContent: 'center',
@@ -783,9 +783,9 @@ const MockTests = ({route}) => {
                           {
                             textAlign: 'center', 
                             color: '#fff',
-                            fontSize: IsTabScreen ? 24 : 16,
-                            lineHeight: IsTabScreen ? 30 : 20, 
-                            padding: IsTabScreen ? 20 : 10,
+                            fontSize: IsTabScreen ? 20 : 16,
+                            lineHeight: 20, 
+                            padding: IsTabScreen ? 10 : 10,
                           },
                         ]}>
                         {Questionlist[currentIndex]?.question}
@@ -794,7 +794,7 @@ const MockTests = ({route}) => {
                   )}
                 </View>
               </View>
-            </ScrollView>
+            {/* </ScrollView> */}
             {Questionlist[currentIndex]?.questiontype == 'image' && (
               <View
                 style={{justifyContent: 'flex-start', flexDirection: 'row'}}>
