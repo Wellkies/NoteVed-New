@@ -413,8 +413,8 @@ const ContentDetails = ({route}) => {
                               backgroundColor: !isExamAvailable
                                 ? '#aaa'
                                 : '#f1a722',
-                              width: IsTabScreen ?46:40,
-                              height: IsTabScreen ?46:40,
+                              width: IsTabScreen ? 46 : 40,
+                              height: IsTabScreen ? 46 : 40,
                               justifyContent: 'center',
                               alignItems: 'center',
                               borderRadius: 30,
@@ -433,7 +433,7 @@ const ContentDetails = ({route}) => {
                                 style={{
                                   marginHorizontal: 10,
                                   flexDirection: 'column',
-                                  width: IsTabScreen ?'80%':'70%',
+                                  width: IsTabScreen ? '80%' : '70%',
                                   justifyContent: 'space-between',
                                 }}>
                                 <View
@@ -445,14 +445,14 @@ const ContentDetails = ({route}) => {
                                   <MaterialCommunityIcons
                                     name="hand-pointing-right"
                                     color={'#f1a722'}
-                                    size={IsTabScreen ?35:30}
+                                    size={IsTabScreen ? 35 : 30}
                                     style={{marginRight: 10}}
                                   />
                                   <Text
                                     style={{
                                       color: '#f1a722',
                                       fontWeight: '500',
-                                      fontSize: IsTabScreen ?20:17,
+                                      fontSize: IsTabScreen ? 20 : 17,
                                       //top: -10,
                                     }}>
                                     {trans(contentset)}
@@ -466,7 +466,7 @@ const ContentDetails = ({route}) => {
                                   <Text
                                     style={{
                                       color: '#fff',
-                                      fontSize: IsTabScreen ?16:14,
+                                      fontSize: IsTabScreen ? 16 : 14,
                                       //width: '60%',
                                       fontWeight: '500',
                                       marginLeft: 20,
@@ -478,7 +478,7 @@ const ContentDetails = ({route}) => {
                                     style={{
                                       textTransform: 'capitalize',
                                       color: '#f1a722',
-                                      fontSize: IsTabScreen ?16:14,
+                                      fontSize: IsTabScreen ? 16 : 14,
                                       fontWeight: 'bold',
                                     }}>
                                     {'   '}
@@ -493,7 +493,7 @@ const ContentDetails = ({route}) => {
                                   <Text
                                     style={{
                                       color: '#fff',
-                                      fontSize: IsTabScreen ?16:14,
+                                      fontSize: IsTabScreen ? 16 : 14,
                                       width: '60%',
                                       fontWeight: '500',
                                       marginLeft: 20,
@@ -505,7 +505,7 @@ const ContentDetails = ({route}) => {
                                     style={{
                                       textTransform: 'capitalize',
                                       color: '#f1a722',
-                                      fontSize:IsTabScreen ?16: 14,
+                                      fontSize: IsTabScreen ? 16 : 14,
                                       fontWeight: '500',
                                     }}>
                                     {`: ${moment(lastattemptDate).format(
@@ -522,7 +522,7 @@ const ContentDetails = ({route}) => {
                                     style={{
                                       color: '#fff',
                                       width: '60%',
-                                      fontSize: IsTabScreen ?16:14,
+                                      fontSize: IsTabScreen ? 16 : 14,
                                       fontWeight: '500',
                                       marginLeft: 20,
                                     }}>
@@ -532,7 +532,7 @@ const ContentDetails = ({route}) => {
                                     style={{
                                       textTransform: 'capitalize',
                                       color: '#f1a722',
-                                      fontSize: IsTabScreen ?16:14,
+                                      fontSize: IsTabScreen ? 16 : 14,
                                       fontWeight: 'bold',
                                     }}>
                                     {`: ${totalmark}`}
@@ -547,7 +547,7 @@ const ContentDetails = ({route}) => {
                                     style={{
                                       width: '60%',
                                       color: '#fff',
-                                      fontSize:IsTabScreen ?16: 14,
+                                      fontSize: IsTabScreen ? 16 : 14,
                                       fontWeight: '500',
                                       marginLeft: 20,
                                     }}>
@@ -557,7 +557,7 @@ const ContentDetails = ({route}) => {
                                     style={{
                                       textTransform: 'capitalize',
                                       color: 'lawngreen',
-                                      fontSize:IsTabScreen ?16: 14,
+                                      fontSize: IsTabScreen ? 16 : 14,
                                       fontWeight: 'bold',
                                     }}>
                                     {`: ${securmark}`}
@@ -572,7 +572,7 @@ const ContentDetails = ({route}) => {
                                     style={{
                                       width: '60%',
                                       color: '#fff',
-                                      fontSize: IsTabScreen ?16:14,
+                                      fontSize: IsTabScreen ? 16 : 14,
                                       fontWeight: '500',
                                       marginLeft: 20,
                                     }}>
@@ -604,12 +604,12 @@ const ContentDetails = ({route}) => {
                                 <MaterialCommunityIcons
                                   name="hand-pointing-right"
                                   color={!isExamAvailable ? '#aaa' : '#f1a722'}
-                                  size={IsTabScreen ?35:30}
+                                  size={IsTabScreen ? 35 : 30}
                                   style={{marginRight: 10}}
                                 />
                                 <Text
                                   style={{
-                                    fontSize: IsTabScreen ?20:17,
+                                    fontSize: IsTabScreen ? 20 : 17,
                                     fontWeight: '500',
                                     color: !isExamAvailable
                                       ? '#aaa'
@@ -628,7 +628,7 @@ const ContentDetails = ({route}) => {
                                 <Text
                                   style={{
                                     color: !isExamAvailable ? '#aaa' : '#fff',
-                                    fontSize: IsTabScreen ?16:14,
+                                    fontSize: IsTabScreen ? 16 : 14,
                                     fontWeight: '700',
                                   }}>
                                   {trans('Total Question')}
@@ -638,7 +638,7 @@ const ContentDetails = ({route}) => {
                                     textTransform: 'capitalize',
                                     color: !isExamAvailable ? '#aaa' : '#fff',
                                     width: '50%',
-                                    fontSize: IsTabScreen ?16:14,
+                                    fontSize: IsTabScreen ? 16 : 14,
                                     fontWeight: 'bold',
                                   }}>
                                   : {item.quizlength}
@@ -654,7 +654,7 @@ const ContentDetails = ({route}) => {
                                   <Text
                                     style={{
                                       color: !isExamAvailable ? '#aaa' : '#fff',
-                                      fontSize: IsTabScreen ?16:14,
+                                      fontSize: IsTabScreen ? 16 : 14,
                                       fontWeight: '700',
                                     }}>
                                     {trans('Time Duration')}
@@ -664,7 +664,7 @@ const ContentDetails = ({route}) => {
                                       textTransform: 'capitalize',
                                       color: !isExamAvailable ? '#aaa' : '#fff',
                                       width: '50%',
-                                      fontSize: IsTabScreen ?16:14,
+                                      fontSize: IsTabScreen ? 16 : 14,
                                       fontWeight: 'bold',
                                     }}>
                                     : {timeDuration} mins
@@ -710,13 +710,13 @@ const ContentDetails = ({route}) => {
                                   <MaterialCommunityIcons
                                     name="refresh"
                                     color={'#f1a722'}
-                                    size={IsTabScreen ?45:35}
+                                    size={IsTabScreen ? 45 : 35}
                                   />
                                   <Text
                                     style={{
                                       color: '#f1a722',
                                       fontWeight: '600',
-                                      fontSize: IsTabScreen ?16:12,
+                                      fontSize: IsTabScreen ? 16 : 12,
                                       letterSpacing: 0.5,
                                     }}>
                                     {trans('Reattempt')}
@@ -728,14 +728,14 @@ const ContentDetails = ({route}) => {
                                   style={{
                                     color: !isExamAvailable ? '#aaa' : 'green',
                                     textAlign: 'center',
-                                    fontSize: IsTabScreen ?18:16,
+                                    fontSize: IsTabScreen ? 18 : 16,
                                     fontWeight: '500',
                                     //borderColor: '#f1a722',
                                     backgroundColor: !isExamAvailable
                                       ? 'rgba(220,220,220,0.1)'
                                       : '#FFFFFF',
-                                    paddingVertical: IsTabScreen ?10:8,
-                                    paddingHorizontal: IsTabScreen ?16:10,
+                                    paddingVertical: IsTabScreen ? 10 : 8,
+                                    paddingHorizontal: IsTabScreen ? 16 : 10,
                                     borderRadius: 10,
                                     letterSpacing: 0.5,
                                   }}>

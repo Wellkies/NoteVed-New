@@ -913,8 +913,8 @@ const MockTests = ({route}) => {
                           }}>
                           <View
                             style={{
-                              width: 80,
-                              height: 80,
+                              width: 60,
+                              height: 60,
                               borderRadius: 10,
                               overflow: 'hidden',
                             }}>
