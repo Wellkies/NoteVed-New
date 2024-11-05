@@ -276,21 +276,21 @@ const SubjectLevel = ({route}) => {
         alignContent: 'center',
         justifyContent: 'center',
         alignItems: 'center',
-        marginLeft: 12,
+        marginLeft: IsTabScreen?6:12,
         // borderWidth: 0.9,
         // borderColor: '#f1a722',
         borderRadius: 20,
         width: IsTabScreen ? device_width * 0.99 : device_width * 0.95,
-        height: IsTabScreen ? device_height * 0.40 :device_height * 0.26,
+        height: IsTabScreen ? device_height * 0.5:device_height * 0.28,
       }}>
       <FastImage
         style={{
           borderRadius: 18,
           width: IsTabScreen ? device_width * 0.99: device_width * 0.95,
-          height: IsTabScreen ? device_height * 0.40 :device_height * 0.28,
+          height: IsTabScreen ? device_height * 0.5 :device_height * 0.28,
         }}
         source={item}
-        resizeMode={'contain'}
+        resizeMode={IsTabScreen?'stretch':'cover'}
       />
     </View>
   );
