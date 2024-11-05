@@ -12,6 +12,7 @@ import {
   ScrollView,
   Image,
   BackHandler,
+  Dimensions,
 } from 'react-native';
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 import {RootState, AppDispatch} from '../../redux/store/Store';
@@ -45,6 +46,8 @@ import Carousel, {Pagination} from 'react-native-snap-carousel';
 
 const SplashScreen = () => {
   const dispatch = useDispatch<any>();
+  const device_width = Dimensions.get('window').width;
+  const device_height = Dimensions.get('window').height;
   const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
   const {t: trans, i18n} = useTranslation();
   const count = useAppSelector(selectCount);
@@ -73,6 +76,16 @@ const SplashScreen = () => {
     const data = {phone: phone, password: password};
     dispatch(fetchUserAsync(Object(data) || {}));
   };
+  const [orientation, setOrientation] = useState('portrait');
+
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({window}) => {
+      const {width, height} = window;
+      setOrientation(height >= width ? 'portrait' : 'landscape');
+    });
+    console.log(orientation, 'Orientation');
+    return () => subscription?.remove();
+  }, [orientation]);
   useEffect(() => {
     dispatch(setLanguage(selectedLanguage));
     if (selectedLanguage == '') {

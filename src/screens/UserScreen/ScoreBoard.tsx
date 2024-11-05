@@ -123,6 +123,8 @@ import LevelCompleted from './LevelCompleted.tsx';
 
 const ScoreBoard = ({route}) => {
   const dispatch = useDispatch<any>();
+  const device_width = Dimensions.get('window').width;
+  const device_height = Dimensions.get('window').height;
   const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
   const navigation = useNavigation();
   // const [rewardedad, setRewardedad] = useState(null);
@@ -748,6 +750,16 @@ const ScoreBoard = ({route}) => {
       });
     };
   }, []);
+  const [orientation, setOrientation] = useState('portrait');
+
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({window}) => {
+      const {width, height} = window;
+      setOrientation(height >= width ? 'portrait' : 'landscape');
+    });
+    console.log(orientation, 'Orientation');
+    return () => subscription?.remove();
+  }, [orientation]);
 
   return (
     <SafeAreaView style={{flex: 1}}>

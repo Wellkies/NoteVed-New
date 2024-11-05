@@ -88,6 +88,8 @@ var Spinner = require('react-native-spinkit');
 
 const SignInScreen = ({route}) => {
   const {t: trans, i18n} = useTranslation();
+  const device_width = Dimensions.get('window').width;
+  const device_height = Dimensions.get('window').height;
   // const [rewardedad, setRewardedad] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   //
@@ -220,6 +222,17 @@ const SignInScreen = ({route}) => {
       // Error retrieving data
     }
   };
+  
+  const [orientation, setOrientation] = useState('portrait');
+
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({window}) => {
+      const {width, height} = window;
+      setOrientation(height >= width ? 'portrait' : 'landscape');
+    });
+    console.log(orientation, 'Orientation');
+    return () => subscription?.remove();
+  }, [orientation]);
 
   useEffect(() => {
     const interval = setInterval(() => {

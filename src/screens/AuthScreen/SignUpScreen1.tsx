@@ -83,7 +83,8 @@ import axios from 'axios';
 const SignUpScreen1 = ({route}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch<any>();
-
+  const device_width = Dimensions.get('window').width;
+  const device_height = Dimensions.get('window').height;
   const {
     phone = '',
     email = '',
@@ -117,6 +118,16 @@ const SignUpScreen1 = ({route}) => {
   // ]);
 
   const [language, setLanguages] = useState('english');
+  const [orientation, setOrientation] = useState('portrait');
+
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({window}) => {
+      const {width, height} = window;
+      setOrientation(height >= width ? 'portrait' : 'landscape');
+    });
+    console.log(orientation, 'Orientation');
+    return () => subscription?.remove();
+  }, [orientation]);
 
   useEffect(() => {
     navigation.addListener('focus', () => {

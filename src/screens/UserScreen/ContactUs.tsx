@@ -48,6 +48,8 @@ import { createContactApi } from '../../redux/actions/createContactApi';
 const ContactUs = ({ }) => {
   const { t: trans, i18n } = useTranslation();
   const navigation = useNavigation();
+  const device_width = Dimensions.get('window').width;
+  const device_height = Dimensions.get('window').height;
   interface ChildInfo {
     _id: string;
     age: string;
@@ -110,6 +112,16 @@ const ContactUs = ({ }) => {
   });
 
   const { p_name, query, p_email, p_phone } = info;
+  const [orientation, setOrientation] = useState('portrait');
+
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({window}) => {
+      const {width, height} = window;
+      setOrientation(height >= width ? 'portrait' : 'landscape');
+    });
+    console.log(orientation, 'Orientation');
+    return () => subscription?.remove();
+  }, [orientation]);
   useEffect(() => {
     if (Object.keys(childInfo).length != 0) {
       setInfo({

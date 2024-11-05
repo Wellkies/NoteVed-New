@@ -46,6 +46,8 @@ const { t: trans } = i18n;
 const ProductList = () => {
   // const [loading, setLoading] = useState(false);
   const navigation = useNavigation()
+  const device_width = Dimensions.get('window').width;
+  const device_height = Dimensions.get('window').height;
   // const {CategoryID = ''} = route.params;
   const dispatch = useDispatch<any>();
   useEffect(() => {
@@ -121,6 +123,17 @@ const ProductList = () => {
     language = '',
     // coordinates='',
   } = childInfo;
+  
+  const [orientation, setOrientation] = useState('portrait');
+
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({window}) => {
+      const {width, height} = window;
+      setOrientation(height >= width ? 'portrait' : 'landscape');
+    });
+    console.log(orientation, 'Orientation');
+    return () => subscription?.remove();
+  }, [orientation]);
 
   // useEffect(() => {
   //   navigation.addListener('focus', () => {

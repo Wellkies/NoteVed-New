@@ -8,6 +8,7 @@ import {
   BackHandler,
   ImageBackground,
   TextInput,
+  Dimensions,
 } from 'react-native';
 import {
   GoogleSignin,
@@ -95,6 +96,8 @@ const UserProfile = ({}) => {
   }
   const navigation = useNavigation();
   const dispatch = useDispatch<any>();
+  const device_width = Dimensions.get('window').width;
+  const device_height = Dimensions.get('window').height;
   const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
   const count = useAppSelector(selectStudentStatus);
   const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
@@ -154,6 +157,16 @@ const UserProfile = ({}) => {
   //   }
   //   // }
   // };
+  const [orientation, setOrientation] = useState('portrait');
+
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({window}) => {
+      const {width, height} = window;
+      setOrientation(height >= width ? 'portrait' : 'landscape');
+    });
+    console.log(orientation, 'Orientation');
+    return () => subscription?.remove();
+  }, [orientation]);
 
   useEffect(() => {
     // tokenCheck();

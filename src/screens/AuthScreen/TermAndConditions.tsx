@@ -34,7 +34,7 @@ import Colors from '../../../assets/Colors';
 // import {loginOtp} from '../redux/actions/Action';
 const {t: trans} = i18n;
 import {useDispatch, useSelector} from 'react-redux';
-import {device_height, device_width} from '../style';
+// import {device_height, device_width} from '../style';
 import {ImageBackground} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useAppSelector} from '../../redux/store/reducerHook';
@@ -43,6 +43,8 @@ import {selectStudentLanguage} from '../../redux/reducers/languageReducer';
 const TermAndConditions = () => {
   // const orientation = useOrientation();
   const navigation = useNavigation();
+  const device_width = Dimensions.get('window').width;
+  const device_height = Dimensions.get('window').height;
   const [showprog, setshowprog] = React.useState(false);
   const height = Dimensions.get('screen').height;
   const width = Dimensions.get('screen').width;
@@ -52,6 +54,16 @@ const TermAndConditions = () => {
   //   console.log(phone, 'phone/////');
   const dispatch = useDispatch();
   const selectedLanguage = useAppSelector(selectStudentLanguage);
+  const [orientation, setOrientation] = useState('portrait');
+
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({window}) => {
+      const {width, height} = window;
+      setOrientation(height >= width ? 'portrait' : 'landscape');
+    });
+    console.log(orientation, 'Orientation');
+    return () => subscription?.remove();
+  }, [orientation]);
   const agreementOdia = [
     {
       title: `ନୋଟଭେଦ ଆପ୍ ର ସମୀକ୍ଷା`,

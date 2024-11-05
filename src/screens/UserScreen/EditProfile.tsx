@@ -12,6 +12,7 @@ import {
   ToastAndroid,
   StatusBar,
   Platform,
+  Dimensions,
 } from 'react-native';
 import Storage from '../../utils/AsyncStorage';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
@@ -65,6 +66,8 @@ import {
 
 const EditProfile = ({route}) => {
   const navigation = useNavigation();
+  const device_width = Dimensions.get('window').width;
+  const device_height = Dimensions.get('window').height;
   const dispatch = useDispatch<any>();
   const {t: trans, i18n} = useTranslation();
   const {childId = ''} = route.params;
@@ -676,6 +679,16 @@ const EditProfile = ({route}) => {
       });
     });
   }, []);
+  const [orientation, setOrientation] = useState('portrait');
+
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({window}) => {
+      const {width, height} = window;
+      setOrientation(height >= width ? 'portrait' : 'landscape');
+    });
+    console.log(orientation, 'Orientation');
+    return () => subscription?.remove();
+  }, [orientation]);
   return (
     <View style={styles.container}>
       {/* <StatusBar backgroundColor={'#263d2d'} barStyle="light-content" /> */}

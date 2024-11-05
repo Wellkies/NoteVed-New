@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   Platform,
+  Dimensions,
 } from 'react-native';
 import React, {useEffect, useState, useRef} from 'react';
 import Colors from '../../../assets/Colors';
@@ -20,7 +21,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import * as Progress from 'react-native-progress';
 
-import {device_height, device_width} from '../style';
+// import {device_height, device_width} from '../style';
 import {markCalculation} from '../../../constants/Constants';
 import WebView from 'react-native-webview';
 
@@ -75,12 +76,24 @@ const LiveQuiz = ({route}) => {
   const navigation = useNavigation();
   const scrollRef = useRef();
   const {t: trans, i18n} = useTranslation();
+  const device_width = Dimensions.get('window').width;
+  const device_height = Dimensions.get('window').height;
 
   const animatedScale = useRef(new Animated.Value(8)).current;
   //
   useEffect(() => {
     animatedScale.setValue(1);
   }, []);
+  const [orientation, setOrientation] = useState('portrait');
+
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({window}) => {
+      const {width, height} = window;
+      setOrientation(height >= width ? 'portrait' : 'landscape');
+    });
+    console.log(orientation, 'Orientation');
+    return () => subscription?.remove();
+  }, [orientation]);
 
   const ContentQuiz = useAppSelector(selectLiveQuizData);
   const ContentLoading = useAppSelector(selectLiveQuizStatus);

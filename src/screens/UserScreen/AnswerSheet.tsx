@@ -16,6 +16,7 @@ import {
   useWindowDimensions,
   Button,
   Linking,
+  Dimensions,
 } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -47,6 +48,8 @@ import {getContentByTopicIdAPI} from '../../redux/reducers/GetContentDetailsRedu
 
 const AnswerSheet = ({route}) => {
   const {t: trans, i18n} = useTranslation();
+  const device_width = Dimensions.get('window').width;
+  const device_height = Dimensions.get('window').height;
   const {
     subjectname = '',
     chapterName = '',
@@ -122,6 +125,16 @@ const AnswerSheet = ({route}) => {
 
   const [questions, setQuestions] = useState([]);
   const [loadedQuestions, setLoadedQuestions] = useState([]);
+  const [orientation, setOrientation] = useState('portrait');
+
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({window}) => {
+      const {width, height} = window;
+      setOrientation(height >= width ? 'portrait' : 'landscape');
+    });
+    console.log(orientation, 'Orientation');
+    return () => subscription?.remove();
+  }, [orientation]);
 
   useEffect(() => {
     // Fetch your questions from an API or data source and update the 'questions' state.
@@ -347,7 +360,6 @@ const AnswerSheet = ({route}) => {
     }
     return true; // Object is empty (or contains only empty spaces)
   }
-
   return (
     <SafeAreaView style={{flex: 1}}>
       {/* <StatusBar backgroundColor={Colors.secondary} barStyle="dark-content" /> */}

@@ -8,6 +8,7 @@ import {
     ImageBackground,
     BackHandler,
     useWindowDimensions,
+    Dimensions,
   } from 'react-native';
   
   import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -33,6 +34,8 @@ import {
   
   const LiveQuizAnswerSheet = ({route}) => {
     const {t: trans, i18n} = useTranslation();
+    const device_width = Dimensions.get('window').width;
+    const device_height = Dimensions.get('window').height;
     const {
       subjectname = '',
       chapterName = '',
@@ -97,7 +100,18 @@ import {
     const [solution, setSolution] = useState('');
     const [selectedId, setSelectedId] = useState(null);
     const [loadedQuestions, setLoadedQuestions] = useState([]);
-  
+    
+    const [orientation, setOrientation] = useState('portrait');
+
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({window}) => {
+      const {width, height} = window;
+      setOrientation(height >= width ? 'portrait' : 'landscape');
+    });
+    console.log(orientation, 'Orientation');
+    return () => subscription?.remove();
+  }, [orientation]);
+
     useEffect(() => {
       const pattern = [3, 10, 15, 15, 15];
       let currentIndex = 0; // Index for the pattern array

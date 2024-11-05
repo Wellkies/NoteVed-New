@@ -81,6 +81,8 @@ import {
 const PremiumPurchase = ({route}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch<any>();
+  const device_width = Dimensions.get('window').width;
+  const device_height = Dimensions.get('window').height;
   const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
   interface ChildInfo {
     _id: string;
@@ -120,6 +122,17 @@ const PremiumPurchase = ({route}) => {
   const AvailableCoupon = useAppSelector(selectCouponData);
   const {t: trans, i18n} = useTranslation();
   const [CouponAvailable, setdCouponAvailable] = useState(false);
+  
+  const [orientation, setOrientation] = useState('portrait');
+
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({window}) => {
+      const {width, height} = window;
+      setOrientation(height >= width ? 'portrait' : 'landscape');
+    });
+    console.log(orientation, 'Orientation');
+    return () => subscription?.remove();
+  }, [orientation]);
 
   useEffect(() => {
     dispatch(getChildDetailsAPI(childid));

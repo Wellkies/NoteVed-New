@@ -80,6 +80,8 @@ import {
 
 const PremiumAccess = ({route}) => {
   const {t: trans, i18n} = useTranslation();
+  const device_width = Dimensions.get('window').width;
+  const device_height = Dimensions.get('window').height;
   const {
     screenName = '',
     subjectId = '',
@@ -178,6 +180,17 @@ const PremiumAccess = ({route}) => {
 
   const PremiumAccessLoad = useAppSelector(selectPremiumAccessStatus);
     const AvailableCoupon = useAppSelector(selectCouponData);
+
+    const [orientation, setOrientation] = useState('portrait');
+
+    useEffect(() => {
+      const subscription = Dimensions.addEventListener('change', ({window}) => {
+        const {width, height} = window;
+        setOrientation(height >= width ? 'portrait' : 'landscape');
+      });
+      console.log(orientation, 'Orientation');
+      return () => subscription?.remove();
+    }, [orientation]);
   //
   useEffect(() => {
     const freeScholar = {stageid, boardid};

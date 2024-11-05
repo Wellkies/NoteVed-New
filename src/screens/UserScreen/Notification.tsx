@@ -12,6 +12,7 @@ import {
   BackHandler,
   ImageBackground,
   Platform,
+  Dimensions,
 } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -41,6 +42,8 @@ import { updateFCMmessage } from '../../redux/actions/NotificationAPI';
 const Notification = () => {
   const { t: trans, i18n } = useTranslation();
   const navigation = useAppNavigation();
+  const device_width = Dimensions.get('window').width;
+  const device_height = Dimensions.get('window').height;
   const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
   const dispatch = useDispatch<any>();
   const [readMsg, setReadMsg] = useState(false);
@@ -92,6 +95,17 @@ const Notification = () => {
     childid = '',
   } = childInfo;
 
+  const [orientation, setOrientation] = useState('portrait');
+
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({window}) => {
+      const {width, height} = window;
+      setOrientation(height >= width ? 'portrait' : 'landscape');
+    });
+    console.log(orientation, 'Orientation');
+    return () => subscription?.remove();
+  }, [orientation]);
+  
   useEffect(() => {
     const fcmData={
       childid,

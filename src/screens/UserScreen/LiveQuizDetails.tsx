@@ -9,6 +9,7 @@ import {
     BackHandler,
     ImageBackground,
     Alert,
+    Dimensions,
   } from 'react-native';
   import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
   import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -62,6 +63,8 @@ import { selectUserInfo } from '../../redux/reducers/loginReducer';
   const LiveQuizDetails = ({route}) => {
     const dispatch = useDispatch<any>();
     const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+    const device_width = Dimensions.get('window').width;
+    const device_height = Dimensions.get('window').height;
     const navigation = useNavigation();
     const todayDate = new Date();
     const {t: trans, i18n} = useTranslation();
@@ -186,6 +189,16 @@ import { selectUserInfo } from '../../redux/reducers/loginReducer';
     //   const quizDate = new Date(item.starttime).toISOString().split('T')[0];
     //   return  quizDate === todayliveQuizDate;
     // });
+    const [orientation, setOrientation] = useState('portrait');
+
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({window}) => {
+      const {width, height} = window;
+      setOrientation(height >= width ? 'portrait' : 'landscape');
+    });
+    console.log(orientation, 'Orientation');
+    return () => subscription?.remove();
+  }, [orientation]);
   
     const TopstudentData = {
       quizid:

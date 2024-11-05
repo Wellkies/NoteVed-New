@@ -7,9 +7,10 @@ import {
   ScrollView,
   ImageBackground,
   BackHandler,
+  Dimensions,
 } from 'react-native';
-import React, {useEffect} from 'react';
-import {device_width, device_height} from '../style';
+import React, {useEffect, useState} from 'react';
+// import {device_width, device_height} from '../style';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {useTranslation} from 'react-i18next';
@@ -45,6 +46,8 @@ const TopicDetails = ({route}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch<any>();
   const {t: trans, i18n} = useTranslation();
+  const device_width = Dimensions.get('window').width;
+  const device_height = Dimensions.get('window').height;
   const {
     //coursename = '',
     subjectname = '',
@@ -109,6 +112,18 @@ const TopicDetails = ({route}) => {
     language = '',
     // coordinates='',
   } = userInfo;
+  
+  const [orientation, setOrientation] = useState('portrait');
+
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({window}) => {
+      const {width, height} = window;
+      setOrientation(height >= width ? 'portrait' : 'landscape');
+    });
+    console.log(orientation, 'Orientation');
+    return () => subscription?.remove();
+  }, [orientation]);
+
   useEffect(() => {
     const bodydata = {
       subjectid: subjectid,

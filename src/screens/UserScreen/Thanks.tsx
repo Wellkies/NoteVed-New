@@ -9,6 +9,7 @@ import {
   StatusBar,
   SafeAreaView,
   BackHandler,
+  Dimensions,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
@@ -29,6 +30,8 @@ const { t: trans } = i18n;
 const Thanks = () => {
   const navigation = useNavigation()
   const dispatch = useDispatch<any>();
+  const device_width = Dimensions.get('window').width;
+  const device_height = Dimensions.get('window').height;
   const childInfo = useAppSelector(selectStudentInfo) as ChildInfo;
   interface ChildInfo {
     _id: string;
@@ -83,6 +86,16 @@ const Thanks = () => {
   } = childInfo;
 
   // console.log(childInfo, "====================childinfo");
+  const [orientation, setOrientation] = useState('portrait');
+
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({window}) => {
+      const {width, height} = window;
+      setOrientation(height >= width ? 'portrait' : 'landscape');
+    });
+    console.log(orientation, 'Orientation');
+    return () => subscription?.remove();
+  }, [orientation]);
 
   useEffect(() => {
     navigation.addListener('focus', () => {

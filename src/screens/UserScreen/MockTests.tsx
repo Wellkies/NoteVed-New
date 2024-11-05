@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   Image,
+  Dimensions,
 } from 'react-native';
 import React, {useEffect, useState, useRef} from 'react';
 import Colors from '../../../assets/Colors';
@@ -18,7 +19,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import * as Progress from 'react-native-progress';
-import {device_height, device_width} from '../style';
+// import {device_height, device_width} from '../style';
 import {
   IsTabScreen,
   markCalculation,
@@ -87,6 +88,8 @@ const MockTests = ({route}) => {
   const navigation = useNavigation();
   const scrollRef = useRef();
   const {t: trans, i18n} = useTranslation();
+  const device_width = Dimensions.get('window').width;
+  const device_height = Dimensions.get('window').height;
 
   const {
     screenName = '',
@@ -201,7 +204,17 @@ const MockTests = ({route}) => {
       rec => rec.contentid == contentid,
     );
   }
+  const [orientation, setOrientation] = useState('portrait');
 
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({window}) => {
+      const {width, height} = window;
+      setOrientation(height >= width ? 'portrait' : 'landscape');
+    });
+    console.log(orientation, 'Orientation');
+    return () => subscription?.remove();
+  }, [orientation]);
+  
   const handleUnlockChapter = () => {
     const revisionbody = {
       childid: childid,
@@ -575,6 +588,7 @@ const MockTests = ({route}) => {
   const reporthandleCallback = () => {
     setConfirmReport(false);
   };
+
   return (
     <SafeAreaView style={{flex: 1}}>
       {ContentLoading == 'loading' ? (

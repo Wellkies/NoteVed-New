@@ -68,6 +68,8 @@ const {t: trans} = i18n;
 const SignUpScreen2 = ({route}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch<any>();
+  const device_width = Dimensions.get('window').width;
+  const device_height = Dimensions.get('window').height;
   const {
     fname = '',
     lname = '',
@@ -124,6 +126,16 @@ const SignUpScreen2 = ({route}) => {
     setGender(value);
     // handleInputChange( "p_fname", f_name.trim())
   };
+  const [orientation, setOrientation] = useState('portrait');
+
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({window}) => {
+      const {width, height} = window;
+      setOrientation(height >= width ? 'portrait' : 'landscape');
+    });
+    console.log(orientation, 'Orientation');
+    return () => subscription?.remove();
+  }, [orientation]);
 
   useEffect(() => {
     navigation.addListener('focus', () => {

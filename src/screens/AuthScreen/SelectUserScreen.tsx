@@ -1,5 +1,6 @@
 import {
   BackHandler,
+  Dimensions,
   ImageBackground,
   SafeAreaView,
   StatusBar,
@@ -34,6 +35,8 @@ import Colors from '../../../assets/Colors';
 
 const SelectUserScreen = ({route}) => {
   const navigation = useNavigation();
+  const device_width = Dimensions.get('window').width;
+  const device_height = Dimensions.get('window').height;
   // const dispatch = useDispatch<any>();
   // const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
   // const { t: trans, i18n } = useTranslation();
@@ -45,7 +48,16 @@ const SelectUserScreen = ({route}) => {
   const [isLoaded, setIsLoaded] = useState(false);
   // const [isRewardedAddCalled, setIsRewardedAddCalled] = useState(false);
   // const adUnitId3 = REWARDEDAD;
+  const [orientation, setOrientation] = useState('portrait');
 
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({window}) => {
+      const {width, height} = window;
+      setOrientation(height >= width ? 'portrait' : 'landscape');
+    });
+    console.log(orientation, 'Orientation');
+    return () => subscription?.remove();
+  }, [orientation]);
   useEffect(() => {
     // initRewardedad();
   }, []);

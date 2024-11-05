@@ -8,12 +8,13 @@ import {
   ScrollView,
   ImageBackground,
   BackHandler,
+  Dimensions,
 } from 'react-native';
 import React, {useEffect, useState, useRef} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {useTranslation} from 'react-i18next';
-import {device_height, device_width} from '../style';
+// import {device_height, device_width} from '../style';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -49,6 +50,8 @@ const ContentDetails = ({route}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch<any>();
   const {t: trans, i18n} = useTranslation();
+  const device_width = Dimensions.get('window').width;
+  const device_height = Dimensions.get('window').height;
   const {
     coursename = '',
     subjectname = '',
@@ -208,6 +211,16 @@ const ContentDetails = ({route}) => {
       });
     }
   }, [reviewquestionsets]);
+  const [orientation, setOrientation] = useState('portrait');
+
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({window}) => {
+      const {width, height} = window;
+      setOrientation(height >= width ? 'portrait' : 'landscape');
+    });
+    console.log(orientation, 'Orientation');
+    return () => subscription?.remove();
+  }, [orientation]);
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: Colors.secondary}}>

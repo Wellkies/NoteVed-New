@@ -9,6 +9,7 @@ import {
   BackHandler,
   ImageBackground,
   ActivityIndicator,
+  Dimensions,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Avatar, Modal} from 'react-native-paper';
@@ -17,7 +18,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import i18n from 'i18next';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Colors from '../../../assets/Colors';
-import {device_height, device_width} from '../style';
+// import {device_height, device_width} from '../style';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -132,6 +133,8 @@ const SubjectLevel = ({route}) => {
   const [topicId, setTopicId] = useState('');
   const TopicBySubjectId = useAppSelector(selectTopicDetailsInfo);
   const TopicLoad = useAppSelector(selectTopicDetailsStatus);
+  const device_width = Dimensions.get('window').width;
+  const device_height = Dimensions.get('window').height;
 
   const filterData = TopicBySubjectId.map(rec => rec.topicid);
   // TopicBySubjectId.filter((rec) => rec.sltopic == 1)
@@ -194,6 +197,17 @@ const SubjectLevel = ({route}) => {
   const wait = (timeout: any) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
   };
+  const [orientation, setOrientation] = useState('portrait');
+
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({window}) => {
+      const {width, height} = window;
+      setOrientation(height >= width ? 'portrait' : 'landscape');
+    });
+    console.log(orientation, 'Orientation');
+    return () => subscription?.remove();
+  }, [orientation]);
+  
   useEffect(() => {
     navigation.addListener('focus', () => {
       // const data = {
@@ -276,21 +290,21 @@ const SubjectLevel = ({route}) => {
         alignContent: 'center',
         justifyContent: 'center',
         alignItems: 'center',
-        marginLeft: IsTabScreen?6:12,
+        marginLeft: IsTabScreen ? 6 : 12,
         // borderWidth: 0.9,
         // borderColor: '#f1a722',
         borderRadius: 20,
         width: IsTabScreen ? device_width * 0.99 : device_width * 0.95,
-        height: IsTabScreen ? device_height * 0.5:device_height * 0.28,
+        height: IsTabScreen ? device_height * 0.5 : device_height * 0.28,
       }}>
       <FastImage
         style={{
           borderRadius: 18,
-          width: IsTabScreen ? device_width * 0.99: device_width * 0.95,
-          height: IsTabScreen ? device_height * 0.5 :device_height * 0.28,
+          width: IsTabScreen ? device_width * 0.99 : device_width * 0.95,
+          height: IsTabScreen ? device_height * 0.5 : device_height * 0.28,
         }}
         source={item}
-        resizeMode={IsTabScreen?'stretch':'cover'}
+        resizeMode={IsTabScreen ? 'stretch' : 'cover'}
       />
     </View>
   );
@@ -527,7 +541,7 @@ const SubjectLevel = ({route}) => {
     });
   }, []);
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1,}}>
       <ImageBackground
         style={{
           width: device_width,
@@ -1757,10 +1771,10 @@ const SubjectLevel = ({route}) => {
                                   source={{uri: subjectimage}}
                                   style={{
                                     height: IsTabScreen
-                                      ? device_height * 0.10
+                                      ? device_height * 0.1
                                       : device_height * 0.2,
                                     width: IsTabScreen
-                                      ? device_width * 0.10
+                                      ? device_width * 0.1
                                       : device_width * 0.12,
                                     resizeMode: 'contain',
                                     tintColor: '#f1a722',
@@ -1774,7 +1788,7 @@ const SubjectLevel = ({route}) => {
                                       ? device_height * 0.12
                                       : device_height * 0.21,
                                     width: IsTabScreen
-                                      ? device_width * 0.10
+                                      ? device_width * 0.1
                                       : device_width * 0.15,
                                     resizeMode: 'contain',
                                     tintColor: '#f1a722',
@@ -2388,7 +2402,7 @@ const SubjectLevel = ({route}) => {
           </Modal>
         )}
       </ImageBackground>
-    </SafeAreaView>
+     </SafeAreaView>
   );
 };
 

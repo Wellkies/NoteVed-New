@@ -38,7 +38,7 @@ import {
   phoneRegex,
   phoneRegexWithout91,
 } from '../../../constants/Constants';
-import { device_height, device_width } from '../style';
+// import { device_height, device_width } from '../style';
 import { Avatar, Chip } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -66,6 +66,8 @@ var Spinner = require('react-native-spinkit');
 const SignUpScreen4 = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch<any>();
+  const device_width = Dimensions.get('window').width;
+  const device_height = Dimensions.get('window').height;
   const {
     fname = '',
     lname = '',
@@ -126,7 +128,17 @@ const SignUpScreen4 = ({ route }) => {
       // console.error(error, '========signout error');
     }
   };
+  const [orientation, setOrientation] = useState('portrait');
 
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({window}) => {
+      const {width, height} = window;
+      setOrientation(height >= width ? 'portrait' : 'landscape');
+    });
+    console.log(orientation, 'Orientation');
+    return () => subscription?.remove();
+  }, [orientation]);
+  
   useEffect(() => {
     navigation.addListener('focus', () => {
       BackHandler.addEventListener('hardwareBackPress', () => {

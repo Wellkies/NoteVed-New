@@ -8,6 +8,7 @@ import {
     SafeAreaView,
     BackHandler,
     ImageBackground,
+    Dimensions,
   } from 'react-native';
   import FontAwesome from 'react-native-vector-icons/FontAwesome';
   import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -52,6 +53,8 @@ import { selectUserInfo } from '../../redux/reducers/loginReducer';
   const LiveQuizScoreBoard = ({route}) => {
     const dispatch = useDispatch<any>();
     const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+    const device_width = Dimensions.get('window').width;
+    const device_height = Dimensions.get('window').height;
     const navigation = useNavigation();
     const todayDate = new Date();
     const {t: trans, i18n} = useTranslation();
@@ -75,7 +78,16 @@ import { selectUserInfo } from '../../redux/reducers/loginReducer';
      const [isLoaded, setIsLoaded] = useState(false);
     //  const [isRewardedAddCalled, setIsRewardedAddCalled] = useState(false)
     //  const adUnitId3 =REWARDEDAD;
-   
+    const [orientation, setOrientation] = useState('portrait');
+
+    useEffect(() => {
+      const subscription = Dimensions.addEventListener('change', ({window}) => {
+        const {width, height} = window;
+        setOrientation(height >= width ? 'portrait' : 'landscape');
+      });
+      console.log(orientation, 'Orientation');
+      return () => subscription?.remove();
+    }, [orientation]);
      useEffect(() => {
      
       //  initRewardedad()
