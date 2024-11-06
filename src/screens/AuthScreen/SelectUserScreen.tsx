@@ -138,7 +138,7 @@ const SelectUserScreen = ({route}) => {
               alignItems: 'center',
               justifyContent: 'center',
               width: '90%',
-              height: device_height * 0.25,
+              height: orientation=='portrait'?device_height * 0.25:device_height*0.30,
               backgroundColor: 'green',
               borderRadius: 25,
             }}>
@@ -217,7 +217,7 @@ const SelectUserScreen = ({route}) => {
               alignItems: 'center',
               justifyContent: 'center',
               width: '90%',
-              height: device_height * 0.25,
+              height:  orientation=='portrait'?device_height * 0.25:device_height*0.30,
               backgroundColor: 'green',
               // minHeight: device_height * 0.05,
               // height: '30%',

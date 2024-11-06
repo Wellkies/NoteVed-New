@@ -1022,7 +1022,7 @@ const SignInScreen = ({route}) => {
                     style={{
                       fontSize: 15,
                       //color: '#333',
-                      color:'#fff',
+                      color: '#fff',
                       fontWeight: '900',
                     }}>
                     {'Sending SMS Code to'}{' '}
@@ -1799,100 +1799,82 @@ const SignInScreen = ({route}) => {
                 </View>
               </ImageBackground>
 
-              <Text
-                style={{
-                  fontWeight: '700',
-                  color: 'gold',
-                  fontSize: 17,
-                  top: -25,
-                  marginLeft: 15,
-                  // alignSelf: 'center',
-                }}>
-                {'Try other ways to login'}
-              </Text>
-              <View
-                style={{
-                  width: '80%',
-                  alignSelf: 'center',
-                  alignItems: 'center',
-                  justifyContent: 'space-around',
-                  flexDirection: 'row', // Keep items in a row
-                  top: -25,
-                  borderRadius: 15,
-                  marginTop: 10,
-                }}>
-                {/* Sign-in with OTP Option */}
-                <TouchableOpacity
-                  onPress={() => setShowOTPContent(true)}
+              <View style={{flex: 1}}>
+                <Text
                   style={{
-                    alignItems: 'center',
-                    justifyContent: 'space-evenly',
-                    width: device_width * 0.4, // Ensure equal width for both buttons
-                    height: 70,
+                    fontWeight: '700',
+                    color: 'gold',
+                    fontSize: 17,
+                    marginLeft: 10,
+                    marginVertical:  orientation == 'landscape' ?20:10,
+                    paddingTop:orientation == 'landscape' ?25:5
                   }}>
-                  <View
+                  Try other ways to login
+                </Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-around',
+                    width: orientation == 'landscape' ? '100%' : '80%',
+                    alignSelf: 'center',
+                    marginTop: 8,
+                    marginBottom:10
+                  }}>
+                  {/* Sign-in with OTP Option */}
+                  <TouchableOpacity
+                    onPress={() => setShowOTPContent(true)}
                     style={{
-                      height: 51,
-                      width: 51,
                       alignItems: 'center',
-                      borderRadius: 50,
+                      justifyContent: 'center',
+                      width: '40%',
+                      height: 70,
+                      marginBottom: orientation == 'landscape' ? 0 : 10,
                     }}>
                     <Avatar.Image
-                      onPress={() => {
-                        setShowOTPContent(true);
-                      }}
                       source={require('../../../assets/msg.jpg')}
                       size={50}
                       style={{backgroundColor: '#fff'}}
                     />
-                  </View>
-                  <Text
-                    style={{
-                      fontWeight: '800',
-                      color: '#fff',
-                      textAlign: 'center',
-                      textDecorationLine: 'underline',
-                      fontSize: 13,
-                      alignSelf: 'center',
-                    }}>
-                    {'Sign-in with OTP'}
-                  </Text>
-                </TouchableOpacity>
+                    <Text
+                      style={{
+                        fontWeight: '800',
+                        color: '#fff',
+                        textAlign: 'center',
+                        textDecorationLine: 'underline',
+                        fontSize: 13,
+                      }}>
+                      Sign-in with OTP
+                    </Text>
+                  </TouchableOpacity>
 
-                {/* Sign-in with Google Option */}
-                <TouchableOpacity
-                  onPress={() => googleLogin()}
-                  style={{
-                    alignItems: 'center',
-                    justifyContent: 'space-evenly',
-                    width: device_width * 0.4, // Ensure equal width for both buttons
-                    height: 70,
-                  }}>
-                  <View
+                  {/* Sign-in with Google Option */}
+                  <TouchableOpacity
+                    onPress={() => googleLogin()}
                     style={{
-                      height: 51,
-                      width: 51,
                       alignItems: 'center',
-                      borderRadius: 50,
+                      justifyContent: 'center',
+                      width: '40%',
+                      height: 70,
+                      marginBottom: orientation == 'landscape' ? 0 : 10,
                     }}>
                     <Avatar.Image
                       source={require('../../../assets/google.jpg')}
                       size={50}
                       style={{backgroundColor: '#fff'}}
                     />
-                  </View>
-                  <Text
-                    style={{
-                      fontWeight: '800',
-                      color: '#fff',
-                      textAlign: 'center',
-                      textDecorationLine: 'underline',
-                      fontSize: 13,
-                      alignSelf: 'center',
-                    }}>
-                    {'Sign-in with Google'}
-                  </Text>
-                </TouchableOpacity>
+                    <Text
+                      style={{
+                        fontWeight: '800',
+                        color: '#fff',
+                        textAlign: 'center',
+                        textDecorationLine: 'underline',
+                        fontSize: 13,
+                      }}>
+                      Sign-in with Google
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </View>
 
               <View

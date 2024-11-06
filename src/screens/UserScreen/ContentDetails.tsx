@@ -218,7 +218,7 @@ const ContentDetails = ({route}) => {
       const {width, height} = window;
       setOrientation(height >= width ? 'portrait' : 'landscape');
     });
-    console.log(orientation, 'Orientation');
+    //console.log(orientation, 'Orientation');
     return () => subscription?.remove();
   }, [orientation]);
 
@@ -294,12 +294,14 @@ const ContentDetails = ({route}) => {
                   <Image
                     source={{uri: subjectimage}}
                     style={{
-                      height: IsTabScreen
-                        ? device_height * 0.1
-                        : device_height * 0.06,
-                      width: IsTabScreen
-                        ? device_width * 0.1
-                        : device_width * 0.11,
+                      height:
+                        IsTabScreen || orientation == 'landscape'
+                          ? device_height * 0.1
+                          : device_height * 0.06,
+                      width:
+                        IsTabScreen || orientation == 'landscape'
+                          ? device_width * 0.1
+                          : device_width * 0.11,
                       resizeMode: 'contain',
                       tintColor: '#FFFFFF',
                     }}
@@ -308,12 +310,14 @@ const ContentDetails = ({route}) => {
                   <Image
                     source={require('../../../assets/people.png')}
                     style={{
-                      height: IsTabScreen
-                        ? device_height * 0.12
-                        : device_height * 0.07,
-                      width: IsTabScreen
-                        ? device_width * 0.1
-                        : device_width * 0.14,
+                      height:
+                        IsTabScreen || orientation == 'landscape'
+                          ? device_height * 0.12
+                          : device_height * 0.07,
+                      width:
+                        IsTabScreen || orientation == 'landscape'
+                          ? device_width * 0.1
+                          : device_width * 0.14,
                       resizeMode: 'contain',
                       tintColor: '#FFFFFF',
                     }}

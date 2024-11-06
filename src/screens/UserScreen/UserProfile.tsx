@@ -337,6 +337,7 @@ const UserProfile = ({}) => {
             </TouchableOpacity>
           }
         />
+        <ScrollView showsVerticalScrollIndicator={false}>
         <View
           style={{
             marginVertical: 5,
@@ -767,6 +768,7 @@ const UserProfile = ({}) => {
             }}>
             
           </View> */}
+        </ScrollView>
         </ScrollView>
         {modalStatus && (
           <CommonModalUser

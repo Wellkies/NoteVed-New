@@ -170,7 +170,7 @@ const SplashScreen = () => {
         />
         <View
           style={{
-            height: device_height * 0.1,
+            height:orientation =='portrait'? device_height * 0.1:device_height * 0.2,
             width: device_width,
             justifyContent: 'flex-start',
             alignItems: 'center',

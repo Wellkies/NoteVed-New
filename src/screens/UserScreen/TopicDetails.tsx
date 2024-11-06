@@ -198,8 +198,8 @@ const TopicDetails = ({route}) => {
                 <Image
                   source={{uri: subjectimage}}
                   style={{
-                    height: IsTabScreen ? device_height * 0.10 : device_height * 0.06,
-                    width: IsTabScreen ? device_width * 0.10 :device_width * 0.11,
+                    height: IsTabScreen||orientation=='landscape' ? device_height * 0.10 : device_height * 0.06,
+                    width: IsTabScreen||orientation=='landscape' ? device_width * 0.10 :device_width * 0.11,
                     resizeMode: 'contain',
                     tintColor: '#FFFFFF',
                     marginRight: IsTabScreen ? 15 :10,
@@ -209,8 +209,8 @@ const TopicDetails = ({route}) => {
                 <Image
                   source={require('../../../assets/people.png')}
                   style={{
-                    height: IsTabScreen ? device_height * 0.12 :device_height * 0.07,
-                    width: IsTabScreen ? device_width * 0.10 :device_width * 0.14,
+                    height: IsTabScreen||orientation=='landscape' ? device_height * 0.12 :device_height * 0.07,
+                    width: IsTabScreen||orientation=='landscape' ? device_width * 0.10 :device_width * 0.14,
                     resizeMode: 'contain',
                     tintColor: '#FFFFFF',
                     marginRight: IsTabScreen ? 15 :10,
@@ -321,7 +321,7 @@ const TopicDetails = ({route}) => {
                               }
                             }}
                             style={{
-                              height: IsTabScreen ? device_height * 0.12 : device_height * 0.09,
+                              height: IsTabScreen||orientation=='landscape' ? device_height * 0.12 : device_height * 0.09,
                               width: '100%',
                               backgroundColor: isLock
                                 ? 'rgba(220,220,220,0.1)'
@@ -330,7 +330,7 @@ const TopicDetails = ({route}) => {
                               borderColor: '#f1a722',
                               borderWidth: 0.9,
                               marginHorizontal: 10,
-                              marginVertical: IsTabScreen ? 12 :10,
+                              marginVertical: IsTabScreen||orientation=='landscape' ? 12 :10,
                               justifyContent: 'space-between',
                               alignItems: 'center',
                               flexDirection: 'row',

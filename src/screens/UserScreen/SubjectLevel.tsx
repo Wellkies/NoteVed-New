@@ -18,7 +18,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import i18n from 'i18next';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Colors from '../../../assets/Colors';
-// import {device_height, device_width} from '../style';
+import {device_height, device_width} from '../style';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -290,21 +290,21 @@ const SubjectLevel = ({route}) => {
         alignContent: 'center',
         justifyContent: 'center',
         alignItems: 'center',
-        marginLeft: IsTabScreen ? 6 : 12,
+        marginLeft: IsTabScreen||orientation=='landscape' ? 6 : 12,
         // borderWidth: 0.9,
         // borderColor: '#f1a722',
         borderRadius: 20,
-        width: IsTabScreen ? device_width * 0.99 : device_width * 0.95,
-        height: IsTabScreen ? device_height * 0.5 : device_height * 0.28,
+        width: IsTabScreen||orientation=='landscape' ? device_width * 0.99 : device_width * 0.95,
+        height: IsTabScreen||orientation=='landscape' ? device_height * 0.5 : device_height * 0.28,
       }}>
       <FastImage
         style={{
           borderRadius: 18,
-          width: IsTabScreen ? device_width * 0.99 : device_width * 0.95,
-          height: IsTabScreen ? device_height * 0.5 : device_height * 0.28,
+          width: IsTabScreen||orientation=='landscape' ? device_width * 0.99 : device_width * 0.95,
+          height: IsTabScreen ||orientation=='landscape'? device_height * 0.5 : device_height * 0.28,
         }}
         source={item}
-        resizeMode={IsTabScreen ? 'stretch' : 'cover'}
+        resizeMode={IsTabScreen||orientation=='landscape' ? 'stretch' : 'contain'}
       />
     </View>
   );
@@ -1745,16 +1745,16 @@ const SubjectLevel = ({route}) => {
                             style={{
                               flexDirection: 'row',
                               backgroundColor: 'rgba(0,255,0,0.1)',
-                              width: IsTabScreen
+                              width: IsTabScreen||orientation=='landscape'
                                 ? device_width * 0.9
                                 : device_width * 0.95,
-                              height: IsTabScreen
+                              height: IsTabScreen||orientation=='landscape'
                                 ? device_height * 0.13
                                 : device_height * 0.09,
-                              marginHorizontal: IsTabScreen
+                              marginHorizontal: IsTabScreen||orientation=='landscape'
                                 ? device_width * 0.05
                                 : 10,
-                              paddingHorizontal: IsTabScreen ? 25 : 10,
+                              paddingHorizontal: IsTabScreen||orientation=='landscape' ? 25 : 10,
                               borderRadius: 12,
                               borderWidth: 0.9,
                               borderColor: '#f1a722',
@@ -1770,10 +1770,10 @@ const SubjectLevel = ({route}) => {
                                 <Image
                                   source={{uri: subjectimage}}
                                   style={{
-                                    height: IsTabScreen
+                                    height: IsTabScreen||orientation=='landscape'
                                       ? device_height * 0.1
                                       : device_height * 0.2,
-                                    width: IsTabScreen
+                                    width: IsTabScreen||orientation=='landscape'
                                       ? device_width * 0.1
                                       : device_width * 0.12,
                                     resizeMode: 'contain',
@@ -1784,10 +1784,10 @@ const SubjectLevel = ({route}) => {
                                 <Image
                                   source={require('../../../assets/people.png')}
                                   style={{
-                                    height: IsTabScreen
+                                    height: IsTabScreen||orientation=='landscape'
                                       ? device_height * 0.12
                                       : device_height * 0.21,
-                                    width: IsTabScreen
+                                    width: IsTabScreen||orientation=='landscape'
                                       ? device_width * 0.1
                                       : device_width * 0.15,
                                     resizeMode: 'contain',
@@ -1825,14 +1825,14 @@ const SubjectLevel = ({route}) => {
                                   fontWeight: '600',
                                   color: '#def',
                                   fontSize: IsTabScreen ? 20 : 16,
-                                  marginRight: IsTabScreen ? 15 : 10,
+                                  marginRight: IsTabScreen||orientation=='landscape' ? 15 : 10,
                                 }}>
                                 {parseFloat(`${proData * 100}% `).toFixed(2)}
                                 {'%'}
                               </Text>
                               <Progress.Circle
                                 progress={proData}
-                                size={IsTabScreen ? 50 : 35}
+                                size={IsTabScreen ? 50 : 30}
                                 indeterminate={false}
                                 thickness={6}
                                 allowFontScaling={false}
