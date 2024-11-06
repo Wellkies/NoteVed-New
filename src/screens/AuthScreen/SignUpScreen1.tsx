@@ -1494,6 +1494,11 @@ const SignUpScreen1 = ({route}) => {
                         btn2.current.focus();
                       }
                     }}
+                    onKeyPress={({nativeEvent}) => {
+                      if (nativeEvent.key === 'Backspace' && f1 === '') {
+                        btn1.current.focus();
+                      }
+                    }}
                   />
                   <TextInput
                     ref={btn2}
@@ -1519,6 +1524,11 @@ const SignUpScreen1 = ({route}) => {
                       if (txt.length >= 1) {
                         btn3.current.focus();
                       } else if (txt.length < 1) {
+                        btn1.current.focus();
+                      }
+                    }}
+                    onKeyPress={({nativeEvent}) => {
+                      if (nativeEvent.key === 'Backspace') {
                         btn1.current.focus();
                       }
                     }}
@@ -1550,6 +1560,11 @@ const SignUpScreen1 = ({route}) => {
                         btn2.current.focus();
                       }
                     }}
+                    onKeyPress={({nativeEvent}) => {
+                      if (nativeEvent.key === 'Backspace') {
+                        btn2.current.focus();
+                      }
+                    }}
                   />
                   <TextInput
                     ref={btn4}
@@ -1575,6 +1590,11 @@ const SignUpScreen1 = ({route}) => {
                       if (txt.length >= 1) {
                         btn5.current.focus();
                       } else if (txt.length < 1) {
+                        btn3.current.focus();
+                      }
+                    }}
+                    onKeyPress={({nativeEvent}) => {
+                      if (nativeEvent.key === 'Backspace') {
                         btn3.current.focus();
                       }
                     }}
@@ -1606,6 +1626,11 @@ const SignUpScreen1 = ({route}) => {
                         btn4.current.focus();
                       }
                     }}
+                    onKeyPress={({nativeEvent}) => {
+                      if (nativeEvent.key === 'Backspace') {
+                        btn4.current.focus();
+                      }
+                    }}
                   />
                   <TextInput
                     ref={btn6}
@@ -1631,6 +1656,11 @@ const SignUpScreen1 = ({route}) => {
                       if (txt.length >= 1) {
                         btn6.current.focus();
                       } else if (txt.length < 1) {
+                        btn5.current.focus();
+                      }
+                    }}
+                    onKeyPress={({nativeEvent}) => {
+                      if (nativeEvent.key === 'Backspace') {
                         btn5.current.focus();
                       }
                     }}

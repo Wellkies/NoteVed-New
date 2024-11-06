@@ -222,7 +222,7 @@ const SignInScreen = ({route}) => {
       // Error retrieving data
     }
   };
-  
+
   const [orientation, setOrientation] = useState('portrait');
 
   useEffect(() => {
@@ -1021,7 +1021,8 @@ const SignInScreen = ({route}) => {
                   <Text
                     style={{
                       fontSize: 15,
-                      color: '#333',
+                      //color: '#333',
+                      color:'#fff',
                       fontWeight: '900',
                     }}>
                     {'Sending SMS Code to'}{' '}
@@ -1088,6 +1089,11 @@ const SignInScreen = ({route}) => {
                             btn2.current.focus();
                           }
                         }}
+                        onKeyPress={({nativeEvent}) => {
+                          if (nativeEvent.key === 'Backspace' && f1 === '') {
+                            btn1.current.focus();
+                          }
+                        }}
                       />
                       <TextInput
                         ref={btn2}
@@ -1113,6 +1119,11 @@ const SignInScreen = ({route}) => {
                           if (txt.length >= 1) {
                             btn3.current.focus();
                           } else if (txt.length < 1) {
+                            btn1.current.focus();
+                          }
+                        }}
+                        onKeyPress={({nativeEvent}) => {
+                          if (nativeEvent.key === 'Backspace') {
                             btn1.current.focus();
                           }
                         }}
@@ -1147,6 +1158,11 @@ const SignInScreen = ({route}) => {
                             btn2.current.focus();
                           }
                         }}
+                        onKeyPress={({nativeEvent}) => {
+                          if (nativeEvent.key === 'Backspace') {
+                            btn2.current.focus();
+                          }
+                        }}
                       />
                       <TextInput
                         ref={btn4}
@@ -1175,6 +1191,11 @@ const SignInScreen = ({route}) => {
                           if (txt.length >= 1) {
                             btn5.current.focus();
                           } else if (txt.length < 1) {
+                            btn3.current.focus();
+                          }
+                        }}
+                        onKeyPress={({nativeEvent}) => {
+                          if (nativeEvent.key === 'Backspace') {
                             btn3.current.focus();
                           }
                         }}
@@ -1209,6 +1230,11 @@ const SignInScreen = ({route}) => {
                             btn4.current.focus();
                           }
                         }}
+                        onKeyPress={({nativeEvent}) => {
+                          if (nativeEvent.key === 'Backspace') {
+                            btn4.current.focus();
+                          }
+                        }}
                       />
                       <TextInput
                         ref={btn6}
@@ -1237,6 +1263,11 @@ const SignInScreen = ({route}) => {
                           if (txt.length >= 1) {
                             btn6.current.focus();
                           } else if (txt.length < 1) {
+                            btn5.current.focus();
+                          }
+                        }}
+                        onKeyPress={({nativeEvent}) => {
+                          if (nativeEvent.key === 'Backspace') {
                             btn5.current.focus();
                           }
                         }}
