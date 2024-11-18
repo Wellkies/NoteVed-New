@@ -207,7 +207,7 @@ const SubjectLevel = ({route}) => {
     console.log(orientation, 'Orientation');
     return () => subscription?.remove();
   }, [orientation]);
-  
+
   useEffect(() => {
     navigation.addListener('focus', () => {
       // const data = {
@@ -290,21 +290,35 @@ const SubjectLevel = ({route}) => {
         alignContent: 'center',
         justifyContent: 'center',
         alignItems: 'center',
-        marginLeft: IsTabScreen||orientation=='landscape' ? 6 : 12,
+        marginLeft: IsTabScreen || orientation == 'landscape' ? 6 : 12,
         // borderWidth: 0.9,
         // borderColor: '#f1a722',
         borderRadius: 20,
-        width: IsTabScreen||orientation=='landscape' ? device_width * 0.99 : device_width * 0.95,
-        height: IsTabScreen||orientation=='landscape' ? device_height * 0.5 : device_height * 0.28,
+        width:
+          IsTabScreen || orientation == 'landscape'
+            ? device_width * 0.99
+            : device_width * 0.95,
+        height:
+          IsTabScreen || orientation == 'landscape'
+            ? device_height * 0.5
+            : device_height * 0.28,
       }}>
       <FastImage
         style={{
           borderRadius: 18,
-          width: IsTabScreen||orientation=='landscape' ? device_width * 0.99 : device_width * 0.95,
-          height: IsTabScreen ||orientation=='landscape'? device_height * 0.5 : device_height * 0.28,
+          width:
+            IsTabScreen || orientation == 'landscape'
+              ? device_width * 0.99
+              : device_width * 0.95,
+          height:
+            IsTabScreen || orientation == 'landscape'
+              ? device_height * 0.5
+              : device_height * 0.28,
         }}
         source={item}
-        resizeMode={IsTabScreen||orientation=='landscape' ? 'stretch' : 'contain'}
+        resizeMode={
+          IsTabScreen || orientation == 'landscape' ? 'stretch' : 'contain'
+        }
       />
     </View>
   );
@@ -541,7 +555,7 @@ const SubjectLevel = ({route}) => {
     });
   }, []);
   return (
-    <SafeAreaView style={{flex: 1,}}>
+    <SafeAreaView style={{flex: 1}}>
       <ImageBackground
         style={{
           width: device_width,
@@ -1745,16 +1759,22 @@ const SubjectLevel = ({route}) => {
                             style={{
                               flexDirection: 'row',
                               backgroundColor: 'rgba(0,255,0,0.1)',
-                              width: IsTabScreen||orientation=='landscape'
-                                ? device_width * 0.9
-                                : device_width * 0.95,
-                              height: IsTabScreen||orientation=='landscape'
-                                ? device_height * 0.13
-                                : device_height * 0.09,
-                              marginHorizontal: IsTabScreen||orientation=='landscape'
-                                ? device_width * 0.05
-                                : 10,
-                              paddingHorizontal: IsTabScreen||orientation=='landscape' ? 25 : 10,
+                              width:
+                                IsTabScreen || orientation == 'landscape'
+                                  ? device_width * 0.9
+                                  : device_width * 0.95,
+                              height:
+                                IsTabScreen || orientation == 'landscape'
+                                  ? device_height * 0.13
+                                  : device_height * 0.09,
+                              marginHorizontal:
+                                IsTabScreen || orientation == 'landscape'
+                                  ? device_width * 0.05
+                                  : 10,
+                              paddingHorizontal:
+                                IsTabScreen || orientation == 'landscape'
+                                  ? 25
+                                  : 10,
                               borderRadius: 12,
                               borderWidth: 0.9,
                               borderColor: '#f1a722',
@@ -1770,12 +1790,14 @@ const SubjectLevel = ({route}) => {
                                 <Image
                                   source={{uri: subjectimage}}
                                   style={{
-                                    height: IsTabScreen||orientation=='landscape'
-                                      ? device_height * 0.1
-                                      : device_height * 0.2,
-                                    width: IsTabScreen||orientation=='landscape'
-                                      ? device_width * 0.1
-                                      : device_width * 0.12,
+                                    height:
+                                      IsTabScreen || orientation == 'landscape'
+                                        ? device_height * 0.1
+                                        : device_height * 0.2,
+                                    width:
+                                      IsTabScreen || orientation == 'landscape'
+                                        ? device_width * 0.1
+                                        : device_width * 0.12,
                                     resizeMode: 'contain',
                                     tintColor: '#f1a722',
                                   }}
@@ -1784,12 +1806,14 @@ const SubjectLevel = ({route}) => {
                                 <Image
                                   source={require('../../../assets/people.png')}
                                   style={{
-                                    height: IsTabScreen||orientation=='landscape'
-                                      ? device_height * 0.12
-                                      : device_height * 0.21,
-                                    width: IsTabScreen||orientation=='landscape'
-                                      ? device_width * 0.1
-                                      : device_width * 0.15,
+                                    height:
+                                      IsTabScreen || orientation == 'landscape'
+                                        ? device_height * 0.12
+                                        : device_height * 0.21,
+                                    width:
+                                      IsTabScreen || orientation == 'landscape'
+                                        ? device_width * 0.1
+                                        : device_width * 0.15,
                                     resizeMode: 'contain',
                                     tintColor: '#f1a722',
                                   }}
@@ -1817,22 +1841,29 @@ const SubjectLevel = ({route}) => {
                                 flexDirection: 'row',
                                 alignItems: 'center',
                                 position: 'absolute',
-                                right: IsTabScreen ? 22 : 10,
-                                bottom: IsTabScreen ? 30 : 15,
+                                right: IsTabScreen
+                                  ? device_width * 0.05
+                                  : device_width * 0.03,
+                                bottom: IsTabScreen
+                                  ? device_height * 0.03
+                                  : device_height * 0.02,
                               }}>
                               <Text
                                 style={{
                                   fontWeight: '600',
                                   color: '#def',
                                   fontSize: IsTabScreen ? 20 : 16,
-                                  marginRight: IsTabScreen||orientation=='landscape' ? 15 : 10,
+                                  marginRight:
+                                    IsTabScreen || orientation == 'landscape'
+                                      ? 15
+                                      : 10,
                                 }}>
                                 {parseFloat(`${proData * 100}% `).toFixed(2)}
                                 {'%'}
                               </Text>
                               <Progress.Circle
                                 progress={proData}
-                                size={IsTabScreen ? 50 : 30}
+                                size={IsTabScreen ? 40 : 30}
                                 indeterminate={false}
                                 thickness={6}
                                 allowFontScaling={false}
@@ -2402,7 +2433,7 @@ const SubjectLevel = ({route}) => {
           </Modal>
         )}
       </ImageBackground>
-     </SafeAreaView>
+    </SafeAreaView>
   );
 };
 

@@ -214,7 +214,7 @@ const MockTests = ({route}) => {
     console.log(orientation, 'Orientation');
     return () => subscription?.remove();
   }, [orientation]);
-  
+
   const handleUnlockChapter = () => {
     const revisionbody = {
       childid: childid,
@@ -600,58 +600,57 @@ const MockTests = ({route}) => {
             height: device_height,
             flex: 1,
             alignSelf: 'center',
-            //backgroundColor: '#272727',
-            //backgroundColor: '#1E1E1E',
           }}
           resizeMode="cover"
           source={require('../../../assets/0.png')}>
-          <StatusBar barStyle="light-content" />
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              paddingBottom: 10,
-            }}>
-            <View style={{height: 40, marginHorizontal: 20}}>
-              {timeDurationValue ? (
-                <CommonTimer
-                  duration={timeDurationValue}
-                  handleAnswerSubmit={handleAnswerSubmit}
-                />
-              ) : (
-                <></>
-              )}
-            </View>
-            <View style={{position: 'absolute', top: 0, right: 10}}>
-              <TouchableOpacity
-                onPress={() => {
-                  // navigation.navigate('Kids_Profile', {childId: id});
-                  setQuitModalStatus(true);
-                }}
-                style={{
-                  // backgroundColor: Colors.secondary,
-                  // position: 'absolute',
-                  flexDirection: 'row',
-                  // top: 0,
-                  // right: 0,
-                  // borderWidth:1,
-                  alignItems: 'center',
-                }}>
-                <MaterialIcons name="logout" color={'#fff'} size={32} />
-                <Text
+          <ScrollView>
+            <StatusBar barStyle="light-content" />
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                paddingBottom: 10,
+              }}>
+              <View style={{height: 40, marginHorizontal: 20}}>
+                {timeDurationValue ? (
+                  <CommonTimer
+                    duration={timeDurationValue}
+                    handleAnswerSubmit={handleAnswerSubmit}
+                  />
+                ) : (
+                  <></>
+                )}
+              </View>
+              <View style={{position: 'absolute', top: 0, right: 10}}>
+                <TouchableOpacity
+                  onPress={() => {
+                    // navigation.navigate('Kids_Profile', {childId: id});
+                    setQuitModalStatus(true);
+                  }}
                   style={{
-                    color: '#fff',
-                    marginLeft: 5,
-                    fontWeight: '700',
-                    fontSize: 15,
+                    // backgroundColor: Colors.secondary,
+                    // position: 'absolute',
+                    flexDirection: 'row',
+                    // top: 0,
+                    // right: 0,
+                    // borderWidth:1,
+                    alignItems: 'center',
                   }}>
-                  {trans('Quit Test')}
-                </Text>
-              </TouchableOpacity>
+                  <MaterialIcons name="logout" color={'#fff'} size={32} />
+                  <Text
+                    style={{
+                      color: '#fff',
+                      marginLeft: 5,
+                      fontWeight: '700',
+                      fontSize: 15,
+                    }}>
+                    {trans('Quit Test')}
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-          {/* <View style={{alignItems: 'center', marginVertical: 5}}>
+            {/* <View style={{alignItems: 'center', marginVertical: 5}}>
             <BannerAd
               unitId={adUnitId}
               size={BannerAdSize.BANNER}
@@ -661,193 +660,46 @@ const MockTests = ({route}) => {
               onAdLoaded={() => console.log('Ad loaded')}
             />
           </View> */}
-          <View
-            style={{
-              paddingHorizontal: 25,
-              flex: 0.9,
-              borderRadius: 10,
-              // borderWidth: 1,
-              borderColor: '#000',
-              // elevation: 10,
-              // borderWidth:1,
-              // backgroundColor: 'rgba(0,255,0,0.08)',
-              //backgroundColor: '#272727',
-              marginHorizontal: 10,
-              marginVertical: 10,
-            }}>
             <View
               style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginVertical: 20,
+                paddingHorizontal: 25,
+                flex: 0.9,
+                borderRadius: 10,
+                // borderWidth: 1,
+                borderColor: '#000',
+                // elevation: 10,
                 // borderWidth:1,
+                // backgroundColor: 'rgba(0,255,0,0.08)',
+                //backgroundColor: '#272727',
+                marginHorizontal: 10,
+                marginVertical: 10,
               }}>
-              <Progress.Bar
-                color={'#f1a722'}
-                progress={progressdata}
-                width={IsTabScreen ? 400 : 300}
-                height={7}
-                style={{marginTop: -5}}
-              />
-            </View>
-            <TouchableOpacity
-              style={{
-                justifyContent: 'flex-start',
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginVertical: IsTabScreen ? 12 : 10,
-              }}
-              onPress={() => handleReport()}>
-              <MaterialIcons
-                name="report"
-                size={IsTabScreen ? 24 : 20}
-                // backgroundColor={Colors.secondary}
-                color={'#fff'}
-                // onPress={() => navigation.goBack()}
-              />
-              <Text
-                style={{
-                  color: '#fff',
-                  fontSize: IsTabScreen ? 14 : 12,
-                  textDecorationLine: 'underline',
-                }}>
-                {trans('Report Wrong Question')}
-              </Text>
-            </TouchableOpacity>
-            <Text
-              style={[
-                styles.question,
-                {
-                  textAlign: 'left',
-                  color: '#fff',
-                  alignSelf: 'flex-start',
-                  marginTop: 10,
-                  fontSize: 18,
-                },
-              ]}>
-              {`${trans('Qs.')} ( ${currentIndex + 1}/${
-                Questionlist?.length
-              } )`}
-            </Text>
-            <ScrollView
-              showsVerticalScrollIndicator={true}
-              showsHorizontalScrollIndicator={true}
-              indicatorStyle={'white'}
-              ref={scrollRef}
-              style={{
-                flex: 1,
-              }}
-              persistentScrollbar={true}>
-              <View style={{width: '100%', flex: 1}}>
-                <View
-                  style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  {Questionlist[currentIndex]?.questiontype == 'image' ? (
-                    Questionlist[currentIndex]?.question != '' ? (
-                      <ScrollView
-                        horizontal={true}
-                        // contentContainerStyle={{height: device_height*0.5}}
-                        showsVerticalScrollIndicator={true}
-                        showsHorizontalScrollIndicator={true}
-                        persistentScrollbar={true}
-                        ref={scrollRef}>
-                        <View
-                          style={{
-                            // padding: 10,
-                            paddingVertical: 10,
-                            color: '#333',
-                            borderWidth: 1,
-                            borderColor: '#ccc',
-                            borderRadius: 5,
-                            // fontSize: '38',
-                            minHeight: IsTabScreen
-                              ? device_height * 0.4
-                              : device_height * 0.5,
-                            width: IsTabScreen
-                              ? device_width * 0.7
-                              : device_width,
-                            alignItems: 'flex-start',
-                            justifyContent: 'flex-start',
-                            // backgroundColor:Colors.secondary,
-                            backgroundColor: '#fff',
-                          }}>
-                          <WebView
-                            style={{
-                              flex: 1,
-                              // marginLeft: -30,
-                              minHeight: IsTabScreen
-                                ? device_height * 0.38
-                                : device_height * 0.47,
-                              width: IsTabScreen
-                                ? device_width * 0.6
-                                : device_width * 0.77,
-                            }}
-                            originWhitelist={['*']}
-                            nestedScrollEnabled={true}
-                            source={{
-                              html: `<html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"></head><body><p style={object-fit: contain}>${JSON.parse(
-                                Questionlist[currentIndex]?.question,
-                              )}</p></body></html>`,
-                            }}
-                          />
-                        </View>
-                      </ScrollView>
-                    ) : (
-                      <></>
-                    )
-                  ) : (
-                    <>
-                      {!IsTabScreen && (
-                        <View>
-                          <Text
-                            style={[
-                              styles.question,
-                              {
-                                textAlign: 'center',
-                                color: '#fff',
-                                fontSize: 16,
-                                lineHeight: 20,
-                                padding: 10,
-                              },
-                            ]}>
-                            {Questionlist[currentIndex]?.question}
-                          </Text>
-                        </View>
-                      )}
-                    </>
-                  )}
-                </View>
-              </View>
-            </ScrollView>
-            {Questionlist[currentIndex]?.questiontype == 'text' &&
-              IsTabScreen &&
-              (Questionlist[currentIndex]?.question != '' ? (
-                <View>
-                  <Text
-                    style={[
-                      styles.question,
-                      {
-                        textAlign: 'center',
-                        color: '#fff',
-                        fontSize: 20,
-                        lineHeight: 20,
-                        padding: 10,
-                      },
-                    ]}>
-                    {Questionlist[currentIndex]?.question}
-                  </Text>
-                </View>
-              ) : (
-                <></>
-              ))}
-            {Questionlist[currentIndex]?.questiontype == 'image' && (
               <View
-                style={{justifyContent: 'flex-start', flexDirection: 'row'}}>
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginVertical: 20,
+                  // borderWidth:1,
+                }}>
+                <Progress.Bar
+                  color={'#f1a722'}
+                  progress={progressdata}
+                  width={300}
+                  height={7}
+                  style={{marginTop: -5}}
+                />
+              </View>
+              <TouchableOpacity
+                style={{
+                  justifyContent: 'flex-start',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  marginVertical: IsTabScreen ? 12 : 10,
+                }}
+                onPress={() => handleReport()}>
                 <MaterialIcons
                   name="report"
-                  size={20}
+                  size={IsTabScreen ? 24 : 20}
                   // backgroundColor={Colors.secondary}
                   color={'#fff'}
                   // onPress={() => navigation.goBack()}
@@ -855,302 +707,451 @@ const MockTests = ({route}) => {
                 <Text
                   style={{
                     color: '#fff',
-                    fontSize: 12,
-                    // textDecorationLine: 'underline',
+                    fontSize: IsTabScreen ? 14 : 12,
+                    textDecorationLine: 'underline',
                   }}>
-                  {trans('Scroll to see the question')}
+                  {trans('Report Wrong Question')}
                 </Text>
-              </View>
-            )}
-            <View
-              style={{
-                marginVertical: 10,
-                paddingBottom: 5,
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-                justifyContent: 'space-between',
-              }}>
-              {Questionlist[currentIndex]?.option?.map((item, indx) => {
-                const {
-                  label = '',
-                  imagurl = '',
-                  value = '',
-                  contenttype = '',
-                } = item;
-                const {selectedAns = ''} = Questionlist[currentIndex];
-                const selectedItem = label == selectedAns;
-                let imageUrl;
-                if (contenttype === 'image') {
-                  console.log(value, '@value');
-                  const htmlString = imagurl.replace(/\\"/g, '"');
-                  const imageUrlMatch = htmlString.match(/<img.*?src="(.*?)"/);
-                  imageUrl =
-                    imageUrlMatch && imageUrlMatch[1]
-                      ? imageUrlMatch[1].replace(/&amp;/g, '&')
-                      : '';
-                }
-                return (
+              </TouchableOpacity>
+              <Text
+                style={[
+                  styles.question,
+                  {
+                    textAlign: 'left',
+                    color: '#fff',
+                    alignSelf: 'flex-start',
+                    marginTop: 10,
+                    fontSize: 18,
+                  },
+                ]}>
+                {`${trans('Qs.')} ( ${currentIndex + 1}/${
+                  Questionlist?.length
+                } )`}
+              </Text>
+              <ScrollView
+                showsVerticalScrollIndicator={true}
+                showsHorizontalScrollIndicator={true}
+                indicatorStyle={'white'}
+                ref={scrollRef}
+                style={{
+                  flex: 1,
+                }}
+                persistentScrollbar={true}>
+                <View style={{width: '100%', flex: 1}}>
                   <View
-                    key={indx}
                     style={{
-                      width:
-                        Questionlist[currentIndex]?.questiontype == 'image'
-                          ? '49%'
-                          : '100%',
-                      backgroundColor: selectedItem ? '#f1a722' : '#F0F0F0',
-                      // borderWidth:1,
-                      marginVertical: 7,
-                      borderColor: '#ccc',
-                      elevation: 5,
-                      borderRadius: 10,
+                      justifyContent: 'center',
+                      alignItems: 'center',
                     }}>
-                    <TouchableOpacity
-                      onPress={() => {
-                        //
-                        handleselectAnswer(label, currentIndex);
-                      }}
-                      style={{
-                        width: '100%',
-                        // borderWidth: 1,
-                        borderColor: '#fff',
-                        borderRadius: 15,
-                        marginVertical: 5,
-                        padding: 5,
-                        backgroundColor: selectedItem ? '#f1a722' : '#F0F0F0',
-                      }}>
-                      {contenttype === 'image' ? (
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            borderRadius: 10,
-                            alignItems: 'center',
-                          }}>
+                    {Questionlist[currentIndex]?.questiontype == 'image' ? (
+                      Questionlist[currentIndex]?.question != '' ? (
+                        <ScrollView
+                          horizontal={true}
+                          // contentContainerStyle={{height: device_height*0.5}}
+                          showsVerticalScrollIndicator={true}
+                          showsHorizontalScrollIndicator={true}
+                          persistentScrollbar={true}
+                          ref={scrollRef}>
                           <View
                             style={{
-                              width: IsTabScreen ? 70 : 60,
-                              height: IsTabScreen ? 70 : 60,
-                              borderRadius: 10,
-                              overflow: 'hidden',
+                              // padding: 10,
+                              paddingVertical: 10,
+                              color: '#333',
+                              borderWidth: 1,
+                              borderColor: '#ccc',
+                              borderRadius: 5,
+                              // fontSize: '38',
+                              minHeight: IsTabScreen
+                                ? device_height * 0.4
+                                : device_height * 0.5,
+                              width: IsTabScreen
+                                ? device_width * 0.7
+                                : device_width,
+                              alignItems: 'flex-start',
+                              justifyContent: 'flex-start',
+                              // backgroundColor:Colors.secondary,
+                              backgroundColor: '#fff',
                             }}>
-                            <Image
-                              source={{uri: imageUrl}}
+                            <WebView
                               style={{
-                                width: '100%',
-                                height: '100%',
-                                resizeMode: 'cover',
+                                flex: 1,
+                                // marginLeft: -30,
+                                minHeight: IsTabScreen
+                                  ? device_height * 0.38
+                                  : device_height * 0.47,
+                                width: IsTabScreen
+                                  ? device_width * 0.6
+                                  : device_width * 0.77,
+                              }}
+                              originWhitelist={['*']}
+                              nestedScrollEnabled={true}
+                              source={{
+                                html: `<html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"></head><body><p style={object-fit: contain}>${JSON.parse(
+                                  Questionlist[currentIndex]?.question,
+                                )}</p></body></html>`,
                               }}
                             />
                           </View>
+                        </ScrollView>
+                      ) : (
+                        <></>
+                      )
+                    ) : (
+                      <>
+                        {!IsTabScreen && (
+                          <View>
+                            <Text
+                              style={[
+                                styles.question,
+                                {
+                                  textAlign: 'center',
+                                  color: '#fff',
+                                  fontSize: 16,
+                                  lineHeight: 20,
+                                  padding: 10,
+                                },
+                              ]}>
+                              {Questionlist[currentIndex]?.question}
+                            </Text>
+                          </View>
+                        )}
+                      </>
+                    )}
+                  </View>
+                </View>
+              </ScrollView>
+              {Questionlist[currentIndex]?.questiontype == 'text' &&
+                IsTabScreen &&
+                (Questionlist[currentIndex]?.question != '' ? (
+                  <View>
+                    <Text
+                      style={[
+                        styles.question,
+                        {
+                          textAlign: 'center',
+                          color: '#fff',
+                          fontSize: 20,
+                          lineHeight: 20,
+                          padding: 10,
+                        },
+                      ]}>
+                      {Questionlist[currentIndex]?.question}
+                    </Text>
+                  </View>
+                ) : (
+                  <></>
+                ))}
+              {Questionlist[currentIndex]?.questiontype == 'image' && (
+                <View
+                  style={{justifyContent: 'flex-start', flexDirection: 'row'}}>
+                  <MaterialIcons
+                    name="report"
+                    size={20}
+                    // backgroundColor={Colors.secondary}
+                    color={'#fff'}
+                    // onPress={() => navigation.goBack()}
+                  />
+                  <Text
+                    style={{
+                      color: '#fff',
+                      fontSize: 12,
+                      // textDecorationLine: 'underline',
+                    }}>
+                    {trans('Scroll to see the question')}
+                  </Text>
+                </View>
+              )}
+              <View
+                style={{
+                  marginVertical: 10,
+                  paddingBottom: 5,
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                  justifyContent: 'space-between',
+                }}>
+                {Questionlist[currentIndex]?.option?.map((item, indx) => {
+                  const {
+                    label = '',
+                    imagurl = '',
+                    value = '',
+                    contenttype = '',
+                  } = item;
+                  const {selectedAns = ''} = Questionlist[currentIndex];
+                  const selectedItem = label == selectedAns;
+                  let imageUrl;
+                  if (contenttype === 'image') {
+                    console.log(value, '@value');
+                    const htmlString = imagurl.replace(/\\"/g, '"');
+                    const imageUrlMatch =
+                      htmlString.match(/<img.*?src="(.*?)"/);
+                    imageUrl =
+                      imageUrlMatch && imageUrlMatch[1]
+                        ? imageUrlMatch[1].replace(/&amp;/g, '&')
+                        : '';
+                  }
+                  return (
+                    <View
+                      key={indx}
+                      style={{
+                        width:
+                          Questionlist[currentIndex]?.questiontype == 'image'
+                            ? '49%'
+                            : '100%',
+                        backgroundColor: selectedItem ? '#f1a722' : '#F0F0F0',
+                        // borderWidth:1,
+                        marginVertical: 7,
+                        borderColor: '#ccc',
+                        elevation: 5,
+                        borderRadius: 10,
+                      }}>
+                      <TouchableOpacity
+                        onPress={() => {
+                          //
+                          handleselectAnswer(label, currentIndex);
+                        }}
+                        style={{
+                          width: '100%',
+                          // borderWidth: 1,
+                          borderColor: '#fff',
+                          borderRadius: 15,
+                          marginVertical: 5,
+                          padding: 5,
+                          backgroundColor: selectedItem ? '#f1a722' : '#F0F0F0',
+                        }}>
+                        {contenttype === 'image' ? (
                           <View
                             style={{
-                              flex: 1,
-                              marginLeft: 10,
+                              flexDirection: 'row',
+                              borderRadius: 10,
+                              alignItems: 'center',
+                            }}>
+                            <View
+                              style={{
+                                width: IsTabScreen ? 70 : 60,
+                                height: IsTabScreen ? 70 : 60,
+                                borderRadius: 10,
+                                overflow: 'hidden',
+                              }}>
+                              <Image
+                                source={{uri: imageUrl}}
+                                style={{
+                                  width: '100%',
+                                  height: '100%',
+                                  resizeMode: 'cover',
+                                }}
+                              />
+                            </View>
+                            <View
+                              style={{
+                                flex: 1,
+                                marginLeft: 10,
+                              }}>
+                              <Text
+                                style={{
+                                  fontSize: IsTabScreen ? 18 : 15,
+                                  fontWeight: '700',
+                                  color: selectedItem ? 'darkgreen' : '#333',
+                                }}>
+                                {`(${label}) ${value}`}
+                              </Text>
+                            </View>
+                          </View>
+                        ) : (
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              padding: IsTabScreen ? 15 : 10,
+                              borderRadius: 10,
+                              alignItems: 'center',
                             }}>
                             <Text
                               style={{
                                 fontSize: IsTabScreen ? 18 : 15,
                                 fontWeight: '700',
+                                marginLeft: IsTabScreen ? 20 : 15,
                                 color: selectedItem ? 'darkgreen' : '#333',
                               }}>
                               {`(${label}) ${value}`}
                             </Text>
                           </View>
-                        </View>
-                      ) : (
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            padding: IsTabScreen ? 15 : 10,
-                            borderRadius: 10,
-                            alignItems: 'center',
-                          }}>
-                          <Text
-                            style={{
-                              fontSize: IsTabScreen ? 18 : 15,
-                              fontWeight: '700',
-                              marginLeft: IsTabScreen ? 20 : 15,
-                              color: selectedItem ? 'darkgreen' : '#333',
-                            }}>
-                            {`(${label}) ${value}`}
-                          </Text>
-                        </View>
-                      )}
-                    </TouchableOpacity>
-                  </View>
-                );
-              })}
-            </View>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              flex: 0.1,
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              // backgroundColor: '#FFF',
-              marginLeft: IsTabScreen ? 20 : 7,
-              paddingHorizontal: IsTabScreen ? 20 : 10,
-            }}>
-            <TouchableOpacity
-              style={{padding: IsTabScreen ? 20 : 15}}
-              disabled={currentIndex == 0}
-              onPress={() => {
-                handlePrevious();
-                // scrollRef.current.scrollTo({
-                //   x:0, // Required
-                //   y: 0, // Required
-                //   animated: true,
-                // });
-              }}>
-              <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
-                <FontAwesome
-                  style={{color: currentIndex == 0 ? '#bbb' : '#f1a722'}}
-                  name="chevron-left"
-                  size={IsTabScreen ? 24 : 18}
-                />
-                <Text
-                  style={{
-                    fontSize: IsTabScreen ? 20 : 16,
-                    fontWeight: '600',
-                    color: currentIndex == 0 ? '#bbb' : '#f1a722',
-                    marginLeft: 10,
-                  }}>
-                  {trans('Previous')}
-                </Text>
+                        )}
+                      </TouchableOpacity>
+                    </View>
+                  );
+                })}
               </View>
-            </TouchableOpacity>
-            {Questionlist[currentIndex]?.selectedAns != '' && (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'baseline',
-                  // borderWidth: 1,
-                  backgroundColor: '#f1a722',
-                  borderRadius: 8,
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                flex: 0.1,
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                // backgroundColor: '#FFF',
+                marginLeft: IsTabScreen ? 20 : 7,
+                paddingHorizontal: IsTabScreen ? 20 : 10,
+              }}>
+              <TouchableOpacity
+                style={{padding: IsTabScreen ? 20 : 15}}
+                disabled={currentIndex == 0}
+                onPress={() => {
+                  handlePrevious();
+                  // scrollRef.current.scrollTo({
+                  //   x:0, // Required
+                  //   y: 0, // Required
+                  //   animated: true,
+                  // });
                 }}>
-                <TouchableOpacity
-                  // disabled={currentIndex == Questionlist.length - 1}
-                  disabled={false}
+                <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
+                  <FontAwesome
+                    style={{color: currentIndex == 0 ? '#bbb' : '#f1a722'}}
+                    name="chevron-left"
+                    size={IsTabScreen ? 24 : 18}
+                  />
+                  <Text
+                    style={{
+                      fontSize: IsTabScreen ? 20 : 16,
+                      fontWeight: '600',
+                      color: currentIndex == 0 ? '#bbb' : '#f1a722',
+                      marginLeft: 10,
+                    }}>
+                    {trans('Previous')}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+              {Questionlist[currentIndex]?.selectedAns != '' && (
+                <View
                   style={{
                     flexDirection: 'row',
                     alignItems: 'baseline',
                     // borderWidth: 1,
-                    paddingVertical: 8,
-                    paddingHorizontal: 30,
+                    backgroundColor: '#f1a722',
                     borderRadius: 8,
-                  }}
-                  onPress={() => {
-                    const selectedAnswerValue =
-                      Questionlist[currentIndex]?.selectedAns;
-                    //   console.warn(
-                    //     selectedAnswerValue,
-                    //   'inside data called',
-                    // );
-                    if (selectedAnswerValue !== '') {
-                      setClearSkipModalStatus(true);
-                    }
-                    // else handleNext();
                   }}>
-                  <Text
+                  <TouchableOpacity
+                    // disabled={currentIndex == Questionlist.length - 1}
+                    disabled={false}
                     style={{
-                      fontSize: IsTabScreen ? 20 : 16,
-                      fontWeight: '600',
-                      color: '#333',
-                      // currentIndex == Questionlist.length - 1 ? '#bbb' : '#333',
-                      // marginRight: 10,
+                      flexDirection: 'row',
+                      alignItems: 'baseline',
+                      // borderWidth: 1,
+                      paddingVertical: 8,
+                      paddingHorizontal: 30,
+                      borderRadius: 8,
+                    }}
+                    onPress={() => {
+                      const selectedAnswerValue =
+                        Questionlist[currentIndex]?.selectedAns;
+                      //   console.warn(
+                      //     selectedAnswerValue,
+                      //   'inside data called',
+                      // );
+                      if (selectedAnswerValue !== '') {
+                        setClearSkipModalStatus(true);
+                      }
+                      // else handleNext();
                     }}>
-                    {trans('Skip')}
-                  </Text>
-                  {/* <FontAwesome
+                    <Text
+                      style={{
+                        fontSize: IsTabScreen ? 20 : 16,
+                        fontWeight: '600',
+                        color: '#333',
+                        // currentIndex == Questionlist.length - 1 ? '#bbb' : '#333',
+                        // marginRight: 10,
+                      }}>
+                      {trans('Skip')}
+                    </Text>
+                    {/* <FontAwesome
                 style={{color: '#fff'}}
                 name="chevron-right"
                 size={12}
               /> */}
-                </TouchableOpacity>
-              </View>
-            )}
-            {currentIndex == Questionlist.length - 1 ? (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  //alignItems: 'baseline',
-                  backgroundColor: '#f1a722',
-                  borderRadius: 10,
-                  alignItems: 'center',
-                  // marginLeft:10
-                  borderWidth: 1,
-                  borderColor: '#FFF',
-                  elevation: 10,
-                }}>
-                <TouchableOpacity
-                  style={styles.signIn}
-                  // disabled={loading}
-                  onPress={() => {
-                    //   handleActiveStep();
-
-                    setModalStatus(true);
-                  }}>
-                  <Text
-                    style={{
-                      fontSize: IsTabScreen ? 20 : 16,
-                      fontWeight: '900',
-                      color: 'green',
-                    }}>
-                    {trans('Submit')}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            ) : (
-              <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
-                <TouchableOpacity
-                  disabled={currentIndex == Questionlist.length - 1}
+                  </TouchableOpacity>
+                </View>
+              )}
+              {currentIndex == Questionlist.length - 1 ? (
+                <View
                   style={{
                     flexDirection: 'row',
-                    alignItems: 'baseline',
-                    padding: IsTabScreen ? 20 : 15,
-                  }}
-                  onPress={() => {
-                    // scrollRef.current.scrollTo({
-                    //   x: 10, // Required
-                    //   y: 10, // Required
-                    //   animated: true,
-                    // });
-                    const selectedAnswerValue =
-                      Questionlist[currentIndex]?.selectedAns;
-                    //   console.warn(
-                    //     selectedAnswerValue,
-                    //   'inside data called',
-                    // );
-                    if (selectedAnswerValue == '') {
-                      setSkipModalStatus(true);
-                    } else handleNext();
+                    //alignItems: 'baseline',
+                    backgroundColor: '#f1a722',
+                    borderRadius: 10,
+                    alignItems: 'center',
+                    // marginLeft:10
+                    borderWidth: 1,
+                    borderColor: '#FFF',
+                    elevation: 10,
                   }}>
-                  <Text
-                    style={{
-                      fontSize: IsTabScreen ? 20 : 18,
-                      fontWeight: '600',
-                      color:
-                        currentIndex == Questionlist.length - 1
-                          ? '#bbb'
-                          : '#f1a722',
-                      marginRight: 10,
+                  <TouchableOpacity
+                    style={styles.signIn}
+                    // disabled={loading}
+                    onPress={() => {
+                      //   handleActiveStep();
+
+                      setModalStatus(true);
                     }}>
-                    {trans('Next')}
-                  </Text>
-                  <FontAwesome
+                    <Text
+                      style={{
+                        fontSize: IsTabScreen ? 20 : 16,
+                        fontWeight: '900',
+                        color: 'green',
+                      }}>
+                      {trans('Submit')}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              ) : (
+                <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
+                  <TouchableOpacity
+                    disabled={currentIndex == Questionlist.length - 1}
                     style={{
-                      color:
-                        currentIndex == Questionlist.length - 1
-                          ? '#bbb'
-                          : '#f1a722',
+                      flexDirection: 'row',
+                      alignItems: 'baseline',
+                      padding: IsTabScreen ? 20 : 15,
                     }}
-                    name="chevron-right"
-                    size={IsTabScreen ? 20 : 16}
-                  />
-                </TouchableOpacity>
-              </View>
-            )}
-          </View>
+                    onPress={() => {
+                      // scrollRef.current.scrollTo({
+                      //   x: 10, // Required
+                      //   y: 10, // Required
+                      //   animated: true,
+                      // });
+                      const selectedAnswerValue =
+                        Questionlist[currentIndex]?.selectedAns;
+                      //   console.warn(
+                      //     selectedAnswerValue,
+                      //   'inside data called',
+                      // );
+                      if (selectedAnswerValue == '') {
+                        setSkipModalStatus(true);
+                      } else handleNext();
+                    }}>
+                    <Text
+                      style={{
+                        fontSize: IsTabScreen ? 20 : 18,
+                        fontWeight: '600',
+                        color:
+                          currentIndex == Questionlist.length - 1
+                            ? '#bbb'
+                            : '#f1a722',
+                        marginRight: 10,
+                      }}>
+                      {trans('Next')}
+                    </Text>
+                    <FontAwesome
+                      style={{
+                        color:
+                          currentIndex == Questionlist.length - 1
+                            ? '#bbb'
+                            : '#f1a722',
+                      }}
+                      name="chevron-right"
+                      size={IsTabScreen ? 20 : 16}
+                    />
+                  </TouchableOpacity>
+                </View>
+              )}
+            </View>
+          </ScrollView>
         </ImageBackground>
       )}
       {modalStatus && (
